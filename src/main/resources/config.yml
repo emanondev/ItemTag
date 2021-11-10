@@ -1,0 +1,5 @@
+actions:
+  player_command:
+    #Should use playercommandpreprocessevent ?
+    #true - if you need other plugins to listen to cancel or handle commands fired by items, like CombatLog MyCommands etc...
+    fires_playercommandpreprocessevent: true

@@ -448,6 +448,8 @@ public class ConsumeActions extends ListenerSubCmd {
 
 		for (String action : tManager.getString(ACTIONS_KEY, event.getItem()).split(LINK))
 			try {
+				if(action.isEmpty())
+					continue;
 				ActionHandler.handleAction(event.getPlayer(), action.split(TYPE_SEPARATOR)[0],
 						action.split(TYPE_SEPARATOR)[1]);
 			} catch (Exception e) {

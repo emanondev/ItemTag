@@ -27,30 +27,25 @@ public class EffectsInfo {
 			for (PotionEffect effect : stringToEffects(ItemTag.get().getTagManager().getString(EFFECTS_LIST_KEY, item)))
 				effects.put(effect.getType(), effect);
 		if (ItemTag.get().getTagManager().hasStringTag(EFFECTS_EQUIPS_KEY, item))
-			for (EquipmentSlot slot : stringToEquips(ItemTag.get().getTagManager().getString(EFFECTS_EQUIPS_KEY, item)))
-				slots.add(slot);
+			slots.addAll(stringToEquips(ItemTag.get().getTagManager().getString(EFFECTS_EQUIPS_KEY, item)));
 	}
 
 	private String effectsToString() {
 		if (effects.isEmpty())
 			return null;
-		StringBuilder str = new StringBuilder("");
+		StringBuilder str = new StringBuilder();
 		List<PotionEffect> list = new ArrayList<>(effects.values());
 
 		if (Integer.parseInt(ItemEdit.NMS_VERSION.split("_")[1]) > 12)
-			str.append(list.get(0).getType().getName() + "," + list.get(0).getAmplifier() + ","
-					+ list.get(0).isAmbient() + "," + list.get(0).hasParticles() + "," + list.get(0).hasIcon());
+			str.append(list.get(0).getType().getName()).append(",").append(list.get(0).getAmplifier()).append(",").append(list.get(0).isAmbient()).append(",").append(list.get(0).hasParticles()).append(",").append(list.get(0).hasIcon());
 		else
-			str.append(list.get(0).getType().getName() + "," + list.get(0).getAmplifier() + ","
-					+ list.get(0).isAmbient() + "," + list.get(0).hasParticles() + ",true");
+			str.append(list.get(0).getType().getName()).append(",").append(list.get(0).getAmplifier()).append(",").append(list.get(0).isAmbient()).append(",").append(list.get(0).hasParticles()).append(",true");
 		for (int i = 1; i < list.size(); i++) {
 			str.append(";");
 			if (Integer.parseInt(ItemEdit.NMS_VERSION.split("_")[1]) > 12)
-				str.append(list.get(i).getType().getName() + "," + list.get(i).getAmplifier() + ","
-						+ list.get(i).isAmbient() + "," + list.get(i).hasParticles() + "," + list.get(i).hasIcon());
+				str.append(list.get(i).getType().getName()).append(",").append(list.get(i).getAmplifier()).append(",").append(list.get(i).isAmbient()).append(",").append(list.get(i).hasParticles()).append(",").append(list.get(i).hasIcon());
 			else
-				str.append(list.get(i).getType().getName() + "," + list.get(i).getAmplifier() + ","
-						+ list.get(i).isAmbient() + "," + list.get(i).hasParticles() + ",true");
+				str.append(list.get(i).getType().getName()).append(",").append(list.get(i).getAmplifier()).append(",").append(list.get(i).isAmbient()).append(",").append(list.get(i).hasParticles()).append(",true");
 		}
 		return str.toString();
 	}
@@ -79,7 +74,7 @@ public class EffectsInfo {
 		if (slots.isEmpty())
 			return null;
 		List<EquipmentSlot> list = new ArrayList<>(slots);
-		StringBuilder str = new StringBuilder("");
+		StringBuilder str = new StringBuilder();
 		str.append(list.get(0).name());
 		for (int i = 1; i < list.size(); i++)
 			str.append(";").append(list.get(i).name());

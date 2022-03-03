@@ -27,11 +27,11 @@ public class SoundAction extends Action {
 		if (Sound.valueOf(args[0].toUpperCase())==null)
 			throw new IllegalStateException();
 		if (args.length >= 2) {
-			if (Float.valueOf(args[1]) <= 0)
+			if (Float.parseFloat(args[1]) <= 0)
 				throw new IllegalStateException();
 		}
 		if (args.length >= 3) {
-			if (Float.valueOf(args[2]) <= 0)
+			if (Float.parseFloat(args[2]) <= 0)
 				throw new IllegalStateException();
 		}
 		if (args.length >= 4) {
@@ -53,11 +53,11 @@ public class SoundAction extends Action {
 		float pitch = 1;
 		Sound sound = Sound.valueOf(args[0].toUpperCase());
 		if (args.length >= 2)
-			volume = Float.valueOf(args[1]);
+			volume = Float.parseFloat(args[1]);
 		if (args.length >= 3)
-			pitch = Float.valueOf(args[2]);
+			pitch = Float.parseFloat(args[2]);
 		if (args.length >= 4)
-			self = Boolean.valueOf(args[3]);
+			self = Boolean.parseBoolean(args[3]);
 		if (self)
 			player.playSound(player.getLocation(), sound, volume, pitch);
 		else

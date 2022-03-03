@@ -177,7 +177,7 @@ public abstract class EffectsBase extends ListenerSubCmd {
 	private void event(PlayerDropItemEvent event) {
 		if (event.getPlayer().hasMetadata("NPC")||event.getPlayer().hasMetadata("BOT"))
 			return;
-		if (clickDrop.remove(event.getPlayer()) == true)
+		if (clickDrop.remove(event.getPlayer()))
 			return;
 		if (event.isCancelled())
 			return;

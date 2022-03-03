@@ -1,20 +1,18 @@
 package emanondev.itemtag.actions;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
-
+import emanondev.itemedit.Util;
+import emanondev.itemedit.UtilsString;
+import emanondev.itemedit.YMLConfig;
+import emanondev.itemtag.ItemTag;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
-import emanondev.itemedit.Util;
-import emanondev.itemedit.UtilsString;
-import emanondev.itemedit.YMLConfig;
-import emanondev.itemtag.ItemTag;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 public class PlayerAsOpCommandAction extends Action {
 	
@@ -72,7 +70,7 @@ public class PlayerAsOpCommandAction extends Action {
 	@Override
 	public List<String> tabComplete(CommandSender sender, List<String> params) {
 		if (params.get(params.size() - 1).startsWith("%"))
-			return Util.complete(params.get(params.size() - 1), Arrays.asList("%player%"));
+			return Util.complete(params.get(params.size() - 1), Collections.singletonList("%player%"));
 		return Collections.emptyList();
 	}
 

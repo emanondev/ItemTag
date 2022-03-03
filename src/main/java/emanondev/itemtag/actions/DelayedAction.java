@@ -26,7 +26,7 @@ public class DelayedAction extends Action {
 		if (args.length < 3)
 			throw new IllegalStateException();
 
-		Long ticks = Long.valueOf(args[0]);
+		long ticks = Long.parseLong(args[0]);
 		if (ticks <= 0)
 			throw new IllegalStateException();
 
@@ -41,7 +41,7 @@ public class DelayedAction extends Action {
 			public void run() {
 				ActionHandler.handleAction(player, args[1], text.substring(args[0].length() + args[1].length() + 2));
 			}
-		}.runTaskLater(ItemTag.get(), Long.valueOf(args[0]));
+		}.runTaskLater(ItemTag.get(), Long.parseLong(args[0]));
 	}
 
 	@Override

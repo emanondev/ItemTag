@@ -206,7 +206,7 @@ public class Actions extends ListenerSubCmd {
 		try {
 			if (args.length > 3)
 				throw new IllegalArgumentException("Wrong param number");
-			int cooldownMs = args.length == 2 ? 0 : Integer.valueOf(args[2]);
+			int cooldownMs = args.length == 2 ? 0 : Integer.parseInt(args[2]);
 			ItemMeta meta;
 			if (cooldownMs > 0) {
 				meta = ItemTag.get().getTagManager().setTag(ACTION_COOLDOWN_KEY, item, cooldownMs).getItemMeta();
@@ -227,7 +227,7 @@ public class Actions extends ListenerSubCmd {
 		try {
 			if (args.length > 3)
 				throw new IllegalArgumentException("Wrong param number");
-			int uses = args.length == 2 ? 1 : Integer.valueOf(args[2]);
+			int uses = args.length == 2 ? 1 : Integer.parseInt(args[2]);
 			if (uses == 0)
 				throw new IllegalArgumentException();
 			ItemMeta meta;
@@ -255,7 +255,7 @@ public class Actions extends ListenerSubCmd {
 		try {
 			if (args.length < 4)
 				throw new IllegalArgumentException("Wrong param number");
-			int line = Integer.valueOf(args[2]) - 1;
+			int line = Integer.parseInt(args[2]) - 1;
 			if (line < 0)
 				throw new IllegalArgumentException();
 			ArrayList<String> tmp = new ArrayList<>();
@@ -303,7 +303,7 @@ public class Actions extends ListenerSubCmd {
 		try {
 			if (args.length != 3)
 				throw new IllegalArgumentException("Wrong param number");
-			int line = Integer.valueOf(args[2]) - 1;
+			int line = Integer.parseInt(args[2]) - 1;
 			if (line < 0)
 				throw new IllegalArgumentException();
 			ItemMeta meta;
@@ -376,7 +376,7 @@ public class Actions extends ListenerSubCmd {
 		try {
 			if (args.length < 4)
 				throw new IllegalArgumentException("Wrong param number");
-			int line = Integer.valueOf(args[2]) - 1;
+			int line = Integer.parseInt(args[2]) - 1;
 			ArrayList<String> tmp = new ArrayList<>();
 			for (int i = 4; i < args.length; i++)
 				tmp.add(args[i]);

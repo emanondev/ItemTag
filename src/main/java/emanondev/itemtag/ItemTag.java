@@ -16,6 +16,7 @@ import emanondev.itemedit.command.AbstractCommand;
 import emanondev.itemtag.actions.*;
 import emanondev.itemtag.command.ItemTagCommand;
 import net.md_5.bungee.api.ChatColor;
+import org.jetbrains.annotations.NotNull;
 
 public class ItemTag extends APlugin {
 	private static ItemTag plugin = null;
@@ -43,12 +44,12 @@ public class ItemTag extends APlugin {
 			TabExecutor exec = new TabExecutor() {
 
 				@Override
-				public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
+				public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
 					return Collections.emptyList();
 				}
 
 				@Override
-				public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+				public boolean onCommand(CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
 					sender.sendMessage(ChatColor.RED + "CraftBukkit is not supported!!! use Spigot or Paper");
 					return true;
 				}
@@ -65,12 +66,12 @@ public class ItemTag extends APlugin {
 			TabExecutor exec = new TabExecutor() {
 
 				@Override
-				public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
+				public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
 					return Collections.emptyList();
 				}
 
 				@Override
-				public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+				public boolean onCommand(CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
 					sender.sendMessage(ChatColor.RED + "This Game Version is not supported!!! (1.8+ is required)");
 					return true;
 				}
@@ -78,7 +79,7 @@ public class ItemTag extends APlugin {
 			};
 			getCommand("itemtag").setExecutor(exec);
 			getCommand("itemtag").setTabCompleter(exec);
-			getCommand("itemtag").setAliases(Arrays.asList("it"));
+			getCommand("itemtag").setAliases(Collections.singletonList("it"));
 			return;
 		}
 		try {
@@ -92,12 +93,12 @@ public class ItemTag extends APlugin {
 					TabExecutor exec = new TabExecutor() {
 
 						@Override
-						public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
+						public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
 							return Collections.emptyList();
 						}
 
 						@Override
-						public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+						public boolean onCommand(CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
 							sender.sendMessage(ChatColor.RED + "NBTAPI is required on this server version check www.spigotmc.org/resources/7939/");
 							return true;
 						}
@@ -105,7 +106,7 @@ public class ItemTag extends APlugin {
 					};
 					getCommand("itemtag").setExecutor(exec);
 					getCommand("itemtag").setTabCompleter(exec);
-					getCommand("itemtag").setAliases(Arrays.asList("it"));
+					getCommand("itemtag").setAliases(Collections.singletonList("it"));
 					return;
 				}
 			else
@@ -113,7 +114,7 @@ public class ItemTag extends APlugin {
 			AbstractCommand c = new ItemTagCommand();
 			getCommand(c.getName()).setExecutor(c);
 			getCommand(c.getName()).setTabCompleter(c);
-			getCommand(c.getName()).setAliases(Arrays.asList("it"));
+			getCommand(c.getName()).setAliases(Collections.singletonList("it"));
 
 			ActionHandler.clearActions(); //required for plugman reload
 			ActionHandler.registerAction(new DelayedAction());

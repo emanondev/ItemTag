@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 
 public abstract class Action {
 	
-	private String id;
+	private final String id;
 
 	public Action(String id) {
 		this.id = id.toLowerCase();

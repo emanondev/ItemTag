@@ -61,10 +61,10 @@ public class Placeable extends ListenerSubCmd {
 	private void event(BlockPlaceEvent event) {
 		if (ItemTag.get().getTagManager().hasBooleanTag(PLACEABLE_KEY, event.getItemInHand())) {
 			event.setCancelled(true);
-			if (cooldownSeconds==0 || !getPlugin().getCooldownAPI().hasCooldown(event.getPlayer(), PLACEABLE_KEY.toString())) {
+			if (cooldownSeconds==0 || !getPlugin().getCooldownAPI().hasCooldown(event.getPlayer(), PLACEABLE_KEY)) {
 				Util.sendMessage(event.getPlayer(), UtilsString.fix(this.getConfString("feedback.failed-place-attemp"), event.getPlayer(), true));
 				if (cooldownSeconds!=0)
-					getPlugin().getCooldownAPI().setCooldownSeconds(event.getPlayer(), PLACEABLE_KEY.toString(), cooldownSeconds);
+					getPlugin().getCooldownAPI().setCooldownSeconds(event.getPlayer(), PLACEABLE_KEY, cooldownSeconds);
 			}
 		}
 	}

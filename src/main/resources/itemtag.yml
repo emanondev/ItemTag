@@ -185,7 +185,7 @@ sub-commands:
             set: '&aThis item has &e%uses% &auses before getting consumed'
             unlimited: '&aThis item has &eunlimited &auses'
   consumeactions:
-    name: actions
+    name: consumeactions
     description: 
     - '&b&lSets actions done when the item is consumed like food and drinks'
     - ''

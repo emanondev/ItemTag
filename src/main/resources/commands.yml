@@ -1,0 +1,11 @@
+itemtag:
+  flag:
+    name: flag
+    placeable:
+      failed-place-attempt-message-cooldown-seconds: 3
+  actions:
+    name: actions
+  consumeactions:
+    name: consumeactions
+  effects:
+    name: effects

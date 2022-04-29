@@ -3,69 +3,69 @@ main: ${groupId}.${project.name}
 version: ${project.version}
 author: emanon
 api-version: 1.13
-depend: [ItemEdit]
-softdepend: [NBTAPI]
+depend: [ ItemEdit ]
+softdepend: [ NBTAPI ]
 
 commands:
-    itemtag:
-        description: allows to apply tags to items
-        usage: /itemtag
-        aliases: [it]
-    itemtagreload:
-        description: reload configurations
-        usage: /itemtagreload
-        
+  itemtag:
+    description: allows to apply tags to items
+    usage: /itemtag
+    aliases: [ it ]
+  itemtagreload:
+    description: reload configurations
+    usage: /itemtagreload
+
 permissions:
-    itemtag.admin:
-        default: op
-        description: Gives full access to the plugin
-        children: 
-            itemtag.itemtag.*: true
-            itemtag.itemtagreload: true
-    itemtag.itemtagreload:
-        default: op
-        description: Gives full access to command /itemtagreload
-    itemtag.itemtag.*:
-        default: op
-        description: Gives full access to command /itemtag
-        children: 
-            itemtag.itemtag.placeable: true
-            itemtag.itemtag.usable: true
-            itemtag.itemtag.renamable: true
-            itemtag.itemtag.enchantable: true
-            itemtag.itemtag.actions: true
-            itemtag.itemtag.furncefuel: true
-            itemtag.itemtag.smelt: true
-            itemtag.itemtag.recipeingredient: true
-            itemtag.itemtag.grindable: true
-            itemtag.itemtag.effects: true
-    itemtag.itemtag.placeable:
-        default: op
-        description: Allow to set if an item could be placed
-    itemtag.itemtag.usable:
-        default: op
-        description: Allow to set if an item could be used
-    itemtag.itemtag.renamable:
-        default: op
-        description: Allow to set if an item could be used or merged on anvil
-    itemtag.itemtag.enchantable:
-        default: op
-        description: Allow to set if an item could be enchanted
-    itemtag.itemtag.actions:
-        default: op
-        description: Allow to set actions when using item
-    itemtag.itemtag.furncefuel:
-        default: op
-        description: Allow to set if an item could be used as furnace fuel
-    itemtag.itemtag.smelt:
-        default: op
-        description: Allow to set if an item could be smelted
-    itemtag.itemtag.recipeingredient:
-        default: op
-        description: Allow to set if an item could be used as crafting ingredient
-    itemtag.itemtag.grindable:
-        default: op
-        description: Allow to set if an item could be disenchanted on grindstone
-    itemtag.itemtag.effects:
-        default: op
-        description: Allow to add effects for equipped items
+  itemtag.admin:
+    default: op
+    description: Gives full access to the plugin
+    children:
+      itemtag.itemtag.*: true
+      itemtag.itemtagreload: true
+  itemtag.itemtagreload:
+    default: op
+    description: Gives full access to command /itemtagreload
+  itemtag.itemtag.*:
+    default: op
+    description: Gives full access to command /itemtag
+    children:
+      itemtag.itemtag.placeable: true
+      itemtag.itemtag.usable: true
+      itemtag.itemtag.renamable: true
+      itemtag.itemtag.enchantable: true
+      itemtag.itemtag.actions: true
+      itemtag.itemtag.furncefuel: true
+      itemtag.itemtag.smelt: true
+      itemtag.itemtag.recipeingredient: true
+      itemtag.itemtag.grindable: true
+      itemtag.itemtag.effects: true
+  itemtag.itemtag.placeable:
+    default: op
+    description: Allow to set if an item could be placed
+  itemtag.itemtag.usable:
+    default: op
+    description: Allow to set if an item could be used
+  itemtag.itemtag.renamable:
+    default: op
+    description: Allow to set if an item could be used or merged on anvil
+  itemtag.itemtag.enchantable:
+    default: op
+    description: Allow to set if an item could be enchanted
+  itemtag.itemtag.actions:
+    default: op
+    description: Allow to set actions when using item
+  itemtag.itemtag.furncefuel:
+    default: op
+    description: Allow to set if an item could be used as furnace fuel
+  itemtag.itemtag.smelt:
+    default: op
+    description: Allow to set if an item could be smelted
+  itemtag.itemtag.recipeingredient:
+    default: op
+    description: Allow to set if an item could be used as crafting ingredient
+  itemtag.itemtag.grindable:
+    default: op
+    description: Allow to set if an item could be disenchanted on grindstone
+  itemtag.itemtag.effects:
+    default: op
+    description: Allow to add effects for equipped items

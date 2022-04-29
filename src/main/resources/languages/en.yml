@@ -1,7 +1,8 @@
-player-only: '&4[&cItemEdit&4] &cCommand for Players only'
-no-item-on-hand: '&4[&cItemEdit&4] &cYou need to hold an item in hand'
-lack-permission: '&4[&cItemEdit&4] &cYou lack of permission %permission%'
-lack-permission-generic: '&4[&cItemEdit&4] &cYou don''t have permission to use this command'
+player-only: '&9[&fItemTag&9] &cCommand for Players only'
+no-item-on-hand: '&9[&fItemTag&9] &cYou need to hold an item in hand'
+lack-permission: '&9[&fItemTag&9] &cYou lack of permission %permission%'
+lack-permission-generic: '&9[&fItemTag&9] &cYou don''t have permission to use this command'
+click-me:
 itemtag:
   help-header: '&9&lItemTag - Help'
   flag:
@@ -10,7 +11,7 @@ itemtag:
       - ''
       - '&e<flag> &bflag name'
       - '&e[true/false] &bflag value, by default toggle'
-      params: '<flag> [true/false]'
+    params: '<flag> [true/false]'
     placeable:
       description:
         - '&b&lSets whether the item can be placed'
@@ -19,7 +20,7 @@ itemtag:
       feedback:
         standard: '&9[&fItemTag&9] &aThe item can be placed.'
         custom: '&9[&fItemTag&9] &aThe item can''t be placed.'
-        failed-place-attempt: '&cYou can''t place this item'
+        failed-place-attempt: '&9[&fItemTag&9] &cYou can''t place this item'
     usable:
       description:
         - '&b&lSets whether the item can be used'
@@ -274,4 +275,166 @@ itemtag:
       - '&b slot apply the effect'
     params: ''
 itemtagreload:
-  success: '&9[&fItemTag&9]&a reloaded'
+  success: '&9[&fItemTag&9]&a Reloaded'
+gui:
+  previous-page:
+    #Holders: %player_name% %page% %target_page%
+    description:
+      - '&6&lNext Page'
+      - ''
+      - '&7[&fClick&7]&b Go to page &e%target_page%'
+  next-page:
+    #Holders: %player_name% %page% %target_page%
+    description:
+      - '&6&lPrevious Page'
+      - ''
+      - '&7[&fClick&7]&b Go to page &e%target_page%'
+  back:
+    #Holders: %player_name%
+    description:
+      - '&6&lGo Back'
+      - ''
+      - '&7[&fClick&7]&b Go to previous gui'
+  actions:
+    title: '&9Actions'
+    addline:
+      - '&6&lAdd Action'
+      - ''
+      - '&7[&fClick&7]&b Change values'
+      - '&9/it actions add <action type> <action info>'
+      - '&9/it actions addline <line> <action type> <action info>'
+    setline:
+      - '&6&lSet Action'
+      - ''
+      - '&7[&fClick&7]&b Change values'
+      - '&9/it actions set <line> <action type> <action info>'
+    removeline:
+      - '&6&lRemove Action'
+      - ''
+      - '&7[&fClick&7]&b Change values'
+      - '&9/it actions remove <line>'
+    consumeon0uses:
+      - '&6&lConsume on &e&l0&6&l uses left'
+      - '&bEnabled: &e%value%'
+      - '&7Note: when this is true, when the item'
+      - '&7 consume his last use, the item is destroyed'
+      - ''
+      - '&7[&fClick&7]&b Toggle'
+      - '&9/it actions consume [true/false]'
+    uses:
+      - '&6&lAvailable Uses &e&l%value%'
+      - '&7(-1 for Unlimited)'
+      - ''
+      - '&7[&fRight Click&7]&b Add &e%editor%'
+      - '&7[&fLeft Click&7]&b Remove &e%editor%'
+      - '&7[&fShift Left/Right Click&7]&b %editor-prev% << &e%editor% &b>> %editor-next%'
+      - '&9/it actions setuses <amount>'
+    permission:
+      - '&6&lPermission to use: &e&l%value%'
+      - '&7Note: if you don''t have this permission'
+      - '&7 you won''t be able to use the item or'
+      - '&7 decrease it''s uses'
+      - ''
+      - '&7[&fClick&7]&b Edit'
+      - '&9/it actions permission [permission]'
+    cooldown:
+      - '&6&lCooldown: &e&l%value_s% &9s'
+      - '&7Note: apply a cooldown on right click uses'
+      - ''
+      - '&7[&fRight Click&7]&b Add &e%editor%'
+      - '&7[&fLeft Click&7]&b Remove &e%editor%'
+      - '&7[&fShift Left/Right Click&7]&b %editor-prev% << &e%editor% &b>> %editor-next%'
+      - '&9/it actions cooldown <cooldown &nms&9>'
+    cooldownid:
+      - '&6&lCooldown id: &e&l%value%'
+      - '&7Note: all items with same cooldownid'
+      - '&7 shares the cooldown'
+      - ''
+      - '&7[&fClick&7]&b Edit'
+      - '&9/it actions cooldownid [cooldown id]'
+    info:
+      - '&6&lList of Actions:'
+    cooldowndisplay:
+      - '&6&lDisplay cooldown'
+      - '&bEnabled: &e%value%'
+      - '&7Note: Unluckly this visual effect also'
+      - '&7 applies to any item of same kind'
+      - ''
+      - '&7[&fClick&7]&b Toggle'
+      - '&9/it actions visualdisplay [true/false]'
+  actionslines:
+    actionformat: '&e%type% &f%info%'
+    element:
+      - '%action%'
+      - '&7[&fRight Click&7]&b Replace this action'
+      - '&7[&fLeft Click&7]&b Add new action before this'
+      - '&7[&fShiftRight Click&7]&b Delete this action'
+    add:
+      - ' '
+      - '&7[&fLeft Click&7]&b Add new action'
+  flags:
+    placeable:
+      - '&6Sets whether the item can be placed'
+      - '&bValue: &e%value%'
+      - ''
+      - '&7[&fClick&7]&b Toggle'
+    usable:
+      - '&6Sets whether the item can be used'
+      - '&bValue: &e%value%'
+      - ''
+      - '&7If set to false deny vanilla behavior of'
+      - '&7 right click of the item'
+      - '&7Definition of what use is vary on the item type'
+      - '&7Food can''t be eaten, fishing rod can''t fish,'
+      - '&7 eggs can''t thrown, spawner eggs can''t spawn...'
+      - ''
+      - '&7[&fClick&7]&b Toggle'
+    smelt:
+      - '&6Sets whether the item can be cooked'
+      - '&bValue: &e%value%'
+      - ''
+      - '&7If set to false deny vanilla behavior'
+      - '&7 furnace cooking'
+      - '&7Works for both foods and ores'
+      - ''
+      - '&7[&fClick&7]&b Toggle'
+    furnacefuel:
+      - '&6Sets whether the item can be used as furnace fuel'
+      - '&bValue: &e%value%'
+      - ''
+      - '&7If set to false deny vanilla behavior of'
+      - '&7 furnaces consuming this item as fuel'
+      - ''
+      - '&7[&fClick&7]&b Toggle'
+    recipeingredient:
+      - '&6Sets whether the item can be used on crafting recipes'
+      - '&bValue: &e%value%'
+      - ''
+      - '&7If set to false deny vanilla crafting behavior'
+      - '&7 when this item is one of the ingredients'
+      - ''
+      - '&7[&fClick&7]&b Toggle'
+    enchantable:
+      - '&6Sets whether the item can be enchanted'
+      - '&bValue: &e%value%'
+      - ''
+      - '&7If set to false deny vanilla enchanting table'
+      - '&7 behavior on this item'
+      - ''
+      - '&7[&fClick&7]&b Toggle'
+    renamable:
+      - '&6Sets whether the item can be used on anvil'
+      - '&bValue: &e%value%'
+      - ''
+      - '&7If set to false deny vanilla anvil behavior'
+      - '&7 on this item'
+      - ''
+      - '&7[&fClick&7]&b Toggle'
+    grindable:
+      - '&6Sets whether the item can be disenchanted on grindstone'
+      - '&bValue: &e%value%'
+      - ''
+      - '&7If set to false deny vanilla grindstone'
+      - '&7 behavior on this item'
+      - ''
+      - '&7[&fClick&7]&b Toggle'

@@ -39,7 +39,7 @@ public class Effects extends ListenerSubCmd {
     public void onCommand(CommandSender sender, String alias, String[] args) {
         Player p = (Player) sender;
         if (args.length != 1) {
-            onFail(p,alias);
+            onFail(p, alias);
             return;
         }
         p.openInventory(new EffectsGui(p, p.getItemInHand()).getInventory());

@@ -14,15 +14,20 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class CustomFlag implements Listener {
+public abstract class CustomFlag implements Listener,Comparable<CustomFlag> {
     private final String ID;
     private final String key;
     private final Flag subCommand;
     private final String PATH;
     private final YMLConfig config;
 
+    @Override
+    public int compareTo(CustomFlag flag){
+        return this.getId().compareTo(flag.getId());
+    }
+
     public CustomFlag(@NotNull String id, @NotNull String key, @NotNull Flag subCommand) {
-        if (!id.equals("") && !id.contains(" "))
+        if (id.equals("") || id.contains(" "))
             throw new IllegalArgumentException();
         this.ID = id;
         this.key = key;

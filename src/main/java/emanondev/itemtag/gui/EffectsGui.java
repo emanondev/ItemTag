@@ -25,7 +25,6 @@ import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -179,7 +178,7 @@ public class EffectsGui implements Gui {
         public ItemStack getItem() {
             ItemMeta meta = item.getItemMeta();
             meta.setLore(Collections.singletonList(
-                    ChatColor.AQUA.toString() + "Enabled: " + ChatColor.YELLOW + Aliases.BOOLEAN.getName(enabled)));
+                    ChatColor.AQUA + "Enabled: " + ChatColor.YELLOW + Aliases.BOOLEAN.getName(enabled)));
             if (enabled)
                 meta.addEnchant(Enchantment.DURABILITY, 1, true);
             else
@@ -200,7 +199,7 @@ public class EffectsGui implements Gui {
         private boolean ambient;
         private boolean particles;
         private boolean icon;
-        private ItemStack item;
+        private final ItemStack item;
 
         private EffectData(PotionEffectType type, int amplifier, boolean ambient, boolean particles, boolean icon) {
             this.type = type;

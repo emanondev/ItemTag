@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>emanondev.itemtag</groupId>
 	<artifactId>ItemTag</artifactId>
-	<version>3.0-Beta</version>
+	<version>3.0</version>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -93,7 +93,7 @@
 		</dependency>
 		<!-- ItemEdit -->
 		<dependency>
-			<groupId>com.github.emanondev</groupId>
+			<groupId>emanondev.itemedit</groupId>
 			<artifactId>ItemEdit</artifactId>
 			<version>3.0</version>
 		</dependency>

@@ -1,5 +1,7 @@
 package emanondev.itemtag;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -88,7 +90,9 @@ public interface TagItem {
     /**
      * @param key with format similar to NamespacedKey "pluginname:truekey"
      */
-    default List<String> getStringList(String key) {
+    default @Nullable List<String> getStringList(String key) {
+        if (getString(key) == null)
+            return null;
         return Arrays.asList(getString(key).split("%%;%%"));
     }
 

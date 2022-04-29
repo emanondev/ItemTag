@@ -1,0 +1,32 @@
+buttons:
+  previous-page:
+    material: ARROW
+    durability: 0
+    glow: false
+  next-page:
+    material: ARROW
+    durability: 0
+    glow: false
+  back:
+    material: BARRIER
+    durability: 0
+    glow: false
+gui:
+  actions:
+    consumeon0uses:
+      material: APPLE
+    uses:
+      material: IRON_PICKAXE
+    permission:
+      material: IRON_BARS
+    cooldown:
+      material: COMPASS
+    cooldownid:
+      material: NAME_TAG
+    cooldowndisplay:
+      material: ENDER_PEARL
+    info:
+      material: PAPER
+  actionslines:
+    line:
+      material: COMMAND_BLOCK

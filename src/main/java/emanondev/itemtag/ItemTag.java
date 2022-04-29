@@ -2,7 +2,6 @@ package emanondev.itemtag;
 
 import emanondev.itemedit.APlugin;
 import emanondev.itemedit.ItemEdit;
-import emanondev.itemedit.UpdateChecker;
 import emanondev.itemedit.aliases.Aliases;
 import emanondev.itemedit.command.ReloadCommand;
 import emanondev.itemtag.actions.*;
@@ -50,26 +49,8 @@ public class ItemTag extends APlugin {
 
     @Override
     public void enable() {
-//Check if can enable
-        try {
-            Class.forName("org.spigotmc.SpigotConfig");
-        } catch (Throwable t) {
-            TabExecutorError exec = new TabExecutorError(
-                    ChatColor.RED + "CraftBukkit is not supported!!! use Spigot or Paper");
-            for (String command : this.getDescription().getCommands().keySet())
-                registerCommand(command, exec, null);
-            return;
-        }
-        if (Bukkit.getServer().getBukkitVersion().startsWith("1.7.")) {
-            TabExecutorError exec = new TabExecutorError(ChatColor.RED + "1.7.x is not supported!!! use 1.8+");
-            for (String command : this.getDescription().getCommands().keySet())
-                registerCommand(command, exec, null);
-            return;
-        }
-
         //true Enable
         try {
-            new UpdateChecker(this, PROJECT_ID).logUpdates();
 
             //set tagapi
             if (ItemEdit.NMS_VERSION.startsWith("v1_8_R") || ItemEdit.NMS_VERSION.startsWith("v1_9_R")
@@ -86,7 +67,6 @@ public class ItemTag extends APlugin {
                     return;
                 }
             else {
-
                 OLD_TAGS = false;
                 tagManager = new SpigotTagManager();
             }
@@ -115,6 +95,7 @@ public class ItemTag extends APlugin {
             e.printStackTrace();
             Bukkit.getServer().getPluginManager().disablePlugin(this);
         }
+        registerMetrics(15077);
     }
 
     @Override

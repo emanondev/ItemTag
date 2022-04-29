@@ -25,7 +25,6 @@ import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
@@ -40,6 +39,7 @@ public class Actions extends ListenerSubCmd {
     private final static String ACTIONS_KEY = ItemTag.get().getName().toLowerCase() + ":actions";
     private final static String ACTION_USES_KEY = ItemTag.get().getName().toLowerCase() + ":uses";
     private final static String ACTION_CONSUME_AT_END_KEY = ItemTag.get().getName().toLowerCase() + ":consume";
+    private final static String ACTION_VISUAL_COOLDOWN = ItemTag.get().getName().toLowerCase() + ":visualcooldown";
     private final static String ACTION_COOLDOWN_KEY = ItemTag.get().getName().toLowerCase() + ":cooldown";
     private final static String ACTION_COOLDOWN_ID_KEY = ItemTag.get().getName().toLowerCase() + ":cooldown_id";
     private final static String ACTION_PERMISSION_KEY = ItemTag.get().getName().toLowerCase() + ":permission";
@@ -116,7 +116,7 @@ public class Actions extends ListenerSubCmd {
     }
 
     private static final String[] actionsSub = new String[]{"add", "addline", "set", "permission", "cooldown",
-            "cooldownid", "uses", "remove", "info"};
+            "cooldownid", "uses", "remove", "info", "visualcooldown"};
 
     public Actions(ItemTagCommand cmd) {
         super("actions", cmd, true, true);
@@ -134,34 +134,37 @@ public class Actions extends ListenerSubCmd {
         try {
             switch (args[1].toLowerCase()) {
                 case "add":
-                    add((Player) sender, args, item);
+                    add(p, args, item);
                     return;
                 case "addline":
-                    addLine((Player) sender, args, item);
+                    addLine(p, args, item);
                     return;
                 case "remove":
-                    remove((Player) sender, args, item);
+                    remove(p, args, item);
                     return;
                 case "set":
-                    set((Player) sender, args, item);
+                    set(p, args, item);
                     return;
                 case "uses":
-                    uses((Player) sender, args, item);
+                    uses(p, args, item);
                     return;
                 case "consume":
-                    consume((Player) sender, args, item);
+                    consume(p, args, item);
                     return;
                 case "cooldown":
-                    cooldown((Player) sender, args, item);
+                    cooldown(p, args, item);
                     return;
                 case "cooldownid":
-                    cooldownId((Player) sender, args, item);
+                    cooldownId(p, args, item);
                     return;
                 case "permission":
-                    permission((Player) sender, args, item);
+                    permission(p, args, item);
+                    return;
+                case "visualcooldown":
+                    visualCooldown(p, args, item);
                     return;
                 case "info":
-                    info((Player) sender, args, item);
+                    info(p, args, item);
                     return;
             }
             onFail(p, alias);
@@ -169,6 +172,29 @@ public class Actions extends ListenerSubCmd {
             e.printStackTrace();
             onFail(p, alias);
         }
+    }
+
+    //it actions visualcooldown [boolean]
+    private void visualCooldown(Player sender, String[] args, ItemStack item) {
+        TagItem tagItem = ItemTag.getTagItem(item);
+        boolean value = args.length >= 3 ? Aliases.BOOLEAN.convertAlias(args[2]) : !consumeAt0Uses(tagItem);
+        setVisualCooldown(tagItem, value);
+        if (value) //TODO
+            Util.sendMessage(sender, ChatColor.translateAlternateColorCodes('&', "&cd"));
+        else
+            Util.sendMessage(sender, ChatColor.translateAlternateColorCodes('&', "&c"));
+    }
+
+    public static void setVisualCooldown(TagItem item, boolean value) {
+        if (value) //default
+            item.setTag(ACTION_VISUAL_COOLDOWN, true);
+        else
+            item.removeTag(ACTION_VISUAL_COOLDOWN);
+    }
+
+
+    public static boolean getVisualCooldown(TagItem item) {
+        return item.hasBooleanTag(ACTION_VISUAL_COOLDOWN);
     }
 
     //it actions consume [boolean]
@@ -457,36 +483,30 @@ public class Actions extends ListenerSubCmd {
                 return Util.complete(args[1], actionsSub);
             case 3:
                 switch (args[1].toLowerCase()) {
-                    case "add": {
+                    case "add":
                         return Util.complete(args[2], ActionHandler.getTypes());
-                    }
-                    case "setuses": {
+                    case "setuses":
                         return Util.complete(args[2], Arrays.asList("-1", "1", "5", "10"));
-                    }
+                    case "visualcooldown":
+                        return Util.complete(args[2], Aliases.BOOLEAN);
                 }
-                return new ArrayList<>();
+                return Collections.emptyList();
             case 4:
                 switch (args[1].toLowerCase()) {
-                    case "add": {
-                        List<String> params = new ArrayList<>(Arrays.asList(args).subList(3, args.length));//TODO
-                        return ActionHandler.tabComplete(sender, args[2].toLowerCase(), params);
-                    }
+                    case "add":
+                        return ActionHandler.tabComplete(sender, args[2].toLowerCase(), new ArrayList<>(Arrays.asList(args).subList(3, args.length)));
                     case "set":
-                    case "addline": {
+                    case "addline":
                         return Util.complete(args[3], ActionHandler.getTypes());
-                    }
                 }
+                return Collections.emptyList();
             default:
                 switch (args[1].toLowerCase()) {
-                    case "add": {
-                        List<String> params = new ArrayList<>(Arrays.asList(args).subList(3, args.length));//TODO
-                        return ActionHandler.tabComplete(sender, args[2].toLowerCase(), params);
-                    }
+                    case "add":
+                        return ActionHandler.tabComplete(sender, args[2].toLowerCase(), new ArrayList<>(Arrays.asList(args).subList(3, args.length)));
                     case "set":
-                    case "addline": {
-                        List<String> params = new ArrayList<>(Arrays.asList(args).subList(4, args.length));//TODO
-                        return ActionHandler.tabComplete(sender, args[3].toLowerCase(), params);
-                    }
+                    case "addline":
+                        return ActionHandler.tabComplete(sender, args[3].toLowerCase(), new ArrayList<>(Arrays.asList(args).subList(4, args.length)));
                 }
         }
         return Collections.emptyList();
@@ -511,13 +531,15 @@ public class Actions extends ListenerSubCmd {
                     if (ItemTag.get().getCooldownAPI().hasCooldown(event.getPlayer(), cooldownId))
                         return;
                     ItemTag.get().getCooldownAPI().setCooldown(event.getPlayer(), cooldownId, cooldown);
+                    if (Actions.getVisualCooldown(tagItem))
+                        event.getPlayer().setCooldown(item.getType(), (int) (cooldown / 50));
                 }
 
                 int uses = getUses(tagItem);
                 if (uses == 0)
                     return;
 
-                for (String action : tagItem.getStringList(ACTIONS_KEY))
+                for (String action : Actions.getActions(tagItem))
                     try {
                         if (action.isEmpty())
                             continue;
@@ -526,7 +548,6 @@ public class Actions extends ListenerSubCmd {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
                 if (uses > 0) {
                     if (uses == 1 && consumeAt0Uses(tagItem))
                         event.getItem().setAmount(event.getItem().getAmount() - 1);
@@ -563,7 +584,7 @@ public class Actions extends ListenerSubCmd {
         }
     }
 
-    public static class ActionsGui implements Gui {
+    private static class ActionsGui implements Gui {
         private final TagItem tagItem;
         private final Inventory inventory;
         private final Player target;
@@ -599,30 +620,83 @@ public class Actions extends ListenerSubCmd {
                 }
                 case 8: {
                     //Set uses
-                    int amount;
                     switch (event.getClick()) {
                         case LEFT:
-                            amount = 1;
-                            break;
-                        case SHIFT_LEFT:
-                            amount = 20;
-                            break;
-                        case RIGHT:
-                            amount = -1;
+                            setUses(this.tagItem, Math.max(-1, Actions.getUses(tagItem) - editorValue));
                             break;
                         case SHIFT_RIGHT:
-                            amount = -20;
+                            editorValue = Math.min(1000000, editorValue * 10);
+                            break;
+                        case RIGHT:
+                            setUses(this.tagItem, (int) Math.min(Integer.MAX_VALUE, Actions.getUses(tagItem) + (long) editorValue));
+                            break;
+                        case SHIFT_LEFT:
+                            editorValue = Math.max(1, editorValue / 10);
                             break;
                         default:
                             return;
                     }
-                    setUses(this.tagItem, Math.max(-1, this.tagItem.getInteger(ACTION_USES_KEY) + amount));
                     updateInventory();
                     return;
                 }
                 case 17: {
                     //consume on 0
                     setConsumeAt0Uses(tagItem, !consumeAt0Uses(tagItem));
+                    updateInventory();
+                    return;
+                }
+                case 6: {//permission
+                    if (event.getClick() == ClickType.SHIFT_RIGHT) {
+                        Actions.setPermission(tagItem, null);
+                        updateInventory();
+                        return;
+                    }
+                    getTargetPlayer().closeInventory();
+                    Util.sendMessage(getTargetPlayer(), new ComponentBuilder(">> Click me <<").event(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                                    new ComponentBuilder("Click to suggest command").create()))
+                            .event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/it actions permission "
+                            )).create());
+                    return;
+                }
+                case 7: {//cooldown
+                    switch (event.getClick()) {
+                        case LEFT:
+                            Actions.setCooldownMs(this.tagItem,
+                                    Math.max(0, Actions.getCooldownMs(tagItem)
+                                            - editorCooldown * 1000));
+                            break;
+                        case SHIFT_RIGHT:
+                            editorCooldown = Math.min(1000000, editorCooldown * 10);
+                            break;
+                        case RIGHT:
+                            Actions.setCooldownMs(this.tagItem,
+                                    (int) Math.min(Integer.MAX_VALUE, Actions.getCooldownMs(tagItem)
+                                            + editorCooldown * 1000L));
+                            break;
+                        case SHIFT_LEFT:
+                            editorCooldown = Math.max(1, editorCooldown / 10);
+                            break;
+                        default:
+                            return;
+                    }
+                    updateInventory();
+                    return;
+                }
+                case 16: {//cooldownid
+                    if (event.getClick() == ClickType.SHIFT_RIGHT) {
+                        Actions.setCooldownId(tagItem, null);
+                        updateInventory();
+                        return;
+                    }
+                    getTargetPlayer().closeInventory();
+                    Util.sendMessage(getTargetPlayer(), new ComponentBuilder(">> Click me <<").event(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                                    new ComponentBuilder("Click to suggest command").create()))
+                            .event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/it actions cooldownid "
+                            )).create());
+                    return;
+                }
+                case 15: {//cooldown display
+                    Actions.setVisualCooldown(tagItem, !Actions.getVisualCooldown(tagItem));
                     updateInventory();
                     return;
                 }
@@ -657,87 +731,119 @@ public class Actions extends ListenerSubCmd {
             ItemStack item;
             ItemMeta meta;
             //add addline lime
+
             try {
-                item = new ItemStack(Material.LIME_DYE);
+                item = this.getGuiItem("gui.actions.addline", Material.LIME_DYE);
             } catch (Throwable t) {
                 item = Util.getDyeItemFromColor(DyeColor.LIME);
+                item = this.getGuiItem("gui.actions.addline", item.getType(), item.getDurability());
             }
             meta = item.getItemMeta();
-            meta.addItemFlags(ItemFlag.values());
-            meta.setDisplayName(ChatColor.BLUE.toString() + ChatColor.BOLD + "Add Action");
-            meta.setLore(Arrays.asList(ChatColor.GRAY + "[Click to change]", "",
-                    ChatColor.GOLD + "/it actions add <action type> <action info>",
-                    ChatColor.GOLD + "/it actions addline <line> <action type> <action info>"));
+            this.loadLanguageDescription(meta, "gui.actions.addline");
             item.setItemMeta(meta);
             this.getInventory().setItem(0, item);
             //set blue
             try {
-                item = new ItemStack(Material.BLUE_DYE);
+                item = this.getGuiItem("gui.actions.setline", Material.BLUE_DYE);
             } catch (Throwable t) {
                 item = Util.getDyeItemFromColor(DyeColor.BLUE);
+                item = this.getGuiItem("gui.actions.setline", item.getType(), item.getDurability());
             }
             meta = item.getItemMeta();
-            meta.addItemFlags(ItemFlag.values());
-            meta.setDisplayName(ChatColor.BLUE.toString() + ChatColor.BOLD + "Set Action");
-            meta.setLore(Arrays.asList(ChatColor.GRAY + "[Click to change]", "",
-                    ChatColor.GOLD + "/it actions set <line> <action type> <action info>"));
+            this.loadLanguageDescription(meta, "gui.actions.setline");
             item.setItemMeta(meta);
             this.getInventory().setItem(9, item);
 
             //remove red
             try {
-                item = new ItemStack(Material.RED_DYE);
+                item = this.getGuiItem("gui.actions.removeline", Material.RED_DYE);
             } catch (Throwable t) {
                 item = Util.getDyeItemFromColor(DyeColor.RED);
+                item = this.getGuiItem("gui.actions.removeline", item.getType(), item.getDurability());
             }
             meta = item.getItemMeta();
-            meta.addItemFlags(ItemFlag.values());
-            meta.setDisplayName(ChatColor.BLUE.toString() + ChatColor.BOLD + "Remove Action");
-            meta.setLore(Arrays.asList(ChatColor.GRAY + "[Click to change]", "",
-                    ChatColor.GOLD + "/it actions remove <line>"));
+            this.loadLanguageDescription(meta, "gui.actions.removeline");
             item.setItemMeta(meta);
             this.getInventory().setItem(1, item);
 
-
             //consume on last use
-            item = new ItemStack(Material.APPLE);
-
+            item = this.getGuiItem("gui.actions.consumeon0uses", Material.APPLE);
             meta = item.getItemMeta();
-            meta.addItemFlags(ItemFlag.values());
-            meta.setDisplayName(ChatColor.BLUE.toString() + ChatColor.BOLD + "Consume on " +
-                    ChatColor.YELLOW + ChatColor.BOLD + "0" + ChatColor.BLUE + ChatColor.BOLD + " uses left");
-            meta.setLore(Arrays.asList(ChatColor.AQUA + "Enabled: " + ChatColor.YELLOW +
-                            (consumeAt0Uses(tagItem) ? "Disabled" : "Enabled")
-                            + ChatColor.GRAY + "[Click to toggle]",
-                    ChatColor.GOLD + "/it actions remove <line>"));
             if (!consumeAt0Uses(tagItem))
                 meta.addEnchant(Enchantment.DURABILITY, 1, true);
+            else
+                meta.removeEnchant(Enchantment.DURABILITY);
+            this.loadLanguageDescription(meta, "gui.actions.consumeon0uses",
+                    "%value%", Aliases.BOOLEAN.getName(consumeAt0Uses(tagItem)));
             item.setItemMeta(meta);
             this.getInventory().setItem(17, item);
 
 
             //consume uses
-            item = new ItemStack(Material.IRON_PICKAXE);
+            item = this.getGuiItem("gui.actions.uses", Material.IRON_PICKAXE);
             meta = item.getItemMeta();
-            meta.addItemFlags(ItemFlag.values());
-            meta.setDisplayName(ChatColor.BLUE.toString() + ChatColor.BOLD + "Available Uses" +
-                    ChatColor.YELLOW + ChatColor.BOLD + (getUses(tagItem) == -1 ? "-1 (Unlimited)" : String.valueOf(getUses(tagItem)))
-            );
-            meta.setLore(Arrays.asList(
-                    ChatColor.AQUA + "Enabled: " + ChatColor.AQUA +
-                            (tagItem.hasBooleanTag(ACTION_CONSUME_AT_END_KEY) ? "Disabled" : "Enabled")
-                    ,
-                    ChatColor.GRAY + "[Right Click to remove 1]",
-                    ChatColor.GRAY + "[Left Click to add 1]",
-                    ChatColor.GRAY + "[ShiftRight Click to remove 20]",
-                    ChatColor.GRAY + "[ShiftLeft Click to add 20]",
-                    ChatColor.GOLD + "/it actions setuses <amount>",
-                    ChatColor.GRAY + "(-1 for Unlimited)"));
+            this.loadLanguageDescription(meta, "gui.actions.uses",
+                    "%value%", getUses(tagItem) == -1 ? "-1 (Unlimited)" : String.valueOf(getUses(tagItem))
+                    , "%editor%", String.valueOf(editorValue)
+                    , "%editor-prev%", String.valueOf(Math.max(1, editorValue / 10)), "%editor-next%", String.valueOf(Math.min(1000000, editorValue * 10)));
             item.setItemMeta(meta);
             this.getInventory().setItem(8, item);
+
+            //permission
+            item = this.getGuiItem("gui.actions.permission", Material.IRON_BARS);
+            meta = item.getItemMeta();
+            this.loadLanguageDescription(meta, "gui.actions.permission",
+                    "%value%", getPermission(tagItem) == null ? "<none>" : getPermission(tagItem));
+            item.setItemMeta(meta);
+            this.getInventory().setItem(6, item);
+            // cooldown
+            item = this.getGuiItem("gui.actions.cooldown", Material.COMPASS);
+            meta = item.getItemMeta();
+            this.loadLanguageDescription(meta, "gui.actions.cooldown",
+                    "%value_s%", String.valueOf(getCooldownMs(tagItem) / 1000)
+                    , "%editor%", String.valueOf(editorCooldown)
+                    , "%editor-prev%", String.valueOf(Math.max(1, editorCooldown / 10)), "%editor-next%", String.valueOf(Math.min(1000000, editorCooldown * 10)));
+            item.setItemMeta(meta);
+            this.getInventory().setItem(7, item);
+            //cooldownid
+            item = this.getGuiItem("gui.actions.cooldownid", Material.NAME_TAG);
+            meta = item.getItemMeta();
+            this.loadLanguageDescription(meta, "gui.actions.cooldownid",
+                    "%value%", getCooldownId(tagItem));
+            item.setItemMeta(meta);
+            this.getInventory().setItem(16, item);
+            //cooldowndisplay
+            item = this.getGuiItem("gui.actions.cooldowndisplay", Material.ENDER_PEARL);
+            meta = item.getItemMeta();
+            this.loadLanguageDescription(meta, "gui.actions.cooldowndisplay",
+                    "%value%", Aliases.BOOLEAN.getName(getVisualCooldown(tagItem)));
+            if (getVisualCooldown(tagItem))
+                meta.addEnchant(Enchantment.DURABILITY, 1, true);
+            else
+                meta.removeEnchant(Enchantment.DURABILITY);
+            item.setItemMeta(meta);
+            this.getInventory().setItem(15, item);
+            //info
+            item = this.getGuiItem("gui.actions.info", Material.PAPER);
+            meta = item.getItemMeta();
+            this.loadLanguageDescription(meta, "gui.actions.info");
+            List<String> lore = new ArrayList<>(meta.hasLore() ? meta.getLore() : Collections.emptyList());
+            List<String> list = Actions.getActions(tagItem);
+            if (list != null)
+                for (String action : list)
+                    if (action != null && !action.isEmpty())
+                        lore.add(ChatColor.YELLOW + action.replace(Actions.TYPE_SEPARATOR, " " + ChatColor.WHITE));
+            meta.setLore(lore);
+            item.setItemMeta(meta);
+            this.getInventory().setItem(4, item);
         }
 
-        public class ActionTypeGui implements Gui {
+
+        private int editorCooldown = 1;
+
+        private int editorValue = 1;
+
+        private class ActionTypeGui implements Gui {
 
             private final Inventory inventory;
 
@@ -760,12 +866,14 @@ public class Actions extends ListenerSubCmd {
                     return;
                 if (event.getCurrentItem() == null || event.getCurrentItem().getType() == Material.AIR)
                     return;
-                if (event.getSlot() == 49) {//TODO back;
+                if (event.getSlot() == 49) {
                     getTargetPlayer().openInventory(ActionsGui.this.getInventory());
                     return;
                 }
                 List<String> actions = getActions(tagItem);
-                if (actions.size() >= event.getSlot()) {
+                if (actions == null)
+                    actions = Collections.emptyList();
+                if (actions.size() > event.getSlot()) {
                     switch (event.getClick()) {
                         case RIGHT:
                             getTargetPlayer().closeInventory();
@@ -789,7 +897,7 @@ public class Actions extends ListenerSubCmd {
                     }
                     return;
                 }
-                if (actions.size() == event.getSlot() && event.getClick()== ClickType.LEFT) {
+                if (actions.size() == event.getSlot() && event.getClick() == ClickType.LEFT) {
                     getTargetPlayer().closeInventory();
                     Util.sendMessage(getTargetPlayer(), new ComponentBuilder(">> Click me <<").event(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
                                     new ComponentBuilder("Click to suggest command").create()))
@@ -809,29 +917,31 @@ public class Actions extends ListenerSubCmd {
 
             private void updateInventory() {
                 List<String> actions = getActions(tagItem);
-                for (int i = 0; i < actions.size(); i++) {
-                    if (i > 45)
-                        break;
-                    String action = "§3" + actions.get(i).replace(TYPE_SEPARATOR, "§f -> §b");
-                    ItemStack item = new ItemStack(Material.COMMAND_BLOCK);
+                if (actions != null)
+                    for (int i = 0; i < actions.size(); i++) {
+                        if (i >= 45)
+                            break;
+                        int index = actions.get(i).indexOf(TYPE_SEPARATOR);
+                        String actionPre = actions.get(i).substring(0, index);
+                        String actionPost = actions.get(i).substring(index + TYPE_SEPARATOR.length());
+                        ItemStack item = this.getGuiItem("gui.actionslines.line", Material.COMMAND_BLOCK);
+                        ItemMeta meta = item.getItemMeta();
+                        String action = this.getPlugin().getLanguageConfig(target).getMessage("gui.actionslines.actionformat"
+                                , "", "%type%", actionPre, "%info%", actionPost);
+                        this.loadLanguageDescription(meta, "gui.actionslines.element", "%action%", action);
+                        item.setAmount(i + 1);
+                        item.setItemMeta(meta);
+                        this.inventory.setItem(i, item);
+                    }
+                if (actions == null || actions.size() < 45) {
+                    ItemStack item = this.getGuiItem("gui.actionslines.line", Material.COMMAND_BLOCK);
                     ItemMeta meta = item.getItemMeta();
-                    meta.setDisplayName(action);
-                    meta.setLore(Arrays.asList("",
-                            ChatColor.GRAY + "[Right Click] replace this action",
-                            ChatColor.GRAY + "[Left Click] add new action before this",
-                            ChatColor.GRAY + "[ShiftRight Click] delete this action"));
+                    this.loadLanguageDescription(meta, "gui.actionslines.add");
                     item.setItemMeta(meta);
-                    this.inventory.setItem(i, item);
+                    item.setAmount(actions == null ? 0 : actions.size() + 1);
+                    this.inventory.setItem(actions == null ? 0 : actions.size(), item);
                 }
-                if (actions.size() < 45) {
-                    ItemStack item = new ItemStack(Material.COMMAND_BLOCK);
-                    ItemMeta meta = item.getItemMeta();
-                    meta.setDisplayName(" ");
-                    meta.setLore(Arrays.asList("",
-                            ChatColor.GRAY + "[Left Click] add new action"));
-                    item.setItemMeta(meta);
-                    this.inventory.setItem(actions.size(), item);
-                }
+                this.inventory.setItem(49, this.getBackItem());
             }
 
             @Override

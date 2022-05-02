@@ -30,11 +30,11 @@ import java.util.*;
 public class Flag extends SubCmd {
 
     private final TreeSet<CustomFlag> flags = new TreeSet<>();
-    private final AliasSet<CustomFlag> aliases;
+    private final AliasSet<CustomFlag> FLAG_ALIASES;
 
     public Flag(ItemTagCommand cmd) {
         super("flag", cmd, true, true);
-        aliases = new AliasSet<CustomFlag>("custom_flags") {
+        FLAG_ALIASES = new AliasSet<CustomFlag>("custom_flags") {
             @Override
             public String getName(CustomFlag customFlag) {
                 return customFlag.getId();
@@ -56,8 +56,9 @@ public class Flag extends SubCmd {
             this.registerFlag(new Renamable(this));
         if (ItemEdit.GAME_VERSION > 13)
             this.registerFlag(new Grindable(this));
+        this.registerFlag(new EquipmentFlag(this));
         //aliases.reload();
-        Aliases.registerAliasType(aliases, true);
+        Aliases.registerAliasType(FLAG_ALIASES, true);
     }
 
     public void reload() {
@@ -72,14 +73,14 @@ public class Flag extends SubCmd {
         ItemStack item = this.getItemInHand(p);
         try {
             if (args.length == 1) {
-                p.openInventory(new FlagGui(p,item).getInventory());
+                p.openInventory(new FlagGui(p, item).getInventory());
                 return;
             }
             TagItem tagItem = ItemTag.getTagItem(item);
 
-            CustomFlag flag = aliases.convertAlias(args[1]);
+            CustomFlag flag = FLAG_ALIASES.convertAlias(args[1]);
             if (flag == null) {
-                //TODO wrong flag name
+                onWrongAlias("wrong-flag", p, FLAG_ALIASES);
                 onFail(p, alias);
                 return;
             }
@@ -99,7 +100,7 @@ public class Flag extends SubCmd {
     @Override
     public List<String> onComplete(CommandSender sender, String[] args) {
         if (args.length == 2)
-            return Util.complete(args[1], aliases);
+            return Util.complete(args[1], FLAG_ALIASES);
         if (args.length == 3)
             return Util.complete(args[2], Aliases.BOOLEAN);
         return Collections.emptyList();
@@ -111,7 +112,7 @@ public class Flag extends SubCmd {
                 throw new IllegalStateException("Id already used");
         getPlugin().registerListener(flag);
         flags.add(flag);
-        aliases.reload();
+        FLAG_ALIASES.reload();
     }
 
     private class FlagGui implements Gui {
@@ -142,9 +143,9 @@ public class Flag extends SubCmd {
             if (event.getCurrentItem() == null || event.getCurrentItem().getType() == Material.AIR)
                 return;
             CustomFlag flag = new ArrayList<>(flags).get(event.getSlot());
-            if (flag==null)
+            if (flag == null)
                 return;
-            flag.setValue(tagItem,!flag.getValue(tagItem));
+            flag.setValue(tagItem, !flag.getValue(tagItem));
             updateInventory();
         }
 
@@ -166,8 +167,8 @@ public class Flag extends SubCmd {
                 boolean value = flag.getValue(tagItem);
                 this.loadLanguageDescription(meta, "gui.flags." + flag.getId(), "%value%"
                         , Aliases.BOOLEAN.getName(value));
-                if (flag.defaultValue()!=value)
-                    meta.addEnchant(Enchantment.DURABILITY,1,true);
+                if (flag.defaultValue() != value)
+                    meta.addEnchant(Enchantment.DURABILITY, 1, true);
                 item.setItemMeta(meta);
                 this.inventory.setItem(i, item);
             }
@@ -184,7 +185,7 @@ public class Flag extends SubCmd {
         }
 
         @Override
-        public APlugin getPlugin() {
+        public @NotNull APlugin getPlugin() {
             return ItemTag.get();
         }
     }

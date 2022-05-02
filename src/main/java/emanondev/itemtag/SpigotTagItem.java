@@ -6,12 +6,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.WeakHashMap;
 
 public class SpigotTagItem implements TagItem {
 
-    private final WeakHashMap<String, NamespacedKey> keys = new WeakHashMap<String, NamespacedKey>() {
+    private static final WeakHashMap<String, NamespacedKey> keys = new WeakHashMap<String, NamespacedKey>() {
         @Override
         public NamespacedKey get(Object key) {
             NamespacedKey keyN = super.get(key);
@@ -36,56 +38,54 @@ public class SpigotTagItem implements TagItem {
         return data;
     }
 
-    public SpigotTagItem(ItemStack item) {
-        //if (item == null || item.getType() == Material.AIR)
-        //    throw new IllegalArgumentException();
+    public SpigotTagItem(@Nullable ItemStack item) {
         this.item = item;
     }
 
-    public <T, Z> boolean hasTag(String key, PersistentDataType<T, Z> type) {
+    public <T, Z> boolean hasTag(@NotNull String key, @NotNull PersistentDataType<T, Z> type) {
         if (item == null || item.getType() == Material.AIR || !item.hasItemMeta())
             return false;
         return getData().get(keys.get(key), type) != null;
     }
 
     @Override
-    public boolean hasBooleanTag(String key) {
+    public boolean hasBooleanTag(@NotNull String key) {
         return hasTag(key, PersistentDataType.INTEGER);
     }
 
     @Override
-    public boolean hasIntegerTag(String key) {
+    public boolean hasIntegerTag(@NotNull String key) {
         return hasTag(key, PersistentDataType.INTEGER);
     }
 
     @Override
-    public boolean hasDoubleTag(String key) {
+    public boolean hasDoubleTag(@NotNull String key) {
         return hasTag(key, PersistentDataType.DOUBLE);
     }
 
     @Override
-    public boolean hasStringTag(String key) {
+    public boolean hasStringTag(@NotNull String key) {
         return hasTag(key, PersistentDataType.STRING);
     }
 
     @Override
-    public boolean hasStringListTag(String key) {
+    public boolean hasStringListTag(@NotNull String key) {
         return hasTag(key, PersistentDataType.STRING);
     }
 
     @Override
-    public void removeTag(String key) {
+    public void removeTag(@NotNull String key) {
         getData().remove(keys.get(key));
         item.setItemMeta(meta);
     }
 
     @Override
-    public void setTag(String key, boolean value) {
+    public void setTag(@NotNull String key, boolean value) {
         setTag(key, value ? 1 : 0);
     }
 
     @Override
-    public void setTag(String key, String value) {
+    public void setTag(@NotNull String key, @Nullable String value) {
         if (value == null)
             removeTag(key);
         else {
@@ -96,35 +96,39 @@ public class SpigotTagItem implements TagItem {
 
 
     @Override
-    public void setTag(String key, int value) {
+    public void setTag(@NotNull String key, int value) {
         getData().set(keys.get(key), PersistentDataType.INTEGER, value);
         item.setItemMeta(meta);
     }
 
     @Override
-    public void setTag(String key, double value) {
+    public void setTag(@NotNull String key, double value) {
         getData().set(keys.get(key), PersistentDataType.DOUBLE, value);
         item.setItemMeta(meta);
     }
 
     @Override
-    public Boolean getBoolean(String key) {
+    @Nullable
+    public Boolean getBoolean(@NotNull String key) {
         Integer value = getInteger(key);
         return value == null ? null : value != 0;
     }
 
     @Override
-    public String getString(String key) {
+    @Nullable
+    public String getString(@NotNull String key) {
         return getData().get(keys.get(key), PersistentDataType.STRING);
     }
 
     @Override
-    public Integer getInteger(String key) {
+    @Nullable
+    public Integer getInteger(@NotNull String key) {
         return getData().get(keys.get(key), PersistentDataType.INTEGER);
     }
 
     @Override
-    public Double getDouble(String key) {
+    @Nullable
+    public Double getDouble(@NotNull String key) {
         return getData().get(keys.get(key), PersistentDataType.DOUBLE);
     }
 

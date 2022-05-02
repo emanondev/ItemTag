@@ -1,5 +1,6 @@
 package emanondev.itemtag;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
@@ -11,54 +12,54 @@ public interface TagItem {
      * @param key with format similar to NamespacedKey "pluginname:truekey"
      * @return true if contains a value
      */
-    boolean hasBooleanTag(String key);
+    boolean hasBooleanTag(@NotNull String key);
 
     /**
      * @param key with format similar to NamespacedKey "pluginname:truekey"
      * @return true if contains a value
      */
-    boolean hasIntegerTag(String key);
+    boolean hasIntegerTag(@NotNull String key);
 
     /**
      * @param key with format similar to NamespacedKey "pluginname:truekey"
      * @return true if contains a value
      */
-    boolean hasDoubleTag(String key);
+    boolean hasDoubleTag(@NotNull String key);
 
     /**
      * @param key with format similar to NamespacedKey "pluginname:truekey"
      * @return true if contains a value
      */
-    boolean hasStringTag(String key);
+    boolean hasStringTag(@NotNull String key);
 
     /**
      * @param key with format similar to NamespacedKey "pluginname:truekey"
      * @return true if contains a value
      */
-    boolean hasStringListTag(String key);
+    boolean hasStringListTag(@NotNull String key);
 
     /**
      * @param key with format similar to NamespacedKey "pluginname:truekey"
      */
-    void removeTag(String key);
+    void removeTag(@NotNull String key);
 
     /**
      * @param key   with format similar to NamespacedKey "pluginname:truekey"
      * @param value value to set, if null is removed
      */
-    void setTag(String key, boolean value);
+    void setTag(@NotNull String key, boolean value);
 
     /**
      * @param key   with format similar to NamespacedKey "pluginname:truekey"
      * @param value value to set, if null is removed
      */
-    void setTag(String key, String value);
+    void setTag(@NotNull String key, @Nullable String value);
 
     /**
      * @param key   with format similar to NamespacedKey "pluginname:truekey"
      * @param value value to set, if null is removed
      */
-    default void setTag(String key, List<String> value) {
+    default void setTag(@NotNull String key, @Nullable List<String> value) {
         if (value == null)
             removeTag(key);
         else
@@ -69,42 +70,41 @@ public interface TagItem {
      * @param key   with format similar to NamespacedKey "pluginname:truekey"
      * @param value value to set, if null is removed
      */
-    void setTag(String key, int value);
+    void setTag(@NotNull String key, int value);
 
     /**
      * @param key   with format similar to NamespacedKey "pluginname:truekey"
      * @param value value to set, if null is removed
      */
-    void setTag(String key, double value);
+    void setTag(@NotNull String key, double value);
 
     /**
      * @param key with format similar to NamespacedKey "pluginname:truekey"
      */
-    Boolean getBoolean(String key);
+    @Nullable Boolean getBoolean(@NotNull String key);
 
     /**
      * @param key with format similar to NamespacedKey "pluginname:truekey"
      */
-    String getString(String key);
+    @Nullable String getString(@NotNull String key);
 
     /**
      * @param key with format similar to NamespacedKey "pluginname:truekey"
      */
-    default @Nullable List<String> getStringList(String key) {
-        if (getString(key) == null)
-            return null;
-        return Arrays.asList(getString(key).split("%%;%%"));
+    default @Nullable List<String> getStringList(@NotNull String key) {
+        String value = getString(key);
+        return value == null ? null : Arrays.asList(value.split("%%;%%"));
     }
 
     /**
      * @param key with format similar to NamespacedKey "pluginname:truekey"
      */
-    Integer getInteger(String key);
+    @Nullable Integer getInteger(@NotNull String key);
 
     /**
      * @param key with format similar to NamespacedKey "pluginname:truekey"
      */
-    Double getDouble(String key);
+    @Nullable Double getDouble(@NotNull String key);
 
     /**
      * @return true if it's possible to apply tags to item

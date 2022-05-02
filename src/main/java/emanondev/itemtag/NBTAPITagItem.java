@@ -3,6 +3,7 @@ package emanondev.itemtag;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class NBTAPITagItem implements TagItem {
@@ -20,79 +21,83 @@ public class NBTAPITagItem implements TagItem {
         this.item = item;
     }
 
-    public boolean hasTag(String key) {
+    public boolean hasTag(@NotNull String key) {
         if (item == null || item.getType() == Material.AIR || !item.hasItemMeta())
             return false;
         return getNbtItem().hasKey(key);
     }
 
     @Override
-    public boolean hasBooleanTag(String key) {
+    public boolean hasBooleanTag(@NotNull String key) {
         return hasTag(key);
     }
 
     @Override
-    public boolean hasIntegerTag(String key) {
+    public boolean hasIntegerTag(@NotNull String key) {
         return hasTag(key);
     }
 
     @Override
-    public boolean hasDoubleTag(String key) {
+    public boolean hasDoubleTag(@NotNull String key) {
         return hasTag(key);
     }
 
     @Override
-    public boolean hasStringTag(String key) {
+    public boolean hasStringTag(@NotNull String key) {
         return hasTag(key);
     }
 
     @Override
-    public boolean hasStringListTag(String key) {
+    public boolean hasStringListTag(@NotNull String key) {
         return hasTag(key);
     }
 
     @Override
-    public void removeTag(String key) {
+    public void removeTag(@NotNull String key) {
         getNbtItem().removeKey(key);
     }
 
     @Override
-    public void setTag(String key, boolean value) {
+    public void setTag(@NotNull String key, boolean value) {
         getNbtItem().setBoolean(key, value);
     }
 
     @Override
-    public void setTag(String key, String value) {
+    public void setTag(@NotNull String key, @Nullable String value) {
         getNbtItem().setString(key, value);
     }
 
     @Override
-    public void setTag(String key, int value) {
+    public void setTag(@NotNull String key, int value) {
         getNbtItem().setInteger(key, value);
     }
 
     @Override
-    public void setTag(String key, double value) {
+    public void setTag(@NotNull String key, double value) {
         getNbtItem().setDouble(key, value);
     }
 
     @Override
-    public Boolean getBoolean(String key) {
+    @Nullable
+    public Boolean getBoolean(@NotNull String key) {
         return getNbtItem().getBoolean(key);
     }
 
     @Override
-    public String getString(String key) {
+    @Nullable
+    public String getString(@NotNull String key) {
         return getNbtItem().getString(key);
     }
 
     @Override
-    public Integer getInteger(String key) {
+    @Nullable
+    public Integer getInteger(@NotNull String key) {
         return getNbtItem().getInteger(key);
     }
 
     @Override
-    public Double getDouble(String key) {
+    @Nullable
+    public Double getDouble(@NotNull String key) {
         return getNbtItem().getDouble(key);
     }
 

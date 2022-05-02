@@ -30,7 +30,7 @@ public class Usable extends CustomFlag {
                     event.setUseItemInHand(Result.DENY);
                     Block b;
                     if (event.getItem().getType() == Material.BUCKET &&
-                            Integer.parseInt(ItemEdit.NMS_VERSION.split("_")[1]) > 14) {
+                            ItemEdit.GAME_VERSION > 14) {
                         b = event.getPlayer().getTargetBlockExact(7, FluidCollisionMode.SOURCE_ONLY);
                     } else b = null;
                     Bukkit.getScheduler().runTaskLater(ItemTag.get(), () -> {
@@ -48,7 +48,7 @@ public class Usable extends CustomFlag {
         if (ItemEdit.GAME_VERSION >= 18)
             return;
         ItemStack item = this.getItemInHand(event.getPlayer());
-        if (!ItemEdit.NMS_VERSION.startsWith("v1_8_R") && (item == null || item.getType() != Material.BUCKET))
+        if (ItemEdit.GAME_VERSION == 8 && (item == null || item.getType() != Material.BUCKET))
             item = event.getPlayer().getInventory().getItemInOffHand();
 
         if (ItemTag.getTagItem(item).hasBooleanTag(USABLE_KEY))
@@ -61,7 +61,7 @@ public class Usable extends CustomFlag {
         if (ItemEdit.GAME_VERSION >= 18)
             return;
         ItemStack item = this.getItemInHand(event.getPlayer());
-        if (!ItemEdit.NMS_VERSION.startsWith("v1_8_R") && (item == null ||
+        if (ItemEdit.GAME_VERSION != 8 && (item == null ||
                 (item.getType() != Material.LAVA_BUCKET && item.getType() != Material.WATER_BUCKET)))
             item = event.getPlayer().getInventory().getItemInOffHand();
         if (ItemTag.getTagItem(item).hasBooleanTag(USABLE_KEY))

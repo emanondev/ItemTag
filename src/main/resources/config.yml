@@ -1,3 +1,19 @@
+# ItemEdit by Emanon
+# Wiki https://github.com/emanondev/ItemTag/wiki
+# Discord https://discord.gg/w5HVCDPtRp
+# Donations https://www.paypal.me/FlavioLiponi/
+# Spigot https://www.spigotmc.org/resources/89634/
+#
+# Do not change config-version
+config-version: 1
+language:
+  #Default locale
+  #If you want to add more languages copy language/en.yml, rename it and apply your changes,
+  # plugin will automatically use it after a plugin reload or server restart
+  default: 'en'
+  #Allowed on ServerVersion 1.12+
+  #When true the plugin will use the client language if a language file exist for that client
+  use_multilanguage: true
 actions:
   player_command:
     #Should use playercommandpreprocessevent ?

@@ -1,11 +1,12 @@
-player-only: '&9[&fItemTag&9] &cCommand for Players only'
-no-item-on-hand: '&9[&fItemTag&9] &cYou need to hold an item in hand'
-lack-permission: '&9[&fItemTag&9] &cYou lack of permission %permission%'
-lack-permission-generic: '&9[&fItemTag&9] &cYou don''t have permission to use this command'
+player-only: '&4[&cItemTag&4] &cCommand for Players only'
+no-item-on-hand: '&4[&cItemTag&4] &cYou need to hold an item in hand'
+lack-permission: '&4[&cItemTag&4] &cYou lack of permission %permission%'
+lack-permission-generic: '&4[&cItemTag&4] &cYou don''t have permission to use this command'
 click-me:
 itemtag:
   help-header: '&9&lItemTag - Help'
   flag:
+    wrong-flag: '&4[&cItemTag&4] &cWrong Flag Value! &4[&6hover here&4]'
     description:
       - '&b&lToggle Custom flags on the item'
       - ''
@@ -20,7 +21,7 @@ itemtag:
       feedback:
         standard: '&9[&fItemTag&9] &aThe item can be placed.'
         custom: '&9[&fItemTag&9] &aThe item can''t be placed.'
-        failed-place-attempt: '&9[&fItemTag&9] &cYou can''t place this item'
+        failed-place-attempt: '&4[&cItemTag&4] &cYou can''t place this item'
     usable:
       description:
         - '&b&lSets whether the item can be used'
@@ -99,6 +100,18 @@ itemtag:
       feedback:
         standard: '&9[&fItemTag&9] &aThe item can be disenchanted with grindstone.'
         custom: '&9[&fItemTag&9] &aThe item can''t be disenchanted with grindstone.'
+    equipment:
+      description:
+        - '&b&lSets whether the item can be used as equipment'
+        - ''
+        - '&bIf set to false and item is equipped, it would be dropped'
+        - '&b back into player inventory'
+        - '&bNB: hand and off hand are not considered part of equipment slots'
+        - ''
+        - '&e[true/false] &bset behavior state, by default toggle'
+      feedback:
+        standard: '&9[&fItemTag&9] &aThe item can be equipped.'
+        custom: '&9[&fItemTag&9] &aThe item can''t be equipped.'
   actions:
     description:
       - '&b&lSets actions done when the item is used'
@@ -275,7 +288,7 @@ itemtag:
       - '&b slot apply the effect'
     params: ''
 itemtagreload:
-  success: '&9[&fItemTag&9]&a Reloaded'
+  success: '&9[&fItemTag&9] &aReloaded'
 gui:
   previous-page:
     #Holders: %player_name% %page% %target_page%

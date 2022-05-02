@@ -49,13 +49,12 @@ public class ItemTag extends APlugin {
 
     @Override
     public void enable() {
+        ConfigurationUpdater.update();
         //true Enable
         try {
 
             //set tagapi
-            if (ItemEdit.NMS_VERSION.startsWith("v1_8_R") || ItemEdit.NMS_VERSION.startsWith("v1_9_R")
-                    || ItemEdit.NMS_VERSION.startsWith("v1_10_R") || ItemEdit.NMS_VERSION.startsWith("v1_11_R")
-                    || ItemEdit.NMS_VERSION.startsWith("v1_12_R") || ItemEdit.NMS_VERSION.startsWith("v1_13_R"))
+            if (ItemEdit.GAME_VERSION <= 13)
                 try {
                     new NBTAPITagItem(new ItemStack(Material.STONE));//force load NBTAPI classes or fails
                     OLD_TAGS = true;
@@ -72,9 +71,9 @@ public class ItemTag extends APlugin {
             }
 
             //register equipmentchange listener
-            if (Integer.parseInt(ItemEdit.NMS_VERSION.split("_")[1]) < 9)
+            if (ItemEdit.GAME_VERSION == 8)
                 equipChangeListener = new EquipmentChangeListenerUpTo1_8();
-            else if (Integer.parseInt(ItemEdit.NMS_VERSION.split("_")[1]) < 13)
+            else if (ItemEdit.GAME_VERSION < 13)
                 equipChangeListener = new EquipmentChangeListenerUpTo1_13();
             else
                 equipChangeListener = new EquipmentChangeListener();

@@ -35,14 +35,19 @@ public class EquipmentFlag extends CustomFlag {
             default:
                 return;
         }
-        if (this.getValue(ItemTag.getTagItem(event.getTo())))
+
+        if (!this.getValue(ItemTag.getTagItem(event.getTo())))
             Bukkit.getScheduler().runTaskLater(getPlugin(), () -> {
-                ItemStack item = event.getPlayer().getInventory().getItem(event.getSlotType());
-                if (!getValue(ItemTag.getTagItem(event.getTo())))
+                if (!event.getPlayer().isOnline())
+                    return;
+                ItemStack item = event.getPlayer().getInventory().getItem(event.getSlotType()).clone();
+                if (getValue(ItemTag.getTagItem(item)))
                     return;
                 event.getPlayer().getInventory().setItem(event.getSlotType(), null);
                 event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_ITEM_BREAK, 1F, 1F);
                 UtilsInventory.giveAmount(event.getPlayer(), item, item.getAmount(), UtilsInventory.ExcessManage.DROP_EXCESS);
+                ItemTag.get().getEquipChangeListener().onEquipChange(event.getPlayer(), EquipmentChangeEvent.EquipMethod.UNKNOWN
+                        , event.getSlotType(), item, null);
             }, 1L);
     }
 }

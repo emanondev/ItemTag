@@ -5,7 +5,6 @@ import emanondev.itemedit.aliases.Aliases;
 import emanondev.itemedit.gui.Gui;
 import emanondev.itemtag.EffectsInfo;
 import emanondev.itemtag.ItemTag;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -25,14 +24,11 @@ import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class EffectsGui implements Gui {
 
     private final Player target;
-    //private static final YMLConfig config = ItemEdit.get().getConfig("itemtag.yml");
-    //private static final String subPath = "sub-commands.effects.";
     private final Inventory inventory;
     private final List<EffectData> effects = new ArrayList<>();
     private final List<EquipData> equips = new ArrayList<>();
@@ -134,7 +130,7 @@ public class EffectsGui implements Gui {
     }
 
     @Override
-    public ItemTag getPlugin() {
+    public @NotNull ItemTag getPlugin() {
         return ItemTag.get();
     }
 
@@ -170,15 +166,12 @@ public class EffectsGui implements Gui {
             }
             ItemMeta meta = item.getItemMeta();
             meta.addItemFlags(ItemFlag.values());
-            meta.setDisplayName(ChatColor.BLUE.toString() + ChatColor.BOLD
-                    + Aliases.EQUIPMENT_SLOTS.getName(slot).replace("_", " "));
             item.setItemMeta(meta);
         }
 
         public ItemStack getItem() {
-            ItemMeta meta = item.getItemMeta();
-            meta.setLore(Collections.singletonList(
-                    ChatColor.AQUA + "Enabled: " + ChatColor.YELLOW + Aliases.BOOLEAN.getName(enabled)));
+            ItemMeta meta = loadLanguageDescription(item.getItemMeta(), "gui.effects.slot", "%slot%", Aliases.EQUIPMENT_SLOTS.getName(slot),
+                    "%value%", Aliases.BOOLEAN.getName(enabled));
             if (enabled)
                 meta.addEnchant(Enchantment.DURABILITY, 1, true);
             else
@@ -210,26 +203,16 @@ public class EffectsGui implements Gui {
             item = new ItemStack(Material.POTION);
         }
 
-        public ItemStack getItem() { //TODO configurable desc
+        public ItemStack getItem() {
             PotionMeta meta = (PotionMeta) item.getItemMeta();
             if (ItemEdit.GAME_VERSION > 10)
                 meta.setColor(type.getColor());
             meta.addItemFlags(ItemFlag.values());
-            meta.setDisplayName(ChatColor.BLUE.toString() + ChatColor.BOLD
-                    + Aliases.POTION_EFFECT.getName(type).replace("_", " "));
-            List<String> text = new ArrayList<>();
-            text.add(ChatColor.AQUA + "Level: " + ChatColor.YELLOW + (amplifier + 1) + " "
-                    + ChatColor.GRAY + "[Left/Right Click to change]");
-            text.add(ChatColor.AQUA + "Particles: " + ChatColor.YELLOW
-                    + Aliases.BOOLEAN.getName(particles) + " " + ChatColor.GRAY + "[Toggle with Shift Left click]");
-            text.add(ChatColor.AQUA + "Ambient: " + ChatColor.YELLOW
-                    + Aliases.BOOLEAN.getName(ambient) + " " + ChatColor.GRAY + "[Toggle with Shift Right click]");
-            if (Integer.parseInt(ItemEdit.NMS_VERSION.split("_")[1]) > 12)
-                text.add(ChatColor.AQUA + "Icon: " + ChatColor.YELLOW
-                        + Aliases.BOOLEAN.getName(icon) + " " + ChatColor.GRAY + "[Toggle with Middle click]");
-            text.add(ChatColor.AQUA + "Duration: " + ChatColor.YELLOW
-                    + (type.isInstant() ? "instant" : "unlimited"));
-            meta.setLore(text);
+            loadLanguageDescription(meta, "gui.effects.potion", "%effect%", Aliases.POTION_EFFECT.getName(type)
+                            .replace("_", " "), "%level%", String.valueOf(amplifier + 1), "%particle%", Aliases.BOOLEAN.getName(particles),
+                    "%ambient%", Aliases.BOOLEAN.getName(ambient), "%icon%",
+                    ItemEdit.GAME_VERSION > 12 ? Aliases.BOOLEAN.getName(icon) : getLanguageMessage("gui.effects.icon-unsupported"), "%duration%",
+                    getLanguageMessage(type.isInstant() ? "gui.effects.potion-instant" : "gui.effects.potion-unlimited"));
             item.setAmount(Math.max(1, amplifier + 1));
             meta.clearCustomEffects();
             if (amplifier >= 0)

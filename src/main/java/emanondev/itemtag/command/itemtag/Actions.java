@@ -7,6 +7,7 @@ import emanondev.itemedit.aliases.Aliases;
 import emanondev.itemedit.gui.Gui;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.TagItem;
+import emanondev.itemtag.actions.Action;
 import emanondev.itemtag.actions.ActionHandler;
 import emanondev.itemtag.command.ItemTagCommand;
 import emanondev.itemtag.command.ListenerSubCmd;
@@ -71,11 +72,11 @@ public class Actions extends ListenerSubCmd {
             item.setTag(ACTION_USES_KEY, Math.max(-1, amount));
     }
 
-    public static boolean consumeAt0Uses(TagItem item) {
+    public static boolean getConsume(TagItem item) {
         return !item.hasBooleanTag(ACTION_CONSUME_AT_END_KEY);
     }
 
-    public static void setConsumeAt0Uses(TagItem item, boolean value) {
+    public static void setConsume(TagItem item, boolean value) {
         if (value) //default
             item.removeTag(ACTION_CONSUME_AT_END_KEY);
         else
@@ -116,7 +117,7 @@ public class Actions extends ListenerSubCmd {
     }
 
     private static final String[] actionsSub = new String[]{"add", "addline", "set", "permission", "cooldown",
-            "cooldownid", "uses", "remove", "info", "visualcooldown"};
+            "cooldownid", "uses", "remove", "info", "consume", "visualcooldown"};
 
     public Actions(ItemTagCommand cmd) {
         super("actions", cmd, true, true);
@@ -164,7 +165,8 @@ public class Actions extends ListenerSubCmd {
                     visualCooldown(p, args, item);
                     return;
                 case "info":
-                    info(p, args, item);
+                    p.openInventory(new ActionsGui(p, item).getInventory());
+                    //info(p, args, item);
                     return;
             }
             onFail(p, alias);
@@ -177,12 +179,12 @@ public class Actions extends ListenerSubCmd {
     //it actions visualcooldown [boolean]
     private void visualCooldown(Player sender, String[] args, ItemStack item) {
         TagItem tagItem = ItemTag.getTagItem(item);
-        boolean value = args.length >= 3 ? Aliases.BOOLEAN.convertAlias(args[2]) : !consumeAt0Uses(tagItem);
+        boolean value = args.length >= 3 ? Aliases.BOOLEAN.convertAlias(args[2]) : !getVisualCooldown(tagItem);
         setVisualCooldown(tagItem, value);
-        if (value) //TODO
-            Util.sendMessage(sender, ChatColor.translateAlternateColorCodes('&', "&cd"));
+        if (value)
+            sendLanguageString("visualcooldown.feedback.set", "", sender);
         else
-            Util.sendMessage(sender, ChatColor.translateAlternateColorCodes('&', "&c"));
+            sendLanguageString("visualcooldown.feedback.unset", "", sender);
     }
 
     public static void setVisualCooldown(TagItem item, boolean value) {
@@ -192,7 +194,6 @@ public class Actions extends ListenerSubCmd {
             item.removeTag(ACTION_VISUAL_COOLDOWN);
     }
 
-
     public static boolean getVisualCooldown(TagItem item) {
         return item.hasBooleanTag(ACTION_VISUAL_COOLDOWN);
     }
@@ -200,44 +201,12 @@ public class Actions extends ListenerSubCmd {
     //it actions consume [boolean]
     private void consume(Player sender, String[] args, ItemStack item) {
         TagItem tagItem = ItemTag.getTagItem(item);
-        boolean value = args.length >= 3 ? Aliases.BOOLEAN.convertAlias(args[2]) : !consumeAt0Uses(tagItem);
-        setConsumeAt0Uses(tagItem, value);
-        if (value) //TODO
-            Util.sendMessage(sender, ChatColor.translateAlternateColorCodes('&', "&cd"));
+        boolean value = args.length >= 3 ? Aliases.BOOLEAN.convertAlias(args[2]) : !getConsume(tagItem);
+        setConsume(tagItem, value);
+        if (value)
+            sendLanguageString("consume.feedback.set", "", sender);
         else
-            Util.sendMessage(sender, ChatColor.translateAlternateColorCodes('&', "&c"));
-    }
-
-    private void info(Player sender, String[] args, ItemStack item) {
-        TagItem tagItem = ItemTag.getTagItem(item);
-        if (!tagItem.hasStringTag(ACTIONS_KEY)) {
-            Util.sendMessage(sender, ChatColor.translateAlternateColorCodes('&', "&cThis item has no actions binded"));
-            return;
-        }
-
-        ArrayList<String> list = new ArrayList<>();
-        list.add("&b&lItemTag Actions Info");
-        String permission = getPermission(tagItem);
-        if (permission != null)
-            list.add("&bTo use this item &e" + permission + "&b permission is required");
-        else
-            list.add("&bTo use this item no permission is required");
-        long cooldown = getCooldownMs(tagItem);
-        String cooldownId = getCooldownId(tagItem);
-        if (cooldown > 0)
-            list.add("&bUsing this item multiple times apply a cooldown of &e" + (cooldown / 1000)
-                    + " &bseconds, cooldown ID is &e" + cooldownId);
-
-        list.add("&bExecuted actions are:");
-        List<String> actions = getActions(tagItem);
-        if (actions != null)
-            for (String action : actions)
-                list.add("&b- &6" + action.split(TYPE_SEPARATOR)[0] + " &e" +
-                        action.split(TYPE_SEPARATOR)[1]);
-
-        int uses = getUses(tagItem);
-        list.add("&bThis item has &e" + uses + " &buses left");
-        Util.sendMessage(sender, ChatColor.translateAlternateColorCodes('&', String.join("\n", list)));
+            sendLanguageString("consume.feedback.unset", "", sender);
     }
 
     // itemtag actions setpermission <permission>
@@ -249,9 +218,9 @@ public class Actions extends ListenerSubCmd {
             TagItem tagItem = ItemTag.getTagItem(item);
             setPermission(tagItem, permission);
             if (permission != null)
-                sendLanguageString("feedback.actions.permission.set", "", p, "%permission%", permission);
+                sendLanguageString("permission.feedback.set", "", p, "%permission%", permission);
             else
-                sendLanguageString("feedback.actions.permission.removed", "", p);
+                sendLanguageString("permission.feedback.removed", "", p);
         } catch (Exception e) {
             Util.sendMessage(p, this.craftFailFeedback(getLanguageString("permission.params", null, p),
                     getLanguageStringList("permission.description", null, p)));
@@ -266,9 +235,9 @@ public class Actions extends ListenerSubCmd {
             TagItem tagItem = ItemTag.getTagItem(item);
             setCooldownId(tagItem, cooldownId);
             if (cooldownId != null)
-                sendLanguageString("feedback.actions.cooldownid.set", "", p, "%id%", cooldownId);
+                sendLanguageString("cooldownid.feedback.set", "", p, "%id%", cooldownId);
             else
-                sendLanguageString("feedback.actions.cooldownid.removed", "", p);
+                sendLanguageString("cooldownid.feedback.removed", "", p);
 
         } catch (Exception e) {
             Util.sendMessage(p, this.craftFailFeedback(getLanguageString("cooldownid.params", null, p),
@@ -284,10 +253,10 @@ public class Actions extends ListenerSubCmd {
             TagItem tagItem = ItemTag.getTagItem(item);
             setCooldownMs(tagItem, cooldownMs);
             if (cooldownMs > 0)
-                sendLanguageString("feedback.actions.cooldown.set", "", p, "%cooldown_ms%",
+                sendLanguageString("cooldown.feedback.set", "", p, "%cooldown_ms%",
                         String.valueOf(cooldownMs), "%cooldown_seconds%", String.valueOf(cooldownMs / 1000));
             else
-                sendLanguageString("feedback.actions.cooldown.removed", "", p);
+                sendLanguageString("cooldown.feedback.removed", "", p);
         } catch (Exception e) {
             Util.sendMessage(p, this.craftFailFeedback(getLanguageString("cooldown.params", null, p),
                     getLanguageStringList("cooldown.description", null, p)));
@@ -305,14 +274,47 @@ public class Actions extends ListenerSubCmd {
             TagItem tagItem = ItemTag.getTagItem(item);
             setUses(tagItem, uses);
             if (uses < 0)
-                sendLanguageString("feedback.actions.uses.unlimited", "", p);
+                sendLanguageString("uses.feedback.unlimited", "", p);
             else
-                sendLanguageString("feedback.actions.uses.set", "", p,
+                sendLanguageString("uses.feedback.set", "", p,
                         "%uses%", String.valueOf(uses));
         } catch (Exception e) {
             Util.sendMessage(p, this.craftFailFeedback(getLanguageString("uses.params", null, p),
                     getLanguageStringList("uses.description", null, p)));
         }
+    }
+
+    private void invalidAction(Player p, String actionError) {
+        String msg = getLanguageString("invalid-action.message", "", p, "%error%", actionError);
+        if (msg == null || msg.isEmpty())
+            return;
+        StringBuilder hover = new StringBuilder(getLanguageString("invalid-action.hover-pre", "", p)).append("\n");
+        String color1 = getLanguageString("invalid-action.first_color", "", p);
+        String color2 = getLanguageString("invalid-action.second_color", "", p);
+        boolean color = true;
+        int counter = 0;
+        for (String actionType : ActionHandler.getTypes()) {
+            counter += actionType.length() + 1;
+            hover.append(color ? color1 : color2).append(actionType);
+            color = !color;
+            if (counter > 30) {
+                counter = 0;
+                hover.append("\n");
+            } else {
+                hover.append(" ");
+            }
+        }
+        Util.sendMessage(p, new ComponentBuilder(msg).event(new HoverEvent(net.md_5.bungee.api.chat.HoverEvent.Action.SHOW_TEXT, (new ComponentBuilder(hover.toString())).create())).create());
+    }
+
+
+    private void invalidActionInfo(Player p, String actionType, String actionInfo) {
+        Action action = ActionHandler.getAction(actionType);
+        String msg = getLanguageString("invalid-actioninfo.message", "", p, "%error%", actionInfo, "%action%", actionType);
+        if (msg == null || msg.isEmpty())
+            return;
+        Util.sendMessage(p, new ComponentBuilder(msg).event(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                new ComponentBuilder(String.join("\n", ActionHandler.getAction(actionType).getInfo())).create())).create());
     }
 
     //
@@ -329,21 +331,13 @@ public class Actions extends ListenerSubCmd {
             try {
                 ActionHandler.validateActionType(actionType);
             } catch (Exception e) {
-                //TODO add to config
-                Util.sendMessage(p,
-                        ChatColor.translateAlternateColorCodes('&',
-                                "&c'&6" + actionType + "&c' is not a valid type\n&cValid types &e"
-                                        + String.join("&c, &e", ActionHandler.getTypes())));
+                invalidAction(p, actionType);
                 return;
             }
             try {
                 ActionHandler.validateActionInfo(actionType, actionInfo);
             } catch (Exception e) {
-                //TODO add to config
-                Util.sendMessage(p,
-                        ChatColor.translateAlternateColorCodes('&',
-                                "&c'&6" + actionInfo + "&c' is not a valid info for &6" + actionType + "\n"
-                                        + String.join("\n", ActionHandler.getAction(actionType).getInfo())));
+                invalidActionInfo(p,actionType,actionInfo);
                 return;
             }
             String action = actionType + TYPE_SEPARATOR + actionInfo;
@@ -356,7 +350,7 @@ public class Actions extends ListenerSubCmd {
                 list.set(line, action);
                 setActions(tagItem, list);
             }
-            sendLanguageString("feedback.actions.set", "", p, "%line%",
+            sendLanguageString("set.feedback", "", p, "%line%",
                     String.valueOf(line + 1), "%action%", action.replace(TYPE_SEPARATOR, " "));
         } catch (Exception e) {
             Util.sendMessage(p, this.craftFailFeedback(getLanguageString("set.params", null, p),
@@ -380,7 +374,7 @@ public class Actions extends ListenerSubCmd {
                 action = list.remove(line);
                 setActions(tagItem, list);
             }
-            sendLanguageString("feedback.actions.remove", "", p, "%line%",
+            sendLanguageString("remove.feedback", "", p, "%line%",
                     String.valueOf(line + 1), "%action%", action.replace(TYPE_SEPARATOR, " "));
         } catch (Exception e) {
             Util.sendMessage(p, this.craftFailFeedback(getLanguageString("remove.params", null, p),
@@ -398,21 +392,13 @@ public class Actions extends ListenerSubCmd {
             try {
                 ActionHandler.validateActionType(actionType);
             } catch (Exception e) {
-                //TODO add to config
-                Util.sendMessage(p,
-                        ChatColor.translateAlternateColorCodes('&',
-                                "&c'&6" + actionType + "&c' is not a valid type\n&cValid types &e"
-                                        + String.join("&c, &e", ActionHandler.getTypes())));
+                invalidAction(p, actionType);
                 return;
             }
             try {
                 ActionHandler.validateActionInfo(actionType, actionInfo);
             } catch (Exception e) {
-                //TODO add to config
-                Util.sendMessage(p,
-                        ChatColor.translateAlternateColorCodes('&',
-                                "&c'&6" + actionInfo + "&c' is not a valid info for &6" + actionType + "\n"
-                                        + String.join("\n", ActionHandler.getAction(actionType).getInfo())));
+                invalidActionInfo(p,actionType,actionInfo);
                 return;
             }
             String action = actionType + TYPE_SEPARATOR + actionInfo;
@@ -424,7 +410,7 @@ public class Actions extends ListenerSubCmd {
                 list.add(action);
                 setActions(tagItem, list);
             }
-            sendLanguageString("feedback.actions.add", "", p, "%action%",
+            sendLanguageString("add.feedback", "", p, "%action%",
                     action.replace(TYPE_SEPARATOR, " "));
         } catch (Exception e) {
             e.printStackTrace();
@@ -444,19 +430,13 @@ public class Actions extends ListenerSubCmd {
             try {
                 ActionHandler.validateActionType(actionType);
             } catch (Exception e) {
-                Util.sendMessage(p,
-                        ChatColor.translateAlternateColorCodes('&',
-                                "&c'&6" + actionType + "&c' is not a valid type\n&cValid types &e"
-                                        + String.join("&c, &e", ActionHandler.getTypes())));
+                invalidAction(p, actionType);
                 return;
             }
             try {
                 ActionHandler.validateActionInfo(actionType, actionInfo);
             } catch (Exception e) {
-                Util.sendMessage(p,
-                        ChatColor.translateAlternateColorCodes('&',
-                                "&c'&6" + actionInfo + "&c' is not a valid info for &6" + actionType + "\n"
-                                        + String.join("\n", ActionHandler.getAction(actionType).getInfo())));
+                invalidActionInfo(p,actionType,actionInfo);
                 return;
             }
             String action = actionType + TYPE_SEPARATOR + actionInfo;
@@ -468,8 +448,8 @@ public class Actions extends ListenerSubCmd {
                 list.add(line, action);
                 setActions(tagItem, list);
             }
-            sendLanguageString("feedback.actions.add", "", p, "%action%",
-                    action.replace(TYPE_SEPARATOR, " "));
+            sendLanguageString("addline.feedback", "", p, "%action%",
+                    action.replace(TYPE_SEPARATOR, " "), "%line%", String.valueOf(line + 1));
         } catch (Exception e) {
             Util.sendMessage(p, this.craftFailFeedback(getLanguageString("addline.params", null, p),
                     getLanguageStringList("addline.description", null, p)));
@@ -488,6 +468,7 @@ public class Actions extends ListenerSubCmd {
                     case "setuses":
                         return Util.complete(args[2], Arrays.asList("-1", "1", "5", "10"));
                     case "visualcooldown":
+                    case "consume":
                         return Util.complete(args[2], Aliases.BOOLEAN);
                 }
                 return Collections.emptyList();
@@ -549,7 +530,7 @@ public class Actions extends ListenerSubCmd {
                         e.printStackTrace();
                     }
                 if (uses > 0) {
-                    if (uses == 1 && consumeAt0Uses(tagItem))
+                    if (uses == 1 && getConsume(tagItem))
                         event.getItem().setAmount(event.getItem().getAmount() - 1);
                     else {
                         try {
@@ -584,7 +565,13 @@ public class Actions extends ListenerSubCmd {
         }
     }
 
-    private static class ActionsGui implements Gui {
+    private void sendClickableText(Gui gui, String postClickable) {
+        Util.sendMessage(gui.getTargetPlayer(), new ComponentBuilder(gui.getLanguageMessage("gui.actions.click-interact")).event(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                        new ComponentBuilder(gui.getLanguageMessage("gui.actions.click-hover")).create()))
+                .event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/it " + Actions.this.getName() + " " + postClickable + " ")).create());
+    }
+
+    private class ActionsGui implements Gui {
         private final TagItem tagItem;
         private final Inventory inventory;
         private final Player target;
@@ -641,7 +628,7 @@ public class Actions extends ListenerSubCmd {
                 }
                 case 17: {
                     //consume on 0
-                    setConsumeAt0Uses(tagItem, !consumeAt0Uses(tagItem));
+                    setConsume(tagItem, !getConsume(tagItem));
                     updateInventory();
                     return;
                 }
@@ -652,10 +639,7 @@ public class Actions extends ListenerSubCmd {
                         return;
                     }
                     getTargetPlayer().closeInventory();
-                    Util.sendMessage(getTargetPlayer(), new ComponentBuilder(this.getLanguageMessage("click-interact")).event(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                                    new ComponentBuilder(this.getLanguageMessage("click-hover")).create()))
-                            .event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/it " + ItemTag.get().getConfig("commands.yml")
-                                    .getString("itemtag.actions.name", "actions") + " permission ")).create());
+                    sendClickableText(this, "permission");
                     return;
                 }
                 case 7: {//cooldown
@@ -689,10 +673,7 @@ public class Actions extends ListenerSubCmd {
                         return;
                     }
                     getTargetPlayer().closeInventory();
-                    Util.sendMessage(getTargetPlayer(), new ComponentBuilder(this.getLanguageMessage("click-interact")).event(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                                    new ComponentBuilder(this.getLanguageMessage("click-hover")).create()))
-                            .event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/it " + ItemTag.get().getConfig("commands.yml")
-                                    .getString("itemtag.actions.name", "actions") + " cooldownid ")).create());
+                    sendClickableText(this, "cooldownid");
                     return;
                 }
                 case 15: {//cooldown display
@@ -702,6 +683,7 @@ public class Actions extends ListenerSubCmd {
                 }
             }
         }
+
 
         @Override
         public void onDrag(InventoryDragEvent event) {
@@ -742,27 +724,27 @@ public class Actions extends ListenerSubCmd {
             this.getInventory().setItem(0, item);
             //set blue
             try {
-                item = this.loadLanguageDescription(this.getGuiItem("gui.actions.setline", Material.BLUE_DYE), "gui.actions.setline");
+                item = this.loadLanguageDescription(this.getGuiItem("gui.actions.set", Material.BLUE_DYE), "gui.actions.set");
             } catch (Throwable t) {
                 item = Util.getDyeItemFromColor(DyeColor.BLUE);
-                item = this.loadLanguageDescription(this.getGuiItem("gui.actions.setline", item.getType(), item.getDurability()), "gui.actions.setline");
+                item = this.loadLanguageDescription(this.getGuiItem("gui.actions.set", item.getType(), item.getDurability()), "gui.actions.set");
             }
             this.getInventory().setItem(9, item);
 
             //remove red
             try {
-                item = this.loadLanguageDescription(this.getGuiItem("gui.actions.removeline", Material.RED_DYE), "gui.actions.removeline");
+                item = this.loadLanguageDescription(this.getGuiItem("gui.actions.remove", Material.RED_DYE), "gui.actions.remove");
             } catch (Throwable t) {
                 item = Util.getDyeItemFromColor(DyeColor.RED);
-                item = this.loadLanguageDescription(this.getGuiItem("gui.actions.removeline", item.getType(), item.getDurability()), "gui.actions.removeline");
+                item = this.loadLanguageDescription(this.getGuiItem("gui.actions.remove", item.getType(), item.getDurability()), "gui.actions.remove");
             }
             this.getInventory().setItem(1, item);
 
             //consume on last use
-            item = this.getGuiItem("gui.actions.consumeon0uses", Material.APPLE);
-            meta = this.loadLanguageDescription(item.getItemMeta(), "gui.actions.consumeon0uses",
-                    "%value%", Aliases.BOOLEAN.getName(consumeAt0Uses(tagItem)));
-            if (!consumeAt0Uses(tagItem))
+            item = this.getGuiItem("gui.actions.consume", Material.APPLE);
+            meta = this.loadLanguageDescription(item.getItemMeta(), "gui.actions.consume",
+                    "%value%", Aliases.BOOLEAN.getName(getConsume(tagItem)));
+            if (!getConsume(tagItem))
                 meta.addEnchant(Enchantment.DURABILITY, 1, true);
             else
                 meta.removeEnchant(Enchantment.DURABILITY);
@@ -788,9 +770,9 @@ public class Actions extends ListenerSubCmd {
             this.getInventory().setItem(16, this.loadLanguageDescription(this.getGuiItem("gui.actions.cooldownid", Material.NAME_TAG), "gui.actions.cooldownid",
                     "%value%", getCooldownId(tagItem)));
 
-            //cooldowndisplay
-            item = this.getGuiItem("gui.actions.cooldowndisplay", Material.ENDER_PEARL);
-            meta = this.loadLanguageDescription(item.getItemMeta(), "gui.actions.cooldowndisplay", "%value%", Aliases.BOOLEAN.getName(getVisualCooldown(tagItem)));
+            //visualcooldown
+            item = this.getGuiItem("gui.actions.visualcooldown", Material.ENDER_PEARL);
+            meta = this.loadLanguageDescription(item.getItemMeta(), "gui.actions.visualcooldown", "%value%", Aliases.BOOLEAN.getName(getVisualCooldown(tagItem)));
             if (getVisualCooldown(tagItem))
                 meta.addEnchant(Enchantment.DURABILITY, 1, true);
             else
@@ -850,19 +832,12 @@ public class Actions extends ListenerSubCmd {
                     switch (event.getClick()) {
                         case RIGHT:
                             getTargetPlayer().closeInventory();
-                            Util.sendMessage(getTargetPlayer(), new ComponentBuilder(this.getLanguageMessage("click-interact")).event(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                                            new ComponentBuilder(this.getLanguageMessage("click-hover")).create()))
-                                    .event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/it "
-                                            + ItemTag.get().getConfig("commands.yml").getString("itemtag.actions.name", "actions") + " set "
-                                            + (event.getSlot() + 1) + " " + actions.get(event.getSlot()).replace(TYPE_SEPARATOR, " "))).create());
+                            sendClickableText(this, "set "
+                                    + (event.getSlot() + 1) + " " + actions.get(event.getSlot()).replace(TYPE_SEPARATOR, " "));
                             return;
                         case LEFT:
                             getTargetPlayer().closeInventory();
-                            Util.sendMessage(getTargetPlayer(), new ComponentBuilder(this.getLanguageMessage("click-interact")).event(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                                            new ComponentBuilder(this.getLanguageMessage("click-hover")).create()))
-                                    .event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/it "
-                                            + ItemTag.get().getConfig("commands.yml").getString("itemtag.actions.name", "actions") + " addline "
-                                            + (event.getSlot() + 1) + " ")).create());
+                            sendClickableText(this, "addline " + (event.getSlot() + 1));
                             return;
                         case SHIFT_RIGHT:
                             actions = new ArrayList<>(actions);
@@ -874,11 +849,7 @@ public class Actions extends ListenerSubCmd {
                 }
                 if (actions.size() == event.getSlot() && event.getClick() == ClickType.LEFT) {
                     getTargetPlayer().closeInventory();
-                    Util.sendMessage(getTargetPlayer(), new ComponentBuilder(this.getLanguageMessage("click-interact")).event(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                                    new ComponentBuilder(this.getLanguageMessage("click-hover")).create()))
-                            .event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/it "
-                                    + ItemTag.get().getConfig("commands.yml").getString("itemtag.actions.name", "actions") + " add "
-                            )).create());
+                    sendClickableText(this, "add");
                 }
             }
 
@@ -914,8 +885,9 @@ public class Actions extends ListenerSubCmd {
                     ItemMeta meta = item.getItemMeta();
                     this.loadLanguageDescription(meta, "gui.actionslines.add");
                     item.setItemMeta(meta);
-                    item.setAmount(actions == null ? 0 : actions.size() + 1);
+                    item.setAmount(actions == null ? 1 : actions.size() + 1);
                     this.inventory.setItem(actions == null ? 0 : actions.size(), item);
+                    this.inventory.setItem(actions == null ? 1 : actions.size() + 1, null);
                 }
                 this.inventory.setItem(49, this.getBackItem());
             }

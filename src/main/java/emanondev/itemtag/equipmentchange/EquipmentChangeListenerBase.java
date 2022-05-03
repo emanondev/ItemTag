@@ -347,12 +347,10 @@ public abstract class EquipmentChangeListenerBase implements Listener {
                 return 45;
             return -1;
         }
-        switch (slot) {
-            case HAND:
-                return p.getInventory().getHeldItemSlot() + view.getTopInventory().getSize() + 27;
-            default:
-                return -1;
-        }
+        if (slot == EquipmentSlot.HAND)
+            return p.getInventory().getHeldItemSlot() + view.getTopInventory().getSize() + 27;
+
+        return -1;
     }
 
     protected EquipmentSlot getEquipmentSlotAtPosition(int pos, Player p, InventoryView view) {
@@ -511,11 +509,10 @@ public abstract class EquipmentChangeListenerBase implements Listener {
     public boolean untrackPlayer(Player p) {
         if (!equips.containsKey(p))
             return false;
-        EnumMap<EquipmentSlot, ItemStack> map = equips.remove(p);
-
-        for (EquipmentSlot slot : map.keySet()) {
+        EnumMap<EquipmentSlot, ItemStack> map = equips.get(p);
+        for (EquipmentSlot slot : map.keySet())
             onEquipChange(p, EquipmentChangeEvent.EquipMethod.QUIT, slot, map.get(slot), null);
-        }
+        equips.remove(p);
         return true;
     }
 }

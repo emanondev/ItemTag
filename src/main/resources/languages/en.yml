@@ -2,7 +2,6 @@ player-only: '&4[&cItemTag&4] &cCommand for Players only'
 no-item-on-hand: '&4[&cItemTag&4] &cYou need to hold an item in hand'
 lack-permission: '&4[&cItemTag&4] &cYou lack of permission %permission%'
 lack-permission-generic: '&4[&cItemTag&4] &cYou don''t have permission to use this command'
-click-me:
 itemtag:
   help-header: '&9&lItemTag - Help'
   flag:
@@ -14,107 +13,50 @@ itemtag:
       - '&e[true/false] &bflag value, by default toggle'
     params: '<flag> [true/false]'
     placeable:
-      description:
-        - '&b&lSets whether the item can be placed'
-        - ''
-        - '&e[true/false] &bset placeable state, by default toggle'
       feedback:
         standard: '&9[&fItemTag&9] &aThe item can be placed.'
         custom: '&9[&fItemTag&9] &aThe item can''t be placed.'
         failed-place-attempt: '&4[&cItemTag&4] &cYou can''t place this item'
     usable:
-      description:
-        - '&b&lSets whether the item can be used'
-        - ''
-        - '&bIf set to false deny vanilla behavior of right click of the item'
-        - '&bDefinition of what use is vary on the item type'
-        - '&bFood can''t be eaten, fishing rod can''t fish, eggs can''t '
-        - '&bthrown, spawner eggs can''t spawn....'
-        - ''
-        - '&e[true/false] &bset usable state, by default toggle'
       feedback:
         standard: '&9[&fItemTag&9] &aThe item can be used.'
         custom: '&9[&fItemTag&9] &aThe item can''t be used (Right click).'
     smelt:
-      description:
-        - '&b&lSets whether the item can be cooked'
-        - ''
-        - '&bIf set to false deny vanilla behavior furnace cooking'
-        - '&bWorks for both foods and ores'
-        - ''
-        - '&e[true/false] &bset behavior state, by default toggle'
       feedback:
         standard: '&9[&fItemTag&9] &aThe item can be cooked/smelt on furnaces.'
         custom: '&9[&fItemTag&9] &aThe item can''t be cooked/smelt on furnace.'
     furnacefuel:
-      description:
-        - '&b&lSets whether the item can be used as furnace fuel'
-        - ''
-        - '&bIf set to false deny vanilla behavior of furnaces'
-        - '&b consuming this item as fuel'
-        - ''
-        - '&e[true/false] &bset behavior state, by default toggle'
       feedback:
         standard: '&9[&fItemTag&9] &aThe item can be used as furnace fuel.'
         custom: '&9[&fItemTag&9] &aThe item can''t be used as furnace fuel.'
     recipeingredient:
-      description:
-        - '&b&lSets whether the item can be used on crafting recipes'
-        - ''
-        - '&bIf set to false deny vanilla crafting behavior when this'
-        - '&b item is one of the ingredients'
-        - ''
-        - '&e[true/false] &bset behavior state, by default toggle'
       feedback:
         standard: '&9[&fItemTag&9] &aThe item can be used as recipe ingredient.'
         custom: '&9[&fItemTag&9] &aThe item can''t be used as recipe ingredient.'
     enchantable:
-      description:
-        - '&b&lSets whether the item can be enchanted'
-        - ''
-        - '&bIf set to false deny vanilla enchanting table behavior'
-        - '&b on this item'
-        - ''
-        - '&e[true/false] &bset behavior state, by default toggle'
       feedback:
         standard: '&9[&fItemTag&9] &aThe item can be enchanted.'
         custom: '&9[&fItemTag&9] &aThe item can''t be enchanted.'
     renamable:
-      description:
-        - '&b&lSets whether the item can be used on anvil'
-        - ''
-        - '&bIf set to false deny vanilla anvil behavior on this item'
-        - ''
-        - '&e[true/false] &bset behavior state, by default toggle'
       feedback:
         standard: '&9[&fItemTag&9] &aThe item can be used on anvils.'
         custom: '&9[&fItemTag&9] &aThe item can''t be used on anvils.'
     grindable:
-      description:
-        - '&b&lSets whether the item can be disenchanted on grindstone'
-        - ''
-        - '&bIf set to false deny vanilla grindstone behavior'
-        - '&b on this item'
-        - ''
-        - '&e[true/false] &bset behavior state, by default toggle'
       feedback:
         standard: '&9[&fItemTag&9] &aThe item can be disenchanted with grindstone.'
         custom: '&9[&fItemTag&9] &aThe item can''t be disenchanted with grindstone.'
     equipment:
-      description:
-        - '&b&lSets whether the item can be used as equipment'
-        - ''
-        - '&bIf set to false and item is equipped, it would be dropped'
-        - '&b back into player inventory'
-        - '&bNB: hand and off hand are not considered part of equipment slots'
-        - ''
-        - '&e[true/false] &bset behavior state, by default toggle'
       feedback:
         standard: '&9[&fItemTag&9] &aThe item can be equipped.'
         custom: '&9[&fItemTag&9] &aThe item can''t be equipped.'
   actions:
-    click-interact: '&9[&fItemTag&9] &b[Click here]'
-    click-hover: '&6Click to suggest command'
+    invalid-action:
+      message: '&4[&cItemTag&4] &c''&6%error%&c'' is not a valid type &4[&6hover here&4]'
+      hover-pre: '&6&lValid types'
+      first_color: '&b'
+      second_color: '&e'
+    invalid-action-info:
+      message: '&4[&cItemTag&4] &c''&6%error%&c'' is not a valid info for &6%action% &4[&6hover here&4]'
     description:
       - '&b&lSets actions done when the item is used'
       - ''
@@ -135,6 +77,7 @@ itemtag:
         - ''
         - '&e<type> &btype of action'
         - '&e<action> &badditional info for action'
+      feedback: '&9[&fItemTag&9] &aAdded &e%action%'
     addline:
       params: 'addline <line> <type> <action>'
       description:
@@ -143,6 +86,7 @@ itemtag:
         - '&e<line> &bline to add'
         - '&e<type> &btype of action'
         - '&e<action> &badditional info for action'
+      feedback: '&9[&fItemTag&9] &aLine &e%line% &aadded as &e%action%'
     set:
       params: 'set <line> <type> <action>'
       description:
@@ -151,18 +95,23 @@ itemtag:
         - '&e<line> &bthe line to replace'
         - '&e<type> &btype of action'
         - '&e<action> &badditional info for action'
+      feedback: '&9[&fItemTag&9] &aLine &e%line% &aset as &e%action%'
     remove:
       params: 'remove <line>'
       description:
         - '&b&lRemove action on selected line'
         - ''
         - '&e<line> &bthe line to remove'
+      feedback: '&9[&fItemTag&9] &aRemoved line &e%line% &a(&e%action%&a)'
     permission:
       params: 'permission [permission]'
       description:
         - '&b&lSet permission to use this item'
         - ''
         - '&e[permission] &bthe permission to set, by default none'
+      feedback: '&9[&fItemTag&9] &aRemoved line &e%line% &a(&e%action%&a)'
+        set: '&9[&fItemTag&9] &aPermission &e%permission% &ais now required to use this item'
+        removed: '&9[&fItemTag&9] &aNow no permission is required to use this item'
     cooldown:
       params: 'cooldown [ms]'
       description:
@@ -173,6 +122,9 @@ itemtag:
         - '&bNote: cooldown is set based on cooldownid, different'
         - '&b  items with same cooldownid share same cooldown'
         - '&bNote: cooldown is preserved on player logout and server restart'
+      feedback:
+        set: '&9[&fItemTag&9] &aThis item has a cooldown of &e%cooldown_seconds% &aseconds'
+        removed: '&9[&fItemTag&9] &aThis item has no cooldown'
     cooldownid:
       params: 'cooldownid [id]'
       description:
@@ -181,27 +133,38 @@ itemtag:
         - '&e[id] &bhow much time before being able to use the item again'
         - '&bNote: cooldown is set based on cooldownid, different'
         - '&b  items with same cooldownid share same cooldown'
+      feedback:
+        set: '&9[&fItemTag&9] &aThis item use id &e%id% &afor cooldown'
+        removed: '&9[&fItemTag&9] &aThis item use &edefault &aid for cooldown'
     uses:
       params: 'uses [amount]'
       description:
-        - '&b&lSet amount of time an item can be used'
-    feedback:
-      actions:
-        set: '&aLine &e%line% &aset as &e%action%'
-        remove: '&aRemoved line &e%line% &a(&e%action%&a)'
-        clear: '&aCleared actions on this item'
-        permission:
-          set: '&aPermission &e%permission% &ais now required to use this item'
-          removed: '&aNow no permission is required to use this item'
-        cooldownid:
-          set: '&aThis item use id &e%id% &afor cooldown'
-          removed: '&aThis item use &edefault &aid for cooldown'
-        cooldown:
-          set: '&aThis item has a cooldown of &e%cooldown_seconds% &aseconds'
-          removed: '&aThis item has no cooldown'
-        uses:
-          set: '&aThis item has &e%uses% &auses before getting consumed'
-          unlimited: '&aThis item has &eunlimited &auses'
+        - '&b&lSet how many times the item can be used'
+        - ''
+        - '&bNote: use &e-1 &bfor unlimited uses'
+      feedback:
+        set: '&9[&fItemTag&9] &aThis item has &e%uses% &auses before getting consumed'
+        unlimited: '&9[&fItemTag&9] &aThis item has &eunlimited &auses'
+    consume:
+      params: 'consume [true/false]'
+      description:
+        - '&6&lConsume the item on last use'
+        - ''
+        - '&bNote: when this is true, if the item'
+        - '&b consume his last use, the item is destroyed'
+      feedback:
+        set: '&9[&fItemTag&9] &aItem is destroyed upon reaching his last use'
+        unset: '&9[&fItemTag&9] &aItem is not destroyed upon reaching his last use'
+    visualcooldown:
+      params: 'visualcooldown [true/false]'
+      description:
+        - '&6&lVisual display cooldown time left'
+        - ''
+        - '&bWhen true apply a cooldown effect similar to'
+        - '&bender pearls cooldown to the item'
+        - ''
+        - '&bNote: Unluckly this visual effect also'
+        - '&b applies to any item of same kind'
   consumeactions:
     description:
       - '&b&lSets actions done when the item is consumed like food and drinks'
@@ -312,23 +275,25 @@ gui:
       - '&7[&fClick&7]&b Go to previous gui'
   actions:
     title: '&9Actions'
+    click-interact: '&9[&fItemTag&9] &b[Click here]'
+    click-hover: '&6Click to suggest command'
     addline:
       - '&6&lAdd Action'
       - ''
       - '&7[&fClick&7]&b Change values'
       - '&9/it actions add <action type> <action info>'
       - '&9/it actions addline <line> <action type> <action info>'
-    setline:
+    set:
       - '&6&lSet Action'
       - ''
       - '&7[&fClick&7]&b Change values'
       - '&9/it actions set <line> <action type> <action info>'
-    removeline:
+    remove:
       - '&6&lRemove Action'
       - ''
       - '&7[&fClick&7]&b Change values'
       - '&9/it actions remove <line>'
-    consumeon0uses:
+    consume:
       - '&6&lConsume on &e&l0&6&l uses left'
       - '&bEnabled: &e%value%'
       - '&7Note: when this is true, when the item'
@@ -369,8 +334,8 @@ gui:
       - '&9/it actions cooldownid [cooldown id]'
     info:
       - '&6&lList of Actions:'
-    cooldowndisplay:
-      - '&6&lDisplay cooldown'
+    visualcooldown:
+      - '&6&lDisplay visual cooldown'
       - '&bEnabled: &e%value%'
       - '&7Note: Unluckly this visual effect also'
       - '&7 applies to any item of same kind'
@@ -453,3 +418,29 @@ gui:
       - '&7 behavior on this item'
       - ''
       - '&7[&fClick&7]&b Toggle'
+    equipment:
+      - '&b&lSets whether the item can be used as equipment'
+      - '&bValue: &e%value%'
+      - ''
+      - '&bIf set to false and item is equipped, it would be dropped'
+      - '&b back into player inventory'
+      - '&bNB: hand and off hand are not considered part of equipment slots'
+      - ''
+      - '&7[&fClick&7]&b Toggle'
+  effects:
+    title: '&9Effects'
+    slot:
+      - '&6&l%slot%'
+      - '&bEnabled: &e%value%'
+    potion:
+      - '&6&l%effect%'
+      - ''
+      - '&bLevel: &e%amplifier% &7[Left/Right Click Change]'
+      - '&bParticles: &e%particles% &7[ShiftLeft Click Toggle]'
+      - '&bAmbient: &e%ambient% &7[ShiftRight Click Toggle]'
+      - '&bIcon: &e%icon% &7[Middle Click Toggle]'
+      - '&bDuration: &e%duration%'
+    potion-instant: 'instant'
+    potion-unlimited: 'unlimited'
+    icon-unsupported: '&conly for 1.13+'
+

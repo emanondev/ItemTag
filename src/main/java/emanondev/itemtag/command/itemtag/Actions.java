@@ -652,10 +652,10 @@ public class Actions extends ListenerSubCmd {
                         return;
                     }
                     getTargetPlayer().closeInventory();
-                    Util.sendMessage(getTargetPlayer(), new ComponentBuilder(">> Click me <<").event(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                                    new ComponentBuilder("Click to suggest command").create()))
-                            .event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/it actions permission "
-                            )).create());
+                    Util.sendMessage(getTargetPlayer(), new ComponentBuilder(this.getLanguageMessage("click-interact")).event(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                                    new ComponentBuilder(this.getLanguageMessage("click-hover")).create()))
+                            .event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/it " + ItemTag.get().getConfig("commands.yml")
+                                    .getString("itemtag.actions.name", "actions") + " permission ")).create());
                     return;
                 }
                 case 7: {//cooldown
@@ -689,10 +689,10 @@ public class Actions extends ListenerSubCmd {
                         return;
                     }
                     getTargetPlayer().closeInventory();
-                    Util.sendMessage(getTargetPlayer(), new ComponentBuilder(">> Click me <<").event(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                                    new ComponentBuilder("Click to suggest command").create()))
-                            .event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/it actions cooldownid "
-                            )).create());
+                    Util.sendMessage(getTargetPlayer(), new ComponentBuilder(this.getLanguageMessage("click-interact")).event(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                                    new ComponentBuilder(this.getLanguageMessage("click-hover")).create()))
+                            .event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/it " + ItemTag.get().getConfig("commands.yml")
+                                    .getString("itemtag.actions.name", "actions") + " cooldownid ")).create());
                     return;
                 }
                 case 15: {//cooldown display
@@ -723,7 +723,7 @@ public class Actions extends ListenerSubCmd {
         }
 
         @Override
-        public ItemTag getPlugin() {
+        public @NotNull ItemTag getPlugin() {
             return ItemTag.get();
         }
 
@@ -731,102 +731,76 @@ public class Actions extends ListenerSubCmd {
             ItemStack item;
             ItemMeta meta;
             //add addline lime
-
             try {
-                item = this.getGuiItem("gui.actions.addline", Material.LIME_DYE);
+                item = this.loadLanguageDescription(this.getGuiItem("gui.actions.addline", Material.LIME_DYE),
+                        "gui.actions.addline");
             } catch (Throwable t) {
                 item = Util.getDyeItemFromColor(DyeColor.LIME);
-                item = this.getGuiItem("gui.actions.addline", item.getType(), item.getDurability());
+                item = this.loadLanguageDescription(this.getGuiItem("gui.actions.addline", item.getType(),
+                        item.getDurability()), "gui.actions.addline");
             }
-            meta = item.getItemMeta();
-            this.loadLanguageDescription(meta, "gui.actions.addline");
-            item.setItemMeta(meta);
             this.getInventory().setItem(0, item);
             //set blue
             try {
-                item = this.getGuiItem("gui.actions.setline", Material.BLUE_DYE);
+                item = this.loadLanguageDescription(this.getGuiItem("gui.actions.setline", Material.BLUE_DYE), "gui.actions.setline");
             } catch (Throwable t) {
                 item = Util.getDyeItemFromColor(DyeColor.BLUE);
-                item = this.getGuiItem("gui.actions.setline", item.getType(), item.getDurability());
+                item = this.loadLanguageDescription(this.getGuiItem("gui.actions.setline", item.getType(), item.getDurability()), "gui.actions.setline");
             }
-            meta = item.getItemMeta();
-            this.loadLanguageDescription(meta, "gui.actions.setline");
-            item.setItemMeta(meta);
             this.getInventory().setItem(9, item);
 
             //remove red
             try {
-                item = this.getGuiItem("gui.actions.removeline", Material.RED_DYE);
+                item = this.loadLanguageDescription(this.getGuiItem("gui.actions.removeline", Material.RED_DYE), "gui.actions.removeline");
             } catch (Throwable t) {
                 item = Util.getDyeItemFromColor(DyeColor.RED);
-                item = this.getGuiItem("gui.actions.removeline", item.getType(), item.getDurability());
+                item = this.loadLanguageDescription(this.getGuiItem("gui.actions.removeline", item.getType(), item.getDurability()), "gui.actions.removeline");
             }
-            meta = item.getItemMeta();
-            this.loadLanguageDescription(meta, "gui.actions.removeline");
-            item.setItemMeta(meta);
             this.getInventory().setItem(1, item);
 
             //consume on last use
             item = this.getGuiItem("gui.actions.consumeon0uses", Material.APPLE);
-            meta = item.getItemMeta();
+            meta = this.loadLanguageDescription(item.getItemMeta(), "gui.actions.consumeon0uses",
+                    "%value%", Aliases.BOOLEAN.getName(consumeAt0Uses(tagItem)));
             if (!consumeAt0Uses(tagItem))
                 meta.addEnchant(Enchantment.DURABILITY, 1, true);
             else
                 meta.removeEnchant(Enchantment.DURABILITY);
-            this.loadLanguageDescription(meta, "gui.actions.consumeon0uses",
-                    "%value%", Aliases.BOOLEAN.getName(consumeAt0Uses(tagItem)));
             item.setItemMeta(meta);
             this.getInventory().setItem(17, item);
 
-
             //consume uses
-            item = this.getGuiItem("gui.actions.uses", Material.IRON_PICKAXE);
-            meta = item.getItemMeta();
-            this.loadLanguageDescription(meta, "gui.actions.uses",
-                    "%value%", getUses(tagItem) == -1 ? "-1 (Unlimited)" : String.valueOf(getUses(tagItem))
-                    , "%editor%", String.valueOf(editorValue)
-                    , "%editor-prev%", String.valueOf(Math.max(1, editorValue / 10)), "%editor-next%", String.valueOf(Math.min(1000000, editorValue * 10)));
-            item.setItemMeta(meta);
-            this.getInventory().setItem(8, item);
+            this.getInventory().setItem(8, this.loadLanguageDescription(this.getGuiItem("gui.actions.uses", Material.IRON_PICKAXE), "gui.actions.uses",
+                    "%value%", getUses(tagItem) == -1 ? "-1 (Unlimited)" : String.valueOf(getUses(tagItem)), "%editor%", String.valueOf(editorValue)
+                    , "%editor-prev%", String.valueOf(Math.max(1, editorValue / 10)), "%editor-next%", String.valueOf(Math.min(1000000, editorValue * 10))));
 
             //permission
-            item = this.getGuiItem("gui.actions.permission", Material.IRON_BARS);
-            meta = item.getItemMeta();
-            this.loadLanguageDescription(meta, "gui.actions.permission",
-                    "%value%", getPermission(tagItem) == null ? "<none>" : getPermission(tagItem));
-            item.setItemMeta(meta);
-            this.getInventory().setItem(6, item);
+            this.getInventory().setItem(6, this.loadLanguageDescription(this.getGuiItem("gui.actions.permission", Material.IRON_BARS), "gui.actions.permission",
+                    "%value%", getPermission(tagItem) == null ? "<none>" : getPermission(tagItem)));
+
+
             // cooldown
-            item = this.getGuiItem("gui.actions.cooldown", Material.COMPASS);
-            meta = item.getItemMeta();
-            this.loadLanguageDescription(meta, "gui.actions.cooldown",
-                    "%value_s%", String.valueOf(getCooldownMs(tagItem) / 1000)
-                    , "%editor%", String.valueOf(editorCooldown)
-                    , "%editor-prev%", String.valueOf(Math.max(1, editorCooldown / 10)), "%editor-next%", String.valueOf(Math.min(1000000, editorCooldown * 10)));
-            item.setItemMeta(meta);
-            this.getInventory().setItem(7, item);
+            this.getInventory().setItem(7, this.loadLanguageDescription(this.getGuiItem("gui.actions.cooldown", Material.COMPASS), "gui.actions.cooldown",
+                    "%value_s%", String.valueOf(getCooldownMs(tagItem) / 1000), "%editor%", String.valueOf(editorCooldown)
+                    , "%editor-prev%", String.valueOf(Math.max(1, editorCooldown / 10)), "%editor-next%", String.valueOf(Math.min(1000000, editorCooldown * 10))));
+
             //cooldownid
-            item = this.getGuiItem("gui.actions.cooldownid", Material.NAME_TAG);
-            meta = item.getItemMeta();
-            this.loadLanguageDescription(meta, "gui.actions.cooldownid",
-                    "%value%", getCooldownId(tagItem));
-            item.setItemMeta(meta);
-            this.getInventory().setItem(16, item);
+            this.getInventory().setItem(16, this.loadLanguageDescription(this.getGuiItem("gui.actions.cooldownid", Material.NAME_TAG), "gui.actions.cooldownid",
+                    "%value%", getCooldownId(tagItem)));
+
             //cooldowndisplay
             item = this.getGuiItem("gui.actions.cooldowndisplay", Material.ENDER_PEARL);
-            meta = item.getItemMeta();
-            this.loadLanguageDescription(meta, "gui.actions.cooldowndisplay",
-                    "%value%", Aliases.BOOLEAN.getName(getVisualCooldown(tagItem)));
+            meta = this.loadLanguageDescription(item.getItemMeta(), "gui.actions.cooldowndisplay", "%value%", Aliases.BOOLEAN.getName(getVisualCooldown(tagItem)));
             if (getVisualCooldown(tagItem))
                 meta.addEnchant(Enchantment.DURABILITY, 1, true);
             else
                 meta.removeEnchant(Enchantment.DURABILITY);
             item.setItemMeta(meta);
             this.getInventory().setItem(15, item);
+
             //info
             item = this.getGuiItem("gui.actions.info", Material.PAPER);
-            meta = item.getItemMeta();
-            this.loadLanguageDescription(meta, "gui.actions.info");
+            meta = this.loadLanguageDescription(item.getItemMeta(), "gui.actions.info");
             List<String> lore = new ArrayList<>(meta.hasLore() ? meta.getLore() : Collections.emptyList());
             List<String> list = Actions.getActions(tagItem);
             if (list != null)
@@ -837,7 +811,6 @@ public class Actions extends ListenerSubCmd {
             item.setItemMeta(meta);
             this.getInventory().setItem(4, item);
         }
-
 
         private int editorCooldown = 1;
 
@@ -877,16 +850,18 @@ public class Actions extends ListenerSubCmd {
                     switch (event.getClick()) {
                         case RIGHT:
                             getTargetPlayer().closeInventory();
-                            Util.sendMessage(getTargetPlayer(), new ComponentBuilder(">> Click me <<").event(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                                            new ComponentBuilder("Click to suggest command").create()))
-                                    .event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/it actions set "
+                            Util.sendMessage(getTargetPlayer(), new ComponentBuilder(this.getLanguageMessage("click-interact")).event(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                                            new ComponentBuilder(this.getLanguageMessage("click-hover")).create()))
+                                    .event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/it "
+                                            + ItemTag.get().getConfig("commands.yml").getString("itemtag.actions.name", "actions") + " set "
                                             + (event.getSlot() + 1) + " " + actions.get(event.getSlot()).replace(TYPE_SEPARATOR, " "))).create());
                             return;
                         case LEFT:
                             getTargetPlayer().closeInventory();
-                            Util.sendMessage(getTargetPlayer(), new ComponentBuilder(">> Click me <<").event(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                                            new ComponentBuilder("Click to suggest command").create()))
-                                    .event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/it actions addline "
+                            Util.sendMessage(getTargetPlayer(), new ComponentBuilder(this.getLanguageMessage("click-interact")).event(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                                            new ComponentBuilder(this.getLanguageMessage("click-hover")).create()))
+                                    .event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/it "
+                                            + ItemTag.get().getConfig("commands.yml").getString("itemtag.actions.name", "actions") + " addline "
                                             + (event.getSlot() + 1) + " ")).create());
                             return;
                         case SHIFT_RIGHT:
@@ -899,9 +874,10 @@ public class Actions extends ListenerSubCmd {
                 }
                 if (actions.size() == event.getSlot() && event.getClick() == ClickType.LEFT) {
                     getTargetPlayer().closeInventory();
-                    Util.sendMessage(getTargetPlayer(), new ComponentBuilder(">> Click me <<").event(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                                    new ComponentBuilder("Click to suggest command").create()))
-                            .event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/it actions add "
+                    Util.sendMessage(getTargetPlayer(), new ComponentBuilder(this.getLanguageMessage("click-interact")).event(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                                    new ComponentBuilder(this.getLanguageMessage("click-hover")).create()))
+                            .event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/it "
+                                    + ItemTag.get().getConfig("commands.yml").getString("itemtag.actions.name", "actions") + " add "
                             )).create());
                 }
             }
@@ -955,7 +931,7 @@ public class Actions extends ListenerSubCmd {
             }
 
             @Override
-            public ItemTag getPlugin() {
+            public @NotNull ItemTag getPlugin() {
                 return ItemTag.get();
             }
         }

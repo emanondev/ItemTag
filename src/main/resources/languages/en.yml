@@ -113,6 +113,8 @@ itemtag:
         standard: '&9[&fItemTag&9] &aThe item can be equipped.'
         custom: '&9[&fItemTag&9] &aThe item can''t be equipped.'
   actions:
+    click-interact: '&9[&fItemTag&9] &b[Click here]'
+    click-hover: '&6Click to suggest command'
     description:
       - '&b&lSets actions done when the item is used'
       - ''

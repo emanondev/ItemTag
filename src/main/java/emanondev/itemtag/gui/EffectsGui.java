@@ -209,7 +209,7 @@ public class EffectsGui implements Gui {
                 meta.setColor(type.getColor());
             meta.addItemFlags(ItemFlag.values());
             loadLanguageDescription(meta, "gui.effects.potion", "%effect%", Aliases.POTION_EFFECT.getName(type)
-                            .replace("_", " "), "%level%", String.valueOf(amplifier + 1), "%particle%", Aliases.BOOLEAN.getName(particles),
+                            .replace("_", " "), "%level%", String.valueOf(amplifier + 1), "%particles%", Aliases.BOOLEAN.getName(particles),
                     "%ambient%", Aliases.BOOLEAN.getName(ambient), "%icon%",
                     ItemEdit.GAME_VERSION > 12 ? Aliases.BOOLEAN.getName(icon) : getLanguageMessage("gui.effects.icon-unsupported"), "%duration%",
                     getLanguageMessage(type.isInstant() ? "gui.effects.potion-instant" : "gui.effects.potion-unlimited"));

@@ -55,7 +55,7 @@ itemtag:
       hover-pre: '&6&lValid types'
       first_color: '&b'
       second_color: '&e'
-    invalid-action-info:
+    invalid-actioninfo:
       message: '&4[&cItemTag&4] &c''&6%error%&c'' is not a valid info for &6%action% &4[&6hover here&4]'
     description:
       - '&b&lSets actions done when the item is used'
@@ -109,7 +109,7 @@ itemtag:
         - '&b&lSet permission to use this item'
         - ''
         - '&e[permission] &bthe permission to set, by default none'
-      feedback: '&9[&fItemTag&9] &aRemoved line &e%line% &a(&e%action%&a)'
+      feedback:
         set: '&9[&fItemTag&9] &aPermission &e%permission% &ais now required to use this item'
         removed: '&9[&fItemTag&9] &aNow no permission is required to use this item'
     cooldown:
@@ -150,8 +150,8 @@ itemtag:
       description:
         - '&6&lConsume the item on last use'
         - ''
-        - '&bNote: when this is true, if the item'
-        - '&b consume his last use, the item is destroyed'
+        - '&bNote: when true and the item consume'
+        - '&b it''s last use, the item is destroyed'
       feedback:
         set: '&9[&fItemTag&9] &aItem is destroyed upon reaching his last use'
         unset: '&9[&fItemTag&9] &aItem is not destroyed upon reaching his last use'
@@ -296,8 +296,8 @@ gui:
     consume:
       - '&6&lConsume on &e&l0&6&l uses left'
       - '&bEnabled: &e%value%'
-      - '&7Note: when this is true, when the item'
-      - '&7 consume his last use, the item is destroyed'
+      - '&7Note: when true and the item consume'
+      - '&7 it''s last use, the item is destroyed'
       - ''
       - '&7[&fClick&7]&b Toggle'
       - '&9/it actions consume [true/false]'
@@ -419,12 +419,12 @@ gui:
       - ''
       - '&7[&fClick&7]&b Toggle'
     equipment:
-      - '&b&lSets whether the item can be used as equipment'
+      - '&6Sets whether the item can be used as equipment'
       - '&bValue: &e%value%'
       - ''
-      - '&bIf set to false and item is equipped, it would be dropped'
-      - '&b back into player inventory'
-      - '&bNB: hand and off hand are not considered part of equipment slots'
+      - '&7If set to false and item is equipped, it would be dropped'
+      - '&7 back into player inventory'
+      - '&7NB: hand and off hand are not considered part of equipment slots'
       - ''
       - '&7[&fClick&7]&b Toggle'
   effects:
@@ -435,7 +435,7 @@ gui:
     potion:
       - '&6&l%effect%'
       - ''
-      - '&bLevel: &e%amplifier% &7[Left/Right Click Change]'
+      - '&bLevel: &e%level% &7[Left/Right Click Change]'
       - '&bParticles: &e%particles% &7[ShiftLeft Click Toggle]'
       - '&bAmbient: &e%ambient% &7[ShiftRight Click Toggle]'
       - '&bIcon: &e%icon% &7[Middle Click Toggle]'

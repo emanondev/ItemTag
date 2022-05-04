@@ -3,6 +3,7 @@ package emanondev.itemtag.command.itemtag;
 import emanondev.itemedit.Util;
 import emanondev.itemedit.UtilsInventory;
 import emanondev.itemedit.UtilsInventory.ExcessManage;
+import emanondev.itemedit.UtilsString;
 import emanondev.itemedit.aliases.Aliases;
 import emanondev.itemedit.gui.Gui;
 import emanondev.itemtag.ItemTag;
@@ -309,12 +310,11 @@ public class Actions extends ListenerSubCmd {
 
 
     private void invalidActionInfo(Player p, String actionType, String actionInfo) {
-        Action action = ActionHandler.getAction(actionType);
         String msg = getLanguageString("invalid-actioninfo.message", "", p, "%error%", actionInfo, "%action%", actionType);
         if (msg == null || msg.isEmpty())
             return;
         Util.sendMessage(p, new ComponentBuilder(msg).event(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                new ComponentBuilder(String.join("\n", ActionHandler.getAction(actionType).getInfo())).create())).create());
+                new ComponentBuilder(String.join("\n", UtilsString.fix(ActionHandler.getAction(actionType).getInfo(),p,true))).create())).create());
     }
 
     //

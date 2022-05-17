@@ -7,8 +7,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.FluidCollisionMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Result;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.EntityBreedEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -65,6 +67,12 @@ public class Usable extends CustomFlag {
                 (item.getType() != Material.LAVA_BUCKET && item.getType() != Material.WATER_BUCKET)))
             item = event.getPlayer().getInventory().getItemInOffHand();
         if (ItemTag.getTagItem(item).hasBooleanTag(USABLE_KEY))
+            event.setCancelled(true);
+    }
+
+    @EventHandler
+    private void event(EntityBreedEvent event) {
+        if (ItemTag.getTagItem(event.getBredWith()).hasBooleanTag(USABLE_KEY))
             event.setCancelled(true);
     }
 

@@ -49,6 +49,10 @@ itemtag:
       feedback:
         standard: '&9[&fItemTag&9] &aThe item can be equipped.'
         custom: '&9[&fItemTag&9] &aThe item can''t be equipped.'
+    entityfood:
+      feedback:
+        standard: '&9[&fItemTag&9] &aThe item can be used as animal''s food.'
+        custom: '&9[&fItemTag&9] &aThe item can''t be used as animal''s food.'
   actions:
     invalid-action:
       message: '&4[&cItemTag&4] &c''&6%error%&c'' is not a valid type &4[&6hover here&4]'
@@ -425,6 +429,15 @@ gui:
       - '&7If set to false and item is equipped, it would be dropped'
       - '&7 back into player inventory'
       - '&7NB: hand and off hand are not considered part of equipment slots'
+      - ''
+      - '&7[&fClick&7]&b Toggle'
+    entityfood:
+      - '&6Sets whether the item can be used as animal''s food'
+      - '&bValue: &e%value%'
+      - ''
+      - '&7If set to false deny vanilla breed behavior'
+      - '&7 and also baby fast grow behavior'
+      - '&7 on this item'
       - ''
       - '&7[&fClick&7]&b Toggle'
   effects:

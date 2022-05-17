@@ -70,12 +70,6 @@ public class Usable extends CustomFlag {
             event.setCancelled(true);
     }
 
-    @EventHandler
-    private void event(EntityBreedEvent event) {
-        if (ItemTag.getTagItem(event.getBredWith()).hasBooleanTag(USABLE_KEY))
-            event.setCancelled(true);
-    }
-
     @Override
     public ItemStack getGuiItem() {
         return new ItemStack(Material.STONE_BUTTON);

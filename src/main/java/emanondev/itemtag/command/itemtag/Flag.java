@@ -53,6 +53,7 @@ public class Flag extends SubCmd {
         this.registerFlag(new Smelt(this));
         this.registerFlag(new FurnaceFuel(this));
         this.registerFlag(new Enchantable(this));
+        this.registerFlag(new EntityFood(this));
         if (ItemEdit.GAME_VERSION > 8)
             this.registerFlag(new Renamable(this));
         if (ItemEdit.GAME_VERSION > 13)

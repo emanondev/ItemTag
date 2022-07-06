@@ -56,16 +56,20 @@ public class Effects extends ListenerSubCmd {
         if (!isAirOrNull(event.getFrom())) {
             EffectsInfo oldInfo = new EffectsInfo(event.getFrom());
             if (oldInfo.isValidSlot(event.getSlotType()) && oldInfo.hasAnyEffects()) {
+                //old item had any active effects
                 List<PotionEffect> instant = new ArrayList<>();
                 HashMap<PotionEffectType, PotionEffect> oldEffects = new HashMap<>();
                 HashMap<PotionEffectType, PotionEffect> newEffects = new HashMap<>();
                 for (PotionEffect effect : oldInfo.getEffects())
                     if (!effect.getType().isInstant())
+                        //load all the old effects
                         oldEffects.put(effect.getType(), effect);
                 if (!isAirOrNull(event.getTo())) {
                     EffectsInfo newInfo = new EffectsInfo(event.getTo());
                     if (newInfo.isValidSlot(event.getSlotType()) && newInfo.hasAnyEffects()) {
+                        //new object has any active effects
                         for (PotionEffect effect : newInfo.getEffects()) {
+                            //load all the new effects
                             if (effect.getType().isInstant())
                                 instant.add(effect);
                             else
@@ -74,6 +78,7 @@ public class Effects extends ListenerSubCmd {
                     }
                 }
                 for (EquipmentSlot slot : EquipmentSlot.values()) {
+                    //for each slot (except event slot) look on effects
                     if (slot == event.getSlotType())
                         continue;
                     ItemStack item = getEquip(event.getPlayer(), slot);
@@ -83,6 +88,7 @@ public class Effects extends ListenerSubCmd {
                     if (!info.isValidSlot(slot) || !info.hasAnyEffects())
                         continue;
                     for (PotionEffect effect : info.getEffects()) {
+                        //for each effect if it's missing or higher put it on oldEffects, same for newEffects
                         if (effect.getType().isInstant())
                             continue;
                         if (!oldEffects.containsKey(effect.getType()))
@@ -95,40 +101,51 @@ public class Effects extends ListenerSubCmd {
                             newEffects.put(effect.getType(), effect);
                     }
                 }
+                //apply instant effects
                 for (PotionEffect effect : instant)
                     event.getPlayer().addPotionEffect(effect, true);
+
+
                 HashSet<PotionEffectType> types = new HashSet<>(oldEffects.keySet());
                 types.addAll(newEffects.keySet());
                 for (PotionEffectType eType : types) {
-                    if (newEffects.containsKey(eType))
-                        event.getPlayer().addPotionEffect(newEffects.get(eType), true);
-                    else if (oldEffects.containsKey(eType))
+                    //for each effect type present on oldEffects or newEffects
+                    if (newEffects.containsKey(eType)) {
+                        if (!oldEffects.containsKey(eType) || oldEffects.get(eType).getAmplifier() != newEffects.get(eType).getAmplifier())
+                            //if a newEffect was not present on oldEffect, or has different amplifier: reset it
+                            event.getPlayer().addPotionEffect(newEffects.get(eType), true);
+                    } else //if (oldEffects.containsKey(eType)) //which is always true
                         event.getPlayer().removePotionEffect(eType);
                 }
                 return;
             }
         }
+
+
+        //old item has no active effects (or it's null/air)
         if (!isAirOrNull(event.getTo())) {
             EffectsInfo newInfo = new EffectsInfo(event.getTo());
             if (newInfo.isValidSlot(event.getSlotType()) && newInfo.hasAnyEffects()) {
+                //if the new item has some active effects
                 for (PotionEffect effect : newInfo.getEffects())
                     if (effect.getType().isInstant())
                         event.getPlayer().addPotionEffect(effect, true);
                     else if (!event.getPlayer().hasPotionEffect(effect.getType()))
                         event.getPlayer().addPotionEffect(effect, true);
                     else {
-                        PotionEffect pEffect = null;
+                        PotionEffect currentEffect = null;
                         if (!is1_10orLower)// safe
-                            pEffect = event.getPlayer().getPotionEffect(effect.getType());
+                            currentEffect = event.getPlayer().getPotionEffect(effect.getType());
                         else
                             for (PotionEffect k : event.getPlayer().getActivePotionEffects())
                                 if (k.getType().equals(effect.getType())) {
-                                    pEffect = k;
+                                    currentEffect = k;
                                     break;
                                 }
-                        if (pEffect.getDuration() < 3600 * 20)
+
+                        if (currentEffect.getDuration() < 3600 * 20) //could be changed checking the whole equipment effects, but this way seems faster and still fair
                             event.getPlayer().addPotionEffect(effect, true);
-                        else if (pEffect.getAmplifier() <= effect.getAmplifier())
+                        else if (currentEffect.getAmplifier() < effect.getAmplifier())
                             event.getPlayer().addPotionEffect(effect, true);
                     }
             }

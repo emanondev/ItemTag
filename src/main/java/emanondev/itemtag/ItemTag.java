@@ -93,6 +93,11 @@ public class ItemTag extends APlugin {
             ActionHandler.registerAction(new PlayerAsOpCommandAction());
             ActionHandler.registerAction(new ServerCommandAction());
             ActionHandler.registerAction(new SoundAction());
+
+            // enable denizen script action if denizen is installed
+            if (Bukkit.getPluginManager().getPlugin("Denizen") != null) {
+                ActionHandler.registerAction(new DenizenScriptRunAction());
+            }
         } catch (Exception e) {
             Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Error while enabling ItemTag, disabling it");
             e.printStackTrace();

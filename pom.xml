@@ -9,6 +9,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <denizen.version>1.2.5-SNAPSHOT</denizen.version>
+        <citizens.version>2.0.30-SNAPSHOT</citizens.version>
     </properties>
 
     <build>
@@ -47,6 +49,10 @@
             <id>placeholderapi</id>
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
+        <repository>
+            <id>everything</id>
+            <url>https://repo.citizensnpcs.co/</url>
+        </repository>
     </repositories>
     <dependencies>
         <!-- SuperVanish -->
@@ -78,6 +84,22 @@
             <version>1.7</version>
             <scope>provided</scope>
         </dependency>
+        <!-- Denizen -->
+        <dependency>
+            <groupId>com.denizenscript</groupId>
+            <artifactId>denizen</artifactId>
+            <version>${denizen.version}</version>
+            <type>jar</type>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Citizens2 -->
+        <dependency>
+            <groupId>net.citizensnpcs</groupId>
+            <artifactId>citizens-main</artifactId>
+            <version>${citizens.version}</version>
+            <type>jar</type>
+            <scope>provided</scope>
+        </dependency>
         <!-- PlaceHolderAPI -->
         <dependency>
             <groupId>me.clip</groupId>
@@ -95,7 +117,7 @@
         <dependency>
             <groupId>emanondev.itemedit</groupId>
             <artifactId>ItemEdit</artifactId>
-            <version>3.0</version>
+            <version>3.0.5</version>
         </dependency>
         <!-- nbtapi -->
         <dependency>

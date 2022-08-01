@@ -4,7 +4,7 @@ version: ${project.version}
 author: emanon
 api-version: 1.13
 depend: [ ItemEdit ]
-softdepend: [ NBTAPI ]
+softdepend: [ NBTAPI, Denizen ]
 
 commands:
   itemtag:

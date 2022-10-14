@@ -5,10 +5,7 @@ import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class SoundAction extends Action {
 
@@ -34,7 +31,7 @@ public class SoundAction extends Action {
                 throw new IllegalStateException();
         }
         if (args.length >= 4) {
-            switch (args[3].toLowerCase()) {
+            switch (args[3].toLowerCase(Locale.ENGLISH)) {
                 case "true":
                 case "false":
                     break;

@@ -8,7 +8,6 @@ import emanondev.itemedit.aliases.Aliases;
 import emanondev.itemedit.gui.Gui;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.TagItem;
-import emanondev.itemtag.actions.Action;
 import emanondev.itemtag.actions.ActionHandler;
 import emanondev.itemtag.command.ItemTagCommand;
 import emanondev.itemtag.command.ListenerSubCmd;
@@ -31,20 +30,17 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Actions extends ListenerSubCmd {
 
-    private final static String ACTIONS_KEY = ItemTag.get().getName().toLowerCase() + ":actions";
-    private final static String ACTION_USES_KEY = ItemTag.get().getName().toLowerCase() + ":uses";
-    private final static String ACTION_CONSUME_AT_END_KEY = ItemTag.get().getName().toLowerCase() + ":consume";
-    private final static String ACTION_VISUAL_COOLDOWN = ItemTag.get().getName().toLowerCase() + ":visualcooldown";
-    private final static String ACTION_COOLDOWN_KEY = ItemTag.get().getName().toLowerCase() + ":cooldown";
-    private final static String ACTION_COOLDOWN_ID_KEY = ItemTag.get().getName().toLowerCase() + ":cooldown_id";
-    private final static String ACTION_PERMISSION_KEY = ItemTag.get().getName().toLowerCase() + ":permission";
+    private final static String ACTIONS_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":actions";
+    private final static String ACTION_USES_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":uses";
+    private final static String ACTION_CONSUME_AT_END_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":consume";
+    private final static String ACTION_VISUAL_COOLDOWN = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":visualcooldown";
+    private final static String ACTION_COOLDOWN_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":cooldown";
+    private final static String ACTION_COOLDOWN_ID_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":cooldown_id";
+    private final static String ACTION_PERMISSION_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":permission";
     private final static String TYPE_SEPARATOR = "%%:%%";
 
     public static boolean hasActions(TagItem item) {
@@ -103,7 +99,7 @@ public class Actions extends ListenerSubCmd {
         if (value == null || value.isEmpty() || value.equalsIgnoreCase("default")) // default
             item.removeTag(ACTION_COOLDOWN_ID_KEY);
         else
-            item.setTag(ACTION_COOLDOWN_ID_KEY, value.toLowerCase());
+            item.setTag(ACTION_COOLDOWN_ID_KEY, value.toLowerCase(Locale.ENGLISH));
     }
 
     public static String getPermission(TagItem item) {
@@ -114,7 +110,7 @@ public class Actions extends ListenerSubCmd {
         if (value == null || value.isEmpty()) // default
             item.removeTag(ACTION_PERMISSION_KEY);
         else
-            item.setTag(ACTION_PERMISSION_KEY, value.toLowerCase());
+            item.setTag(ACTION_PERMISSION_KEY, value.toLowerCase(Locale.ENGLISH));
     }
 
     private static final String[] actionsSub = new String[]{"add", "addline", "set", "permission", "cooldown",
@@ -134,7 +130,7 @@ public class Actions extends ListenerSubCmd {
             return;
         }
         try {
-            switch (args[1].toLowerCase()) {
+            switch (args[1].toLowerCase(Locale.ENGLISH)) {
                 case "add":
                     add(p, args, item);
                     return;
@@ -215,7 +211,7 @@ public class Actions extends ListenerSubCmd {
         try {
             if (args.length > 3)
                 throw new IllegalArgumentException("Wrong param number");
-            String permission = args.length == 2 ? null : args[2].toLowerCase();
+            String permission = args.length == 2 ? null : args[2].toLowerCase(Locale.ENGLISH);
             TagItem tagItem = ItemTag.getTagItem(item);
             setPermission(tagItem, permission);
             if (permission != null)
@@ -232,7 +228,7 @@ public class Actions extends ListenerSubCmd {
         try {
             if (args.length > 3)
                 throw new IllegalArgumentException("Wrong param number");
-            String cooldownId = args.length == 2 ? null : args[2].toLowerCase();
+            String cooldownId = args.length == 2 ? null : args[2].toLowerCase(Locale.ENGLISH);
             TagItem tagItem = ItemTag.getTagItem(item);
             setCooldownId(tagItem, cooldownId);
             if (cooldownId != null)
@@ -314,7 +310,7 @@ public class Actions extends ListenerSubCmd {
         if (msg == null || msg.isEmpty())
             return;
         Util.sendMessage(p, new ComponentBuilder(msg).event(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                new ComponentBuilder(String.join("\n", UtilsString.fix(ActionHandler.getAction(actionType).getInfo(),p,true))).create())).create());
+                new ComponentBuilder(String.join("\n", UtilsString.fix(ActionHandler.getAction(actionType).getInfo(), p, true))).create())).create());
     }
 
     //
@@ -326,7 +322,7 @@ public class Actions extends ListenerSubCmd {
             if (line < 0)
                 throw new IllegalArgumentException();
             //ArrayList<String> tmp = new ArrayList<>(Arrays.asList(args).subList(4, args.length));
-            String actionType = args[3].toLowerCase();
+            String actionType = args[3].toLowerCase(Locale.ENGLISH);
             String actionInfo = String.join(" ", Arrays.asList(args).subList(4, args.length));
             try {
                 ActionHandler.validateActionType(actionType);
@@ -337,7 +333,7 @@ public class Actions extends ListenerSubCmd {
             try {
                 ActionHandler.validateActionInfo(actionType, actionInfo);
             } catch (Exception e) {
-                invalidActionInfo(p,actionType,actionInfo);
+                invalidActionInfo(p, actionType, actionInfo);
                 return;
             }
             String action = actionType + TYPE_SEPARATOR + actionInfo;
@@ -387,7 +383,7 @@ public class Actions extends ListenerSubCmd {
         try {
             if (args.length < 3)
                 throw new IllegalArgumentException("Wrong param number");
-            String actionType = args[2].toLowerCase();
+            String actionType = args[2].toLowerCase(Locale.ENGLISH);
             String actionInfo = String.join(" ", Arrays.asList(args).subList(3, args.length));
             try {
                 ActionHandler.validateActionType(actionType);
@@ -398,7 +394,7 @@ public class Actions extends ListenerSubCmd {
             try {
                 ActionHandler.validateActionInfo(actionType, actionInfo);
             } catch (Exception e) {
-                invalidActionInfo(p,actionType,actionInfo);
+                invalidActionInfo(p, actionType, actionInfo);
                 return;
             }
             String action = actionType + TYPE_SEPARATOR + actionInfo;
@@ -425,7 +421,7 @@ public class Actions extends ListenerSubCmd {
             if (args.length < 4)
                 throw new IllegalArgumentException("Wrong param number");
             int line = Integer.parseInt(args[2]) - 1;
-            String actionType = args[3].toLowerCase();
+            String actionType = args[3].toLowerCase(Locale.ENGLISH);
             String actionInfo = String.join(" ", Arrays.asList(args).subList(4, args.length));
             try {
                 ActionHandler.validateActionType(actionType);
@@ -436,7 +432,7 @@ public class Actions extends ListenerSubCmd {
             try {
                 ActionHandler.validateActionInfo(actionType, actionInfo);
             } catch (Exception e) {
-                invalidActionInfo(p,actionType,actionInfo);
+                invalidActionInfo(p, actionType, actionInfo);
                 return;
             }
             String action = actionType + TYPE_SEPARATOR + actionInfo;
@@ -462,7 +458,7 @@ public class Actions extends ListenerSubCmd {
             case 2:
                 return Util.complete(args[1], actionsSub);
             case 3:
-                switch (args[1].toLowerCase()) {
+                switch (args[1].toLowerCase(Locale.ENGLISH)) {
                     case "add":
                         return Util.complete(args[2], ActionHandler.getTypes());
                     case "setuses":
@@ -473,21 +469,21 @@ public class Actions extends ListenerSubCmd {
                 }
                 return Collections.emptyList();
             case 4:
-                switch (args[1].toLowerCase()) {
+                switch (args[1].toLowerCase(Locale.ENGLISH)) {
                     case "add":
-                        return ActionHandler.tabComplete(sender, args[2].toLowerCase(), new ArrayList<>(Arrays.asList(args).subList(3, args.length)));
+                        return ActionHandler.tabComplete(sender, args[2].toLowerCase(Locale.ENGLISH), new ArrayList<>(Arrays.asList(args).subList(3, args.length)));
                     case "set":
                     case "addline":
                         return Util.complete(args[3], ActionHandler.getTypes());
                 }
                 return Collections.emptyList();
             default:
-                switch (args[1].toLowerCase()) {
+                switch (args[1].toLowerCase(Locale.ENGLISH)) {
                     case "add":
-                        return ActionHandler.tabComplete(sender, args[2].toLowerCase(), new ArrayList<>(Arrays.asList(args).subList(3, args.length)));
+                        return ActionHandler.tabComplete(sender, args[2].toLowerCase(Locale.ENGLISH), new ArrayList<>(Arrays.asList(args).subList(3, args.length)));
                     case "set":
                     case "addline":
-                        return ActionHandler.tabComplete(sender, args[3].toLowerCase(), new ArrayList<>(Arrays.asList(args).subList(4, args.length)));
+                        return ActionHandler.tabComplete(sender, args[3].toLowerCase(Locale.ENGLISH), new ArrayList<>(Arrays.asList(args).subList(4, args.length)));
                 }
         }
         return Collections.emptyList();
@@ -530,9 +526,20 @@ public class Actions extends ListenerSubCmd {
                         e.printStackTrace();
                     }
                 if (uses > 0) {
-                    if (uses == 1 && getConsume(tagItem))
-                        event.getItem().setAmount(event.getItem().getAmount() - 1);
-                    else {
+                    if (uses == 1 && getConsume(tagItem)) {
+                        if (event.getItem().getAmount() == 1) { //1.8 doesn't like  event.getItem().setAmount(event.getItem().getAmount() - 1); on single items
+                            try {
+                                if (event.getHand() == EquipmentSlot.HAND)
+                                    event.getPlayer().getInventory().setItemInMainHand(null);
+                                else
+                                    event.getPlayer().getInventory().setItemInOffHand(null);
+                            } catch (Error e) {
+                                event.getPlayer().getInventory().setItemInHand(null);
+                            }
+                        } else
+                            event.getItem().setAmount(event.getItem().getAmount() - 1);
+
+                    } else {
                         try {
                             if (event.getItem().getAmount() == 1) {
                                 setUses(tagItem, uses - 1);
@@ -757,9 +764,13 @@ public class Actions extends ListenerSubCmd {
                     , "%editor-prev%", String.valueOf(Math.max(1, editorValue / 10)), "%editor-next%", String.valueOf(Math.min(1000000, editorValue * 10))));
 
             //permission
-            this.getInventory().setItem(6, this.loadLanguageDescription(this.getGuiItem("gui.actions.permission", Material.IRON_BARS), "gui.actions.permission",
-                    "%value%", getPermission(tagItem) == null ? "<none>" : getPermission(tagItem)));
-
+            try {
+                this.getInventory().setItem(6, this.loadLanguageDescription(this.getGuiItem("gui.actions.permission", Material.IRON_BARS), "gui.actions.permission",
+                        "%value%", getPermission(tagItem) == null ? "<none>" : getPermission(tagItem)));
+            } catch (Error e) {
+                this.getInventory().setItem(6, this.loadLanguageDescription(this.getGuiItem("gui.actions.permission", Material.valueOf("IRON_FENCE")), "gui.actions.permission",
+                        "%value%", getPermission(tagItem) == null ? "<none>" : getPermission(tagItem)));
+            }
 
             // cooldown
             this.getInventory().setItem(7, this.loadLanguageDescription(this.getGuiItem("gui.actions.cooldown", Material.COMPASS), "gui.actions.cooldown",
@@ -871,7 +882,12 @@ public class Actions extends ListenerSubCmd {
                         int index = actions.get(i).indexOf(TYPE_SEPARATOR);
                         String actionPre = actions.get(i).substring(0, index);
                         String actionPost = actions.get(i).substring(index + TYPE_SEPARATOR.length());
-                        ItemStack item = this.getGuiItem("gui.actionslines.line", Material.COMMAND_BLOCK);
+                        ItemStack item;
+                        try {
+                            item = this.getGuiItem("gui.actionslines.line", Material.COMMAND_BLOCK);
+                        } catch (Error e){
+                            item = this.getGuiItem("gui.actionslines.line", Material.valueOf("COMMAND"));
+                        }
                         ItemMeta meta = item.getItemMeta();
                         String action = this.getPlugin().getLanguageConfig(target).getMessage("gui.actionslines.actionformat"
                                 , "", "%type%", actionPre, "%info%", actionPost);
@@ -881,7 +897,12 @@ public class Actions extends ListenerSubCmd {
                         this.inventory.setItem(i, item);
                     }
                 if (actions == null || actions.size() < 45) {
-                    ItemStack item = this.getGuiItem("gui.actionslines.line", Material.COMMAND_BLOCK);
+                    ItemStack item;
+                    try {
+                        item = this.getGuiItem("gui.actionslines.line", Material.COMMAND_BLOCK);
+                    } catch (Error e){
+                        item = this.getGuiItem("gui.actionslines.line", Material.valueOf("COMMAND"));
+                    }
                     ItemMeta meta = item.getItemMeta();
                     this.loadLanguageDescription(meta, "gui.actionslines.add");
                     item.setItemMeta(meta);

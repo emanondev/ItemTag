@@ -9,9 +9,11 @@ import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.inventory.GrindstoneInventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Locale;
+
 public class Grindable extends CustomFlag {
 
-    private final static String GRINDABLE_KEY = ItemTag.get().getName().toLowerCase() + ":grindable";
+    private final static String GRINDABLE_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":grindable";
 
     public Grindable(Flag cmd) {
         super("grindable", GRINDABLE_KEY, cmd);

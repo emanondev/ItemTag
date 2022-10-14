@@ -11,8 +11,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Locale;
+
 public class EquipmentFlag extends CustomFlag {
-    private final static String EQUIPMENT = ItemTag.get().getName().toLowerCase() + ":equipment";
+    private final static String EQUIPMENT = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":equipment";
 
 
     public EquipmentFlag(@NotNull Flag subCommand) {

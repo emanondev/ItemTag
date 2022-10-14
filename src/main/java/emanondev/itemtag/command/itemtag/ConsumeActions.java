@@ -13,17 +13,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class ConsumeActions extends ListenerSubCmd {
 
-    private final static String ACTIONS_KEY = ItemTag.get().getName().toLowerCase() + ":consume_actions";
-    private final static String ACTION_COOLDOWN_KEY = ItemTag.get().getName().toLowerCase() + ":consume_cooldown";
-    private final static String ACTION_COOLDOWN_ID_KEY = ItemTag.get().getName().toLowerCase() + ":consume_cooldown_id";
-    private final static String ACTION_PERMISSION_KEY = ItemTag.get().getName().toLowerCase() + ":consume_permission";
+    private final static String ACTIONS_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":consume_actions";
+    private final static String ACTION_COOLDOWN_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":consume_cooldown";
+    private final static String ACTION_COOLDOWN_ID_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":consume_cooldown_id";
+    private final static String ACTION_PERMISSION_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":consume_permission";
     private final static String TYPE_SEPARATOR = "%%:%%";
 
     private static final String[] actionsSub = new String[]{"add", "addline", "set", "permission", "cooldown",
@@ -43,7 +40,7 @@ public class ConsumeActions extends ListenerSubCmd {
         }
         ItemStack item = this.getItemInHand(p);
         try {
-            switch (args[1].toLowerCase()) {
+            switch (args[1].toLowerCase(Locale.ENGLISH)) {
                 case "add":
                     add((Player) sender, args, item);
                     return;
@@ -116,7 +113,7 @@ public class ConsumeActions extends ListenerSubCmd {
         try {
             if (args.length > 3)
                 throw new IllegalArgumentException("Wrong param number");
-            String permission = args.length == 2 ? null : args[2].toLowerCase();
+            String permission = args.length == 2 ? null : args[2].toLowerCase(Locale.ENGLISH);
             if (permission != null) {
                 ItemTag.getTagItem(item).setTag(ACTION_PERMISSION_KEY, permission);
                 sendLanguageString("feedback.actions.permission.set", null, p,
@@ -135,7 +132,7 @@ public class ConsumeActions extends ListenerSubCmd {
         try {
             if (args.length > 3)
                 throw new IllegalArgumentException("Wrong param number");
-            String cooldownId = args.length == 2 ? null : args[2].toLowerCase();
+            String cooldownId = args.length == 2 ? null : args[2].toLowerCase(Locale.ENGLISH);
             if (cooldownId != null) {
                 ItemTag.getTagItem(item).setTag(ACTION_COOLDOWN_ID_KEY, cooldownId);
                 sendLanguageString("feedback.actions.cooldownid.set", null, p,
@@ -178,7 +175,7 @@ public class ConsumeActions extends ListenerSubCmd {
             if (line < 0)
                 throw new IllegalArgumentException();
             ArrayList<String> tmp = new ArrayList<>(Arrays.asList(args).subList(4, args.length));
-            String actionType = args[3].toLowerCase();
+            String actionType = args[3].toLowerCase(Locale.ENGLISH);
             String actionInfo = String.join(" ", tmp.toArray(new String[0]));
             try {
                 ActionHandler.validateActionType(actionType);
@@ -244,7 +241,7 @@ public class ConsumeActions extends ListenerSubCmd {
             if (args.length < 3)
                 throw new IllegalArgumentException("Wrong param number");
             ArrayList<String> tmp = new ArrayList<>(Arrays.asList(args).subList(3, args.length));
-            String actionType = args[2].toLowerCase();
+            String actionType = args[2].toLowerCase(Locale.ENGLISH);
             String actionInfo = String.join(" ", tmp.toArray(new String[0]));
             try {
                 ActionHandler.validateActionType(actionType);
@@ -291,7 +288,7 @@ public class ConsumeActions extends ListenerSubCmd {
             ArrayList<String> tmp = new ArrayList<>();
             for (int i = 4; i < args.length; i++)
                 tmp.add(args[i]);
-            String actionType = args[3].toLowerCase();
+            String actionType = args[3].toLowerCase(Locale.ENGLISH);
             String actionInfo = String.join(" ", tmp.toArray(new String[0]));
             try {
                 ActionHandler.validateActionType(actionType);
@@ -339,12 +336,12 @@ public class ConsumeActions extends ListenerSubCmd {
                 }
                 return new ArrayList<>();
             case 4:
-                switch (args[1].toLowerCase()) {
+                switch (args[1].toLowerCase(Locale.ENGLISH)) {
                     case "add": {
                         List<String> params = new ArrayList<>();
                         for (int i = 3; i < args.length; i++)
                             params.add(args[i]);
-                        return ActionHandler.tabComplete(sender, args[2].toLowerCase(), params);
+                        return ActionHandler.tabComplete(sender, args[2].toLowerCase(Locale.ENGLISH), params);
                     }
                     case "set":
                     case "addline": {
@@ -352,19 +349,19 @@ public class ConsumeActions extends ListenerSubCmd {
                     }
                 }
             default:
-                switch (args[1].toLowerCase()) {
+                switch (args[1].toLowerCase(Locale.ENGLISH)) {
                     case "add": {
                         List<String> params = new ArrayList<>();
                         for (int i = 3; i < args.length; i++)
                             params.add(args[i]);
-                        return ActionHandler.tabComplete(sender, args[2].toLowerCase(), params);
+                        return ActionHandler.tabComplete(sender, args[2].toLowerCase(Locale.ENGLISH), params);
                     }
                     case "set":
                     case "addline": {
                         List<String> params = new ArrayList<>();
                         for (int i = 4; i < args.length; i++)
                             params.add(args[i]);
-                        return ActionHandler.tabComplete(sender, args[2].toLowerCase(), params);
+                        return ActionHandler.tabComplete(sender, args[2].toLowerCase(Locale.ENGLISH), params);
                     }
                 }
         }

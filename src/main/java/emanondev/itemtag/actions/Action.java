@@ -4,13 +4,14 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.Locale;
 
 public abstract class Action {
 
     private final String id;
 
     public Action(String id) {
-        this.id = id.toLowerCase();
+        this.id = id.toLowerCase(Locale.ENGLISH);
 
     }
 

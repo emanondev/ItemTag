@@ -18,8 +18,10 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Locale;
+
 public class EntityFood extends CustomFlag {
-    private final static String ENTITYFOOD_KEY = ItemTag.get().getName().toLowerCase() + ":entity_food";
+    private final static String ENTITYFOOD_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":entity_food";
 
     public EntityFood(Flag cmd) {
         super("entityfood", ENTITYFOOD_KEY, cmd);

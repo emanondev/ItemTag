@@ -9,18 +9,25 @@ import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
 import java.util.WeakHashMap;
 
 public class SpigotTagItem implements TagItem {
 
-    private static final WeakHashMap<String, NamespacedKey> keys = new WeakHashMap<String, NamespacedKey>() {
+    private static final HashMap<String, NamespacedKey> keys = new HashMap<String, NamespacedKey>() {
         @Override
         public NamespacedKey get(Object key) {
             NamespacedKey keyN = super.get(key);
             if (keyN != null)
                 return keyN;
             String[] args = ((String) key).split(":");
-            keyN = new NamespacedKey(args[0], args[1]);
+            try {
+                ItemTag.get().log("Debug: arg1 '&e"+args[0]+"&f' arg2 '&e"+args[0]+"&f'");
+                keyN = new NamespacedKey(args[0], args[1]);
+            } catch (Exception e) {
+                ItemTag.get().log("Invalid key "+key);
+                throw e;
+            }
             this.put((String) key, keyN);
             return keyN;
         }

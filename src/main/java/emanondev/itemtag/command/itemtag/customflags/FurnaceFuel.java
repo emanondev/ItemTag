@@ -7,8 +7,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.FurnaceBurnEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Locale;
+
 public class FurnaceFuel extends CustomFlag {
-    private final static String FURNACE_FUEL = ItemTag.get().getName().toLowerCase() + ":furnacefuel";
+    private final static String FURNACE_FUEL = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":furnacefuel";
 
     public FurnaceFuel(Flag cmd) {
         super("furnacefuel", FURNACE_FUEL, cmd);

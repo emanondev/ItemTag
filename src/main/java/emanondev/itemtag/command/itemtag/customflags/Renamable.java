@@ -8,9 +8,11 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Locale;
+
 public class Renamable extends CustomFlag {
 
-    private final static String RENAMABLE_KEY = ItemTag.get().getName().toLowerCase() + ":renamable";
+    private final static String RENAMABLE_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":renamable";
 
     public Renamable(Flag cmd) {
         super("renamable", RENAMABLE_KEY, cmd);

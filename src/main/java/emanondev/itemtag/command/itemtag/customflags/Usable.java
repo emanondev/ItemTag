@@ -16,8 +16,10 @@ import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Locale;
+
 public class Usable extends CustomFlag {
-    private final static String USABLE_KEY = ItemTag.get().getName().toLowerCase() + ":usable";
+    private final static String USABLE_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":usable";
 
     public Usable(Flag cmd) {
         super("usable", USABLE_KEY, cmd);

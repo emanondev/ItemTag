@@ -7,9 +7,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Locale;
+
 public class Placeable extends CustomFlag {
 
-    private final static String PLACEABLE_KEY = ItemTag.get().getName().toLowerCase() + ":placeable";
+    private final static String PLACEABLE_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":placeable";
 
     public Placeable(Flag subCmd) {
         super("placeable", PLACEABLE_KEY, subCmd);

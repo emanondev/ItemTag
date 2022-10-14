@@ -7,8 +7,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.FurnaceSmeltEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Locale;
+
 public class Smelt extends CustomFlag {
-    private final static String SMELT = ItemTag.get().getName().toLowerCase() + ":smelt";
+    private final static String SMELT = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":smelt";
 
     public Smelt(Flag cmd) {
         super("smelt", SMELT, cmd);

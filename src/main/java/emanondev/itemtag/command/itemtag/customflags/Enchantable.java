@@ -7,9 +7,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Locale;
+
 public class Enchantable extends CustomFlag {
 
-    private final static String ENCHANTABLE_KEY = ItemTag.get().getName().toLowerCase() + ":enchantable";
+    private final static String ENCHANTABLE_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":enchantable";
 
     public Enchantable(Flag cmd) {
         super("enchantable", ENCHANTABLE_KEY, cmd);

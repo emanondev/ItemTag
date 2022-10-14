@@ -9,8 +9,8 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.*;
 
 public class EffectsInfo {
-    private final static String EFFECTS_LIST_KEY = ItemTag.get().getName().toLowerCase() + ":effects_list";
-    private final static String EFFECTS_EQUIPS_KEY = ItemTag.get().getName().toLowerCase() + ":effects_equips";
+    private final static String EFFECTS_LIST_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":effects_list";
+    private final static String EFFECTS_EQUIPS_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":effects_equips";
 
     private final EnumSet<EquipmentSlot> slots = EnumSet.noneOf(EquipmentSlot.class);
     private final HashMap<PotionEffectType, PotionEffect> effects = new HashMap<>();

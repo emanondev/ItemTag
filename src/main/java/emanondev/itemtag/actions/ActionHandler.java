@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class ActionHandler {
 
@@ -20,7 +21,7 @@ public class ActionHandler {
             throw new NullPointerException();
         if (actions.containsKey(action.getID()))
             throw new IllegalArgumentException();
-        actions.put(action.getID().toLowerCase(), action);
+        actions.put(action.getID().toLowerCase(Locale.ENGLISH), action);
     }
 
     public static void clearActions() {
@@ -28,17 +29,17 @@ public class ActionHandler {
     }
 
     public static void validateActionType(String type) {
-        if (!actions.containsKey(type.toLowerCase()))
+        if (!actions.containsKey(type.toLowerCase(Locale.ENGLISH)))
             throw new IllegalArgumentException();
     }
 
     public static void validateActionInfo(String type, String text) {
-        actions.get(type.toLowerCase()).validateInfo(text);
+        actions.get(type.toLowerCase(Locale.ENGLISH)).validateInfo(text);
     }
 
     public static List<String> tabComplete(CommandSender sender, String type, List<String> params) {
-        if (actions.containsKey(type.toLowerCase()))
-            return actions.get(type.toLowerCase()).tabComplete(sender, params);
+        if (actions.containsKey(type.toLowerCase(Locale.ENGLISH)))
+            return actions.get(type.toLowerCase(Locale.ENGLISH)).tabComplete(sender, params);
         return new ArrayList<>();
     }
 
@@ -47,7 +48,7 @@ public class ActionHandler {
     }
 
     public static Action getAction(String type) {
-        return actions.get(type.toLowerCase());
+        return actions.get(type.toLowerCase(Locale.ENGLISH));
     }
 
 }

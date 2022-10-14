@@ -9,7 +9,7 @@ class ConfigurationUpdater {
 
     static void update() {
         ItemTag plugin = ItemTag.get();
-        int version = plugin.getConfig().getInt("version", 1);
+        int version = plugin.getConfig().getInt("config-version", 1);
         if (version >= CURRENT_VERSION)
             return;
 

@@ -10,7 +10,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
-import java.util.WeakHashMap;
 
 public class SpigotTagItem implements TagItem {
 
@@ -21,13 +20,7 @@ public class SpigotTagItem implements TagItem {
             if (keyN != null)
                 return keyN;
             String[] args = ((String) key).split(":");
-            try {
-                ItemTag.get().log("Debug: arg1 '&e"+args[0]+"&f' arg2 '&e"+args[0]+"&f'");
-                keyN = new NamespacedKey(args[0], args[1]);
-            } catch (Exception e) {
-                ItemTag.get().log("Invalid key "+key);
-                throw e;
-            }
+            keyN = new NamespacedKey(args[0], args[1]);
             this.put((String) key, keyN);
             return keyN;
         }

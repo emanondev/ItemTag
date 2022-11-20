@@ -1,0 +1,481 @@
+player-only: '&4[&cItemTag&4] &c此命令仅玩家可用'
+no-item-on-hand: '&4[&cItemTag&4] &c你需要拿着一个物品'
+lack-permission: '&4[&cItemTag&4] &c你没有 %permission% 权限'
+lack-permission-generic: '&4[&cItemTag&4] &c您无权使用此命令'
+itemtag:
+  help-header: '&9&lItemTag - 帮助'
+  flag:
+    wrong-flag: '&4[&cItemTag&4] &c错误的标签值! &4[&6悬停查看&4]'
+    description:
+    - '&b&l切换物品上的自定义标签'
+    - ''
+    - '&e<flag> &b标签名称'
+    - '&e[true/false] &b标签值, 默认切换'
+    params: <flag> [true/false]
+    placeable:
+      feedback:
+        standard: '&9[&fItemTag&9] &a现在可以放置该物品.'
+        custom: '&9[&fItemTag&9] &a现在无法放置该物品.'
+        failed-place-attempt: '&7您不能放置该物品.'
+    usable:
+      feedback:
+        standard: '&9[&fItemTag&9] &a现在该物品可以使用.'
+        custom: '&9[&fItemTag&9] &a现在该物品无法使用 (右键点击).'
+    smelt:
+      feedback:
+        standard: '&9[&fItemTag&9] &a现在该物品可以在熔炉上烹饪/熔炼.'
+        custom: '&9[&fItemTag&9] &a现在该物品不能在熔炉上烹饪/冶炼.'
+    furnacefuel:
+      feedback:
+        standard: '&9[&fItemTag&9] &a现在该物品可用作熔炉燃料.'
+        custom: '&9[&fItemTag&9] &a现在该物品不能用作熔炉燃料.'
+    recipeingredient:
+      feedback:
+        standard: '&9[&fItemTag&9] &a现在该物品可用作物品合成.'
+        custom: '&9[&fItemTag&9] &a现在该物品不能用作物品合成.'
+    enchantable:
+      feedback:
+        standard: '&9[&fItemTag&9] &a现在该物品可以附魔.'
+        custom: '&9[&fItemTag&9] &a现在该物品不能被附魔.'
+    renamable:
+      feedback:
+        standard: '&9[&fItemTag&9] &a现在该物品可以在铁砧上使用.'
+        custom: '&9[&fItemTag&9] &a现在该物品不能在铁砧上使用.'
+    grindable:
+      feedback:
+        standard: '&9[&fItemTag&9] &a现在该物品可以用磨石分解.'
+        custom: '&9[&fItemTag&9] &a现在该物品不能用磨石分解.'
+    equipment:
+      feedback:
+        standard: '&9[&fItemTag&9] &a现在该物品可以装备.'
+        custom: '&9[&fItemTag&9] &a现在该物品不能装备.'
+    entityfood:
+      feedback:
+        standard: '&9[&fItemTag&9] &a现在该物品可以喂养动物.'
+        custom: '&9[&fItemTag&9] &a现在该物品不能喂养动物.'
+  actions:
+    invalid-action:
+      message: '&4[&cItemTag&4] &c''&6%error%&c'' 不是有效类型 &4[&6悬停查看&4]'
+      hover-pre: '&6&l无效的类型'
+      first_color: '&b'
+      second_color: '&e'
+    invalid-actioninfo:
+      message: '&4[&cItemTag&4] &c''&6%error%&c'' 不是有效的信息对于 &6%action% &4[&6悬停查看&4]'
+    description:
+    - '&b&l设置使用该物品时完成的行为'
+    - ''
+    - '&eAdd <type> <action> &b- 添加选定的行为'
+    - '&eSet <line> <type> <action> &b- 替换所选行上的行为'
+    - '&eRemove <line> &b- 删除所选行上的行为'
+    - '&eClear &b- 删除所有行为'
+    - '&ePermission [permission] &b- 设置使用此物品所需的权限'
+    - '&eCooldown <ms> &b- 设置冷却时间以再次使用此物品'
+    - '&eCooldownid [id] &b- 为此设置使用的冷却时间'
+    - '&eUses [amount] &b- 设置这个物品可以使用多少次'
+    - '&eInfo &b- 显示有关当前物品行为的信息'
+    params: '[...]'
+    add:
+      params: add <type> <action>
+      description:
+      - '&b&l添加选定的行为'
+      - ''
+      - '&e<type> &b行为类型'
+      - '&e<action> &b行为的附加信息'
+      # %action%
+      feedback: '&9[&fItemTag&9] &a已添加 &e%action%'
+    addline:
+      params: addline <line> <type> <action>
+      description:
+      - '&b&l在选定的行上添加选定的行为'
+      - ''
+      - '&e<line> &b要添加的行'
+      - '&e<type> &b行为类型'
+      - '&e<action> &b行动的附加信息'
+      feedback: '&9[&fItemTag&9] &a行 &e%line% &a添加为了 &e%action%'
+    set:
+      params: set <line> <type> <action>
+      description:
+      - '&b&l替换所选行上的行为'
+      - ''
+      - '&e<line> &b要替换的行'
+      - '&e<type> &b行为类型'
+      - '&e<action> &b行动的附加信息'
+      # %line% %action%
+      feedback: '&9[&fItemTag&9] &a行 &e%line% &a设置为了 &e%action%'
+    remove:
+      params: remove <line>
+      description:
+      - '&b&l删除选定行上的行为'
+      - ''
+      - '&e<line> &b要删除的行'
+      # %line% %action%
+      feedback: '&9[&fItemTag&9] &a删除行 &e%line% &a(&e%action%&a)'
+    permission:
+      params: permission [permission]
+      description:
+      - '&b&l设置使用此物品的权限'
+      - ''
+      - '&e[permission] &b设置权限，默认无需'
+      feedback:
+        set: '&9[&fItemTag&9] &a现在使用这个物品需要权限 &e%permission%'
+        removed: '&9[&fItemTag&9] &a现在使用此物品不需要任何权限'
+    cooldown:
+      params: cooldown [ms]
+      description:
+      - '&b&l设置再次使用物品的冷却时间'
+      - ''
+      - '&e[毫秒] &b多长时间后才可以'
+      - '     &b再次使用此物品, 默认为 0'
+      - '&b注意: 冷却时间基于冷却 ID,'
+      - '&b 拥有相同冷却 ID 的物品共享相同的冷却时间'
+      - '&b注意: 玩家退出和服务器重启时会保留冷却时间'
+      feedback:
+        set: '&9[&fItemTag&9] &a该物品的冷却时间为 &e%cooldown_seconds% &a秒'
+        removed: '&9[&fItemTag&9] &a此物品没有冷却时间'
+    cooldownid:
+      params: cooldownid [id]
+      description:
+      - '&b&l为物品设置冷却 ID'
+      - ''
+      - '&e[id] &b多久可以再次使用该物品'
+      - '&b注意: 冷却时间基于冷却 ID,'
+      - '&b 拥有相同冷却 ID 的物品共享相同的冷却时间'
+      feedback:
+        set: '&9[&fItemTag&9] &a这个物品使用 &e%id% &a 作为冷却 ID'
+        removed: '&9[&fItemTag&9] &a这个物品使用 &e默认冷却 ID'
+    uses:
+      params: uses [amount]
+      description:
+      - '&b&l设置物品可以使用多少次'
+      - ''
+      - '&b注意: 设置 &e-1 &b即可无限使用'
+      feedback:
+        set: '&9[&fItemTag&9] &a此物品现在有 &e%uses% &a使用次数限制'
+        unlimited: '&9[&fItemTag&9] &a此物品现在有 &e无限 &a使用次数'
+    consume:
+      params: consume [true/false]
+      description:
+      - '&6&l在最后一次使用时损坏该物品'
+      - ''
+      - '&b注意: 当开启并且该物品损坏'
+      - '&b 它的最后一次使用时, 该物品将损坏'
+      feedback:
+        set: '&9[&fItemTag&9] &a物品在最后一次使用时损坏'
+        unset: '&9[&fItemTag&9] &a物品在达到最后一次使用时不会被损坏'
+    visualcooldown:
+      params: visualcooldown [true/false]
+      description:
+      - '&6&l可见的冷却时间显示'
+      - ''
+      - '&b开启后, 物品将会有一个类似末影珍珠'
+      - '&b的冷却时间显示效果'
+      - ''
+      - '&b注意: 不幸的是，这种视觉效果也'
+      - '&b会显示在任何同类物品上 (Minecraft 限制)'
+  consumeactions:
+    description:
+    - '&b&l设置在消耗物品 (如食物和饮品) 时完成的行为'
+    - ''
+    - '&e添加 <type> <action> &b- 添加行为'
+    - '&e替换 <line> <type> <action> &b- 替换所选行上的行为'
+    - '&e删除 <line> &b- 删除所选行上的行为'
+    - '&e删除所有 &b- 删除所有行为'
+    - '&e权限 [permission] &b- 设置使用此物品所需的权限'
+    - '&e冷却 <ms> &b- 设置使用该物品的冷却时间'
+    - '&e冷却 ID [id] &b- 为此设置使用的冷却 ID'
+    - '&e信息 &b- 显示有关当前物品行为的信息'
+    params: '[...]'
+    add:
+      params: add <type> <action>
+      description:
+      - '&b&l添加选定的行为'
+      - ''
+      - '&e<type> &b行为类型'
+      - '&e<action> &b行为的附加信息'
+    addline:
+      params: addline <line> <type> <action>
+      description:
+      - '&b&l在选定的行上添加选定的行为'
+      - ''
+      - '&e<line> &b要添加的行'
+      - '&e<type> &b行为类型'
+      - '&e<action> &b行动的附加信息'
+    set:
+      params: set <line> <type> <action>
+      description:
+      - '&b&l替换所选行上的行为'
+      - ''
+      - '&e<line> &b要替换的行'
+      - '&e<type> &b行为类型'
+      - '&e<action> &b行动的附加信息'
+    remove:
+      params: remove <line>
+      description:
+      - '&b&l删除选定行上的行为'
+      - ''
+      - '&e<line> &b要删除的行'
+    permission:
+      params: permission [permission]
+      description:
+      - '&b&l设置使用此物品的权限'
+      - ''
+      - '&e[permission] &b设置权限, 默认无'
+    cooldown:
+      params: cooldown [ms]
+      description:
+      - '&b&l设置冷却时间以再次消耗物品'
+      - ''
+      - '&e[毫秒] &b时间后才能再次'
+      - '     &b使用此物品, 默认为 0'
+      - '&b注意: 冷却时间基于冷却 ID,'
+      - '&b 拥有相同冷却 ID 的物品共享相同的冷却时间'
+      - '&b注意: 玩家退出和服务器重启时会保留冷却时间'
+    cooldownid:
+      params: cooldownid [id]
+      description:
+      - '&b&l为物品设置冷却 ID'
+      - ''
+      - '&e[id] &b多久才能再次使用该物品'
+      - '&b注意: 冷却时间基于冷却 ID,'
+      - '&b  拥有相同冷却 ID 的物品共享相同的冷却时间'
+    feedback:
+      actions:
+        set: '&a行 &e%line% &a设置为了 &e%action%'
+        remove: '&a删除了行 &e%line% &a(&e%action%&a)'
+        clear: '&a已清除此物品损坏前的行为'
+        permission:
+          set: '&a现在需要 &e%permission% &a才能损坏此物品'
+          removed: '&a现在不需要权限即可损坏此物品'
+        cooldownid:
+          set: '&a此物品使用的冷却 ID 设置为 &e%id%'
+          removed: '&a此物品使用的冷却 ID 设置为 &e默认'
+        cooldown:
+          set: '&a此物品的冷却时间设置为 &e%cooldown_seconds% &a秒'
+          removed: '&a此物品不再有冷却时间'
+        add: ''
+  effects:
+    description:
+    - '&b&l添加永久药水效果'
+    - '&b打开一个 GUI'
+    - '&b切记选择一个药水'
+    - '&b生效时的的盔甲位'
+    params: ''
+itemtagreload:
+  success: '&9[&fItemTag&9] &a重载成功'
+gui:
+  previous-page:
+    # Holders: %player_name% %page% %target_page%
+    description:
+    - '&6&l下一页'
+    - ''
+    - '&7[&f点击&7]&b 前往第 &e%target_page% 页'
+  next-page:
+    # Holders: %player_name% %page% %target_page%
+    description:
+    - '&6&l上一页'
+    - ''
+    - '&7[&f点击&7]&b 前往第 &e%target_page% 页'
+  back:
+    # Holders: %player_name%
+    description:
+    - '&6&l返回'
+    - ''
+    - '&7[&f点击&7]&b 返回上一层'
+  actions:
+    # %player_name%
+    title: '&9行为'
+    click-interact: '&9[&fItemTag&9] &b[点击此处]'
+    click-hover: '&6点击填充指令到聊天栏'
+    addline:
+    - '&6&l添加行为'
+    - ''
+    - '&7[&f点击&7]&b 来改变值'
+    - '&9/it actions add <action type> <action info>'
+    - '&9/it actions addline <line> <action type> <action info>'
+    set:
+    - '&6&l设置行为'
+    - ''
+    - '&7[&f点击&7]&b 来改变值'
+    - '&9/it actions set <line> <action type> <action info>'
+    remove:
+    - '&6&l删除行为'
+    - ''
+    - '&7[&f点击&7]&b 来改变值'
+    - '&9/it actions remove <line>'
+    # %value%
+    consume:
+    - '&6&l当使用次数为 &e&l0&6&l 时损坏'
+    - '&b状态: &e%value%'
+    - '&7注意: 当 true 并且该物品消耗其'
+    - '&7 最后一次使用时, 物品损坏'
+    - ''
+    - '&7[&f点击&7]&b 切换'
+    - '&9/it actions consume [true/false]'
+    # %value% %editor% %editor-prev% %editor-next%
+    uses:
+    - '&e&l%value% &6&l次可用次数'
+    - '&7(设置为 -1 为无限)'
+    - ''
+    - '&7[&f右键&7]&b 添加 &e%editor%'
+    - '&7[&f左键&7]&b 删除 &e%editor%'
+    - '&7[&fShift 左/右键 点击&7]&b %editor-prev% << &e%editor% &b>> %editor-next%'
+    - '&9/it actions setuses <amount>'
+    # %value%
+    permission:
+    - '&6&l使用权限要求: &e&l%value%'
+    - '&7注意: 如果您没有此权限'
+    - '&7 您将无法使用该物品或'
+    - '&7 减少它的使用次数'
+    - ''
+    - '&7[&f点击&7]&b 编辑'
+    - '&9/it actions permission [permission]'
+    # %value_s% %editor% %editor-prev% %editor-next%
+    cooldown:
+    - '&6&l冷却: &e&l%value_s% &9秒'
+    - '&7注意: 当右键点击使用时会触发一次冷却'
+    - ''
+    - '&7[&f右键&7]&b 添加 &e%editor%'
+    - '&7[&f左键&7]&b 删除 &e%editor%'
+    - '&7[&fShift 左/右键 点击&7]&b %editor-prev% << &e%editor% &b>> %editor-next%'
+    - '&9/it actions cooldown <cooldown &nms&9>'
+    # %value%
+    cooldownid:
+    - '&6&l冷却 ID: &e&l%value%'
+    - '&7注意: 具有相同冷却 ID 的物品'
+    - '&7 共享冷却'
+    - ''
+    - '&7[&f点击&7]&b 编辑'
+    - '&9/it actions cooldownid [cooldown id]'
+    info:
+    - '&6&l物品行为列表:'
+    # %value%
+    visualcooldown:
+    - '&6&l显示可见冷却时间'
+    - '&b状态: &e%value%'
+    - '&7注意: 不幸的是这种显示'
+    - '&7 会影响同一种类型的物品'
+    - ''
+    - '&7[&f点击&7]&b 切换'
+    - '&9/it actions visualdisplay [true/false]'
+  actionslines:
+    actionformat: '&e%type% &f%info%'
+    element:
+    - '%action%'
+    - '&7[&f右键&7]&b 替换此行为'
+    - '&7[&f左键&7]&b 在此之前添加新行为'
+    - '&7[&fShift 右键点击&7]&b 删除此行为'
+    add:
+    - ' '
+    - '&7[&f左键&7]&b 添加新动作'
+  flags:
+    # %value%
+    placeable:
+    - '&6设置该物品是否可以被放置'
+    - '&b状态: &e%value%'
+    - ''
+    - '&7[&f点击&7]&b 切换'
+    # %value%
+    usable:
+    - '&6设置该物品是否可以被使用'
+    - '&b状态: &e%value%'
+    - ''
+    - '&7如果关闭将会阻止原版右键'
+    - '&7 此物品的行为'
+    - '&7用途的定义因物品类型而异'
+    - '&7食物不能食用, 鱼竿不能钓鱼,'
+    - '&7 鸡蛋不能投掷, 刷怪蛋无法召唤...'
+    - ''
+    - '&7[&f点击&7]&b 切换'
+    # %value%
+    smelt:
+    - '&6设置该物品是否可以被熔炉烹饪或烧炼'
+    - '&b状态: &e%value%'
+    - ''
+    - '&7如果关闭将会阻止原版'
+    - '&7 被熔炉燃烧的行为'
+    - '&7食物和矿物均有效'
+    - ''
+    - '&7[&f点击&7]&b 切换'
+    # %value%
+    furnacefuel:
+    - '&6设置该物品是否可以用作熔炉燃料'
+    - '&b状态: &e%value%'
+    - ''
+    - '&7如果关闭将会阻止原版'
+    - '&7 熔炉使用此物品作为燃料的行为'
+    - ''
+    - '&7[&f点击&7]&b 切换'
+    # %value%
+    recipeingredient:
+    - '&6设置该物品是否可用于合成'
+    - '&b状态: &e%value%'
+    - ''
+    - '&7如果关闭将会阻止原版合成时'
+    - '&7 使用此物品作为配方的行为'
+    - ''
+    - '&7[&f点击&7]&b 切换'
+    # %value%
+    enchantable:
+    - '&6设置该物品是否可以附魔'
+    - '&b状态: &e%value%'
+    - ''
+    - '&7如果关闭将会阻止原版附魔台'
+    - '&7 对此物品附魔的行为'
+    - ''
+    - '&7[&f点击&7]&b 切换'
+    # %value%
+    renamable:
+    - '&6设置该物品是否可以在铁砧上使用'
+    - '&b状态: &e%value%'
+    - ''
+    - '&7如果关闭将会阻止原版铁砧'
+    - '&7 对此物品的行为'
+    - ''
+    - '&7[&f点击&7]&b 切换'
+    # %value%
+    grindable:
+    - '&6设置该物品是否可以在磨石上分解'
+    - '&b状态: &e%value%'
+    - ''
+    - '&7如果关闭将会阻止原版磨石'
+    - '&7 对此物品的行为'
+    - ''
+    - '&7[&f点击&7]&b 切换'
+    # %value%
+    equipment:
+    - '&6设置物品是否可以作为装备使用'
+    - '&b状态: &e%value%'
+    - ''
+    - '&7如果关闭将会阻止玩家将'
+    - '&7 此物品穿戴, 并且移回物品栏'
+    - '&7注意: 手和副手不被视为装备槽的一部分'
+    - ''
+    - '&7[&f点击&7]&b 切换'
+    # %value%
+    entityfood:
+    - '&6设置该物品是否可以用作动物的食物'
+    - '&b状态: &e%value%'
+    - ''
+    - '&7如果关闭将阻止原版中此物品'
+    - '&7 被喂养给动物的行为'
+    - ''
+    - '&7[&f点击&7]&b 切换'
+  effects:
+    # %player_name%
+    title: '&9状态效果'
+    # %slot% %value%
+    slot:
+    - '&6&l%slot%'
+    - '&b状态: &e%value%'
+    # %effect% %level% %particles% %ambient% %icon% %duration%
+    potion:
+    - '&6&l%effect%'
+    - ''
+    - '&b等级: &e%level% &7[左键/右键点击调整]'
+    - '&b粒子效果: &e%particles% &7[Shift 左键切换]'
+    - '&b较少粒子(Ambient): &e%ambient% &7[Shift 右键点击切换]'
+    - '&b图标: &e%icon% &7[中键点击切换]'
+    - '&b时长: &e%duration%'
+    potion-instant: 瞬间
+    potion-unlimited: 无限
+    icon-unsupported: '&c仅支持 1.13+'

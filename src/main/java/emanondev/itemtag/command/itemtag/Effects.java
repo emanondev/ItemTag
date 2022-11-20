@@ -20,8 +20,8 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.*;
 
 public class Effects extends ListenerSubCmd {
-    private final boolean is1_8 = Integer.parseInt(ItemEdit.NMS_VERSION.split("_")[1]) < 9;
-    private final boolean is1_10orLower = Integer.parseInt(ItemEdit.NMS_VERSION.split("_")[1]) < 11;
+    private final boolean is1_8 = ItemEdit.GAME_VERSION < 9;
+    private final boolean is1_10orLower = ItemEdit.GAME_VERSION < 11;
 
     public Effects(ItemTagCommand cmd) {
         super("effects", cmd, true, true);
@@ -107,7 +107,7 @@ public class Effects extends ListenerSubCmd {
                 }
                 //apply instant effects
                 for (PotionEffect effect : instant)
-                    addEffect(event.getPlayer(),effect);
+                    addEffect(event.getPlayer(), effect);
 
 
                 HashSet<PotionEffectType> types = new HashSet<>(oldEffects.keySet());
@@ -117,7 +117,7 @@ public class Effects extends ListenerSubCmd {
                     if (newEffects.containsKey(eType)) {
                         if (!oldEffects.containsKey(eType) || oldEffects.get(eType).getAmplifier() != newEffects.get(eType).getAmplifier())
                             //if a newEffect was not present on oldEffect, or has different amplifier: reset it
-                            addEffect(event.getPlayer(),newEffects.get(eType));
+                            addEffect(event.getPlayer(), newEffects.get(eType));
                     } else //if (oldEffects.containsKey(eType)) //which is always true
                         event.getPlayer().removePotionEffect(eType);
                 }
@@ -133,9 +133,9 @@ public class Effects extends ListenerSubCmd {
                 //if the new item has some active effects
                 for (PotionEffect effect : newInfo.getEffects())
                     if (effect.getType().isInstant())
-                        addEffect(event.getPlayer(),effect);
+                        addEffect(event.getPlayer(), effect);
                     else if (!event.getPlayer().hasPotionEffect(effect.getType()))
-                        addEffect(event.getPlayer(),effect);
+                        addEffect(event.getPlayer(), effect);
                     else {
                         PotionEffect currentEffect = null;
                         if (!is1_10orLower)// safe
@@ -149,15 +149,15 @@ public class Effects extends ListenerSubCmd {
 
                         if (currentEffect.getDuration() < 3600 * 20) //could be changed checking the whole equipment effects, but this way seems faster and still fair
                             if (ItemEdit.GAME_VERSION >= 16)
-                                addEffect(event.getPlayer(),effect);
-                        else if (currentEffect.getAmplifier() < effect.getAmplifier())
-                            addEffect(event.getPlayer(),effect);
+                                addEffect(event.getPlayer(), effect);
+                            else if (currentEffect.getAmplifier() < effect.getAmplifier())
+                                addEffect(event.getPlayer(), effect);
                     }
             }
         }
     }
 
-    private void addEffect(Player target,PotionEffect effect){
+    private void addEffect(Player target, PotionEffect effect) {
         if (ItemEdit.GAME_VERSION >= 16)
             target.addPotionEffect(effect);
         else

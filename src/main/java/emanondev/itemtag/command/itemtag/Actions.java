@@ -6,6 +6,7 @@ import emanondev.itemedit.UtilsInventory.ExcessManage;
 import emanondev.itemedit.UtilsString;
 import emanondev.itemedit.aliases.Aliases;
 import emanondev.itemedit.gui.Gui;
+import emanondev.itemedit.gui.PagedGui;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.TagItem;
 import emanondev.itemtag.actions.ActionHandler;
@@ -809,15 +810,37 @@ public class Actions extends ListenerSubCmd {
 
         private int editorValue = 1;
 
-        private class ActionTypeGui implements Gui {
+        private class ActionTypeGui implements PagedGui {
 
             private final Inventory inventory;
+            private final int page;
+            private final int rows = 5;
+            private final int maxPages;
 
             public ActionTypeGui() {
+                this(1);
+            }
+
+            public ActionTypeGui(int page) {
+                if (page < 1)
+                    throw new NullPointerException();
                 String title = this.getLanguageMessage("gui.actions.title",
                         "%player_name%", target.getName());
-                this.inventory = Bukkit.createInventory(this, 6 * 9, title);
+                this.inventory = Bukkit.createInventory(this, (rows + 1) * 9, title);
                 updateInventory();
+                int actions = getActions(tagItem).size() + 1;
+                int maxPages = (actions) / (rows * 9) + ((actions) % (rows * 9) == 0 ? 0 : 1);
+                if (page > maxPages)
+                    page = maxPages;
+                this.maxPages = maxPages;
+                this.page = page;
+            }
+
+            /**
+             * @return 1+
+             */
+            public int getPage() {
+                return this.page;
             }
 
             @Override
@@ -832,13 +855,27 @@ public class Actions extends ListenerSubCmd {
                     return;
                 if (event.getCurrentItem() == null || event.getCurrentItem().getType() == Material.AIR)
                     return;
-                if (event.getSlot() == 49) {
-                    getTargetPlayer().openInventory(ActionsGui.this.getInventory());
-                    return;
+                if (event.getSlot() > inventory.getSize() - 9) {
+                    switch (inventory.getSize() - event.getSlot()) {
+                        case 2:
+                            target.openInventory(new ActionTypeGui(page + 1).getInventory());
+                            return;
+                        case 5:
+                            getTargetPlayer().openInventory(ActionsGui.this.getInventory());
+                            return;
+                        default:
+                            target.openInventory(new ActionTypeGui(page - 1).getInventory());
+                            return;
+                    }
                 }
                 List<String> actions = getActions(tagItem);
                 if (actions == null)
                     actions = Collections.emptyList();
+                if (page > 1)//based on page
+                    if ((page - 1) * rows * 9 > actions.size())
+                        actions = Collections.emptyList();
+                    else
+                        actions = actions.subList((page - 1) * rows * 9, actions.size());
                 if (actions.size() > event.getSlot()) {
                     switch (event.getClick()) {
                         case RIGHT:
@@ -875,7 +912,12 @@ public class Actions extends ListenerSubCmd {
 
             private void updateInventory() {
                 List<String> actions = getActions(tagItem);
-                if (actions != null)
+                if (actions != null) {
+                    if (page > 1)
+                        if ((page - 1) * rows * 9 > actions.size())
+                            actions = Collections.emptyList();
+                        else
+                            actions = actions.subList((page - 1) * rows * 9, actions.size());
                     for (int i = 0; i < actions.size(); i++) {
                         if (i >= 45)
                             break;
@@ -885,7 +927,7 @@ public class Actions extends ListenerSubCmd {
                         ItemStack item;
                         try {
                             item = this.getGuiItem("gui.actionslines.line", Material.COMMAND_BLOCK);
-                        } catch (Error e){
+                        } catch (Error e) {
                             item = this.getGuiItem("gui.actionslines.line", Material.valueOf("COMMAND"));
                         }
                         ItemMeta meta = item.getItemMeta();
@@ -896,11 +938,12 @@ public class Actions extends ListenerSubCmd {
                         item.setItemMeta(meta);
                         this.inventory.setItem(i, item);
                     }
+                }
                 if (actions == null || actions.size() < 45) {
                     ItemStack item;
                     try {
                         item = this.getGuiItem("gui.actionslines.line", Material.COMMAND_BLOCK);
-                    } catch (Error e){
+                    } catch (Error e) {
                         item = this.getGuiItem("gui.actionslines.line", Material.valueOf("COMMAND"));
                     }
                     ItemMeta meta = item.getItemMeta();
@@ -911,6 +954,11 @@ public class Actions extends ListenerSubCmd {
                     this.inventory.setItem(actions == null ? 1 : actions.size() + 1, null);
                 }
                 this.inventory.setItem(49, this.getBackItem());
+                //here arrows
+                if (page > 1)
+                    this.inventory.setItem(rows * 9 + 1, getPreviousPageItem());
+                if (page < maxPages)
+                    this.inventory.setItem(rows * 9 + 7, getNextPageItem());
             }
 
             @Override

@@ -6,13 +6,11 @@ import emanondev.itemedit.gui.Gui;
 import emanondev.itemtag.EffectsInfo;
 import emanondev.itemtag.ItemTag;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
-import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
@@ -46,7 +44,7 @@ public class EffectsGui implements Gui {
                 if (info.hasEffect(type)) {
                     PotionEffect effect = info.getEffect(type);
 
-                    if (Integer.parseInt(ItemEdit.NMS_VERSION.split("_")[1]) > 12)
+                    if (ItemEdit.GAME_VERSION > 12)
                         effects.add(new EffectData(type, effect.getAmplifier(), effect.isAmbient(),
                                 effect.hasParticles(), effect.hasIcon()));
                     else
@@ -71,6 +69,8 @@ public class EffectsGui implements Gui {
         if (!inventory.equals(event.getClickedInventory()))
             return;
         if (event.getCurrentItem() == null || event.getCurrentItem().getType() == Material.AIR)
+            return;
+        if (event.getClick() == ClickType.DOUBLE_CLICK)
             return;
         if (event.getSlot() < effects.size())
             effects.get(event.getSlot()).onClick(event);
@@ -107,7 +107,7 @@ public class EffectsGui implements Gui {
     private void update(EffectData effectData) {
         if (effectData.amplifier < 0)
             info.removeEffect(effectData.type);
-        else if (Integer.parseInt(ItemEdit.NMS_VERSION.split("_")[1]) > 12)
+        else if (ItemEdit.GAME_VERSION > 12)
             info.addEffect(new PotionEffect(effectData.type, effectData.type.isInstant() ? 1 : (20 * 3600 * 12),
                     effectData.amplifier, effectData.ambient, effectData.particles, effectData.icon));
         else
@@ -212,7 +212,8 @@ public class EffectsGui implements Gui {
                             .replace("_", " "), "%level%", String.valueOf(amplifier + 1), "%particles%", Aliases.BOOLEAN.getName(particles),
                     "%ambient%", Aliases.BOOLEAN.getName(ambient), "%icon%",
                     ItemEdit.GAME_VERSION > 12 ? Aliases.BOOLEAN.getName(icon) : getLanguageMessage("gui.effects.icon-unsupported"), "%duration%",
-                    getLanguageMessage(type.isInstant() ? "gui.effects.potion-instant" : "gui.effects.potion-unlimited"));
+                    getLanguageMessage(type.isInstant() ? "gui.effects.potion-instant" : "gui.effects.potion-unlimited"),
+                    "%middle_click%", getLanguageMessage("gui.middleclick." + (getTargetPlayer().getGameMode() == GameMode.CREATIVE ? "creative" : "other")));
             item.setAmount(Math.max(1, amplifier + 1));
             meta.clearCustomEffects();
             if (amplifier >= 0)
@@ -229,7 +230,11 @@ public class EffectsGui implements Gui {
                 case RIGHT:
                     amplifier = Math.min(Math.max(-1, amplifier + 1), 127);
                     break;
-                case MIDDLE:
+                case NUMBER_KEY:
+                    if (event.getHotbarButton() != 0)
+                        return;
+                case CREATIVE:
+                case MIDDLE: //middle click or 1, note middle click doesn't work unless in creative mode
                     if (ItemEdit.GAME_VERSION > 12)
                         icon = !icon;
                     else

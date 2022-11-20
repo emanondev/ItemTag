@@ -30,8 +30,8 @@ public abstract class EquipmentChangeListenerBase implements Listener {
 
     private int maxCheckedPlayerPerTick = 5;
     private TimerCheckTask timerTask = null;
-    private final boolean is1_8 = Integer.parseInt(ItemEdit.NMS_VERSION.split("_")[1]) < 9;
-    //private final boolean is1_10orLower = Integer.parseInt(ItemEdit.NMS_VERSION.split("_")[1]) < 11;
+    private final boolean is1_8 = ItemEdit.GAME_VERSION < 9;
+    //private final boolean is1_10orLower = ItemEdit.GAME_VERSION < 11;
 
     public void reload() {
         if (timerTask != null)

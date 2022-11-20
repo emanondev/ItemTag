@@ -14,8 +14,8 @@ public class EffectsInfo {
 
     private final EnumSet<EquipmentSlot> slots = EnumSet.noneOf(EquipmentSlot.class);
     private final HashMap<PotionEffectType, PotionEffect> effects = new HashMap<>();
-    private ItemStack item;
-    private TagItem tagItem;
+    private final ItemStack item;
+    private final TagItem tagItem;
 
     public EffectsInfo(ItemStack item) {
         this.item = item;
@@ -33,13 +33,13 @@ public class EffectsInfo {
         StringBuilder str = new StringBuilder();
         List<PotionEffect> list = new ArrayList<>(effects.values());
 
-        if (Integer.parseInt(ItemEdit.NMS_VERSION.split("_")[1]) > 12)
+        if (ItemEdit.GAME_VERSION > 12)
             str.append(list.get(0).getType().getName()).append(",").append(list.get(0).getAmplifier()).append(",").append(list.get(0).isAmbient()).append(",").append(list.get(0).hasParticles()).append(",").append(list.get(0).hasIcon());
         else
             str.append(list.get(0).getType().getName()).append(",").append(list.get(0).getAmplifier()).append(",").append(list.get(0).isAmbient()).append(",").append(list.get(0).hasParticles()).append(",true");
         for (int i = 1; i < list.size(); i++) {
             str.append(";");
-            if (Integer.parseInt(ItemEdit.NMS_VERSION.split("_")[1]) > 12)
+            if (ItemEdit.GAME_VERSION > 12)
                 str.append(list.get(i).getType().getName()).append(",").append(list.get(i).getAmplifier()).append(",").append(list.get(i).isAmbient()).append(",").append(list.get(i).hasParticles()).append(",").append(list.get(i).hasIcon());
             else
                 str.append(list.get(i).getType().getName()).append(",").append(list.get(i).getAmplifier()).append(",").append(list.get(i).isAmbient()).append(",").append(list.get(i).hasParticles()).append(",true");
@@ -54,7 +54,7 @@ public class EffectsInfo {
         String[] effects = txt.split(";");
         for (String rawEffect : effects) {
             String[] args = rawEffect.split(",");
-            if (Integer.parseInt(ItemEdit.NMS_VERSION.split("_")[1]) > 12)
+            if (ItemEdit.GAME_VERSION > 12)
                 list.add(new PotionEffect(PotionEffectType.getByName(args[0]),
                         PotionEffectType.getByName(args[0]).isInstant() ? 1 : (20 * 3600 * 12),
                         Integer.parseInt(args[1]), Boolean.parseBoolean(args[2]), Boolean.parseBoolean(args[3]),

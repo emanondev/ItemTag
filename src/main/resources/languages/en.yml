@@ -259,16 +259,19 @@ itemtag:
 itemtagreload:
   success: '&9[&fItemTag&9] &aReloaded'
 gui:
+  middleclick: #middle click can't be used unless on creative mode, an alternative to middle click is pressing hotbar button 1
+    creative: 'Middle Click'
+    other: 'Press 1'
   previous-page:
     #Holders: %player_name% %page% %target_page%
     description:
-      - '&6&lNext Page'
+      - '&6&lPrevious Page'
       - ''
       - '&7[&fClick&7]&b Go to page &e%target_page%'
   next-page:
     #Holders: %player_name% %page% %target_page%
     description:
-      - '&6&lPrevious Page'
+      - '&6&lNext Page'
       - ''
       - '&7[&fClick&7]&b Go to page &e%target_page%'
   back:
@@ -451,7 +454,7 @@ gui:
       - '&bLevel: &e%level% &7[Left/Right Click Change]'
       - '&bParticles: &e%particles% &7[ShiftLeft Click Toggle]'
       - '&bAmbient: &e%ambient% &7[ShiftRight Click Toggle]'
-      - '&bIcon: &e%icon% &7[Middle Click Toggle]'
+      - '&bIcon: &e%icon% &7[%middle_click% Toggle]'
       - '&bDuration: &e%duration%'
     potion-instant: 'instant'
     potion-unlimited: 'unlimited'

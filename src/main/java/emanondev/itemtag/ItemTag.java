@@ -23,7 +23,7 @@ public class ItemTag extends APlugin {
     private static boolean OLD_TAGS;
     private EquipmentChangeListenerBase equipChangeListener;
 
-    public EquipmentChangeListenerBase getEquipChangeListener(){
+    public EquipmentChangeListenerBase getEquipChangeListener() {
         return equipChangeListener;
     }
 

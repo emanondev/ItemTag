@@ -4,6 +4,8 @@ import emanondev.itemedit.APlugin;
 import emanondev.itemedit.ItemEdit;
 import emanondev.itemedit.aliases.Aliases;
 import emanondev.itemedit.command.ReloadCommand;
+import emanondev.itemedit.compability.Hooks;
+import emanondev.itemedit.compability.PlaceHolders;
 import emanondev.itemtag.actions.*;
 import emanondev.itemtag.command.ItemTagCommand;
 import emanondev.itemtag.equipmentchange.EquipmentChangeListener;
@@ -64,9 +66,12 @@ public class ItemTag extends APlugin {
                     OLD_TAGS = true;
                     tagManager = new NBTAPITagManager();
                 } catch (Exception e) {
-                    ItemEdit.TabExecutorError exec = new ItemEdit.TabExecutorError(ChatColor.RED + "NBTAPI is required on this server version check www.spigotmc.org/resources/7939/");
+                    String error = "NBTAPI is required on this server version check www.spigotmc.org/resources/7939/";
+                    //this.enableWithError(error);
+                    ItemEdit.TabExecutorError exec = new ItemEdit.TabExecutorError(ChatColor.RED + error);
                     for (String command : this.getDescription().getCommands().keySet())
                         registerCommand(command, exec, null);
+                    log(org.bukkit.ChatColor.RED + error);
                     return;
                 }
             else {
@@ -93,13 +98,23 @@ public class ItemTag extends APlugin {
             ActionHandler.registerAction(new PlayerAsOpCommandAction());
             ActionHandler.registerAction(new ServerCommandAction());
             ActionHandler.registerAction(new SoundAction());
+            if (Hooks.isPAPIEnabled()) {
+                try {
+                    this.log("Hooking into PlaceholderApi");
+                    new PlaceHolders().register();
+                } catch (Throwable t) {
+                    t.printStackTrace();
+                }
+            }
+            registerMetrics(BSTATS_PLUGIN_ID);
         } catch (Exception e) {
             Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Error while enabling ItemTag, disabling it");
             e.printStackTrace();
             Bukkit.getServer().getPluginManager().disablePlugin(this);
         }
-        registerMetrics(15077);
     }
+
+    private static final int BSTATS_PLUGIN_ID = 15077;
 
     @Override
     public void reload() {

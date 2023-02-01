@@ -93,11 +93,11 @@ public class Actions extends ListenerSubCmd {
     }
 
     public static String getCooldownId(TagItem item) {
-        return item.hasStringTag(ACTION_COOLDOWN_ID_KEY) ? item.getString(ACTION_COOLDOWN_ID_KEY) : "default";
+        return item.hasStringTag(ACTION_COOLDOWN_ID_KEY) ? item.getString(ACTION_COOLDOWN_ID_KEY) : DEFAULT_COOLDOWN_ID;
     }
 
     public static void setCooldownId(TagItem item, String value) {
-        if (value == null || value.isEmpty() || value.equalsIgnoreCase("default")) // default
+        if (value == null || value.isEmpty() || value.equalsIgnoreCase(DEFAULT_COOLDOWN_ID)) // default
             item.removeTag(ACTION_COOLDOWN_ID_KEY);
         else
             item.setTag(ACTION_COOLDOWN_ID_KEY, value.toLowerCase(Locale.ENGLISH));
@@ -119,6 +119,12 @@ public class Actions extends ListenerSubCmd {
 
     public Actions(ItemTagCommand cmd) {
         super("actions", cmd, true, true);
+    }
+
+    private static final String DEFAULT_COOLDOWN_ID = "default";
+
+    public static String getDefaultCooldownId() {
+        return DEFAULT_COOLDOWN_ID;
     }
 
     @Override

@@ -30,6 +30,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -48,7 +49,7 @@ public class Actions extends ListenerSubCmd {
         return item.hasStringListTag(ACTIONS_KEY);
     }
 
-    public static List<String> getActions(TagItem item) {
+    public static @Nullable List<String> getActions(TagItem item) {
         return item.getStringList(ACTIONS_KEY);
     }
 
@@ -834,7 +835,8 @@ public class Actions extends ListenerSubCmd {
                         "%player_name%", target.getName());
                 this.inventory = Bukkit.createInventory(this, (ROWS + 1) * 9, title);
                 updateInventory();
-                int actions = getActions(tagItem).size() + 1;
+                List<String> actionsList = getActions(tagItem);
+                int actions = actionsList==null?0:actionsList.size() + 1;
                 int maxPages = (actions) / (ROWS * 9) + ((actions) % (ROWS * 9) == 0 ? 0 : 1);
                 if (page > maxPages)
                     page = maxPages;

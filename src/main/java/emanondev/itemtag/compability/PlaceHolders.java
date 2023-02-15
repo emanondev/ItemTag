@@ -1,13 +1,9 @@
 package emanondev.itemtag.compability;
 
-import emanondev.itemedit.ItemEdit;
-import emanondev.itemedit.UtilsInventory;
 import emanondev.itemtag.ItemTag;
-import emanondev.itemtag.TagItem;
 import emanondev.itemtag.command.itemtag.Actions;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import net.md_5.bungee.api.ChatColor;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -27,17 +23,17 @@ import java.util.Locale;
 public class PlaceHolders extends PlaceholderExpansion {
     public PlaceHolders() {
 
-        ItemEdit.get().log("Hooked into PlaceHolderAPI:");
-        ItemEdit.get().log("placeholders:");
-        ItemEdit.get().log("  &e%itemtag_cooldown_&6<timeunit>&e_&6[cooldownid]&e%");
-        ItemEdit.get().log("    shows how much cooldown has selected cooldownid for player");
-        ItemEdit.get().log("    <timeunit> may be &eh&f, &es &for &ems");
-        ItemEdit.get().log("    [cooldownid] for cooldown type, by default &adefault");
-        ItemEdit.get().log("    example: %itemtag_cooldown_s_anid%");
-        ItemEdit.get().log("  &e%itemtag_handcooldown_&6<timeunit>&e%");
-        ItemEdit.get().log("    shows how much cooldown has player on the item in his hand");
-        ItemEdit.get().log("    <timeunit> may be &eh&f, &es &for &ems");
-        ItemEdit.get().log("    example: %itemtag_handcooldown_s%");
+        ItemTag.get().log("Hooked into PlaceHolderAPI:");
+        ItemTag.get().log("placeholders:");
+        ItemTag.get().log("  &e%itemtag_cooldown_&6<timeunit>&e_&6[cooldownid]&e%");
+        ItemTag.get().log("    shows how much cooldown has selected cooldownid for player");
+        ItemTag.get().log("    <timeunit> may be &eh&f, &es &for &ems");
+        ItemTag.get().log("    [cooldownid] for cooldown type, by default &adefault");
+        ItemTag.get().log("    example: %itemtag_cooldown_s_anid%");
+        ItemTag.get().log("  &e%itemtag_handcooldown_&6<timeunit>&e%");
+        ItemTag.get().log("    shows how much cooldown has player on the item in his hand");
+        ItemTag.get().log("    <timeunit> may be &eh&f, &es &for &ems");
+        ItemTag.get().log("    example: %itemtag_handcooldown_s%");
     }
 
     /**
@@ -134,7 +130,7 @@ public class PlaceHolders extends PlaceholderExpansion {
                     throw new IllegalStateException();
             }
         } catch (Exception e) {
-            ItemEdit.get().log("&c! &fWrong PlaceHolderValue %" + getIdentifier() + "_" + ChatColor.YELLOW + value
+            ItemTag.get().log("&c! &fWrong PlaceHolderValue %" + getIdentifier() + "_" + ChatColor.YELLOW + value
                     + ChatColor.WHITE + "%");
             e.printStackTrace();
         }

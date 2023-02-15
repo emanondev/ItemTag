@@ -5,7 +5,7 @@ import emanondev.itemedit.ItemEdit;
 import emanondev.itemedit.aliases.Aliases;
 import emanondev.itemedit.command.ReloadCommand;
 import emanondev.itemedit.compability.Hooks;
-import emanondev.itemedit.compability.PlaceHolders;
+import emanondev.itemtag.compability.PlaceHolders;
 import emanondev.itemtag.actions.*;
 import emanondev.itemtag.command.ItemTagCommand;
 import emanondev.itemtag.equipmentchange.EquipmentChangeListener;

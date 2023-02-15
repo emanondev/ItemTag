@@ -2,7 +2,7 @@ package emanondev.itemtag.gui;
 
 import emanondev.itemedit.ItemEdit;
 import emanondev.itemedit.aliases.Aliases;
-import emanondev.itemedit.gui.Gui;
+import emanondev.itemedit.gui.PagedGui;
 import emanondev.itemtag.EffectsInfo;
 import emanondev.itemtag.ItemTag;
 import org.bukkit.Bukkit;
@@ -24,13 +24,15 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EffectsGui implements Gui {
+public class EffectsGui implements PagedGui {
 
     private final Player target;
     private final Inventory inventory;
     private final List<EffectData> effects = new ArrayList<>();
     private final List<EquipData> equips = new ArrayList<>();
     private final EffectsInfo info;
+    private int page = 1;
+    private static final int EFFECTS_SLOTS = 5 * 9;
 
     public EffectsGui(Player target, ItemStack item) {
         String title = this.getLanguageMessage("gui.effects.title",
@@ -72,10 +74,22 @@ public class EffectsGui implements Gui {
             return;
         if (event.getClick() == ClickType.DOUBLE_CLICK)
             return;
-        if (event.getSlot() < effects.size())
-            effects.get(event.getSlot()).onClick(event);
-        else
+
+        if (event.getSlot() == EFFECTS_SLOTS + 1) {
+            setPage(getPage() - 1);
+            return;
+        }
+        if (event.getSlot() == EFFECTS_SLOTS + 2) {
+            setPage(getPage() + 1);
+            return;
+        }
+
+        if (event.getSlot() > EFFECTS_SLOTS) {
             equips.get(inventory.getSize() - event.getSlot() - 1).onClick(event);
+            return;
+        }
+
+        effects.get(event.getSlot() + (page - 1) * EFFECTS_SLOTS).onClick(event);
     }
 
     @Override
@@ -88,11 +102,16 @@ public class EffectsGui implements Gui {
     }
 
     private void updateInventory() {
-        for (int i = 0; i < effects.size(); i++)
-            inventory.setItem(i, effects.get(i).getItem());
+        for (int i = 0; i + (page - 1) * EFFECTS_SLOTS < effects.size() && i < EFFECTS_SLOTS; i++)
+            inventory.setItem(i, effects.get(i + (page - 1) * EFFECTS_SLOTS).getItem());
 
         for (int i = 0; i < equips.size(); i++)
             inventory.setItem(inventory.getSize() - 1 - i, equips.get(i).getItem());
+
+        if (page > 1)
+            this.inventory.setItem(EFFECTS_SLOTS + 1, getPreviousPageItem());
+        if (page < getMaxPage())
+            this.inventory.setItem(EFFECTS_SLOTS + 2, getNextPageItem());
     }
 
     @SuppressWarnings("deprecation")
@@ -132,6 +151,25 @@ public class EffectsGui implements Gui {
     @Override
     public @NotNull ItemTag getPlugin() {
         return ItemTag.get();
+    }
+
+    @Override
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        page = Math.max(1, Math.min(page, getMaxPage()));
+        if (page != this.page) {
+            this.inventory.clear();
+            this.page = page;
+            updateInventory();
+        }
+    }
+
+    public int getMaxPage() {
+        return effects.size() / EFFECTS_SLOTS +
+                (effects.size() % EFFECTS_SLOTS == 0 ? 0 : 1);
     }
 
     private class EquipData {

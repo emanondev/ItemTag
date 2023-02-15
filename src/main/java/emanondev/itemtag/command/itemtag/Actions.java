@@ -820,7 +820,7 @@ public class Actions extends ListenerSubCmd {
 
             private final Inventory inventory;
             private final int page;
-            private final int rows = 5;
+            private static final int ROWS = 5;
             private final int maxPages;
 
             public ActionTypeGui() {
@@ -832,10 +832,10 @@ public class Actions extends ListenerSubCmd {
                     throw new NullPointerException();
                 String title = this.getLanguageMessage("gui.actions.title",
                         "%player_name%", target.getName());
-                this.inventory = Bukkit.createInventory(this, (rows + 1) * 9, title);
+                this.inventory = Bukkit.createInventory(this, (ROWS + 1) * 9, title);
                 updateInventory();
                 int actions = getActions(tagItem).size() + 1;
-                int maxPages = (actions) / (rows * 9) + ((actions) % (rows * 9) == 0 ? 0 : 1);
+                int maxPages = (actions) / (ROWS * 9) + ((actions) % (ROWS * 9) == 0 ? 0 : 1);
                 if (page > maxPages)
                     page = maxPages;
                 this.maxPages = maxPages;
@@ -878,10 +878,10 @@ public class Actions extends ListenerSubCmd {
                 if (actions == null)
                     actions = Collections.emptyList();
                 if (page > 1)//based on page
-                    if ((page - 1) * rows * 9 > actions.size())
+                    if ((page - 1) * ROWS * 9 > actions.size())
                         actions = Collections.emptyList();
                     else
-                        actions = actions.subList((page - 1) * rows * 9, actions.size());
+                        actions = actions.subList((page - 1) * ROWS * 9, actions.size());
                 if (actions.size() > event.getSlot()) {
                     switch (event.getClick()) {
                         case RIGHT:
@@ -920,10 +920,10 @@ public class Actions extends ListenerSubCmd {
                 List<String> actions = getActions(tagItem);
                 if (actions != null) {
                     if (page > 1)
-                        if ((page - 1) * rows * 9 > actions.size())
+                        if ((page - 1) * ROWS * 9 > actions.size())
                             actions = Collections.emptyList();
                         else
-                            actions = actions.subList((page - 1) * rows * 9, actions.size());
+                            actions = actions.subList((page - 1) * ROWS * 9, actions.size());
                     for (int i = 0; i < actions.size(); i++) {
                         if (i >= 45)
                             break;
@@ -962,9 +962,9 @@ public class Actions extends ListenerSubCmd {
                 this.inventory.setItem(49, this.getBackItem());
                 //here arrows
                 if (page > 1)
-                    this.inventory.setItem(rows * 9 + 1, getPreviousPageItem());
+                    this.inventory.setItem(ROWS * 9 + 1, getPreviousPageItem());
                 if (page < maxPages)
-                    this.inventory.setItem(rows * 9 + 7, getNextPageItem());
+                    this.inventory.setItem(ROWS * 9 + 7, getNextPageItem());
             }
 
             @Override

@@ -2,6 +2,7 @@ package emanondev.itemtag.command.itemtag;
 
 import emanondev.itemedit.ItemEdit;
 import emanondev.itemtag.EffectsInfo;
+import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.command.ItemTagCommand;
 import emanondev.itemtag.command.ListenerSubCmd;
 import emanondev.itemtag.equipmentchange.EquipmentChangeEvent;
@@ -12,10 +13,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
@@ -156,6 +159,47 @@ public class Effects extends ListenerSubCmd {
             }
         }
     }
+
+    @EventHandler
+    private void onPlayerRespawn(PlayerRespawnEvent event) {
+        new BukkitRunnable() {
+            public void run() {
+                for (EquipmentSlot slot : EquipmentSlot.values()) {
+                    ItemStack equip = getEquip(event.getPlayer(), slot);
+                    if (isAirOrNull(equip))
+                        continue;
+                    EffectsInfo newInfo = new EffectsInfo(equip);
+                    if (!(newInfo.isValidSlot(slot) && newInfo.hasAnyEffects()))
+                        continue;
+                    //if the new item has some active effects
+                    for (PotionEffect effect : newInfo.getEffects()) {
+                        ItemTag.get().log(effect.getType() + " " + effect.getAmplifier() + 1);
+                        if (effect.getType().isInstant() || !event.getPlayer().hasPotionEffect(effect.getType()))
+                            addEffect(event.getPlayer(), effect);
+
+                        else {
+                            PotionEffect currentEffect = null;
+                            if (!is1_10orLower)// safe
+                                currentEffect = event.getPlayer().getPotionEffect(effect.getType());
+                            else
+                                for (PotionEffect k : event.getPlayer().getActivePotionEffects())
+                                    if (k.getType().equals(effect.getType())) {
+                                        currentEffect = k;
+                                        break;
+                                    }
+                            if (currentEffect.getDuration() < 3600 * 20) //could be changed checking the whole equipment effects, but this way seems faster and still fair
+                                if (ItemEdit.GAME_VERSION >= 16)
+                                    addEffect(event.getPlayer(), effect);
+                                else if (currentEffect.getAmplifier() <= effect.getAmplifier())
+                                    addEffect(event.getPlayer(), effect);
+                        }
+                    }
+                }
+            }
+        }.runTaskLater(ItemTag.get(), 1L); //effect are resetted just after playerrespawnevent
+
+    }
+
 
     private void addEffect(Player target, PotionEffect effect) {
         if (ItemEdit.GAME_VERSION >= 16)

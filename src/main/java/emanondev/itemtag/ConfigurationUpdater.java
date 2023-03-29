@@ -5,7 +5,7 @@ import emanondev.itemedit.YMLConfig;
 import java.util.Arrays;
 
 class ConfigurationUpdater {
-    private static final int CURRENT_VERSION = 3;
+    private static final int CURRENT_VERSION = 4;
 
     static void update() {
         ItemTag plugin = ItemTag.get();
@@ -44,6 +44,12 @@ class ConfigurationUpdater {
                     "&bParticles: &e%particles% &7[ShiftLeft Click Toggle]",
                     "&bAmbient: &e%ambient% &7[ShiftRight Click Toggle]",
                     "&bIcon: &e%icon% &7[%middle_click% Toggle]", "&bDuration: &e%duration%"));
+        }
+        if (version <= 3) {
+            YMLConfig lang = ItemTag.get().getLanguageConfig(null);
+            lang.set("gui.flags.vanishcurse", Arrays.asList("&6Sets whether the item disappear on death",
+                    "&bValue: &e%value%", "", "&7Works exactly as the enchantment Vanish Curse",
+                    "&7But it's not an enchantment", "", "&7[&fClick&7]&b Toggle"));
         }
 
 

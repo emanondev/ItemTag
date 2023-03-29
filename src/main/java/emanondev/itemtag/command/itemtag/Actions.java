@@ -836,7 +836,7 @@ public class Actions extends ListenerSubCmd {
                 this.inventory = Bukkit.createInventory(this, (ROWS + 1) * 9, title);
                 updateInventory();
                 List<String> actionsList = getActions(tagItem);
-                int actions = actionsList==null?0:actionsList.size() + 1;
+                int actions = actionsList == null ? 0 : actionsList.size() + 1;
                 int maxPages = (actions) / (ROWS * 9) + ((actions) % (ROWS * 9) == 0 ? 0 : 1);
                 if (page > maxPages)
                     page = maxPages;

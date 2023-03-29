@@ -59,6 +59,7 @@ public class Flag extends SubCmd {
         if (ItemEdit.GAME_VERSION > 13)
             this.registerFlag(new Grindable(this));
         this.registerFlag(new EquipmentFlag(this));
+        this.registerFlag(new VanishCurse(this));
         //aliases.reload();
         Aliases.registerAliasType(FLAG_ALIASES, true);
     }

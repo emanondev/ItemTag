@@ -443,6 +443,14 @@ gui:
       - '&7 on this item'
       - ''
       - '&7[&fClick&7]&b Toggle'
+    vanishcurse:
+      - '&6Sets whether the item disappear on death'
+      - '&bValue: &e%value%'
+      - ''
+      - '&7Works exactly as the enchantment Vanish Curse'
+      - '&7But it''s not an enchantment'
+      - ''
+      - '&7[&fClick&7]&b Toggle'
   effects:
     title: '&9Effects'
     slot:

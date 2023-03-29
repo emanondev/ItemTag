@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>emanondev.itemtag</groupId>
     <artifactId>ItemTag</artifactId>
-    <version>3.0.9</version>
+    <version>3.0.10</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -68,7 +68,7 @@
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
-            <version>23.0.0</version>
+            <version>24.0.1</version>
             <scope>provided</scope>
         </dependency>
         <!-- Vault -->

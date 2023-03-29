@@ -460,6 +460,14 @@ gui:
       - '&7 被喂养给动物的行为'
       - ''
       - '&7[&f点击&7]&b 切换'
+    vanishcurse:
+      - '&6Sets whether the item disappear on death'
+      - '&bValue: &e%value%'
+      - ''
+      - '&7Works exactly as the enchantment Vanish Curse'
+      - '&7But it''s not an enchantment'
+      - ''
+      - '&7[&f点击&7]&b 切换'
   effects:
     # %player_name%
     title: '&9状态效果'

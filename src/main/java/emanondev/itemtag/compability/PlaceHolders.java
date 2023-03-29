@@ -106,10 +106,10 @@ public class PlaceHolders extends PlaceholderExpansion {
             String id;
             switch (args[0].toLowerCase(Locale.ENGLISH)) {
                 case "cooldown": {
-                    id = args.length>=3?value.substring(2+args[0].length()+args[1].length()):Actions.getDefaultCooldownId();
+                    id = args.length >= 3 ? value.substring(2 + args[0].length() + args[1].length()) : Actions.getDefaultCooldownId();
                     break;
                 }
-                case "handcooldown":{
+                case "handcooldown": {
                     ItemStack item = player.getInventory().getItemInHand();
                     if (item == null || item.getType() == Material.AIR)
                         return "0";
@@ -119,13 +119,13 @@ public class PlaceHolders extends PlaceholderExpansion {
                 default:
                     throw new IllegalStateException();
             }
-            switch (args[1].toLowerCase(Locale.ENGLISH)){
+            switch (args[1].toLowerCase(Locale.ENGLISH)) {
                 case "h":
-                    return String.valueOf(ItemTag.get().getCooldownAPI().getCooldownHours(player,id));
+                    return String.valueOf(ItemTag.get().getCooldownAPI().getCooldownHours(player, id));
                 case "s":
-                    return String.valueOf(ItemTag.get().getCooldownAPI().getCooldownSeconds(player,id));
+                    return String.valueOf(ItemTag.get().getCooldownAPI().getCooldownSeconds(player, id));
                 case "ms":
-                    return String.valueOf(ItemTag.get().getCooldownAPI().getCooldownMillis(player,id));
+                    return String.valueOf(ItemTag.get().getCooldownAPI().getCooldownMillis(player, id));
                 default:
                     throw new IllegalStateException();
             }

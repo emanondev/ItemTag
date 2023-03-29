@@ -13,8 +13,8 @@ public class Placeable extends CustomFlag {
 
     private final static String PLACEABLE_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":placeable";
 
-    public Placeable(Flag subCmd) {
-        super("placeable", PLACEABLE_KEY, subCmd);
+    public Placeable(Flag cmd) {
+        super("placeable", PLACEABLE_KEY, cmd);
         reload();
     }
 

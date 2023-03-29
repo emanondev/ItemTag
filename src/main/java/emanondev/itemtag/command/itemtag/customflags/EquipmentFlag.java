@@ -17,8 +17,8 @@ public class EquipmentFlag extends CustomFlag {
     private final static String EQUIPMENT = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":equipment";
 
 
-    public EquipmentFlag(@NotNull Flag subCommand) {
-        super("equipment", EQUIPMENT, subCommand);
+    public EquipmentFlag(@NotNull Flag cmd) {
+        super("equipment", EQUIPMENT, cmd);
     }
 
     @Override

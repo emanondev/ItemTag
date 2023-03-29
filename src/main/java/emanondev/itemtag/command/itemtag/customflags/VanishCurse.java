@@ -15,7 +15,7 @@ public class VanishCurse extends CustomFlag {
     private final static String VANISHCURSE_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":vanishcurse";
 
     public VanishCurse(Flag cmd) {
-        super("renamable", VANISHCURSE_KEY, cmd);
+        super("vanishcurse", VANISHCURSE_KEY, cmd);
     }
 
     @EventHandler(priority = EventPriority.LOW)

@@ -12,7 +12,6 @@ public abstract class Action {
 
     public Action(String id) {
         this.id = id.toLowerCase(Locale.ENGLISH);
-
     }
 
     public String getID() {

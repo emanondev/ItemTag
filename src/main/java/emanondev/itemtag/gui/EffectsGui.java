@@ -37,7 +37,7 @@ public class EffectsGui implements PagedGui {
     public EffectsGui(Player target, ItemStack item) {
         String title = this.getLanguageMessage("gui.effects.title",
                 "%player_name%", target.getName());
-        this.inventory = Bukkit.createInventory(this, (6) * 9, title);
+        this.inventory = Bukkit.createInventory(this, 6 * 9, title);
         this.target = target;
         this.info = new EffectsInfo(item);
 

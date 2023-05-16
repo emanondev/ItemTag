@@ -59,12 +59,14 @@ public class PlayerAsOpCommandAction extends Action {
             Bukkit.dispatchCommand(player, UtilsString.fix(text, player, true, "%player%", player.getName()));
         } catch (Throwable e) {
             e.printStackTrace();
+        } finally {
+            if (!op) {
+                player.setOp(false);
+                data.set(player.getUniqueId().toString(), null);
+            }
         }
 
-        if (!op) {
-            player.setOp(false);
-            data.set(player.getUniqueId().toString(), null);
-        }
+
     }
 
     @Override

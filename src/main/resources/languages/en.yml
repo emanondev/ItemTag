@@ -149,6 +149,17 @@ itemtag:
       feedback:
         set: '&9[&fItemTag&9] &aThis item has &e%uses% &auses before getting consumed'
         unlimited: '&9[&fItemTag&9] &aThis item has &eunlimited &auses'
+    maxuses:
+      params: 'maxuses [amount]'
+      description:
+        - '&b&lSet max uses for the item'
+        - '&bUsed mainly for aesthetic purposes with'
+        - '&bdisplay uses as true'
+        - ''
+        - '&bNote: use &e-1 &bfor unlimited uses'
+      feedback:
+        set: '&9[&fItemTag&9] &aThis item has &e%uses% &amax uses'
+        unlimited: '&9[&fItemTag&9] &aThis item has &eunlimited &amax uses'
     consume:
       params: 'consume [true/false]'
       description:
@@ -169,6 +180,22 @@ itemtag:
         - ''
         - '&bNote: Unluckly this visual effect also'
         - '&b applies to any item of same kind'
+      feedback:
+        set: '&9[&fItemTag&9] &aNow item shows visual cooldown'
+        unset: '&9[&fItemTag&9] &aNow item won''t show visual cooldown'
+    displayuses:
+      params: 'displayuses [true/false]'
+      description:
+        - '&6&lDisplay uses left'
+        - ''
+        - '&bWhen true adds a line to describe'
+        - '&bhow many uses are left'
+        - ''
+        - '&bNote: Unluckly this visual effect also'
+        - '&b applies to any item of same kind'
+      feedback:
+        set: '&9[&fItemTag&9] &aNow item shows uses left and max uses'
+        unset: '&9[&fItemTag&9] &aNow item won''t show uses left and max uses'
   consumeactions:
     description:
       - '&b&lSets actions done when the item is consumed like food and drinks'
@@ -315,7 +342,16 @@ gui:
       - '&7[&fRight Click&7]&b Add &e%editor%'
       - '&7[&fLeft Click&7]&b Remove &e%editor%'
       - '&7[&fShift Left/Right Click&7]&b %editor-prev% << &e%editor% &b>> %editor-next%'
-      - '&9/it actions setuses <amount>'
+      - '&9/it actions uses <amount>'
+    maxuses:
+      - '&6&lMax Uses &e&l%value%'
+      - '&7(-1 for Unlimited)'
+      - '&7Mainly used for aesthetic purpose with Display Uses'
+      - ''
+      - '&7[&fRight Click&7]&b Add &e%editor%'
+      - '&7[&fLeft Click&7]&b Remove &e%editor%'
+      - '&7[&fShift Left/Right Click&7]&b %editor-prev% << &e%editor% &b>> %editor-next%'
+      - '&9/it actions maxuses <amount>'
     permission:
       - '&6&lPermission to use: &e&l%value%'
       - '&7Note: if you don''t have this permission'
@@ -349,6 +385,12 @@ gui:
       - ''
       - '&7[&fClick&7]&b Toggle'
       - '&9/it actions visualdisplay [true/false]'
+    displayuses:
+      - '&6&lDisplay Uses left'
+      - '&bEnabled: &e%value%'
+      - ''
+      - '&7[&fClick&7]&b Toggle'
+      - '&9/it actions displayuses [true/false]'
   actionslines:
     actionformat: '&e%type% &f%info%'
     element:
@@ -467,4 +509,3 @@ gui:
     potion-instant: 'instant'
     potion-unlimited: 'unlimited'
     icon-unsupported: '&conly for 1.13+'
-

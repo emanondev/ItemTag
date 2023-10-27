@@ -152,6 +152,17 @@ itemtag:
       feedback:
         set: '&9[&fItemTag&9] &a此物品現在有 &e%uses% &a使用次數限制'
         unlimited: '&9[&fItemTag&9] &a此物品現在有 &e無限 &a使用次數'
+    maxuses:
+      params: 'maxuses [amount]'
+      description:
+        - '&b&lSet max uses for the item'
+        - '&bUsed mainly for aesthetic purposes with'
+        - '&bdisplay uses as true'
+        - ''
+        - '&bNote: use &e-1 &bfor unlimited uses'
+      feedback:
+        set: '&9[&fItemTag&9] &aThis item has &e%uses% &amax uses'
+        unlimited: '&9[&fItemTag&9] &aThis item has &eunlimited &amax uses'
     consume:
       params: consume [true/false]
       description:
@@ -172,6 +183,22 @@ itemtag:
         - ''
         - '&b注意: 不幸的是，這種視覺效果也'
         - '&b會顯示在任何同類物品上 (Minecraft 限制)'
+      feedback:
+        set: '&9[&fItemTag&9] &aNow item shows visual cooldown'
+        unset: '&9[&fItemTag&9] &aNow item won''t show visual cooldown'
+    displayuses:
+      params: 'displayuses [true/false]'
+      description:
+        - '&6&lDisplay uses left'
+        - ''
+        - '&bWhen true adds a line to describe'
+        - '&bhow many uses are left'
+        - ''
+        - '&bNote: Unluckly this visual effect also'
+        - '&b applies to any item of same kind'
+      feedback:
+        set: '&9[&fItemTag&9] &aNow item shows uses left and max uses'
+        unset: '&9[&fItemTag&9] &aNow item won''t show uses left and max uses'
   consumeactions:
     description:
       - '&b&l設置在消耗物品 (如食物和飲品) 時完成的行為'
@@ -319,7 +346,16 @@ gui:
       - '&7[&f右鍵&7]&b 添加 &e%editor%'
       - '&7[&f左鍵&7]&b 刪除 &e%editor%'
       - '&7[&fShift 左/右鍵 點擊&7]&b %editor-prev% << &e%editor% &b>> %editor-next%'
-      - '&9/it actions setuses <amount>'
+      - '&9/it actions uses <amount>'
+    maxuses:
+      - '&6&lMax Uses &e&l%value%'
+      - '&7(-1 for Unlimited)'
+      - '&7Mainly used for aesthetic purpose with Display Uses'
+      - ''
+      - '&7[&fRight Click&7]&b Add &e%editor%'
+      - '&7[&fLeft Click&7]&b Remove &e%editor%'
+      - '&7[&fShift Left/Right Click&7]&b %editor-prev% << &e%editor% &b>> %editor-next%'
+      - '&9/it actions maxuses <amount>'
     # %value%
     permission:
       - '&6&l使用權限要求: &e&l%value%'
@@ -357,6 +393,12 @@ gui:
       - ''
       - '&7[&f點擊&7]&b 切換'
       - '&9/it actions visualdisplay [true/false]'
+    displayuses:
+      - '&6&lDisplay Uses left'
+      - '&bEnabled: &e%value%'
+      - ''
+      - '&7[&fClick&7]&b Toggle'
+      - '&9/it actions displayuses [true/false]'
   actionslines:
     actionformat: '&e%type% &f%info%'
     element:

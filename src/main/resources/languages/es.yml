@@ -1,0 +1,509 @@
+player-only: '&4[&cItemTag&4] &cComando solo para jugadores'
+no-item-on-hand: '&4[&cItemTag&4] &cDebes sostener un objeto en la mano'
+lack-permission: '&4[&cItemTag&4] &cTe falta el permiso %permission%'
+lack-permission-generic: '&4[&cItemTag&4] &cNo tienes permiso para usar este comando'
+itemtag:
+  help-header: '&9&lItemTag - Ayuda'
+  flag:
+    wrong-flag: '&4[&cItemTag&4] &c¡Valor de bandera incorrecto! &4[&6pasa el puntero aquí&4]'
+    description:
+      - '&b&lActiva o desactiva banderas personalizadas en el objeto'
+      - ''
+      - '&e<flag> &bnombre de la bandera'
+      - '&e[true/false] &bvalor de la bandera, por defecto alternar'
+    params: '<flag> [true/false]'
+    placeable:
+      feedback:
+        standard: '&9[&fItemTag&9] &aEl objeto se puede colocar.'
+        custom: '&9[&fItemTag&9] &aEl objeto no se puede colocar.'
+        failed-place-attempt: '&4[&cItemTag&4] &cNo puedes colocar este objeto'
+    usable:
+      feedback:
+        standard: '&9[&fItemTag&9] &aEl objeto se puede usar.'
+        custom: '&9[&fItemTag&9] &aEl objeto no se puede usar (clic derecho).'
+    smelt:
+      feedback:
+        standard: '&9[&fItemTag&9] &aEl objeto se puede cocinar/fundir en hornos.'
+        custom: '&9[&fItemTag&9] &aEl objeto no se puede cocinar/fundir en un horno.'
+    furnacefuel:
+      feedback:
+        standard: '&9[&fItemTag&9] &aEl objeto se puede usar como combustible en el horno.'
+        custom: '&9[&fItemTag&9] &aEl objeto no se puede usar como combustible en el horno.'
+    recipeingredient:
+      feedback:
+        standard: '&9[&fItemTag&9] &aEl objeto se puede usar como ingrediente de receta.'
+        custom: '&9[&fItemTag&9] &aEl objeto no se puede usar como ingrediente de receta.'
+    enchantable:
+      feedback:
+        standard: '&9[&fItemTag&9] &aEl objeto se puede encantar.'
+        custom: '&9[&fItemTag&9] &aEl objeto no se puede encantar.'
+    renamable:
+      feedback:
+        standard: '&9[&fItemTag&9] &aEl objeto se puede usar en yunques.'
+        custom: '&9[&fItemTag&9] &aEl objeto no se puede usar en yunques.'
+    grindable:
+      feedback:
+        standard: '&9[&fItemTag&9] &aEl objeto se puede desencantar con la muela.'
+        custom: '&9[&fItemTag&9] &aEl objeto no se puede desencantar con la muela.'
+    equipment:
+      feedback:
+        standard: '&9[&fItemTag&9] &aEl objeto se puede equipar.'
+        custom: '&9[&fItemTag&9] &aEl objeto no se puede equipar.'
+    entityfood:
+      feedback:
+        standard: '&9[&fItemTag&9] &aEl objeto se puede usar como alimento para animales.'
+        custom: '&9[&fItemTag&9] &aEl objeto no se puede usar como alimento para animales.'
+  actions:
+    invalid-action:
+      message: '&4[&cItemTag&4] &c''&6%error%&c'' no es un tipo válido &4[pasa el puntero aquí&4]'
+      hover-pre: '&6&lTipos válidos'
+      first_color: '&b'
+      second_color: '&e'
+    invalid-actioninfo:
+      message: '&4[&cItemTag&4] &c''&6%error%&c'' no es una información válida para &6%action% &4[pasa el puntero aquí&4]'
+    description:
+      - '&b&lConfigura las acciones realizadas cuando se utiliza el objeto'
+      - ''
+      - '&eAñadir <tipo> <acción> &b- añade una acción seleccionada'
+      - '&eEstablecer <línea> <tipo> <acción> &b- reemplaza la acción en la línea seleccionada'
+      - '&eEliminar <línea> &b- elimina la acción en la línea seleccionada'
+      - '&eBorrar &b- elimina todas las acciones'
+      - '&ePermiso [permiso] &b- establece un permiso requerido para usar este objeto'
+      - '&eEnfriamiento <ms> &b- establece un enfriamiento para usar este objeto nuevamente'
+      - '&eIDEnfriamiento [id] &b- establece la ID de enfriamiento utilizada para esto'
+      - '&eUsos [cantidad] &b- establece cuántas veces se puede usar este objeto'
+      - '&eInfo &b- muestra información sobre las acciones en el objeto actual'
+    params: '[...]'
+    add:
+      params: 'añadir <tipo> <acción>'
+      description:
+        - '&b&lAñade una acción seleccionada'
+        - ''
+        - '&e<tipo> &btipo de acción'
+        - '&e<acción> &binformación adicional para la acción'
+      feedback: '&9[&fItemTag&9] &aAñadida &e%action%'
+    addline:
+      params: 'añadirlínea <línea> <tipo> <acción>'
+      description:
+        - '&b&lAñade una acción seleccionada en la línea seleccionada'
+        - ''
+        - '&e<línea> &blínea a añadir'
+        - '&e<tipo> &btipo de acción'
+        - '&e<acción> &binformación adicional para la acción'
+      feedback: '&9[&fItemTag&9] &aLínea &e%line% &aañadida como &e%action%'
+    set:
+      params: 'establecer <línea> <tipo> <acción>'
+      description:
+        - '&b&lReemplaza la acción en la línea seleccionada'
+        - ''
+        - '&e<línea> &blínea a reemplazar'
+        - '&e<tipo> &btipo de acción'
+        - '&e<acción> &binformación adicional para la acción'
+      feedback: '&9[&fItemTag&9] &aLínea &e%line% &aestablecida como &e%action%'
+    remove:
+      params: 'eliminar <línea>'
+      description:
+        - '&b&lElimina la acción en la línea seleccionada'
+        - ''
+        - '&e<línea> &blínea a eliminar'
+      feedback: '&9[&fItemTag&9] &aLínea &e%línea% &a(eliminar: &e%action%&a)'
+    permission:
+      params: 'permiso [permiso]'
+      description:
+        - '&b&lEstablece un permiso requerido para usar este objeto'
+        - ''
+        - '&e[permiso] &bpermiso requerido para usar este objeto, por defecto ninguno'
+      feedback:
+        set: '&9[&fItemTag&9] &aSe requiere el permiso &e%permission% &apara usar este objeto'
+        removed: '&9[&fItemTag&9] &aAhora no se requiere ningún permiso para usar este objeto'
+    cooldown:
+      params: 'enfriamiento [ms]'
+      description:
+        - '&b&lEstablece un enfriamiento para usar el objeto nuevamente'
+        - ''
+        - '&e[ms] &bcuánto tiempo antes de poder usar el objeto nuevamente, por defecto 0'
+        - '&bNota: el enfriamiento se establece según la ID de enfriamiento, diferentes'
+        - '&b  objetos con la misma ID de enfriamiento comparten el mismo enfriamiento'
+        - '&bNota: el enfriamiento se conserva después de la desconexión del jugador y el reinicio del servidor'
+      feedback:
+        set: '&9[&fItemTag&9] &aEste objeto tiene un enfriamiento de &e%cooldown_seconds% &asegundos'
+        removed: '&9[&fItemTag&9] &aEste objeto no tiene enfriamiento'
+    cooldownid:
+      params: 'idenfriamiento [id]'
+      description:
+        - '&b&lEstablece la ID de enfriamiento utilizada para este objeto'
+        - ''
+        - '&e[id] &bcuánto tiempo antes de poder usar el objeto nuevamente'
+        - '&bNota: el enfriamiento se establece según la ID de enfriamiento, diferentes'
+        - '&b  objetos con la misma ID de enfriamiento comparten el mismo enfriamiento'
+      feedback:
+        set: '&9[&fItemTag&9] &aEste objeto usa la ID &e%id% &apara el enfriamiento'
+        removed: '&9[&fItemTag&9] &aEste objeto usa la ID por defecto para el enfriamiento'
+    uses:
+      params: 'usos [cantidad]'
+      description:
+        - '&b&lEstablece cuántas veces el objeto se puede usar'
+        - ''
+        - '&bNota: usa &e-1 &bpara usos ilimitados'
+      feedback:
+        set: '&9[&fItemTag&9] &aEste objeto tiene &e%uses% &ausos antes de ser consumido'
+        unlimited: '&9[&fItemTag&9] &aEste objeto tiene usos &eilimitados'
+    maxuses:
+      params: 'maxuses [cantidad]'
+      description:
+        - '&b&lEstablece el número máximo de usos para el objeto'
+        - '&bUsado principalmente con fines estéticos cuando se muestra el número de usos como verdadero'
+        - ''
+        - '&bNota: usa &e-1 &bpara usos ilimitados'
+      feedback:
+        set: '&9[&fItemTag&9] &aEste objeto tiene &e%uses% &ausos máximos'
+        unlimited: '&9[&fItemTag&9] &aEste objeto tiene usos &eilimitados'
+    consume:
+      params: 'consume [verdadero/falso]'
+      description:
+        - '&6&lConsumir el objeto en el último uso'
+        - ''
+        - '&bNota: cuando es verdadero y el objeto se consume'
+        - '&b en su último uso, el objeto se destruye'
+      feedback:
+        set: '&9[&fItemTag&9] &aEl objeto se destruye al alcanzar su último uso'
+        unset: '&9[&fItemTag&9] &aEl objeto no se destruye al alcanzar su último uso'
+    visualcooldown:
+      params: 'visualcooldown [verdadero/falso]'
+      description:
+        - '&6&lMostrar visualmente el tiempo de enfriamiento restante'
+        - ''
+        - '&bCuando es verdadero, se aplica un efecto de enfriamiento similar a'
+        - '&bel de las perlas de Ender en el objeto'
+        - ''
+        - '&bNota: Desafortunadamente, este efecto visual también se'
+        - '&b aplica a cualquier objeto del mismo tipo'
+      feedback:
+        set: '&9[&fItemTag&9] &aAhora el objeto muestra el enfriamiento visual'
+        unset: '&9[&fItemTag&9] &aAhora el objeto no mostrará el enfriamiento visual'
+    displayuses:
+      params: 'displayuses [verdadero/falso]'
+      description:
+        - '&6&lMostrar usos restantes'
+        - ''
+        - '&bCuando es verdadero, agrega una línea que describe'
+        - '&bcuántos usos quedan'
+        - ''
+        - '&bNota: Desafortunadamente, este efecto visual también se'
+        - '&b aplica a cualquier objeto del mismo tipo'
+      feedback:
+        set: '&9[&fItemTag&9] &aAhora el objeto muestra los usos restantes y los usos máximos'
+        unset: '&9[&fItemTag&9] &aAhora el objeto no mostrará los usos restantes y los usos máximos'
+  consumeactions:
+    description:
+      - '&b&lConfigura las acciones realizadas cuando el objeto se consume como alimentos y bebidas'
+      - ''
+      - '&eAñadir <tipo> <acción> &b- añadir una acción seleccionada'
+      - '&eEstablecer <línea> <tipo> <acción> &b- reemplazar la acción en la línea elegida'
+      - '&eEliminar <línea> &b- eliminar la acción en la línea seleccionada'
+      - '&eBorrar &b- eliminar todas las acciones'
+      - '&ePermiso [permiso] &b- establecer un permiso requerido para consumir este objeto'
+      - '&eEnfriamiento <ms> &b- establecer un enfriamiento para usar este objeto nuevamente'
+      - '&eIDEnfriamiento [id] &b- establecer la ID de enfriamiento utilizada para esto'
+      - '&eInfo &b- mostrar información sobre las acciones en el objeto actual'
+    params: '[...]'
+    add:
+      params: 'añadir <tipo> <acción>'
+      description:
+        - '&b&lAñade una acción seleccionada'
+        - ''
+        - '&e<tipo> &btipo de acción'
+        - '&e<acción> &binformación adicional para la acción'
+    addline:
+      params: 'añadirlínea <línea> <tipo> <acción>'
+      description:
+        - '&b&lAñade una acción seleccionada en la línea seleccionada'
+        - ''
+        - '&e<línea> &blínea a añadir'
+        - '&e<tipo> &btipo de acción'
+        - '&e<acción> &binformación adicional para la acción'
+    set:
+      params: 'establecer <línea> <tipo> <acción>'
+      description:
+        - '&b&lReemplaza la acción en la línea seleccionada'
+        - ''
+        - '&e<línea> &blínea a reemplazar'
+        - '&e<tipo> &btipo de acción'
+        - '&e<acción> &binformación adicional para la acción'
+    remove:
+      params: 'eliminar <línea>'
+      description:
+        - '&b&lElimina la acción en la línea seleccionada'
+        - ''
+        - '&e<línea> &blínea a eliminar'
+    permission:
+      params: 'permiso [permiso]'
+      description:
+        - '&b&lEstablece un permiso requerido para consumir este objeto'
+        - ''
+        - '&e[permiso] &bpermiso requerido para establecerlo, por defecto ninguno'
+    cooldown:
+      params: 'enfriamiento [ms]'
+      description:
+        - '&b&lEstablece un enfriamiento para consumir nuevamente un objeto'
+        - ''
+        - '&e[ms] &bcuánto tiempo antes de poder consumir'
+        - '     &bel objeto nuevamente, por defecto 0'
+        - '&bNota: el enfriamiento se establece según la ID de enfriamiento, diferentes'
+        - '&b  objetos con la misma ID de enfriamiento comparten el mismo enfriamiento'
+        - '&bNota: el enfriamiento se conserva después de la desconexión del jugador y el reinicio del servidor'
+      feedback:
+        set: '&9[&fItemTag&9] &aEste objeto tiene un enfriamiento de &e%cooldown_seconds% &asegundos'
+        removed: '&9[&fItemTag&9] &aEste objeto no tiene enfriamiento'
+    cooldownid:
+      params: 'idenfriamiento [id]'
+      description:
+        - '&b&lEstablece la ID de enfriamiento utilizada para este objeto'
+        - ''
+        - '&e[id] &bcuánto tiempo antes de poder consumir el objeto nuevamente'
+        - '&bNota: el enfriamiento se establece según la ID de enfriamiento, diferentes'
+        - '&b  objetos con la misma ID de enfriamiento comparten el mismo enfriamiento'
+    feedback:
+      actions:
+        set: '&aLínea &e%line% &aestablecida como &e%action%'
+        remove: '&aEliminada la línea &e%line% &a(&e%action%&a)'
+        clear: '&aAcciones de consumo eliminadas en este objeto'
+        permission:
+          set: '&aSe requiere el permiso &e%permission% &apara consumir este objeto'
+          removed: '&aAhora no se requiere ningún permiso para consumir este objeto'
+        cooldownid:
+          set: '&aEste objeto usa la ID &e%id% &apara el enfriamiento'
+          removed: '&aEste objeto usa la ID por defecto para el enfriamiento'
+        cooldown:
+          set: '&aEste objeto tiene un enfriamiento de &e%cooldown_seconds% &asegundos'
+          removed: '&aEste objeto no tiene enfriamiento'
+  effects:
+    description:
+      - '&b&lAñade efectos permanentes de pociones'
+      - '&bAbre una interfaz gráfica'
+      - '&bRecuerda seleccionar en qué ranura de equipo'
+      - '&b aplicar el efecto'
+    params: ''
+itemtagreload:
+  success: '&9[&fItemTag&9] &aRecargado'
+gui:
+  middleclick: # El clic medio no se puede usar a menos que estés en modo creativo; una alternativa al clic medio es presionar el botón de la barra de acceso rápido 1
+    creative: 'Clic Medio'
+    other: 'Presiona 1'
+  previous-page:
+    description:
+      - '&6&lPágina Anterior'
+      - ''
+      - '&7[&fClic&7]&b Ir a la página &e%target_page%'
+  next-page:
+    description:
+      - '&6&lPágina Siguiente'
+      - ''
+      - '&7[&fClic&7]&b Ir a la página &e%target_page%'
+  back:
+    description:
+      - '&6&lVolver'
+      - ''
+      - '&7[&fClic&7]&b Volver al menú anterior'
+  actions:
+    title: '&9Acciones'
+    click-interact: '&9[&fItemTag&9] &b[Haz clic aquí]'
+    click-hover: '&6Haz clic para sugerir un comando'
+    addline:
+      - '&6&lAñadir Acción'
+      - ''
+      - '&7[&fClic&7]&b Cambiar valores'
+      - '&9/it actions add <tipo de acción> <información de acción>'
+      - '&9/it actions addline <línea> <tipo de acción> <información de acción>'
+    set:
+      - '&6&lEstablecer Acción'
+      - ''
+      - '&7[&fClic&7]&b Cambiar valores'
+      - '&9/it actions set <línea> <tipo de acción> <información de acción>'
+    remove:
+      - '&6&lEliminar Acción'
+      - ''
+      - '&7[&fClic&7]&b Cambiar valores'
+      - '&9/it actions remove <línea>'
+    consume:
+      - '&6&lConsumir con &e&l0&6&l usos restantes'
+      - '&bActivado: &e%value%'
+      - '&7Nota: cuando es verdadero y el objeto se consume'
+      - '&7 en su último uso, el objeto se destruye'
+      - ''
+      - '&7[&fClic&7]&b Alternar'
+      - '&9/it actions consume [verdadero/falso]'
+    uses:
+      - '&6&lUsos Disponibles &e&l%value%'
+      - '&7(-1 para ilimitados)'
+      - ''
+      - '&7[&fClic Derecho&7]&b Agregar &e%editor%'
+      - '&7[&fClic Izquierdo&7]&b Eliminar &e%editor%'
+      - '&7[&fClic Derecho/Izquierdo + Mayús&7]&b %editor-prev% << &e%editor% &b>> %editor-next%'
+      - '&9/it actions uses <cantidad>'
+    maxuses:
+      - '&6&lUsos Máximos &e&l%value%'
+      - '&7(-1 para ilimitados)'
+      - '&7Utilizado principalmente con fines estéticos junto con Mostrar Usos'
+      - ''
+      - '&7[&fClic Derecho&7]&b Agregar &e%editor%'
+      - '&7[&fClic Izquierdo&7]&b Eliminar &e%editor%'
+      - '&7[&fClic Derecho/Izquierdo + Mayús&7]&b %editor-prev% << &e%editor% &b>> %editor-next%'
+      - '&9/it actions maxuses <cantidad>'
+    permission:
+      - '&6&lPermiso para Usar: &e&l%value%'
+      - '&7Nota: si no tienes este permiso'
+      - '&7 no podrás usar el objeto o'
+      - '&7 disminuir sus usos'
+      - ''
+      - '&7[&fClic&7]&b Editar'
+      - '&9/it actions permission [permiso]'
+    cooldown:
+      - '&6&lEnfriamiento: &e&l%value_s% &9s'
+      - '&7Nota: aplica un enfriamiento en los usos de clic derecho'
+      - ''
+      - '&7[&fClic Derecho&7]&b Agregar &e%editor%'
+      - '&7[&fClic Izquierdo&7]&b Eliminar &e%editor%'
+      - '&7[&fClic Derecho/Izquierdo + Mayús&7]&b %editor-prev% << &e%editor% &b>> %editor-next%'
+      - '&9/it actions cooldown <tiempo de enfriamiento en ms>'
+    cooldownid:
+      - '&6&lID de Enfriamiento: &e&l%value%'
+      - '&7Nota: todos los objetos con la misma ID de enfriamiento'
+      - '&7 comparten el mismo enfriamiento'
+      - ''
+      - '&7[&fClic&7]&b Editar'
+      - '&9/it actions cooldownid [ID de enfriamiento]'
+    info:
+      - '&6&lLista de Acciones:'
+    visualcooldown:
+      - '&6&lMostrar Enfriamiento Visual'
+      - '&bActivado: &e%value%'
+      - '&7Nota: lamentablemente, este efecto visual también se aplica'
+      - '&7 a cualquier objeto del mismo tipo'
+      - ''
+      - '&7[&fClic&7]&b Alternar'
+      - '&9/it actions visualdisplay [verdadero/falso]'
+    displayuses:
+      - '&6&lMostrar Usos Restantes'
+      - '&bActivado: &e%value%'
+      - ''
+      - '&7[&fClic&7]&b Alternar'
+      - '&9/it actions displayuses [verdadero/falso]'
+  actionslines:
+    actionformat: '&e%type% &f%info%'
+    element:
+      - '%action%'
+      - '&7[&fClic Derecho&7]&b Reemplazar esta acción'
+      - '&7[&fClic Izquierdo&7]&b Agregar nueva acción antes de esta'
+      - '&7[&fClic Derecho/Izquierdo + Mayús&7]&b Eliminar esta acción'
+    add:
+      - ' '
+      - '&7[&fClic Izquierdo&7]&b Agregar nueva acción'
+  flags:
+    placeable:
+      - '&6Establece si el objeto se puede colocar'
+      - '&bValor: &e%value%'
+      - ''
+      - '&7[&fClic&7]&b Alternar'
+    usable:
+      - '&6Establece si el objeto se puede usar'
+      - '&bValor: &e%value%'
+      - ''
+      - '&7Si se establece en falso, se niega el comportamiento'
+      - '&7 de clic derecho estándar del objeto'
+      - '&7La definición de lo que es "usar" varía según el tipo de objeto'
+      - '&7No se podrá comer la comida, pescar con la caña,'
+      - '&7lanzar huevos ni aparecer criaturas de huevos de generador...'
+      - ''
+      - '&7[&fClic&7]&b Alternar'
+    smelt:
+      - '&6Establece si el objeto se puede cocinar'
+      - '&bValor: &e%value%'
+      - ''
+      - '&7Si se establece en falso, se niega el comportamiento'
+      - '&7 estándar de cocción en el horno'
+      - '&7Funciona tanto para alimentos como para minerales'
+      - ''
+      - '&7[&fClic&7]&b Alternar'
+    furnacefuel:
+      - '&6Establece si el objeto se puede usar como combustible en el horno'
+      - '&bValor: &e%value%'
+      - ''
+      - '&7Si se establece en falso, se niega el comportamiento estándar de'
+      - '&7los hornos al consumir este objeto como combustible'
+      - ''
+      - '&7[&fClic&7]&b Alternar'
+    recipeingredient:
+      - '&6Establece si el objeto se puede utilizar en recetas de elaboración'
+      - '&bValor: &e%value%'
+      - ''
+      - '&7Si se establece en falso, se niega el comportamiento estándar de'
+      - '&7elaboración cuando este objeto es uno de los ingredientes'
+      - ''
+      - '&7[&fClic&7]&b Alternar'
+    enchantable:
+      - '&6Establece si el objeto se puede encantar'
+      - '&bValor: &e%value%'
+      - ''
+      - '&7Si se establece en falso, se niega el comportamiento estándar de la mesa de encantamientos'
+      - '&7 con respecto a este objeto'
+      - ''
+      - '&7[&fClic&7]&b Alternar'
+    renamable:
+      - '&6Establece si el objeto se puede utilizar en el yunque'
+      - '&bValor: &e%value%'
+      - ''
+      - '&7Si se establece en falso, se niega el comportamiento estándar del yunque'
+      - '&7con respecto a este objeto'
+      - ''
+      - '&7[&fClic&7]&b Alternar'
+    grindable:
+      - '&6Establece si el objeto se puede desencantar en la muela'
+      - '&bValor: &e%value%'
+      - ''
+      - '&7Si se establece en falso, se niega el comportamiento estándar de la muela'
+      - '&7con respecto a este objeto'
+      - ''
+      - '&7[&fClic&7]&b Alternar'
+    equipment:
+      - '&6Establece si el objeto se puede utilizar como equipo'
+      - '&bValor: &e%value%'
+      - ''
+      - '&7Si se establece en falso y el objeto está equipado, se soltará'
+      - '&7de nuevo en el inventario del jugador'
+      - '&7Nota: la mano y la mano secundaria no se consideran parte de las ranuras de equipo'
+      - ''
+      - '&7[&fClic&7]&b Alternar'
+    entityfood:
+      - '&6Establece si el objeto se puede utilizar como alimento para animales'
+      - '&bValor: &e%value%'
+      - ''
+      - '&7Si se establece en falso, se niega el comportamiento estándar de'
+      - '&7apareamiento de animales y también el crecimiento rápido de las crías'
+      - '&7con respecto a este objeto'
+      - ''
+      - '&7[&fClic&7]&b Alternar'
+    vanishcurse:
+      - '&6Establece si el objeto desaparece al morir'
+      - '&bValor: &e%value%'
+      - ''
+      - '&7Funciona exactamente como el encantamiento Maldición de Desvanecimiento'
+      - '&7Pero no es un encantamiento'
+      - ''
+      - '&7[&fClic&7]&b Alternar'
+  effects:
+    title: '&9Efectos'
+    slot:
+      - '&6&l%slot%'
+      - '&bActivado: &e%value%'
+    potion:
+      - '&6&l%effect%'
+      - ''
+      - '&bNivel: &e%level% &7[Clic Izquierdo/Derecho para Cambiar]'
+      - '&bPartículas: &e%particles% &7[Mantén Shift y Haz Clic Izquierdo para Alternar]'
+      - '&bAmbiente: &e%ambient% &7[Mantén Shift y Haz Clic Derecho para Alternar]'
+      - '&bIcono: &e%icon% &7[Alternar con %clic_medio%]'
+      - '&bDuración: &e%duration%'
+    potion-instant: 'instantáneo'
+    potion-unlimited: 'ilimitado'
+    icon-unsupported: '&conly compatible con la versión 1.13+'

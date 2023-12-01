@@ -105,4 +105,9 @@ public class NBTAPITagItem implements TagItem {
     public boolean isValid() {
         return item != null && item.getType() != Material.AIR;
     }
+
+    @Override
+    public ItemStack getItem() {
+        return item;
+    }
 }

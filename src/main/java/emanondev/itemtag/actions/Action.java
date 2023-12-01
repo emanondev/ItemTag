@@ -19,23 +19,23 @@ public abstract class Action {
     }
 
     /**
-     * @param text
      * @throws IllegalArgumentException if text is not valid
      */
     public abstract void validateInfo(String text);
 
     /**
-     * @param text
      * @throws IllegalArgumentException if text is not valid
      */
     public abstract void execute(Player player, String text);
 
     /**
-     * @param sender
-     * @param params
      * @return allowed completitions
      */
     public abstract List<String> tabComplete(CommandSender sender, List<String> params);
 
     public abstract List<String> getInfo();
+
+    public String fixActionInfo(String actionInfo){
+        return actionInfo;
+    }
 }

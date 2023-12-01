@@ -116,6 +116,12 @@ public class PlaceHolders extends PlaceholderExpansion {
                     id = Actions.getCooldownId(ItemTag.getTagItem(item));
                     break;
                 }
+                case "usesleft": {
+                    ItemStack item = player.getInventory().getItemInHand();
+                    if (item == null || item.getType() == Material.AIR)
+                        return "0";
+                    return String.valueOf(Actions.getUses(ItemTag.getTagItem(item)));
+                }
                 default:
                     throw new IllegalStateException();
             }

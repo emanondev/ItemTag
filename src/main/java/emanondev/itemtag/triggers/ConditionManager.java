@@ -1,5 +1,6 @@
 package emanondev.itemtag.triggers;
 
+import emanondev.itemtag.activity.TriggerType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

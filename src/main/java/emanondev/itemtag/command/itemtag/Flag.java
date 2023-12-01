@@ -56,6 +56,8 @@ public class Flag extends SubCmd {
         this.registerFlag(new EntityFood(this));
         if (ItemEdit.GAME_VERSION > 8)
             this.registerFlag(new Renamable(this));
+        else
+            this.registerFlag(new RenamableOld(this));
         if (ItemEdit.GAME_VERSION > 13)
             this.registerFlag(new Grindable(this));
         this.registerFlag(new EquipmentFlag(this));

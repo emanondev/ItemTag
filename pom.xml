@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>emanondev.itemtag</groupId>
     <artifactId>ItemTag</artifactId>
-    <version>3.1.0</version>
+    <version>3.2.2</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -60,7 +60,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.19.3-R0.1-SNAPSHOT</version>
+            <version>1.20.1-R0.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>provided</scope>
         </dependency>
@@ -77,6 +77,12 @@
             <artifactId>VaultAPI</artifactId>
             <version>1.7</version>
             <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- PlaceHolderAPI -->
         <dependency>
@@ -85,17 +91,17 @@
             <version>2.10.9</version>
             <scope>provided</scope>
         </dependency>
-        <!-- shopguiplus -->
-        <dependency>
-            <groupId>com.github.brcdev-minecraft</groupId>
-            <artifactId>shopgui-api</artifactId>
-            <version>2.2.0</version>
-        </dependency>
         <!-- ItemEdit -->
         <dependency>
             <groupId>emanondev.itemedit</groupId>
             <artifactId>ItemEdit</artifactId>
             <version>3.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- nbtapi -->
         <dependency>

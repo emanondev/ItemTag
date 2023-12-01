@@ -1,6 +1,7 @@
-package emanondev.itemtag.triggers;
+package emanondev.itemtag.activity;
 
 import emanondev.itemtag.actions.Action;
+import emanondev.itemtag.triggers.Trigger;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.inventory.ItemStack;

@@ -17,6 +17,8 @@ gui:
       material: APPLE
     uses:
       material: IRON_PICKAXE
+    mxuses:
+      material: DIAMOND_PICKAXE
     permission:
       material: IRON_BARS
     cooldown:
@@ -25,6 +27,8 @@ gui:
       material: NAME_TAG
     cooldowndisplay:
       material: ENDER_PEARL
+    displayuses:
+      material: PAINTING
     info:
       material: PAPER
   actionslines:

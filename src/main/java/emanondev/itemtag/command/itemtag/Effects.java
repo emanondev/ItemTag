@@ -1,6 +1,8 @@
 package emanondev.itemtag.command.itemtag;
 
 import emanondev.itemedit.ItemEdit;
+import emanondev.itemedit.Util;
+import emanondev.itemedit.aliases.Aliases;
 import emanondev.itemtag.EffectsInfo;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.command.ItemTagCommand;
@@ -41,19 +43,178 @@ public class Effects extends ListenerSubCmd {
     private void load() {
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void onCommand(CommandSender sender, String alias, String[] args) {
         Player p = (Player) sender;
         if (args.length != 1) {
+            switch (args[1].toLowerCase()) {
+                case "set": {
+                    set(p, alias, args);
+                    return;
+                }
+                case "modify": {
+                    modify(p, alias, args);
+                    return;
+                }
+                case "slots": {
+                    slots(p, alias, args);
+                    return;
+                }
+                case "remove": {
+                    remove(p, alias, args);
+                    return;
+                }
+            }
             onFail(p, alias);
             return;
         }
-        p.openInventory(new EffectsGui(p, p.getItemInHand()).getInventory());
+        p.openInventory(new EffectsGui(p, getItemInHand(p)).getInventory());
+    }
+
+    //it effects set <type> <ampl> [] [] []
+    private void set(Player p, String alias, String[] args) {
+        try {
+            PotionEffectType type = Aliases.POTION_EFFECT.convertAlias(args[2]);
+            int amplifier = Integer.parseInt(args[3])-1;
+            Boolean particles = args.length >= 5 ? Aliases.BOOLEAN.convertAlias(args[4]) : Boolean.TRUE;
+            Boolean ambient = args.length >= 6 ? Aliases.BOOLEAN.convertAlias(args[5]) : Boolean.FALSE;
+            Boolean icon = args.length >= 7 ? Aliases.BOOLEAN.convertAlias(args[6]) : Boolean.TRUE;
+            if (type == null || particles == null || ambient == null || icon == null)
+                throw new IllegalArgumentException();
+
+            EffectsInfo info = new EffectsInfo(getItemInHand(p));
+            if (amplifier < 0)
+                info.removeEffect(type);
+            else if (ItemEdit.GAME_VERSION > 12)
+                info.addEffect(new PotionEffect(type, type.isInstant() ? 1 : (20 * 3600 * 12),
+                        amplifier, ambient, particles, icon));
+            else
+                info.addEffect(new PotionEffect(type, type.isInstant() ? 1 : (20 * 3600 * 12),
+                        amplifier, ambient, particles));
+            info.update();
+            p.setItemInHand(info.getItem());
+        } catch (Exception e) {
+            //TODO
+            onFail(p, alias);
+        }
+    }
+
+    private void modify(Player p,  String alias, String[] args) {
+        try {
+            PotionEffectType type = Aliases.POTION_EFFECT.convertAlias(args[2]);
+            EffectsInfo info = new EffectsInfo(getItemInHand(p));
+            PotionEffect effect = info.getEffect(type);
+            int amplifier = Integer.parseInt(args[3])-1;
+            Boolean particles = args.length >= 5 ? Aliases.BOOLEAN.convertAlias(args[4]) : effect==null?Boolean.TRUE:(Boolean) effect.hasParticles();
+            Boolean ambient = args.length >= 6 ? Aliases.BOOLEAN.convertAlias(args[5]) : effect==null?Boolean.FALSE:(Boolean) effect.isAmbient();
+            Boolean icon = args.length >= 7 ? Aliases.BOOLEAN.convertAlias(args[6]) : effect==null?Boolean.TRUE:(Boolean) effect.hasIcon();
+            if (type == null || particles == null || ambient == null || icon == null)
+                throw new IllegalArgumentException();
+
+            amplifier += effect!=null?effect.getAmplifier():0;
+            if (amplifier < 0)
+                info.removeEffect(type);
+            else if (ItemEdit.GAME_VERSION > 12)
+                info.addEffect(new PotionEffect(type, type.isInstant() ? 1 : (20 * 3600 * 12),
+                        amplifier, ambient, particles, icon));
+            else
+                info.addEffect(new PotionEffect(type, type.isInstant() ? 1 : (20 * 3600 * 12),
+                        amplifier, ambient, particles));
+            info.update();
+            p.setItemInHand(info.getItem());
+        } catch (Exception e) {
+            //TODO
+            onFail(p, alias);
+        }
+    }
+
+    private void remove(Player p,  String alias, String[] args) {
+        try {
+            PotionEffectType type = Aliases.POTION_EFFECT.convertAlias(args[2]);
+            if (type == null)
+                throw new IllegalArgumentException();
+
+            EffectsInfo info = new EffectsInfo(getItemInHand(p));
+            if (!info.hasEffect(type))
+                return;
+            info.removeEffect(type);
+            info.update();
+            p.setItemInHand(info.getItem());
+        } catch (Exception e) {
+            //TODO
+            onFail(p, alias);
+        }
+    }
+
+    private void slots(Player p, String alias, String[] args) {
+        try {
+            EnumSet<EquipmentSlot> slots = EnumSet.noneOf(EquipmentSlot.class);
+            for (int i = 2;i<args.length;i++)
+                slots.add(Aliases.EQUIPMENT_SLOTS.convertAlias(args[i]));
+
+            EffectsInfo info = new EffectsInfo(getItemInHand(p));
+            for (EquipmentSlot slot:EquipmentSlot.values())
+                info.setSlot(slot,slots.contains(slot));
+            info.update();
+            p.setItemInHand(info.getItem());
+        } catch (Exception e) {
+            //TODO
+            onFail(p, alias);
+        }
     }
 
     @Override
     public List<String> onComplete(CommandSender sender, String[] args) {
+        switch (args.length){
+            case 2:{
+                return Util.complete(args[1], "set","modify","slots","remove");
+            }
+            case 3: {
+                switch (args[1].toLowerCase()){
+                    case "set":
+                    case "modify":
+                    case "remove": {
+                        return Util.complete(args[2],Aliases.POTION_EFFECT);
+                    }
+                    case "slots": {
+                        return Util.complete(args[2],Aliases.EQUIPMENT_SLOTS);
+                    }
+                }
+                return Collections.emptyList();
+            }
+            case 4: {
+                switch (args[1].toLowerCase()){
+                    case "set":
+                    case "modify": {
+                        return Util.complete(args[3],"1","2","3");
+                    }
+                    case "slots": {
+                        return Util.complete(args[3],Aliases.EQUIPMENT_SLOTS);
+                    }
+                }
+                return Collections.emptyList();
+            }
+            case 5:
+            case 6:
+            case 7: {
+                switch (args[1].toLowerCase()){
+                    case "set":
+                    case "modify":{
+                        return Util.complete(args[4],Aliases.BOOLEAN);
+                    }
+                    case "slots": {
+                        return Util.complete(args[4],Aliases.EQUIPMENT_SLOTS);
+                    }
+                }
+                return Collections.emptyList();
+            }
+            case 8: {
+                if ("slots".equalsIgnoreCase(args[1])) {
+                    return Util.complete(args[4], Aliases.EQUIPMENT_SLOTS);
+                }
+                return Collections.emptyList();
+            }
+        }
         return Collections.emptyList();
     }
 
@@ -257,9 +418,7 @@ public class Effects extends ListenerSubCmd {
             case FEET:
                 return p.getEquipment().getBoots();
             case HAND:
-                if (!is1_8)// safe
-                    return p.getInventory().getItemInMainHand();
-                return p.getInventory().getItemInHand();
+                return getItemInHand(p);
             case HEAD:
                 return p.getEquipment().getHelmet();
             case LEGS:

@@ -1,11 +1,10 @@
 package emanondev.itemtag.gui;
 
-import emanondev.itemedit.APlugin;
 import emanondev.itemedit.gui.PagedGui;
-import emanondev.itemtag.EffectsInfo;
 import emanondev.itemtag.ItemTag;
+import emanondev.itemtag.activity.TriggerType;
 import emanondev.itemtag.triggers.Trigger;
-import emanondev.itemtag.triggers.TriggerHandler;
+import emanondev.itemtag.activity.TriggerHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -27,7 +26,7 @@ public class TriggerGui implements PagedGui {
     private final Inventory inventory;
     private final Player target;
     private int page = 1;
-    private final List<Trigger> triggers = new ArrayList<>();
+    private final List<TriggerType> triggers = new ArrayList<>();
 
 
     public TriggerGui(Player target, ItemStack item) {
@@ -36,7 +35,7 @@ public class TriggerGui implements PagedGui {
         this.inventory = Bukkit.createInventory(this, TRIGGER_SLOTS + 9, title);
         this.target = target;
         this.triggers.addAll(TriggerHandler.getTriggers());
-        this.triggers.sort(Comparator.comparing(Trigger::getID));
+        this.triggers.sort(Comparator.comparing(TriggerType::getID));
     }
 
     @Override

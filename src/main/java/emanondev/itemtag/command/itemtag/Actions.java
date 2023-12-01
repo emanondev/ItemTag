@@ -1,5 +1,6 @@
 package emanondev.itemtag.command.itemtag;
 
+import emanondev.itemedit.ItemEdit;
 import emanondev.itemedit.Util;
 import emanondev.itemedit.UtilsInventory;
 import emanondev.itemedit.UtilsInventory.ExcessManage;
@@ -20,6 +21,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -38,6 +41,8 @@ public class Actions extends ListenerSubCmd {
 
     private final static String ACTIONS_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":actions";
     private final static String ACTION_USES_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":uses";
+    private final static String ACTION_MAXUSES_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":maxuses";
+    private final static String ACTION_DISPLAYUSES_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":displayuses";
     private final static String ACTION_CONSUME_AT_END_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":consume";
     private final static String ACTION_VISUAL_COOLDOWN = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":visualcooldown";
     private final static String ACTION_COOLDOWN_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":cooldown";
@@ -69,6 +74,28 @@ public class Actions extends ListenerSubCmd {
             item.removeTag(ACTION_USES_KEY);
         else
             item.setTag(ACTION_USES_KEY, Math.max(-1, amount));
+    }
+
+    public static int getMaxUses(TagItem item) {
+        return item.hasIntegerTag(ACTION_MAXUSES_KEY) ? item.getInteger(ACTION_MAXUSES_KEY) : -1;
+    }
+
+    public static void setMaxUses(TagItem item, int amount) {
+        if (amount <= -1) // default
+            item.removeTag(ACTION_MAXUSES_KEY);
+        else
+            item.setTag(ACTION_MAXUSES_KEY, amount);
+    }
+
+    public static boolean getDisplayUses(TagItem item) {
+        return item.hasBooleanTag(ACTION_DISPLAYUSES_KEY);
+    }
+
+    public static void setDisplayUses(TagItem item, boolean value) {
+        if (!value) // default
+            item.removeTag(ACTION_DISPLAYUSES_KEY);
+        else
+            item.setTag(ACTION_DISPLAYUSES_KEY, true);
     }
 
     public static boolean getConsume(TagItem item) {
@@ -116,7 +143,7 @@ public class Actions extends ListenerSubCmd {
     }
 
     private static final String[] actionsSub = new String[]{"add", "addline", "set", "permission", "cooldown",
-            "cooldownid", "uses", "remove", "info", "consume", "visualcooldown"};
+            "cooldownid", "uses", "maxuses", "remove", "info", "consume", "visualcooldown", "displayuses"};
 
     public Actions(ItemTagCommand cmd) {
         super("actions", cmd, true, true);
@@ -154,6 +181,9 @@ public class Actions extends ListenerSubCmd {
                 case "uses":
                     uses(p, args, item);
                     return;
+                case "maxuses":
+                    maxUses(p, args, item);
+                    return;
                 case "consume":
                     consume(p, args, item);
                     return;
@@ -169,6 +199,8 @@ public class Actions extends ListenerSubCmd {
                 case "visualcooldown":
                     visualCooldown(p, args, item);
                     return;
+                case "displayuses":
+                    displayUses(p, args, item);
                 case "info":
                     p.openInventory(new ActionsGui(p, item).getInventory());
                     //info(p, args, item);
@@ -180,6 +212,57 @@ public class Actions extends ListenerSubCmd {
             onFail(p, alias);
         }
     }
+
+    //it actions displayUses [boolean]
+    private void displayUses(Player p, String[] args, ItemStack item) {
+        TagItem tagItem = ItemTag.getTagItem(item);
+        boolean value = args.length >= 3 ? Aliases.BOOLEAN.convertAlias(args[2]) : !getDisplayUses(tagItem);
+        setDisplayUses(tagItem, value);
+        updateUsesDisplay(item);
+        if (value) {
+            sendLanguageString("displayuses.feedback.set", "", p);
+            updateUsesDisplay(item);
+        } else {
+            sendLanguageString("displayuses.feedback.unset", "", p);
+            updateUsesDisplay(item);
+        }
+    }
+
+    private void updateUsesDisplay(ItemStack item) {
+        TagItem tagItem = ItemTag.getTagItem(item);
+        boolean show = getDisplayUses(tagItem);
+        Map<String, Object> metaMap = new LinkedHashMap<>(item.getItemMeta().serialize());
+        /*if (show && !map.containsKey("meta"))
+            map.put("meta",new LinkedHashMap<String,Object>());
+
+        if (map.containsKey("meta")) {
+            Map<String, Object> metaMap = (Map<String, Object>) map.get("meta");*/
+        if (show && !metaMap.containsKey("lore"))
+            metaMap.put("lore", new ArrayList<String>());
+
+        if (metaMap.containsKey("lore")) {
+            List<String> lore = new ArrayList<>((Collection<String>) metaMap.get("lore"));
+            //that's a bit hardcoded!
+            lore.removeIf((line) -> (line.startsWith(
+                    "{\"italic\":false,\"color\":\"white\",\"translate\":\"item.durability\",\"with\":[{\"text\":\"")
+                    && line.endsWith("\"}]}") || line.startsWith(
+                    "{\"extra\":[{\"bold\":false,\"italic\":false,\"underlined\":false,\"strikethrough\":false,\"obfuscated\":false,\"color\":\"white\",\"text\":\"Durability:")
+                    && line.endsWith("\"}],\"text\":\"\"}")));
+            if (show) {
+                int uses = getUses(tagItem);
+                int maxUses = getMaxUses(tagItem);
+                lore.add("{\"italic\":false,\"color\":\"white\",\"translate\":\"item.durability\",\"with\":[{\"text\":\"" +
+                        (uses == -1 ? "∞" : uses) + "\"},{\"text\":\"" + (maxUses == -1 ? "∞" : maxUses) + "\"}]}");
+            }
+            if (!lore.isEmpty())
+                metaMap.put("lore", lore);
+            else
+                metaMap.remove("lore");
+        }
+        metaMap.put("==", "ItemMeta");
+        item.setItemMeta((ItemMeta) ConfigurationSerialization.deserializeObject(metaMap));
+    }
+
 
     //it actions visualcooldown [boolean]
     private void visualCooldown(Player sender, String[] args, ItemStack item) {
@@ -269,6 +352,28 @@ public class Actions extends ListenerSubCmd {
     }
 
 
+    private void maxUses(Player p, String[] args, ItemStack item) {
+        try {
+            if (args.length > 3)
+                throw new IllegalArgumentException("Wrong param number");
+            int uses = args.length == 2 ? 1 : Integer.parseInt(args[2]);
+            if (uses == 0)
+                throw new IllegalArgumentException();
+            TagItem tagItem = ItemTag.getTagItem(item);
+            setMaxUses(tagItem, uses);
+            if (getDisplayUses(tagItem))
+                updateUsesDisplay(item);
+            if (uses < 0)
+                sendLanguageString("maxuses.feedback.unlimited", "", p);
+            else
+                sendLanguageString("maxuses.feedback.set", "", p,
+                        "%uses%", String.valueOf(uses));
+        } catch (Exception e) {
+            Util.sendMessage(p, this.craftFailFeedback(getLanguageString("maxuses.params", null, p),
+                    getLanguageStringList("maxuses.description", null, p)));
+        }
+    }
+
     private void uses(Player p, String[] args, ItemStack item) {
         try {
             if (args.length > 3)
@@ -278,6 +383,8 @@ public class Actions extends ListenerSubCmd {
                 throw new IllegalArgumentException();
             TagItem tagItem = ItemTag.getTagItem(item);
             setUses(tagItem, uses);
+            if (getDisplayUses(tagItem))
+                updateUsesDisplay(item);
             if (uses < 0)
                 sendLanguageString("uses.feedback.unlimited", "", p);
             else
@@ -312,7 +419,6 @@ public class Actions extends ListenerSubCmd {
         Util.sendMessage(p, new ComponentBuilder(msg).event(new HoverEvent(net.md_5.bungee.api.chat.HoverEvent.Action.SHOW_TEXT, (new ComponentBuilder(hover.toString())).create())).create());
     }
 
-
     private void invalidActionInfo(Player p, String actionType, String actionInfo) {
         String msg = getLanguageString("invalid-actioninfo.message", "", p, "%error%", actionInfo, "%action%", actionType);
         if (msg == null || msg.isEmpty())
@@ -321,7 +427,6 @@ public class Actions extends ListenerSubCmd {
                 new ComponentBuilder(String.join("\n", UtilsString.fix(ActionHandler.getAction(actionType).getInfo(), p, true))).create())).create());
     }
 
-    //
     private void set(Player p, String[] args, ItemStack item) {
         try {
             if (args.length < 4)
@@ -332,6 +437,7 @@ public class Actions extends ListenerSubCmd {
             //ArrayList<String> tmp = new ArrayList<>(Arrays.asList(args).subList(4, args.length));
             String actionType = args[3].toLowerCase(Locale.ENGLISH);
             String actionInfo = String.join(" ", Arrays.asList(args).subList(4, args.length));
+            String originalAction = String.join(" ", Arrays.asList(args).subList(3, args.length));
             try {
                 ActionHandler.validateActionType(actionType);
             } catch (Exception e) {
@@ -355,7 +461,7 @@ public class Actions extends ListenerSubCmd {
                 setActions(tagItem, list);
             }
             sendLanguageString("set.feedback", "", p, "%line%",
-                    String.valueOf(line + 1), "%action%", action.replace(TYPE_SEPARATOR, " "));
+                    String.valueOf(line + 1), "%action%", originalAction);
         } catch (Exception e) {
             Util.sendMessage(p, this.craftFailFeedback(getLanguageString("set.params", null, p),
                     getLanguageStringList("set.description", null, p)));
@@ -379,20 +485,20 @@ public class Actions extends ListenerSubCmd {
                 setActions(tagItem, list);
             }
             sendLanguageString("remove.feedback", "", p, "%line%",
-                    String.valueOf(line + 1), "%action%", action.replace(TYPE_SEPARATOR, " "));
+                    String.valueOf(line + 1), "%action%", action.split(TYPE_SEPARATOR)[0]);
         } catch (Exception e) {
             Util.sendMessage(p, this.craftFailFeedback(getLanguageString("remove.params", null, p),
                     getLanguageStringList("remove.description", null, p)));
         }
     }
 
-    // add
     private void add(Player p, String[] args, ItemStack item) {
         try {
             if (args.length < 3)
                 throw new IllegalArgumentException("Wrong param number");
             String actionType = args[2].toLowerCase(Locale.ENGLISH);
             String actionInfo = String.join(" ", Arrays.asList(args).subList(3, args.length));
+            String originalAction = String.join(" ", Arrays.asList(args).subList(2, args.length));
             try {
                 ActionHandler.validateActionType(actionType);
             } catch (Exception e) {
@@ -405,6 +511,8 @@ public class Actions extends ListenerSubCmd {
                 invalidActionInfo(p, actionType, actionInfo);
                 return;
             }
+
+            actionInfo = ActionHandler.fixActionInfo(actionType,actionInfo);
             String action = actionType + TYPE_SEPARATOR + actionInfo;
             TagItem tagItem = ItemTag.getTagItem(item);
             if (!hasActions(tagItem))
@@ -415,7 +523,7 @@ public class Actions extends ListenerSubCmd {
                 setActions(tagItem, list);
             }
             sendLanguageString("add.feedback", "", p, "%action%",
-                    action.replace(TYPE_SEPARATOR, " "));
+                    originalAction);
         } catch (Exception e) {
             e.printStackTrace();
             Util.sendMessage(p, this.craftFailFeedback(getLanguageString("add.params", null, p),
@@ -423,7 +531,6 @@ public class Actions extends ListenerSubCmd {
         }
     }
 
-    // add
     private void addLine(Player p, String[] args, ItemStack item) {
         try {
             if (args.length < 4)
@@ -431,6 +538,7 @@ public class Actions extends ListenerSubCmd {
             int line = Integer.parseInt(args[2]) - 1;
             String actionType = args[3].toLowerCase(Locale.ENGLISH);
             String actionInfo = String.join(" ", Arrays.asList(args).subList(4, args.length));
+            String originalAction = String.join(" ", Arrays.asList(args).subList(3, args.length));
             try {
                 ActionHandler.validateActionType(actionType);
             } catch (Exception e) {
@@ -453,7 +561,7 @@ public class Actions extends ListenerSubCmd {
                 setActions(tagItem, list);
             }
             sendLanguageString("addline.feedback", "", p, "%action%",
-                    action.replace(TYPE_SEPARATOR, " "), "%line%", String.valueOf(line + 1));
+                    originalAction, "%line%", String.valueOf(line + 1));
         } catch (Exception e) {
             Util.sendMessage(p, this.craftFailFeedback(getLanguageString("addline.params", null, p),
                     getLanguageStringList("addline.description", null, p)));
@@ -469,10 +577,12 @@ public class Actions extends ListenerSubCmd {
                 switch (args[1].toLowerCase(Locale.ENGLISH)) {
                     case "add":
                         return Util.complete(args[2], ActionHandler.getTypes());
-                    case "setuses":
+                    case "uses":
+                    case "maxuses":
                         return Util.complete(args[2], Arrays.asList("-1", "1", "5", "10"));
                     case "visualcooldown":
                     case "consume":
+                    case "displayuses":
                         return Util.complete(args[2], Aliases.BOOLEAN);
                 }
                 return Collections.emptyList();
@@ -551,6 +661,8 @@ public class Actions extends ListenerSubCmd {
                         try {
                             if (event.getItem().getAmount() == 1) {
                                 setUses(tagItem, uses - 1);
+                                if (getDisplayUses(tagItem))
+                                    updateUsesDisplay(item);
                             } else {
                                 ItemStack clone = event.getItem();
                                 clone.setAmount(clone.getAmount() - 1);
@@ -559,6 +671,8 @@ public class Actions extends ListenerSubCmd {
                                 else
                                     event.getPlayer().getInventory().setItemInOffHand(clone);
                                 setUses(ItemTag.getTagItem(clone), uses - 1);
+                                if (getDisplayUses(tagItem))
+                                    updateUsesDisplay(clone);
                                 UtilsInventory.giveAmount(event.getPlayer(), clone, 1, ExcessManage.DROP_EXCESS);
                             }
 
@@ -570,6 +684,7 @@ public class Actions extends ListenerSubCmd {
                                 clone.setAmount(clone.getAmount() - 1);
                                 event.getPlayer().getInventory().setItemInHand(clone);
                                 ItemTag.getTagItem(clone).setTag(ACTION_USES_KEY, uses - 1);
+                                //has no displayuses on 1.8
                                 UtilsInventory.giveAmount(event.getPlayer(), clone, 1, ExcessManage.DROP_EXCESS);
                             }
                         }
@@ -625,12 +740,16 @@ public class Actions extends ListenerSubCmd {
                     switch (event.getClick()) {
                         case LEFT:
                             setUses(this.tagItem, Math.max(-1, Actions.getUses(tagItem) - editorValue));
+                            if (getDisplayUses(tagItem))
+                                updateUsesDisplay(tagItem.getItem());
                             break;
                         case SHIFT_RIGHT:
                             editorValue = Math.min(1000000, editorValue * 10);
                             break;
                         case RIGHT:
                             setUses(this.tagItem, (int) Math.min(Integer.MAX_VALUE, Actions.getUses(tagItem) + (long) editorValue));
+                            if (getDisplayUses(tagItem))
+                                updateUsesDisplay(tagItem.getItem());
                             break;
                         case SHIFT_LEFT:
                             editorValue = Math.max(1, editorValue / 10);
@@ -642,12 +761,37 @@ public class Actions extends ListenerSubCmd {
                     return;
                 }
                 case 17: {
+                    //Set maxuses
+                    switch (event.getClick()) {
+                        case LEFT:
+                            setMaxUses(this.tagItem, Math.max(-1, Actions.getMaxUses(tagItem) - editorValue));
+                            if (getDisplayUses(this.tagItem))
+                                updateUsesDisplay(tagItem.getItem());
+                            break;
+                        case SHIFT_RIGHT:
+                            editorValue = Math.min(1000000, editorValue * 10);
+                            break;
+                        case RIGHT:
+                            setMaxUses(this.tagItem, (int) Math.min(Integer.MAX_VALUE, Actions.getMaxUses(tagItem) + (long) editorValue));
+                            if (getDisplayUses(this.tagItem))
+                                updateUsesDisplay(tagItem.getItem());
+                            break;
+                        case SHIFT_LEFT:
+                            editorValue = Math.max(1, editorValue / 10);
+                            break;
+                        default:
+                            return;
+                    }
+                    updateInventory();
+                    return;
+                }
+                case 7: {
                     //consume on 0
                     setConsume(tagItem, !getConsume(tagItem));
                     updateInventory();
                     return;
                 }
-                case 6: {//permission
+                case 5: {//permission
                     if (event.getClick() == ClickType.SHIFT_RIGHT) {
                         Actions.setPermission(tagItem, null);
                         updateInventory();
@@ -657,7 +801,7 @@ public class Actions extends ListenerSubCmd {
                     sendClickableText(this, "permission");
                     return;
                 }
-                case 7: {//cooldown
+                case 6: {//cooldown
                     switch (event.getClick()) {
                         case LEFT:
                             Actions.setCooldownMs(this.tagItem,
@@ -693,6 +837,13 @@ public class Actions extends ListenerSubCmd {
                 }
                 case 15: {//cooldown display
                     Actions.setVisualCooldown(tagItem, !Actions.getVisualCooldown(tagItem));
+                    updateInventory();
+                    return;
+                }
+                case 14: {//display uses
+                    Actions.setDisplayUses(tagItem, !Actions.getDisplayUses(tagItem));
+                    if (getDisplayUses(this.tagItem))
+                        updateUsesDisplay(tagItem.getItem());
                     updateInventory();
                     return;
                 }
@@ -764,24 +915,41 @@ public class Actions extends ListenerSubCmd {
             else
                 meta.removeEnchant(Enchantment.DURABILITY);
             item.setItemMeta(meta);
-            this.getInventory().setItem(17, item);
+            this.getInventory().setItem(7, item);
 
-            //consume uses
+            // uses
             this.getInventory().setItem(8, this.loadLanguageDescription(this.getGuiItem("gui.actions.uses", Material.IRON_PICKAXE), "gui.actions.uses",
                     "%value%", getUses(tagItem) == -1 ? "-1 (Unlimited)" : String.valueOf(getUses(tagItem)), "%editor%", String.valueOf(editorValue)
                     , "%editor-prev%", String.valueOf(Math.max(1, editorValue / 10)), "%editor-next%", String.valueOf(Math.min(1000000, editorValue * 10))));
 
+            if (ItemEdit.GAME_VERSION>8) {
+                //max uses
+                this.getInventory().setItem(17, this.loadLanguageDescription(this.getGuiItem("gui.actions.maxuses", Material.DIAMOND_PICKAXE), "gui.actions.maxuses",
+                        "%value%", getMaxUses(tagItem) == -1 ? "-1 (Unlimited)" : String.valueOf(getMaxUses(tagItem)), "%editor%", String.valueOf(editorValue)
+                        , "%editor-prev%", String.valueOf(Math.max(1, editorValue / 10)), "%editor-next%", String.valueOf(Math.min(1000000, editorValue * 10))));
+
+
+                item = this.getGuiItem("gui.actions.displayuses", Material.PAINTING);
+                meta = this.loadLanguageDescription(item.getItemMeta(), "gui.actions.displayuses", "%value%", Aliases.BOOLEAN.getName(getDisplayUses(tagItem)));
+                if (getDisplayUses(tagItem))
+                    meta.addEnchant(Enchantment.DURABILITY, 1, true);
+                else
+                    meta.removeEnchant(Enchantment.DURABILITY);
+                item.setItemMeta(meta);
+                //max uses
+                this.getInventory().setItem(14, item);
+            }
             //permission
             try {
-                this.getInventory().setItem(6, this.loadLanguageDescription(this.getGuiItem("gui.actions.permission", Material.IRON_BARS), "gui.actions.permission",
+                this.getInventory().setItem(5, this.loadLanguageDescription(this.getGuiItem("gui.actions.permission", Material.IRON_BARS), "gui.actions.permission",
                         "%value%", getPermission(tagItem) == null ? "<none>" : getPermission(tagItem)));
             } catch (Error e) {
-                this.getInventory().setItem(6, this.loadLanguageDescription(this.getGuiItem("gui.actions.permission", Material.valueOf("IRON_FENCE")), "gui.actions.permission",
+                this.getInventory().setItem(5, this.loadLanguageDescription(this.getGuiItem("gui.actions.permission", Material.valueOf("IRON_FENCE")), "gui.actions.permission",
                         "%value%", getPermission(tagItem) == null ? "<none>" : getPermission(tagItem)));
             }
 
             // cooldown
-            this.getInventory().setItem(7, this.loadLanguageDescription(this.getGuiItem("gui.actions.cooldown", Material.COMPASS), "gui.actions.cooldown",
+            this.getInventory().setItem(6, this.loadLanguageDescription(this.getGuiItem("gui.actions.cooldown", Material.COMPASS), "gui.actions.cooldown",
                     "%value_s%", String.valueOf(getCooldownMs(tagItem) / 1000), "%editor%", String.valueOf(editorCooldown)
                     , "%editor-prev%", String.valueOf(Math.max(1, editorCooldown / 10)), "%editor-next%", String.valueOf(Math.min(1000000, editorCooldown * 10))));
 
@@ -810,7 +978,7 @@ public class Actions extends ListenerSubCmd {
                         lore.add(ChatColor.YELLOW + action.replace(Actions.TYPE_SEPARATOR, " " + ChatColor.WHITE));
             meta.setLore(lore);
             item.setItemMeta(meta);
-            this.getInventory().setItem(4, item);
+            this.getInventory().setItem(2, item);
         }
 
         private int editorCooldown = 1;

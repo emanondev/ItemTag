@@ -100,8 +100,13 @@ public class EffectsInfo {
         return effects.values();
     }
 
+    /**
+     * Note: if no slot is specified all slots are considered valid
+     * @param slot
+     * @return
+     */
     public boolean isValidSlot(EquipmentSlot slot) {
-        return slots.contains(slot);
+        return slots.isEmpty()||slots.contains(slot);
     }
 
     public EnumSet<EquipmentSlot> getValidSlots() {

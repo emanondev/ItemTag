@@ -56,6 +56,14 @@ public class PermissionAction extends Action {
         }
     }
 
+    @Override
+    public String fixActionInfo(String actionInfo) {
+        //permission <perm> <actiontype> <actioninfo>
+        String[] args = actionInfo.split(" ");
+        return args[0]+" "+args[1]+" "+ActionHandler.getAction(args[1])
+                .fixActionInfo(actionInfo.substring(args[0].length() + args[1].length() + 2));
+    }
+
 
     @Override
     public List<String> getInfo() {

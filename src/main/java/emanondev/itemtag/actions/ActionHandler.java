@@ -51,4 +51,7 @@ public class ActionHandler {
         return actions.get(type.toLowerCase(Locale.ENGLISH));
     }
 
+    public static String fixActionInfo(String type, String actionInfo) {
+       return actions.get(type.toLowerCase(Locale.ENGLISH)).fixActionInfo(actionInfo);
+    }
 }

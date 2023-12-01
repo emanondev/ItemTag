@@ -1,10 +1,13 @@
 package emanondev.itemtag.triggers;
 
+import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.UnmodifiableView;
-
 import java.util.*;
+import java.util.List;
 
 public class Action {
 
@@ -22,7 +25,6 @@ public class Action {
 
     public Map<String, Object> toMap() {
         Map<String, Object> map = new LinkedHashMap<>(rawValues);
-        //map.put("type", type.getID());
         List<Map<String, Object>> conds = new ArrayList<>();
         for (Condition condition : conditions)
             conds.add(condition.toMap());
@@ -35,9 +37,7 @@ public class Action {
     }
 
     public void setConsumeUses(int value) {
-        if (value < -1)
-            value = -1;
-        if (value == 0)
+        if (value <= 0)
             rawValues.remove("consumes");
         else
             rawValues.put("consumes", value);
@@ -77,6 +77,11 @@ public class Action {
             rawValues.put(key, value);
     }
 
+    public <T, L extends T> @Nullable T getValue(@NotNull String key, @NotNull Class<T> clazz) {
+        return getValue(key,null,clazz);
+    }
+
+    @Contract("_,!null,_ -> !null")
     public <T, L extends T> @Nullable T getValue(@NotNull String key, @Nullable L def, @NotNull Class<T> clazz) {
         try {
             return (T) rawValues.getOrDefault(key, def);
@@ -86,9 +91,24 @@ public class Action {
         }
     }
 
-    public void execute() {
+    public <E extends Event> void execute(@NotNull E event,@NotNull Player player) {
         if (type == null)
             return;
-        type.execute(this);
+        type.execute(this,event,player);
+    }
+
+    public <E extends Event> boolean isSatisfied(@NotNull E event,@NotNull Player player){
+        if (type == null) {
+            //TODO
+            return false;
+        }
+        if (!event.getClass().isAssignableFrom(type.getEventType())) {
+            //TODO
+            return false;
+        }
+        for (Condition cond: getConditions())
+            if (!cond.isSatisfied(event,player))
+                return false;
+        return true;
     }
 }

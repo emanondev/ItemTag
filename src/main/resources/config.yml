@@ -5,7 +5,7 @@
 # Spigot https://www.spigotmc.org/resources/89634/
 #
 # Do not change config-version
-config-version: 1
+config-version: 5
 language:
   #Default locale
   #If you want to add more languages copy language/en.yml, rename it and apply your changes,
@@ -15,6 +15,7 @@ language:
   #When true the plugin will use the client language if a language file exist for that client
   use_multilanguage: true
 actions:
+  unsafe_mode: false
   player_command:
     #Should use playercommandpreprocessevent ?
     #true - if you need other plugins to listen to cancel or handle commands fired by items, like CombatLog MyCommands etc...

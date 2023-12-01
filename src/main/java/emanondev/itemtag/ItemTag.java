@@ -7,6 +7,7 @@ import emanondev.itemedit.command.ReloadCommand;
 import emanondev.itemedit.compability.Hooks;
 import emanondev.itemtag.actions.*;
 import emanondev.itemtag.command.ItemTagCommand;
+import emanondev.itemtag.command.ItemTagUpdateOldItem;
 import emanondev.itemtag.compability.PlaceHolders;
 import emanondev.itemtag.equipmentchange.EquipmentChangeListener;
 import emanondev.itemtag.equipmentchange.EquipmentChangeListenerBase;
@@ -55,8 +56,6 @@ public class ItemTag extends APlugin {
 
     @Override
     public void enable() {
-        ConfigurationUpdater.update();
-        //true Enable
         try {
 
             //set tagapi
@@ -78,7 +77,16 @@ public class ItemTag extends APlugin {
                 OLD_TAGS = false;
                 tagManager = new SpigotTagManager();
             }
+        } catch (Exception e) {
+            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Error while enabling ItemTag, disabling it");
+            e.printStackTrace();
+            Bukkit.getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+        ConfigurationUpdater.update();
+        //true Enable
 
+        try {
             //register equipmentchange listener
             if (ItemEdit.GAME_VERSION == 8)
                 equipChangeListener = new EquipmentChangeListenerUpTo1_8();
@@ -90,6 +98,8 @@ public class ItemTag extends APlugin {
 
             this.registerCommand(new ItemTagCommand(), Collections.singletonList("it"));
             new ReloadCommand(this).register();
+            this.registerCommand("itemtagupdateolditem", new ItemTagUpdateOldItem(), null);
+
 
             ActionHandler.clearActions(); //required for plugman reload
             ActionHandler.registerAction(new DelayedAction());

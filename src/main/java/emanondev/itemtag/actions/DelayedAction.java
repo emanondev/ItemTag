@@ -2,6 +2,7 @@ package emanondev.itemtag.actions;
 
 import emanondev.itemedit.Util;
 import emanondev.itemtag.ItemTag;
+import emanondev.itemtag.command.itemtag.SecurityUtil;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -31,6 +32,15 @@ public class DelayedAction extends Action {
 
         ActionHandler.validateActionType(args[1]);
         ActionHandler.validateActionInfo(args[1], text.substring(args[0].length() + args[1].length() + 2));
+    }
+
+
+    @Override
+    public String fixActionInfo(String actionInfo) {
+        //delay <ticks> <actiontype> <actioninfo>
+        String[] args = actionInfo.split(" ");
+        return args[0]+" "+args[1]+" "+ActionHandler.getAction(args[1])
+                .fixActionInfo(actionInfo.substring(args[0].length() + args[1].length() + 2));
     }
 
     @Override

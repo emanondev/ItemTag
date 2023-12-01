@@ -1,5 +1,6 @@
 package emanondev.itemtag.triggers;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -25,8 +26,9 @@ public class Condition {
         return new LinkedHashMap<>(rawValues);
     }
 
-    public <E extends Event> boolean isSatisfied(E e) {
+    public <E extends Event> boolean isSatisfied(@NotNull E e,@NotNull  Player target) {
         if (type == null) {
+
             //TODO
             return true;
         }
@@ -34,7 +36,7 @@ public class Condition {
             //TODO
             return true;
         }
-        return isReversed() != type.isSatisfied(this,e);
+        return isReversed() != type.isSatisfied(this,e,target);
     }
 
     public boolean isReversed() {

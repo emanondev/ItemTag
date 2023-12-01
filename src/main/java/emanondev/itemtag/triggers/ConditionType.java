@@ -1,5 +1,6 @@
 package emanondev.itemtag.triggers;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,16 +13,16 @@ public abstract class ConditionType <E extends Event>{
     private final String id;
     private final Class<E> eventType;
 
-    public ConditionType(@NotNull String id, Class<E> e) {
+    public ConditionType(@NotNull String id,@NotNull Class<E> e) {
         this.id = id.toLowerCase(Locale.ENGLISH);
         this.eventType = e;
     }
 
-    public String getID() {
+    public @NotNull String getID() {
         return id;
     }
 
-    public Class<E> getEventType(){
+    public @NotNull Class<E> getEventType(){
         return eventType;
     }
 
@@ -29,5 +30,5 @@ public abstract class ConditionType <E extends Event>{
         return new Condition(condMap);
     }
 
-    public abstract boolean isSatisfied(Condition condition, E e);
+    public abstract boolean isSatisfied(@NotNull Condition condition,@NotNull  E e,@NotNull  Player target);
 }

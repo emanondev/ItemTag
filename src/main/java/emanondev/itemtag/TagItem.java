@@ -1,5 +1,6 @@
 package emanondev.itemtag;
 
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -110,4 +111,6 @@ public interface TagItem {
      * @return true if it's possible to apply tags to item
      */
     boolean isValid();
+
+    ItemStack getItem();
 }

@@ -3,10 +3,7 @@ package emanondev.itemtag.command;
 import emanondev.itemedit.command.AbstractCommand;
 import emanondev.itemedit.command.SubCmd;
 import emanondev.itemtag.ItemTag;
-import emanondev.itemtag.command.itemtag.Actions;
-import emanondev.itemtag.command.itemtag.ConsumeActions;
-import emanondev.itemtag.command.itemtag.Effects;
-import emanondev.itemtag.command.itemtag.Flag;
+import emanondev.itemtag.command.itemtag.*;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 
@@ -23,6 +20,7 @@ public class ItemTagCommand extends AbstractCommand {
         this.registerSubCommand(new Effects(this));
         this.registerSubCommand(new Actions(this));
         this.registerSubCommand(new ConsumeActions(this));
+        this.registerSubCommand(new UsePermission(this));
         this.registerSubCommand(new Flag(this));
     }
 

@@ -6,6 +6,10 @@ import emanondev.itemedit.aliases.Aliases;
 import emanondev.itemedit.command.ReloadCommand;
 import emanondev.itemedit.compability.Hooks;
 import emanondev.itemtag.actions.*;
+import emanondev.itemtag.activity.ActionManager;
+import emanondev.itemtag.activity.ActivityManager;
+import emanondev.itemtag.activity.ConditionManager;
+import emanondev.itemtag.activity.TriggerManager;
 import emanondev.itemtag.command.ItemTagCommand;
 import emanondev.itemtag.command.ItemTagUpdateOldItem;
 import emanondev.itemtag.compability.PlaceHolders;
@@ -95,6 +99,11 @@ public class ItemTag extends APlugin {
             else
                 equipChangeListener = new EquipmentChangeListener();
             equipChangeListener.reload();
+            //TODO
+            TriggerManager.load();
+            ActionManager.load();
+            ConditionManager.load();
+            ActivityManager.reload();
 
             this.registerCommand(new ItemTagCommand(), Collections.singletonList("it"));
             new ReloadCommand(this).register();
@@ -130,6 +139,7 @@ public class ItemTag extends APlugin {
     public void reload() {
         equipChangeListener.reload();
         Aliases.reload();
+        ActivityManager.reload();//TODO
         ItemTagCommand.get().reload();
     }
 

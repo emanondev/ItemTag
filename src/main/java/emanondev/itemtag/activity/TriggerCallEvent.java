@@ -1,7 +1,6 @@
 package emanondev.itemtag.activity;
 
 import emanondev.itemtag.actions.Action;
-import emanondev.itemtag.triggers.Trigger;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.inventory.ItemStack;
@@ -13,7 +12,7 @@ public class TriggerCallEvent implements Cancellable {
 
     private boolean cancelled = false;
 
-    public Trigger getTrigger() {
+    public TriggerType getTriggerType() {
         return trigger;
     }
 
@@ -37,13 +36,13 @@ public class TriggerCallEvent implements Cancellable {
         return actions;
     }
 
-    private final Trigger trigger;
+    private final TriggerType trigger;
     private final Player player;
     private final ItemStack itemOld;
     private ItemStack itemNew;
     private final ArrayList<Action> actions;
 
-    public TriggerCallEvent(Trigger trigger, Player player, ItemStack itemOld, ItemStack itemNew, List<Action> actions){
+    public TriggerCallEvent(TriggerType trigger, Player player, ItemStack itemOld, ItemStack itemNew, List<Action> actions){
         this.trigger = trigger;
         this.player = player;
         this.itemOld = itemOld;

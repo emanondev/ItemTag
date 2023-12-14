@@ -1,7 +1,11 @@
 package emanondev.itemtag.activity;
 
+import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.activity.action.*;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -20,6 +24,7 @@ public class ActionManager {
         if (actionTypes.containsKey(id))
             throw  new IllegalArgumentException();
         actionTypes.put(id,action);
+        ItemTag.get().log("ActionManager registered Action Type &e"+action.getId());
     }
 
     public static void load(){
@@ -32,8 +37,12 @@ public class ActionManager {
         register(new DelayedActionType());
         register(new ConditionalActionType());
         register(new RandomActionType());
-        register(new ConsumeUsesActionType());
         //TODO event
+    }
+
+
+    public static Collection<String> getActionTypeIds() {
+        return Collections.unmodifiableSet(actionTypes.keySet());
     }
 
 

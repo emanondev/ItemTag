@@ -1,18 +1,17 @@
 package emanondev.itemtag.activity.condition;
 
+import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.activity.ConditionType;
+import emanondev.itemtag.activity.TriggerHandler;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-import java.util.HashSet;
-
 public class HasUsesConditionType extends ConditionType{
 
     public HasUsesConditionType() {
-        super("world");
+        super("hasuses");
     }
 
     @Override
@@ -33,7 +32,7 @@ public class HasUsesConditionType extends ConditionType{
 
         @Override
         protected boolean evaluateImpl(@NotNull Player player, @NotNull ItemStack item, Event event) {
-            return ;//TODO
+            return TriggerHandler.getUsesLeft(ItemTag.getTagItem(item))>uses;
         }
     }
 }

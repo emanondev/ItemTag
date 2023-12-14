@@ -2,7 +2,6 @@ package emanondev.itemtag.activity;
 
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.TagItem;
-import emanondev.itemtag.triggers.Trigger;
 import org.bukkit.inventory.EquipmentSlot;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -40,18 +39,18 @@ public class TriggerHandler {
     public Trigger ATTACK_PLAYER = new Trigger("attack_player");*/
 
 
-    private final static String TRIGGERS_ACTIVITY_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":triggeractivity_";
-    private final static String TRIGGERS_SLOTS_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":triggerslots_";
-    private final static String TRIGGER_USES_CONSUME_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":triggeruseconsume_";
-    private final static String TRIGGER_COOLDOWN_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":triggercooldown_";
-    private final static String TRIGGER_COOLDOWN_ID_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":triggercooldown_id_";
+    private final static String TRIGGERS_ACTIVITY_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":t_activity_";
+    private final static String TRIGGERS_SLOTS_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":t_slots_";
+    //private final static String TRIGGER_USES_CONSUME_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":t_useconsume_";
+    private final static String TRIGGER_COOLDOWN_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":t_cooldown_";
+    private final static String TRIGGER_COOLDOWN_ID_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":t_cooldown_id_";
 
-    private final static String TRIGGER_USES_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":triggeruses";
-    private final static String TRIGGER_MAXUSES_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":triggermaxuses";
-    private final static String TRIGGER_NOT_CONSUME_AT_END_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":triggernotconsume";
-    private final static String TRIGGER_DISPLAY_USES = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":triggerdisplayuses";
-    private final static String TRIGGER_VISUAL_COOLDOWN = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":triggervisualcooldown";
-    private final static String TRIGGER_PERMISSION_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":triggerpermission";
+    private final static String TRIGGER_USES_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":t_uses";
+    private final static String TRIGGER_MAXUSES_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":t_maxuses";
+    private final static String TRIGGER_NOT_CONSUME_AT_END_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":t_notconsume";
+    private final static String TRIGGER_DISPLAY_USES = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":t_displayuses";
+    private final static String TRIGGER_VISUAL_COOLDOWN = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":t_visualcooldown";
+    private final static String TRIGGER_PERMISSION_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":t_perm";
 
 
     public static boolean hasTrigger(@NotNull TriggerType trigger, @NotNull TagItem item) {
@@ -62,7 +61,7 @@ public class TriggerHandler {
      * @return Activity id if present
      */
     public static String getTriggerActivityId(@NotNull TriggerType trigger, @NotNull TagItem item) {
-        return item.getString(TRIGGERS_ACTIVITY_KEY + trigger.getID());
+        return item.getString(TRIGGERS_ACTIVITY_KEY + trigger.getId());
     }
 
     /**
@@ -75,13 +74,13 @@ public class TriggerHandler {
 
     public static void setTriggerActivity(@NotNull TriggerType trigger, @NotNull TagItem item, @Nullable Activity activity) {
         if (activity == null)
-            item.removeTag(TRIGGERS_ACTIVITY_KEY + trigger.getID());
+            item.removeTag(TRIGGERS_ACTIVITY_KEY + trigger.getId());
         else
-            item.setTag(TRIGGERS_ACTIVITY_KEY + trigger.getID(), activity.getId());
+            item.setTag(TRIGGERS_ACTIVITY_KEY + trigger.getId(), activity.getId());
     }
 
     public static @NotNull Collection<EquipmentSlot> getAllowedSlots(@NotNull TriggerType trigger, @NotNull TagItem item) {
-        String values = item.getString(TRIGGERS_SLOTS_KEY + trigger.getID());
+        String values = item.getString(TRIGGERS_SLOTS_KEY + trigger.getId());
         if (values == null || values.isEmpty())
             return EnumSet.allOf(EquipmentSlot.class);
         EnumSet<EquipmentSlot> slots = EnumSet.noneOf(EquipmentSlot.class);
@@ -104,9 +103,9 @@ public class TriggerHandler {
             }
         }
         if (value == null)
-            item.removeTag(TRIGGERS_SLOTS_KEY + trigger.getID());
+            item.removeTag(TRIGGERS_SLOTS_KEY + trigger.getId());
         else
-            item.setTag(TRIGGERS_SLOTS_KEY + trigger.getID(), value.toString());
+            item.setTag(TRIGGERS_SLOTS_KEY + trigger.getId(), value.toString());
     }
 
     public static boolean isConsumeAtUsesEnd(@NotNull TagItem item) {
@@ -131,18 +130,18 @@ public class TriggerHandler {
         else
             item.setTag(TRIGGER_DISPLAY_USES, false);
     }
-
+/*
     public static int getConsumeUses(@NotNull TriggerType trigger, @NotNull TagItem item) {
-        Integer value = item.getInteger(TRIGGER_USES_CONSUME_KEY + trigger.getID());
+        Integer value = item.getInteger(TRIGGER_USES_CONSUME_KEY + trigger.getId());
         return value == null ? 1 : value;
     }
 
     public static void setConsumeUses(@NotNull TriggerType trigger, @NotNull TagItem item, int value) {
         if (value == 1)
-            item.removeTag(TRIGGER_USES_CONSUME_KEY + trigger.getID());
+            item.removeTag(TRIGGER_USES_CONSUME_KEY + trigger.getId());
         else
-            item.setTag(TRIGGER_USES_CONSUME_KEY + trigger.getID(), value);
-    }
+            item.setTag(TRIGGER_USES_CONSUME_KEY + trigger.getId(), value);
+    }*/
 
     public static int getUsesLeft( @NotNull TagItem item) {
         Integer value = item.getInteger(TRIGGER_USES_KEY);
@@ -180,28 +179,29 @@ public class TriggerHandler {
             item.setTag(TRIGGER_VISUAL_COOLDOWN, true);
     }
 
+
     public static long getCooldownAmountMs(@NotNull TriggerType trigger, @NotNull TagItem item) {
-        Integer value = item.getInteger(TRIGGER_COOLDOWN_KEY + trigger.getID());
+        Integer value = item.getInteger(TRIGGER_COOLDOWN_KEY + trigger.getId());
         return value == null ? 0L : value * 10;
     }
 
     public static void setCooldownAmountMs(@NotNull TriggerType trigger, @NotNull TagItem item, long value) {
         if (value == 0)
-            item.removeTag(TRIGGER_COOLDOWN_KEY + trigger.getID());
+            item.removeTag(TRIGGER_COOLDOWN_KEY + trigger.getId());
         else
-            item.setTag(TRIGGER_COOLDOWN_KEY + trigger.getID(), (int) value / 10);
+            item.setTag(TRIGGER_COOLDOWN_KEY + trigger.getId(), (int) value / 10);
     }
 
     public static String getCooldownId(@NotNull TriggerType trigger, @NotNull TagItem item) {
-        String value = item.getString(TRIGGER_COOLDOWN_ID_KEY + trigger.getID());
+        String value = item.getString(TRIGGER_COOLDOWN_ID_KEY + trigger.getId());
         return value == null ? "default" : value;
     }
 
     public static void setCooldownId(@NotNull TriggerType trigger, @NotNull TagItem item, String value) {
         if (value == null || value.isEmpty())
-            item.removeTag(TRIGGER_COOLDOWN_ID_KEY + trigger.getID());
+            item.removeTag(TRIGGER_COOLDOWN_ID_KEY + trigger.getId());
         else
-            item.setTag(TRIGGER_COOLDOWN_ID_KEY + trigger.getID(), value);
+            item.setTag(TRIGGER_COOLDOWN_ID_KEY + trigger.getId(), value);
     }
 
     public static String getPermission(@NotNull TagItem item) {
@@ -232,9 +232,9 @@ public class TriggerHandler {
     public static void registerTrigger(TriggerType trigger) {
         if (trigger == null)
             throw new NullPointerException();
-        if (triggers.containsKey(trigger.getID()))
+        if (triggers.containsKey(trigger.getId()))
             throw new IllegalArgumentException();
-        triggers.put(trigger.getID().toLowerCase(Locale.ENGLISH), trigger);
+        triggers.put(trigger.getId().toLowerCase(Locale.ENGLISH), trigger);
     }
 
     public static void clearTriggers() {
@@ -252,6 +252,5 @@ public class TriggerHandler {
     public static TriggerType getTrigger(String type) {
         return triggers.get(type.toLowerCase(Locale.ENGLISH));
     }
-
 
 }

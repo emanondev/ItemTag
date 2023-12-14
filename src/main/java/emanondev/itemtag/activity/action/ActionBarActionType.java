@@ -1,8 +1,8 @@
 package emanondev.itemtag.activity.action;
 
-import emanondev.itemedit.UtilsString;
 import emanondev.itemtag.activity.ActionType;
-import org.bukkit.Bukkit;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.ComponentBuilder;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
@@ -26,7 +26,8 @@ public class ActionBarActionType extends ActionType{
 
         @Override
         public boolean execute(@NotNull Player player, @NotNull ItemStack item, Event event) {
-            return Bukkit.dispatchCommand(Bukkit.getConsoleSender(), UtilsString.fix(getInfo(), player, true));
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR,new ComponentBuilder(getInfo()).create());
+            return true;
         }
     }
 }

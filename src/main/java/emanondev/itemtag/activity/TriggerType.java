@@ -1,16 +1,19 @@
 package emanondev.itemtag.activity;
 
-import emanondev.itemedit.ItemEdit;
 import emanondev.itemedit.UtilsInventory;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.TagItem;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.regex.Pattern;
@@ -27,16 +30,18 @@ public class TriggerType<E extends Event> {
         this.eventType = e;
     }
 
-    public String getID() {
+    public String getId() {
         return id;
     }
 
     public void handle(E event, @NotNull Player p, ItemStack item, EquipmentSlot slot) {
         TagItem tag = ItemTag.getTagItem(item);
-        Activity activity = TriggerHandler.getTriggerActivity(this, tag);
-        if (!TriggerHandler.getAllowedSlots(this, tag).contains(slot))
+        if (!tag.isValid())
             return;
+        Activity activity = TriggerHandler.getTriggerActivity(this, tag);
         if (activity == null)
+            return;
+        if (!TriggerHandler.getAllowedSlots(this, tag).contains(slot))
             return;
         long ms = TriggerHandler.getCooldownAmountMs(this, tag);
         if (ms > 0 && ItemTag.get().getCooldownAPI().hasCooldown(p, TriggerHandler.getCooldownId(this, tag))) {
@@ -49,7 +54,7 @@ public class TriggerType<E extends Event> {
         for (ConditionType.Condition cond : activity.getConditions()) {
             if (!cond.isCompatible(event)) {
                 ItemTag.get().log("Incompatible Condition &e" + cond + "&f from Activity &e"
-                        + activity.getId() + "&f used on Trigger &e" + getID());
+                        + activity.getId() + "&f used on Trigger &e" + getId());
                 return;
             }
             try {
@@ -74,7 +79,7 @@ public class TriggerType<E extends Event> {
         int uses = TriggerHandler.getUsesLeft(tag);
         int newUses = uses;
         if (uses >= 0) {
-            int consumes = TriggerHandler.getConsumeUses(this, tag);
+            int consumes = activity.getConsumes();//TriggerHandler.getConsumeUses(this, tag);
             if (consumes > uses) {
                 executeActions(activity.getNoConsumesActions(), event, item, p, activity,
                         "(no consume actions)");
@@ -115,6 +120,7 @@ public class TriggerType<E extends Event> {
         item.setAmount(item.getAmount()-1);
         TagItem toGiveTag = ItemTag.getTagItem(toGive);
         TriggerHandler.setUsesLeft(toGiveTag,newUses);
+        updateUsesDisplay(item);
         UtilsInventory.giveAmount(p,toGive,1, UtilsInventory.ExcessManage.DROP_EXCESS);
     }
 
@@ -123,7 +129,7 @@ public class TriggerType<E extends Event> {
         for (ActionType.Action action : actions) {
             if (!action.isAssignable(event)) {
                 ItemTag.get().log("Incompatible Action &e" + action + "&f from Activity " + actionType + " &e"
-                        + activity.getId() + "&f used on Trigger &e" + getID() + "&f, skipping it");
+                        + activity.getId() + "&f used on Trigger &e" + getId() + "&f, skipping it");
                 continue;
             }
             try {
@@ -136,7 +142,7 @@ public class TriggerType<E extends Event> {
 
     private void updateUsesDisplay(ItemStack item) {
         TagItem tagItem = ItemTag.getTagItem(item);
-        boolean show = TriggerHandler.getDisplayUses(tagItem);
+        boolean show = TriggerHandler.isDisplayUses(tagItem);
         Map<String, Object> metaMap = new LinkedHashMap<>(item.getItemMeta().serialize());
         /*if (show && !map.containsKey("meta"))
             map.put("meta",new LinkedHashMap<String,Object>());
@@ -169,4 +175,20 @@ public class TriggerType<E extends Event> {
         item.setItemMeta((ItemMeta) ConfigurationSerialization.deserializeObject(metaMap));
     }
 
+    public ItemStack getGuiItem(@Nullable Player player){
+        ItemStack mat;
+        try {
+            mat = new ItemStack(Material.valueOf(ItemTag.get().getConfig("triggers.yml")
+                    .getString(getId() + ".gui_material", Material.STONE.name()).toUpperCase(Locale.ENGLISH)));
+        } catch (Exception e){
+            e.printStackTrace();
+            mat = new ItemStack(Material.STONE);
+        }
+        ItemMeta meta = mat.getItemMeta();
+        meta.addItemFlags(ItemFlag.values());
+        meta.setDisplayName(ChatColor.AQUA+getId());
+        meta.setLore(ItemTag.get().getLanguageConfig(player).loadMultiMessage("trigger."+getId()+".description",new ArrayList<>()));
+        mat.setItemMeta(meta);
+        return mat;
+    }
 }

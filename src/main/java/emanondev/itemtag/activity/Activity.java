@@ -8,7 +8,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -29,7 +28,7 @@ public class Activity {
         if (!Pattern.compile("[a-z][_a-z0-9]*").matcher(id).matches())
             throw new IllegalArgumentException();
         this.id = id;
-        consumes = config.loadInteger(getId()+".consumes",1);
+        consumes = config.getInteger(getId()+".consumes",1);
         //alternativeConsumes = config.loadInteger(getId()+".alternativeConsumes",0);
         List<String> rawList = config.getStringList(getId()+".conditions");
         for (String line:rawList){
@@ -169,7 +168,14 @@ public class Activity {
         save();
     }
 
-    private void save() {
+    void delete(){
+        config.set(getId(),null);
+        config.save();
+    }
+
+    void save() {
+        if (ActivityManager.getActivity(getId())!=this)
+            return;
         config.set(getId()+".consumes",consumes);
         //config.set(getId()+".alternativeConsumes",alternativeConsumes);
         List<String> rawList1 = new ArrayList<>();
@@ -187,9 +193,24 @@ public class Activity {
         List<String> rawList4 = new ArrayList<>();
         noConsumesActions.forEach(action -> rawList4.add(action.toString()));
         config.set(getId()+".noConsumesActions",rawList4);
+        config.save();
     }
 
-    public String getId() {
+    Activity clone(@NotNull String newId){
+        Activity act = new Activity(newId);
+        act.actions.clear();
+        act.actions.addAll(actions);
+        act.alternativeActions.clear();
+        act.alternativeActions.addAll(alternativeActions);
+        act.noConsumesActions.clear();
+        act.noConsumesActions.addAll(noConsumesActions);
+        act.conditions.clear();
+        act.conditions.addAll(conditions);
+        act.consumes = consumes;
+        return act;
+    }
+
+    public final String getId() {
         return id;
     }
 }

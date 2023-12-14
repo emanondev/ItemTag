@@ -2,9 +2,10 @@ package emanondev.itemtag.gui;
 
 import emanondev.itemedit.gui.PagedGui;
 import emanondev.itemtag.ItemTag;
-import emanondev.itemtag.activity.TriggerType;
-import emanondev.itemtag.triggers.Trigger;
+import emanondev.itemtag.TagItem;
+import emanondev.itemtag.activity.Activity;
 import emanondev.itemtag.activity.TriggerHandler;
+import emanondev.itemtag.activity.TriggerType;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -22,9 +23,10 @@ import java.util.List;
 public class TriggerGui implements PagedGui {
 
 
-    private static final int TRIGGER_SLOTS = 5*9;
+    private static final int TRIGGER_SLOTS = 5 * 9;
     private final Inventory inventory;
     private final Player target;
+    private final ItemStack item;
     private int page = 1;
     private final List<TriggerType> triggers = new ArrayList<>();
 
@@ -32,10 +34,11 @@ public class TriggerGui implements PagedGui {
     public TriggerGui(Player target, ItemStack item) {
         String title = this.getLanguageMessage("gui.triggers.title_main",
                 "%player_name%", target.getName());
+        this.item = item;
         this.inventory = Bukkit.createInventory(this, TRIGGER_SLOTS + 9, title);
         this.target = target;
         this.triggers.addAll(TriggerHandler.getTriggers());
-        this.triggers.sort(Comparator.comparing(TriggerType::getID));
+        this.triggers.sort(Comparator.comparing(TriggerType::getId));
     }
 
     @Override
@@ -78,7 +81,20 @@ public class TriggerGui implements PagedGui {
     }
 
     @Override
-    public void onClick(InventoryClickEvent inventoryClickEvent) {
+    public void onClick(InventoryClickEvent event) {
+        if (event.getClickedInventory() != this.inventory)
+            return;
+        if (triggers.size() <= TRIGGER_SLOTS * (page - 1) + event.getSlot())
+            return;
+        TriggerType type = triggers.get(TRIGGER_SLOTS * (page - 1) + event.getSlot());
+        TagItem tagItem = ItemTag.getTagItem(getTargetPlayer().getItemInHand());//TODO
+        //if (TriggerHandler.hasTrigger(type,tagItem))
+        Activity activity = TriggerHandler.getTriggerActivity(type,tagItem);
+        if (activity==null){
+            //TODO select activity
+        }else{
+            getTargetPlayer().openInventory(new ActivityGui(activity,getTargetPlayer(),this).getInventory());
+        }
 
     }
 
@@ -92,5 +108,8 @@ public class TriggerGui implements PagedGui {
     }
 
     private void updateInventory() {
+        for (int i = 0; TRIGGER_SLOTS * (page - 1) + i < triggers.size(); i++) {
+            inventory.setItem(i, triggers.get(TRIGGER_SLOTS * (page - 1) + i).getGuiItem(getTargetPlayer()));
+        }
     }
 }

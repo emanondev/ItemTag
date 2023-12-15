@@ -37,5 +37,8 @@ public class TriggerManager {
         TriggerManager.registerTriggerType(TriggerListener.CONSUME_ITEM);
         TriggerManager.registerTriggerType(TriggerListener.RIGHT_INTERACT);
         TriggerManager.registerTriggerType(TriggerListener.LEFT_INTERACT);
+        TriggerManager.registerTriggerType(TriggerListener.MELEE_HIT);
+        TriggerManager.registerTriggerType(TriggerListener.RANGED_HIT);
+        TriggerManager.registerTriggerType(TriggerListener.HITTED);
     }
 }

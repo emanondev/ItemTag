@@ -1,10 +1,7 @@
 package emanondev.itemtag.activity;
 
 import emanondev.itemtag.ItemTag;
-import emanondev.itemtag.activity.condition.HasUsesConditionType;
-import emanondev.itemtag.activity.condition.LuckPermGroupConditionType;
-import emanondev.itemtag.activity.condition.PermissionConditionType;
-import emanondev.itemtag.activity.condition.WorldConditionType;
+import emanondev.itemtag.activity.condition.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -41,6 +38,8 @@ public class ConditionManager {
         register(new WorldConditionType());
         register(new LuckPermGroupConditionType()); //doesn't actually require luckperms
         register(new HasUsesConditionType());
+        register(new IsPvpConditionType());
+        register(new IsFullChargedConditionType()); //1.13+?
         //TODO event
     }
 

@@ -43,7 +43,7 @@ public class TriggerHandler {
     private final static String TRIGGERS_SLOTS_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":t_slots_";
     //private final static String TRIGGER_USES_CONSUME_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":t_useconsume_";
     private final static String TRIGGER_COOLDOWN_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":t_cooldown_";
-    private final static String TRIGGER_COOLDOWN_ID_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":t_cooldown_id_";
+    //private final static String TRIGGER_COOLDOWN_ID_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":t_cooldown_id_";
 
     private final static String TRIGGER_USES_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":t_uses";
     private final static String TRIGGER_MAXUSES_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":t_maxuses";
@@ -192,17 +192,19 @@ public class TriggerHandler {
             item.setTag(TRIGGER_COOLDOWN_KEY + trigger.getId(), (int) value / 10);
     }
 
-    public static String getCooldownId(@NotNull TriggerType trigger, @NotNull TagItem item) {
-        String value = item.getString(TRIGGER_COOLDOWN_ID_KEY + trigger.getId());
-        return value == null ? "default" : value;
+    public static String getCooldownId(@NotNull TriggerType trigger /*, @NotNull TagItem item*/) {
+        return "t_cd_"+trigger.getId();
+        //String value = item.getString(TRIGGER_COOLDOWN_ID_KEY + trigger.getId());
+        //return value == null ? "default" : value;
     }
 
+    /*
     public static void setCooldownId(@NotNull TriggerType trigger, @NotNull TagItem item, String value) {
         if (value == null || value.isEmpty())
             item.removeTag(TRIGGER_COOLDOWN_ID_KEY + trigger.getId());
         else
             item.setTag(TRIGGER_COOLDOWN_ID_KEY + trigger.getId(), value);
-    }
+    }*/
 
     public static String getPermission(@NotNull TagItem item) {
         return item.getString(TRIGGER_PERMISSION_KEY);

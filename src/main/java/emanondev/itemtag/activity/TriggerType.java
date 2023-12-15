@@ -34,19 +34,19 @@ public class TriggerType<E extends Event> {
         return id;
     }
 
-    public void handle(E event, @NotNull Player p, ItemStack item, EquipmentSlot slot) {
+    public ItemStack handle(E event, @NotNull Player p, ItemStack item, EquipmentSlot slot) {
         TagItem tag = ItemTag.getTagItem(item);
         if (!tag.isValid())
-            return;
+            return item;
         Activity activity = TriggerHandler.getTriggerActivity(this, tag);
         if (activity == null)
-            return;
+            return item;
         if (!TriggerHandler.getAllowedSlots(this, tag).contains(slot))
-            return;
+            return item;
         long ms = TriggerHandler.getCooldownAmountMs(this, tag);
-        if (ms > 0 && ItemTag.get().getCooldownAPI().hasCooldown(p, TriggerHandler.getCooldownId(this, tag))) {
+        if (ms > 0 && ItemTag.get().getCooldownAPI().hasCooldown(p, TriggerHandler.getCooldownId(this))) {
 
-            return; //TODO on cooldown
+            return item; //TODO on cooldown
         }
 
         //checking conditions
@@ -55,7 +55,7 @@ public class TriggerType<E extends Event> {
             if (!cond.isCompatible(event)) {
                 ItemTag.get().log("Incompatible Condition &e" + cond + "&f from Activity &e"
                         + activity.getId() + "&f used on Trigger &e" + getId());
-                return;
+                return item;
             }
             try {
                 if (!cond.evaluate(p, item, event)) {
@@ -73,7 +73,7 @@ public class TriggerType<E extends Event> {
         if (!satisfied) {
             executeActions(activity.getAlternativeActions(), event, item, p, activity,
                     "(alternative actions)");
-            return;
+            return item;
         }
 
         int uses = TriggerHandler.getUsesLeft(tag);
@@ -83,7 +83,7 @@ public class TriggerType<E extends Event> {
             if (consumes > uses) {
                 executeActions(activity.getNoConsumesActions(), event, item, p, activity,
                         "(no consume actions)");
-                return;
+                return item;
             }
             int maxUses = TriggerHandler.getMaxUses(tag);
             newUses = Math.max(0, maxUses > 0 ? Math.min(maxUses, uses - consumes) : (uses - consumes));
@@ -94,17 +94,17 @@ public class TriggerType<E extends Event> {
 
         //apply uses change
         if (uses < 0 || newUses == uses)//skip
-            return;
+            return item;
 
         if (item.getAmount() == 1) {
             if (newUses == 0 && TriggerHandler.isConsumeAtUsesEnd(tag)) {
-                //TODO delete
-
-                return;
+                return null;
+                //item.setAmount(0); //TODO 1.8 issue
+                //return item;
             }
             TriggerHandler.setUsesLeft(tag, newUses);
             //TODO set changes?
-            return;
+            return item;
         }
 
         //stack size > 1
@@ -112,7 +112,7 @@ public class TriggerType<E extends Event> {
         if (newUses == 0 && TriggerHandler.isConsumeAtUsesEnd(tag)) {
             //TODO dec by 1
             item.setAmount(item.getAmount()-1);
-            return;
+            return item;
         }
 
         ItemStack toGive = new ItemStack(item);
@@ -122,6 +122,7 @@ public class TriggerType<E extends Event> {
         TriggerHandler.setUsesLeft(toGiveTag,newUses);
         updateUsesDisplay(item);
         UtilsInventory.giveAmount(p,toGive,1, UtilsInventory.ExcessManage.DROP_EXCESS);
+        return item;
     }
 
     private void executeActions(Collection<ActionType.Action> actions, E event, ItemStack item, Player p, Activity activity,

@@ -120,7 +120,8 @@ public class ActivitySubCommand extends SubCmd {
     //activity rename <id> <newId>
     private void rename(Player player, String label, String[] args) {
         if (args.length != 4) {
-            //TODO args
+            Util.sendMessage(player, this.craftFailFeedback(getLanguageString("rename.params", null, player),
+                    getLanguageStringList("rename.description", null, player)));
             return;
         }
         Activity activity = ActivityManager.getActivity(args[2]);
@@ -134,13 +135,14 @@ public class ActivitySubCommand extends SubCmd {
             return;
         }
         ActivityManager.rename(activity, args[3]);
-        //TODO feedback
+        sendLanguageString("rename.feedback", null, player, "%id%", args[2],"%new_id%", args[3]);
     }
 
     //open <action id>
     private void open(Player player, String label, String[] args) {
         if (args.length != 3) {
-            //TODO args
+            Util.sendMessage(player, this.craftFailFeedback(getLanguageString("open.params", null, player),
+                    getLanguageStringList("open.description", null, player)));
             return;
         }
         Activity activity = ActivityManager.getActivity(args[2]);
@@ -153,7 +155,8 @@ public class ActivitySubCommand extends SubCmd {
 
     private void delete(Player player, String label, String[] args) {
         if (args.length != 3) {
-            //TODO args
+            Util.sendMessage(player, this.craftFailFeedback(getLanguageString("delete.params", null, player),
+                    getLanguageStringList("delete.description", null, player)));
             return;
         }
         Activity activity = ActivityManager.getActivity(args[2]);
@@ -162,12 +165,13 @@ public class ActivitySubCommand extends SubCmd {
             return;
         }
         ActivityManager.deleteActivity(activity);
-        //TODO feedback
+        sendLanguageString("delete.feedback", null, player, "%id%", args[2]);
     }
 
     private void clone(Player player, String label, String[] args) {
         if (args.length != 4) {
-            //TODO args
+            Util.sendMessage(player, this.craftFailFeedback(getLanguageString("clone.params", null, player),
+                    getLanguageStringList("clone.description", null, player)));
             return;
         }
         Activity activity = ActivityManager.getActivity(args[2]);
@@ -181,13 +185,15 @@ public class ActivitySubCommand extends SubCmd {
             return;
         }
         ActivityManager.clone(activity, args[3]);
-        //TODO feedback
+        //TODO open gui
+        sendLanguageString("clone.feedback", null, player, "%id%", args[2], "%clone_id%", args[3]);
     }
 
     //setconsumes <activity> <amount>
     private void setconsumes(Player player, String label, String[] args) {
         if (args.length != 4) {
-            //TODO args
+            Util.sendMessage(player, this.craftFailFeedback(getLanguageString("setconsumes.params", null, player),
+                    getLanguageStringList("setconsumes.description", null, player)));
             return;
         }
         Activity activity = ActivityManager.getActivity(args[2]);
@@ -199,19 +205,24 @@ public class ActivitySubCommand extends SubCmd {
         try {
             amount = Integer.parseInt(args[3]);
         } catch (Exception e) {
+            Util.sendMessage(player, this.craftFailFeedback(getLanguageString("setconsumes.params", null, player),
+                    getLanguageStringList("setconsumes.description", null, player)));
             //TODO NaN
             return;
         }
         //TODO optional error if <0
+        amount= Math.max(0,amount);
 
         activity.setConsumes(amount);
-        //TODO
+        sendLanguageString("setconsumes.feedback", null, player, "%id%", args[2],
+                "%amount%", String.valueOf(amount));
     }
 
     //addcondition <activity> <conditiontype> <condition arguments>
     private void addcondition(Player player, String label, String[] args) {
         if (args.length < 4) {
-            //TODO args
+            Util.sendMessage(player, this.craftFailFeedback(getLanguageString("addcondition.params", null, player),
+                    getLanguageStringList("addcondition.description", null, player)));
             return;
         }
         Activity activity = ActivityManager.getActivity(args[2]);
@@ -221,6 +232,8 @@ public class ActivitySubCommand extends SubCmd {
         }
         ConditionType type = ConditionManager.getConditionType(args[3]);
         if (type == null) {
+            Util.sendMessage(player, this.craftFailFeedback(getLanguageString("addcondition.params", null, player),
+                    getLanguageStringList("addcondition.description", null, player)));
             //TODO
             return;
         }
@@ -231,60 +244,97 @@ public class ActivitySubCommand extends SubCmd {
         try {
             condition = ConditionManager.read(b.toString());
         } catch (Exception e) {
+            Util.sendMessage(player, this.craftFailFeedback(getLanguageString("addcondition.params", null, player),
+                    getLanguageStringList("addcondition.description", null, player)));
             //TODO bad format
             return;
         }
         if (condition == null) {
+            Util.sendMessage(player, this.craftFailFeedback(getLanguageString("addcondition.params", null, player),
+                    getLanguageStringList("addcondition.description", null, player)));
             //TODO invalid condition type
             return;
         }
         activity.addCondition(condition);
+        sendLanguageString("addcondition.feedback", null, player, "%id%", args[2],
+                "%condition%", condition.toString());
+    }
+
+    //insertcondition <activity> <line> <conditiontype> <condition arguments>
+    private void insertcondition(Player player, String label, String[] args) {
+        player.sendMessage("Not implemented yet, use the file! plugins/ItemTag/activity/config.yml");
         //TODO
     }
 
-    private void insertcondition(Player player, String label, String[] args) {
-    }
-
+    //insertcondition <activity> <line> <conditiontype> <condition arguments>
     private void setcondition(Player player, String label, String[] args) {
+        player.sendMessage("Not implemented yet, use the file! plugins/ItemTag/activity/config.yml");
+        //TODO
     }
 
     private void removecondition(Player player, String label, String[] args) {
+        player.sendMessage("Not implemented yet, use the file! plugins/ItemTag/activity/config.yml");
+        //TODO
     }
 
     private void addaction(Player player, String label, String[] args) {
+        player.sendMessage("Not implemented yet, use the file! plugins/ItemTag/activity/config.yml");
+        //TODO
     }
 
     private void insertaction(Player player, String label, String[] args) {
+        player.sendMessage("Not implemented yet, use the file! plugins/ItemTag/activity/config.yml");
+        //TODO
     }
 
     private void setaction(Player player, String label, String[] args) {
+        player.sendMessage("Not implemented yet, use the file! plugins/ItemTag/activity/config.yml");
+        //TODO
     }
 
     private void removeaction(Player player, String label, String[] args) {
+        player.sendMessage("Not implemented yet, use the file! plugins/ItemTag/activity/config.yml");
+        //TODO
     }
 
     private void addalternativeaction(Player player, String label, String[] args) {
+        player.sendMessage("Not implemented yet, use the file! plugins/ItemTag/activity/config.yml");
+        //TODO
     }
 
     private void insertalternativeaction(Player player, String label, String[] args) {
+        player.sendMessage("Not implemented yet, use the file! plugins/ItemTag/activity/config.yml");
+        //TODO
     }
 
     private void setalternativeaction(Player player, String label, String[] args) {
+        player.sendMessage("Not implemented yet, use the file! plugins/ItemTag/activity/config.yml");
+        //TODO
     }
 
     private void removealternativeaction(Player player, String label, String[] args) {
+        player.sendMessage("Not implemented yet, use the file! plugins/ItemTag/activity/config.yml");
+        //TODO
     }
 
     private void addnoconsumesaction(Player player, String label, String[] args) {
+        player.sendMessage("Not implemented yet, use the file! plugins/ItemTag/activity/config.yml");
+        //TODO
     }
 
     private void insertnoconsumesaction(Player player, String label, String[] args) {
+        player.sendMessage("Not implemented yet, use the file! plugins/ItemTag/activity/config.yml");
+        //TODO
     }
 
     private void setnoconsumesaction(Player player, String label, String[] args) {
+        player.sendMessage("Not implemented yet, use the file! plugins/ItemTag/activity/config.yml");
+        //TODO
     }
 
     private void removenoconsumesaction(Player player, String label, String[] args) {
+        player.sendMessage("Not implemented yet, use the file! plugins/ItemTag/activity/config.yml");
+        //TODO
     }
 
     @Override

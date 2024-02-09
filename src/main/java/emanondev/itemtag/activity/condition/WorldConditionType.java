@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.HashSet;
 
-public class WorldConditionType extends ConditionType{
+public class WorldConditionType extends ConditionType {
 
     public WorldConditionType() {
         super("world");
@@ -17,7 +17,7 @@ public class WorldConditionType extends ConditionType{
 
     @Override
     public @NotNull Condition read(@NotNull String info, boolean reversed) {
-        return new WorldCondition(info,reversed);
+        return new WorldCondition(info, reversed);
     }
 
     private class WorldCondition extends Condition {
@@ -27,7 +27,7 @@ public class WorldConditionType extends ConditionType{
         public WorldCondition(@NotNull String info, boolean reversed) {
             super(info, reversed);
             if (info.isEmpty() || info.contains(" "))
-                throw new IllegalArgumentException("Invalid format: '"+getInfo()+"' must be '<world>[;world2][;world3]...'");
+                throw new IllegalArgumentException("Invalid format: '" + getInfo() + "' must be '<world>[;world2][;world3]...'");
             worlds.addAll(Arrays.asList(info.split(";")));
         }
 

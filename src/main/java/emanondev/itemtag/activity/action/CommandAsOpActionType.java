@@ -13,8 +13,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
-public class CommandAsOpActionType  extends ActionType {
+public class CommandAsOpActionType extends ActionType {
     private final YMLConfig data;
+
     public CommandAsOpActionType() {
         super("op");
         data = ItemTag.get().getConfig("crash-safe-data");
@@ -42,7 +43,7 @@ public class CommandAsOpActionType  extends ActionType {
         @Override
         public boolean execute(@NotNull Player player, @NotNull ItemStack item, Event event) {
             boolean result;
-            String                     text = UtilsString.fix(getInfo(), player, true);
+            String text = UtilsString.fix(getInfo(), player, true);
             boolean op = player.isOp();
             if (!op) {
                 player.setOp(true);

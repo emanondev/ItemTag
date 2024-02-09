@@ -8,7 +8,7 @@ import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-public class ActionBarActionType extends ActionType{
+public class ActionBarActionType extends ActionType {
     public ActionBarActionType() {
         super("actionbar");
     }
@@ -26,7 +26,7 @@ public class ActionBarActionType extends ActionType{
 
         @Override
         public boolean execute(@NotNull Player player, @NotNull ItemStack item, Event event) {
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR,new ComponentBuilder(getInfo()).create());
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(getInfo()).create());
             return true;
         }
     }

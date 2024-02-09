@@ -10,6 +10,7 @@ import emanondev.itemtag.activity.ActionManager;
 import emanondev.itemtag.activity.ActivityManager;
 import emanondev.itemtag.activity.ConditionManager;
 import emanondev.itemtag.activity.TriggerManager;
+import emanondev.itemtag.activity.target.TargetManager;
 import emanondev.itemtag.command.ItemTagCommand;
 import emanondev.itemtag.command.ItemTagUpdateOldItem;
 import emanondev.itemtag.compability.PlaceHolders;
@@ -21,14 +22,26 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
 
 public class ItemTag extends APlugin {
+    private final static int PROJECT_ID = 89634;
+    private static final int BSTATS_PLUGIN_ID = 15077;
     private static ItemTag plugin = null;
     private static TagManager tagManager = null;
     private static boolean OLD_TAGS;
     private EquipmentChangeListenerBase equipChangeListener;
+    private TargetManager targetManager;
+
+    public static ItemTag get() {
+        return plugin;
+    }
+
+    public static TagItem getTagItem(@Nullable ItemStack item) {
+        return OLD_TAGS ? new NBTAPITagItem(item) : new SpigotTagItem(item);
+    }
 
     public EquipmentChangeListenerBase getEquipChangeListener() {
         return equipChangeListener;
@@ -39,19 +52,9 @@ public class ItemTag extends APlugin {
         return tagManager;
     }
 
-    public static ItemTag get() {
-        return plugin;
-    }
-
-    public static TagItem getTagItem(ItemStack item) {
-        return OLD_TAGS ? new NBTAPITagItem(item) : new SpigotTagItem(item);
-    }
-
     public void onLoad() {
         plugin = this;
     }
-
-    private final static int PROJECT_ID = 89634;
 
     @Override
     public Integer getProjectId() {
@@ -98,12 +101,16 @@ public class ItemTag extends APlugin {
                 equipChangeListener = new EquipmentChangeListenerUpTo1_13();
             else
                 equipChangeListener = new EquipmentChangeListener();
+            log(equipChangeListener.getClass().getSimpleName());
             equipChangeListener.reload();
-            //TODO
+
+            //TODO new features
+            /*targetManager = new TargetManager();
+            targetManager.load();
             TriggerManager.load();
             ActionManager.load();
             ConditionManager.load();
-            ActivityManager.reload();
+            ActivityManager.reload();*/
 
             this.registerCommand(new ItemTagCommand(), Collections.singletonList("it"));
             new ReloadCommand(this).register();
@@ -117,6 +124,7 @@ public class ItemTag extends APlugin {
             ActionHandler.registerAction(new PlayerAsOpCommandAction());
             ActionHandler.registerAction(new ServerCommandAction());
             ActionHandler.registerAction(new SoundAction());
+            ActionHandler.registerAction(new MessageAction());
             if (Hooks.isPAPIEnabled()) {
                 try {
                     this.log("Hooking into PlaceholderApi");
@@ -133,8 +141,6 @@ public class ItemTag extends APlugin {
         }
     }
 
-    private static final int BSTATS_PLUGIN_ID = 15077;
-
     @Override
     public void reload() {
         equipChangeListener.reload();
@@ -146,5 +152,9 @@ public class ItemTag extends APlugin {
     @Override
     public void disable() {
 
+    }
+
+    public TargetManager getTargetManager() {
+        return targetManager;
     }
 }

@@ -10,7 +10,20 @@ import java.util.List;
 
 public class TriggerCallEvent implements Cancellable {
 
+    private final TriggerType trigger;
+    private final Player player;
+    private final ItemStack itemOld;
+    private final ArrayList<Action> actions;
     private boolean cancelled = false;
+    private ItemStack itemNew;
+
+    public TriggerCallEvent(TriggerType trigger, Player player, ItemStack itemOld, ItemStack itemNew, List<Action> actions) {
+        this.trigger = trigger;
+        this.player = player;
+        this.itemOld = itemOld;
+        this.itemNew = itemNew;
+        this.actions = new ArrayList<>(actions);
+    }
 
     public TriggerType getTriggerType() {
         return trigger;
@@ -34,20 +47,6 @@ public class TriggerCallEvent implements Cancellable {
 
     public ArrayList<Action> getActions() {
         return actions;
-    }
-
-    private final TriggerType trigger;
-    private final Player player;
-    private final ItemStack itemOld;
-    private ItemStack itemNew;
-    private final ArrayList<Action> actions;
-
-    public TriggerCallEvent(TriggerType trigger, Player player, ItemStack itemOld, ItemStack itemNew, List<Action> actions){
-        this.trigger = trigger;
-        this.player = player;
-        this.itemOld = itemOld;
-        this.itemNew = itemNew;
-        this.actions = new ArrayList<>(actions);
     }
 
     @Override

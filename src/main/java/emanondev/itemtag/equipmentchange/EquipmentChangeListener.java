@@ -1,6 +1,8 @@
 package emanondev.itemtag.equipmentchange;
 
 import emanondev.itemtag.ItemTag;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -18,14 +20,14 @@ import java.util.ArrayList;
 
 public class EquipmentChangeListener extends EquipmentChangeListenerBase {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    private void event(final InventoryClickEvent event) {
+    public void event(final InventoryClickEvent event) {
+        ItemTag.get().log(event.getAction().name());
         if (!(event.getWhoClicked() instanceof Player))
             return;
         if (event.getWhoClicked().hasMetadata("NPC") || event.getWhoClicked().hasMetadata("BOT"))
             return;
         Player p = (Player) event.getWhoClicked();
         EquipmentSlot clickedSlot = getEquipmentSlotAtPosition(event.getRawSlot(), p, event.getView());
-
         switch (event.getAction()) {
             case CLONE_STACK:
             case NOTHING:

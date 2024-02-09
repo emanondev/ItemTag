@@ -13,11 +13,11 @@ public abstract class ActionType {
     private final String id;
     private final Class<? extends Event> clazz;
 
-    public ActionType(@NotNull String id){
-        this(id,null);
+    public ActionType(@NotNull String id) {
+        this(id, null);
     }
 
-    public ActionType(@NotNull String id, @Nullable Class<? extends Event> clazz){
+    public ActionType(@NotNull String id, @Nullable Class<? extends Event> clazz) {
         if (!Pattern.compile("[a-z][_a-z0-9]*").matcher(id).matches())
             throw new IllegalArgumentException();
         this.id = id;
@@ -34,7 +34,7 @@ public abstract class ActionType {
 
         private final String info;
 
-        public Action(@NotNull String info){
+        public Action(@NotNull String info) {
             this.info = info;
         }
 
@@ -42,20 +42,20 @@ public abstract class ActionType {
             return info;
         }
 
-        public final @NotNull String getId(){
+        public final @NotNull String getId() {
             return ActionType.this.getId();
         }
 
-        public @NotNull String toString(){
-            return getId()+(getInfo().isEmpty()?"":(" "+getInfo()));
+        public @NotNull String toString() {
+            return getId() + (getInfo().isEmpty() ? "" : (" " + getInfo()));
         }
 
         public abstract boolean execute(@NotNull Player player, @NotNull ItemStack item, @Nullable Event event);
 
-        public boolean isAssignable(@Nullable Event event){
+        public boolean isAssignable(@Nullable Event event) {
             if (clazz == null)
                 return true;
-            return event!=null && clazz.isAssignableFrom(event.getClass());
+            return event != null && clazz.isAssignableFrom(event.getClass());
         }
     }
 }

@@ -17,22 +17,10 @@ import org.jetbrains.annotations.NotNull;
  */
 public class EquipmentChangeEvent extends PlayerEvent {
     private static final HandlerList HANDLERS_LIST = new HandlerList();
-
-    @Override
-    public @NotNull HandlerList getHandlers() {
-        return HANDLERS_LIST;
-    }
-
-    public static HandlerList getHandlerList() {
-        return HANDLERS_LIST;
-    }
-
-
     private final ItemStack from;
     private final ItemStack to;
     private final EquipmentSlot slot;
     private final EquipMethod method;
-
 
     public EquipmentChangeEvent(Player who, EquipMethod method, EquipmentSlot slot, ItemStack from, ItemStack to) {
         super(who);
@@ -40,6 +28,15 @@ public class EquipmentChangeEvent extends PlayerEvent {
         this.to = to;
         this.slot = slot;
         this.method = method;
+    }
+
+    public static HandlerList getHandlerList() {
+        return HANDLERS_LIST;
+    }
+
+    @Override
+    public @NotNull HandlerList getHandlers() {
+        return HANDLERS_LIST;
     }
 
     /**

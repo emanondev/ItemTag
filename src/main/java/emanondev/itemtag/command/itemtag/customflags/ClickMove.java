@@ -21,7 +21,7 @@ public class ClickMove extends CustomFlag {
 
     @EventHandler
     public void event(InventoryClickEvent event) {
-        if (event.getWhoClicked().hasPermission("itemtag.itemtag.flag.bypass_clickmove")){
+        if (event.getWhoClicked().hasPermission("itemtag.itemtag.flag.bypass_clickmove")) {
             //TODO feedback
             return;
         }

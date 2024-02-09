@@ -12,6 +12,7 @@ import java.util.Locale;
 public class Placeable extends CustomFlag {
 
     private final static String PLACEABLE_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":placeable";
+    private long cooldownSeconds;
 
     public Placeable(Flag cmd) {
         super("placeable", PLACEABLE_KEY, cmd);
@@ -29,8 +30,6 @@ public class Placeable extends CustomFlag {
             }
         }
     }
-
-    private long cooldownSeconds;
 
     public void reload() {
         cooldownSeconds = Math.max(0, this.getConfigLong(

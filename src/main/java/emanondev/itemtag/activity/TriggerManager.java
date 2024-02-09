@@ -16,14 +16,14 @@ public class TriggerManager {
         if (triggerTypes.containsKey(type.getId()))
             throw new IllegalArgumentException();
         triggerTypes.put(type.getId(), type);
-        ItemTag.get().log("TriggerManager registered Trigger Type &e"+type.getId());
+        ItemTag.get().log("TriggerManager registered Trigger Type &e" + type.getId());
     }
 
-    public static TriggerType getTriggerType(@Nullable String id){
-        return id==null?null: triggerTypes.get(id);
+    public static TriggerType getTriggerType(@Nullable String id) {
+        return id == null ? null : triggerTypes.get(id);
     }
 
-    public static Collection<TriggerType> getTriggerTypes(){
+    public static Collection<TriggerType> getTriggerTypes() {
         return Collections.unmodifiableCollection(triggerTypes.values());
     }
 
@@ -32,7 +32,7 @@ public class TriggerManager {
     }
 
 
-    public static void load(){
+    public static void load() {
         ItemTag.get().registerListener(new TriggerListener());
         TriggerManager.registerTriggerType(TriggerListener.CONSUME_ITEM);
         TriggerManager.registerTriggerType(TriggerListener.RIGHT_INTERACT);

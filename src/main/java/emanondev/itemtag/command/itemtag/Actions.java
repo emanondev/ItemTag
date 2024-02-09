@@ -48,6 +48,13 @@ public class Actions extends ListenerSubCmd {
     private final static String ACTION_COOLDOWN_ID_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":cooldown_id";
     private final static String ACTION_PERMISSION_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":permission";
     private final static String TYPE_SEPARATOR = "%%:%%";
+    private static final String[] actionsSub = new String[]{"add", "addline", "set", "permission", "cooldown",
+            "cooldownid", "uses", "maxuses", "remove", "info", "consume", "visualcooldown", "displayuses"};
+    private static final String DEFAULT_COOLDOWN_ID = "default";
+
+    public Actions(ItemTagCommand cmd) {
+        super("actions", cmd, true, true);
+    }
 
     public static boolean hasActions(TagItem item) {
         return item.hasStringListTag(ACTIONS_KEY);
@@ -141,17 +148,19 @@ public class Actions extends ListenerSubCmd {
             item.setTag(ACTION_PERMISSION_KEY, value.toLowerCase(Locale.ENGLISH));
     }
 
-    private static final String[] actionsSub = new String[]{"add", "addline", "set", "permission", "cooldown",
-            "cooldownid", "uses", "maxuses", "remove", "info", "consume", "visualcooldown", "displayuses"};
-
-    public Actions(ItemTagCommand cmd) {
-        super("actions", cmd, true, true);
-    }
-
-    private static final String DEFAULT_COOLDOWN_ID = "default";
-
     public static String getDefaultCooldownId() {
         return DEFAULT_COOLDOWN_ID;
+    }
+
+    public static void setVisualCooldown(TagItem item, boolean value) {
+        if (value) //default
+            item.setTag(ACTION_VISUAL_COOLDOWN, true);
+        else
+            item.removeTag(ACTION_VISUAL_COOLDOWN);
+    }
+
+    public static boolean getVisualCooldown(TagItem item) {
+        return item.hasBooleanTag(ACTION_VISUAL_COOLDOWN);
     }
 
     @Override
@@ -262,7 +271,6 @@ public class Actions extends ListenerSubCmd {
         item.setItemMeta((ItemMeta) ConfigurationSerialization.deserializeObject(metaMap));
     }
 
-
     //it actions visualcooldown [boolean]
     private void visualCooldown(Player sender, String[] args, ItemStack item) {
         TagItem tagItem = ItemTag.getTagItem(item);
@@ -272,17 +280,6 @@ public class Actions extends ListenerSubCmd {
             sendLanguageString("visualcooldown.feedback.set", "", sender);
         else
             sendLanguageString("visualcooldown.feedback.unset", "", sender);
-    }
-
-    public static void setVisualCooldown(TagItem item, boolean value) {
-        if (value) //default
-            item.setTag(ACTION_VISUAL_COOLDOWN, true);
-        else
-            item.removeTag(ACTION_VISUAL_COOLDOWN);
-    }
-
-    public static boolean getVisualCooldown(TagItem item) {
-        return item.hasBooleanTag(ACTION_VISUAL_COOLDOWN);
     }
 
     //it actions consume [boolean]
@@ -511,7 +508,7 @@ public class Actions extends ListenerSubCmd {
                 return;
             }
 
-            actionInfo = ActionHandler.fixActionInfo(actionType,actionInfo);
+            actionInfo = ActionHandler.fixActionInfo(actionType, actionInfo);
             String action = actionType + TYPE_SEPARATOR + actionInfo;
             TagItem tagItem = ItemTag.getTagItem(item);
             if (!hasActions(tagItem))
@@ -704,6 +701,8 @@ public class Actions extends ListenerSubCmd {
         private final TagItem tagItem;
         private final Inventory inventory;
         private final Player target;
+        private int editorCooldown = 1;
+        private int editorValue = 1;
 
         public ActionsGui(Player target, ItemStack item) {
             String title = this.getLanguageMessage("gui.actions.title",
@@ -849,7 +848,6 @@ public class Actions extends ListenerSubCmd {
             }
         }
 
-
         @Override
         public void onDrag(InventoryDragEvent event) {
         }
@@ -921,7 +919,7 @@ public class Actions extends ListenerSubCmd {
                     "%value%", getUses(tagItem) == -1 ? "-1 (Unlimited)" : String.valueOf(getUses(tagItem)), "%editor%", String.valueOf(editorValue)
                     , "%editor-prev%", String.valueOf(Math.max(1, editorValue / 10)), "%editor-next%", String.valueOf(Math.min(1000000, editorValue * 10))));
 
-            if (ItemEdit.GAME_VERSION>8) {
+            if (ItemEdit.GAME_VERSION > 8) {
                 //max uses
                 this.getInventory().setItem(17, this.loadLanguageDescription(this.getGuiItem("gui.actions.maxuses", Material.DIAMOND_PICKAXE), "gui.actions.maxuses",
                         "%value%", getMaxUses(tagItem) == -1 ? "-1 (Unlimited)" : String.valueOf(getMaxUses(tagItem)), "%editor%", String.valueOf(editorValue)
@@ -980,15 +978,11 @@ public class Actions extends ListenerSubCmd {
             this.getInventory().setItem(2, item);
         }
 
-        private int editorCooldown = 1;
-
-        private int editorValue = 1;
-
         private class ActionTypeGui implements PagedGui {
 
+            private static final int ROWS = 5;
             private final Inventory inventory;
             private final int page;
-            private static final int ROWS = 5;
             private final int maxPages;
 
             public ActionTypeGui() {

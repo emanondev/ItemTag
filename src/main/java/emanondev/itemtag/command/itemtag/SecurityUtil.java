@@ -14,22 +14,21 @@ public class SecurityUtil {
     private static UUID uuid;
 
     private static @NotNull UUID getUUID() {
-        if (uuid==null){
+        if (uuid == null) {
             YMLConfig config = ItemTag.get().getConfig("security.yml");
             try {
-                String txt = config.getString("server_uuid",null);
-                if (txt !=null){
+                String txt = config.getString("server_uuid", null);
+                if (txt != null) {
                     uuid = UUID.fromString(txt);
-                }
-                else{
+                } else {
                     uuid = UUID.randomUUID();
-                    config.set("server_uuid",uuid.toString());
+                    config.set("server_uuid", uuid.toString());
                     config.save();
                 }
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
                 uuid = UUID.randomUUID();
-                config.set("server_uuid",uuid.toString());
+                config.set("server_uuid", uuid.toString());
                 config.save();
             }
         }

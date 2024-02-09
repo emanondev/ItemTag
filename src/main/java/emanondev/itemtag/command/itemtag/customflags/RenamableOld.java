@@ -30,7 +30,7 @@ public class RenamableOld extends CustomFlag {
                             ItemTag.getTagItem(event.getInventory().getItem(1)).hasBooleanTag(RENAMABLE_KEY))
                         event.getInventory().setItem(2, null);
                 }, 1L);
-                if (event.getSlot()==2)
+                if (event.getSlot() == 2)
                     event.setCancelled(true);
             }
     }

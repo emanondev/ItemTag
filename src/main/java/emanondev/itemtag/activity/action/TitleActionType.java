@@ -28,8 +28,8 @@ public class TitleActionType extends ActionType {
         public TitleAction(@NotNull String info) {
             super(info);
             String[] args = info.split(";");
-            if (args.length!=5)
-                throw new IllegalArgumentException("Invalid format: '"+getInfo()+"' must be '[title];[subtitle];<fadein ticks>;<stay ticks>;<fadeout ticks>'");
+            if (args.length != 5)
+                throw new IllegalArgumentException("Invalid format: '" + getInfo() + "' must be '[title];[subtitle];<fadein ticks>;<stay ticks>;<fadeout ticks>'");
             message = args[0];
             sub = args[1];
             fadeIn = Integer.parseInt(args[2]);

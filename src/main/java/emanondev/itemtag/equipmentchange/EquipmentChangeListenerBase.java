@@ -27,11 +27,11 @@ import java.util.*;
 public abstract class EquipmentChangeListenerBase implements Listener {
 
     protected final HashMap<Player, EnumMap<EquipmentSlot, ItemStack>> equips = new HashMap<>();
-
-    private int maxCheckedPlayerPerTick = 5;
-    private TimerCheckTask timerTask = null;
+    protected final HashSet<Player> clickDrop = new HashSet<>();
     private final boolean is1_8 = ItemEdit.GAME_VERSION < 9;
+    private int maxCheckedPlayerPerTick = 5;
     //private final boolean is1_10orLower = ItemEdit.GAME_VERSION < 11;
+    private TimerCheckTask timerTask = null;
 
     public void reload() {
         if (timerTask != null)
@@ -137,8 +137,6 @@ public abstract class EquipmentChangeListenerBase implements Listener {
         onEquipChange(event.getPlayer(), EquipmentChangeEvent.EquipMethod.ARMOR_STAND_MANIPULATE, EquipmentSlot.HAND, event.getPlayerItem(),
                 event.getArmorStandItem());
     }
-
-    protected final HashSet<Player> clickDrop = new HashSet<>();
 
     @EventHandler(priority = EventPriority.MONITOR)
     private void event(PlayerDropItemEvent event) {
@@ -374,6 +372,28 @@ public abstract class EquipmentChangeListenerBase implements Listener {
                 : null;
     }
 
+    public boolean trackPlayer(Player p) {
+        if (equips.containsKey(p))
+            return false;
+        EnumMap<EquipmentSlot, ItemStack> map = new EnumMap<>(EquipmentSlot.class);
+        equips.put(p, map);
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            map.put(slot, null);
+            onEquipChange(p, EquipmentChangeEvent.EquipMethod.JOIN, slot, null, getEquip(p, slot));
+        }
+        return true;
+    }
+
+    public boolean untrackPlayer(Player p) {
+        if (!equips.containsKey(p))
+            return false;
+        EnumMap<EquipmentSlot, ItemStack> map = equips.get(p);
+        for (EquipmentSlot slot : map.keySet())
+            onEquipChange(p, EquipmentChangeEvent.EquipMethod.QUIT, slot, map.get(slot), null);
+        equips.remove(p);
+        return true;
+    }
+
     private class TimerCheckTask extends BukkitRunnable {
 
         private TimerCheckTask.PlayerCheck subTask = null;
@@ -492,27 +512,5 @@ public abstract class EquipmentChangeListenerBase implements Listener {
             }
         }
 
-    }
-
-    public boolean trackPlayer(Player p) {
-        if (equips.containsKey(p))
-            return false;
-        EnumMap<EquipmentSlot, ItemStack> map = new EnumMap<>(EquipmentSlot.class);
-        equips.put(p, map);
-        for (EquipmentSlot slot : EquipmentSlot.values()) {
-            map.put(slot, null);
-            onEquipChange(p, EquipmentChangeEvent.EquipMethod.JOIN, slot, null, getEquip(p, slot));
-        }
-        return true;
-    }
-
-    public boolean untrackPlayer(Player p) {
-        if (!equips.containsKey(p))
-            return false;
-        EnumMap<EquipmentSlot, ItemStack> map = equips.get(p);
-        for (EquipmentSlot slot : map.keySet())
-            onEquipChange(p, EquipmentChangeEvent.EquipMethod.QUIT, slot, map.get(slot), null);
-        equips.remove(p);
-        return true;
     }
 }

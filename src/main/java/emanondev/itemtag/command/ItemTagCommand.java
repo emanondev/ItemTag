@@ -11,21 +11,22 @@ import org.jetbrains.annotations.NotNull;
 public class ItemTagCommand extends AbstractCommand {
     public static ItemTagCommand instance;
 
-    public static ItemTagCommand get() {
-        return instance;
-    }
-
     public ItemTagCommand() {
         super("itemtag", ItemTag.get());
         instance = this;
         this.registerSubCommand(new Effects(this));
+        this.registerSubCommand(new Actions(this));
         this.registerSubCommand(new ConsumeActions(this));
         this.registerSubCommand(new UsePermission(this));
         this.registerSubCommand(new Flag(this));
-        this.registerSubCommand(new ActivitySubCommand(this));
-
+        /*this.registerSubCommand(new ActivitySubCommand(this));
         this.registerSubCommand(new TriggerAction(this));
-        this.registerSubCommand(new Actions(this));
+        TODO  new features
+         */
+    }
+
+    public static ItemTagCommand get() {
+        return instance;
     }
 
     public void registerSubCommand(@NotNull SubCmd cmd) {

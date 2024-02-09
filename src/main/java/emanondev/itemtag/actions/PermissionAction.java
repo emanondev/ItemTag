@@ -60,7 +60,7 @@ public class PermissionAction extends Action {
     public String fixActionInfo(String actionInfo) {
         //permission <perm> <actiontype> <actioninfo>
         String[] args = actionInfo.split(" ");
-        return args[0]+" "+args[1]+" "+ActionHandler.getAction(args[1])
+        return args[0] + " " + args[1] + " " + ActionHandler.getAction(args[1])
                 .fixActionInfo(actionInfo.substring(args[0].length() + args[1].length() + 2));
     }
 

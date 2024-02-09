@@ -21,11 +21,6 @@ public abstract class CustomFlag implements Listener, Comparable<CustomFlag> {
     private final String PATH;
     private final YMLConfig config;
 
-    @Override
-    public int compareTo(CustomFlag flag) {
-        return this.getId().compareTo(flag.getId());
-    }
-
     public CustomFlag(@NotNull String id, @NotNull String key, @NotNull Flag subCommand) {
         if (id.equals("") || id.contains(" "))
             throw new IllegalArgumentException();
@@ -34,6 +29,11 @@ public abstract class CustomFlag implements Listener, Comparable<CustomFlag> {
         this.subCommand = subCommand;
         config = this.getPlugin().getConfig("commands.yml");
         PATH = subCommand.getCommand().getName() + "." + subCommand.ID + "." + this.ID + ".";
+    }
+
+    @Override
+    public int compareTo(CustomFlag flag) {
+        return this.getId().compareTo(flag.getId());
     }
 
     public APlugin getPlugin() {

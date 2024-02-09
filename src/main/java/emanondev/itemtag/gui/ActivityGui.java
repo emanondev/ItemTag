@@ -19,10 +19,10 @@ public class ActivityGui implements Gui {
     private final Activity activity;
     private final TriggerGui parent;
 
-    public ActivityGui(@NotNull Activity activity,@NotNull Player target,@Nullable TriggerGui parent) {
+    public ActivityGui(@NotNull Activity activity, @NotNull Player target, @Nullable TriggerGui parent) {
         String title = this.getLanguageMessage("gui.activity.title_main",
-                "%player_name%", target.getName(),"%activity_id%", activity.getId());
-        this.inventory = Bukkit.createInventory(this, 6* 9, title);
+                "%player_name%", target.getName(), "%activity_id%", activity.getId());
+        this.inventory = Bukkit.createInventory(this, 6 * 9, title);
         this.target = target;
         this.activity = activity;
         this.parent = parent;

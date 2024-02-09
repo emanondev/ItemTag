@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 public class EmptyConditionType extends ConditionType {
 
     public static final EmptyConditionType INST = new EmptyConditionType();
+
     private EmptyConditionType() {
         super("empty");
     }
@@ -23,7 +24,11 @@ public class EmptyConditionType extends ConditionType {
 
     public final class EmptyCondition extends Condition {
 
-        public @NotNull String toString(){
+        public EmptyCondition(@NotNull String info) {
+            super(info, false);
+        }
+
+        public @NotNull String toString() {
             return getInfo();
         }
 
@@ -35,10 +40,6 @@ public class EmptyConditionType extends ConditionType {
         @Override
         protected boolean evaluateImpl(@NotNull Player player, @NotNull ItemStack item, Event event) {
             return false;
-        }
-
-        public EmptyCondition(@NotNull String info) {
-            super(info,false);
         }
     }
 }

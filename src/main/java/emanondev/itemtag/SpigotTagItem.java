@@ -30,16 +30,16 @@ public class SpigotTagItem implements TagItem {
     private ItemMeta meta = null;
     private PersistentDataContainer data = null;
 
+    public SpigotTagItem(@Nullable ItemStack item) {
+        this.item = item;
+    }
+
     private PersistentDataContainer getData() {
         if (data == null) {
             this.meta = this.item.getItemMeta();
             this.data = this.meta.getPersistentDataContainer();
         }
         return data;
-    }
-
-    public SpigotTagItem(@Nullable ItemStack item) {
-        this.item = item;
     }
 
     public <T, Z> boolean hasTag(@NotNull String key, @NotNull PersistentDataType<T, Z> type) {

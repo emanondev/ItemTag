@@ -13,7 +13,7 @@ public class LuckPermGroupConditionType extends ConditionType {
 
     @Override
     public @NotNull Condition read(@NotNull String info, boolean reversed) {
-        return new LuckPermGroupConditionType.LuckPermGroupCondition(info,reversed);
+        return new LuckPermGroupConditionType.LuckPermGroupCondition(info, reversed);
     }
 
     private class LuckPermGroupCondition extends ConditionType.Condition {
@@ -21,10 +21,10 @@ public class LuckPermGroupConditionType extends ConditionType {
         private final String perm;
 
         public LuckPermGroupCondition(@NotNull String info, boolean reversed) {
-            super(info,reversed);
-            if (info.isEmpty()||info.contains(" "))
-                throw new IllegalArgumentException("Invalid format: '"+getInfo()+"' must be '<group>'");
-            perm = "group."+info;
+            super(info, reversed);
+            if (info.isEmpty() || info.contains(" "))
+                throw new IllegalArgumentException("Invalid format: '" + getInfo() + "' must be '<group>'");
+            perm = "group." + info;
         }
 
         @Override

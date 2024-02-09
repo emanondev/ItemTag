@@ -135,7 +135,7 @@ public class ActivitySubCommand extends SubCmd {
             return;
         }
         ActivityManager.rename(activity, args[3]);
-        sendLanguageString("rename.feedback", null, player, "%id%", args[2],"%new_id%", args[3]);
+        sendLanguageString("rename.feedback", null, player, "%id%", args[2], "%new_id%", args[3]);
     }
 
     //open <action id>
@@ -211,7 +211,7 @@ public class ActivitySubCommand extends SubCmd {
             return;
         }
         //TODO optional error if <0
-        amount= Math.max(0,amount);
+        amount = Math.max(0, amount);
 
         activity.setConsumes(amount);
         sendLanguageString("setconsumes.feedback", null, player, "%id%", args[2],

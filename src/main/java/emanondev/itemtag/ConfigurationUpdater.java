@@ -79,13 +79,13 @@ class ConfigurationUpdater {
                     if (prefix == null)
                         continue;
                     actions.set(i, prefix + "-pin" +
-                            SecurityUtil.generateControlKey(action.substring(prefix.length())) + " "+ action.substring(prefix.length()));
-                    updating=true;
+                            SecurityUtil.generateControlKey(action.substring(prefix.length())) + " " + action.substring(prefix.length()));
+                    updating = true;
                 }
                 if (updating) {
-                    ItemTag.get().log("Updated item &e"+id);
-                    Actions.setActions(tagItem,actions);
-                    storage.setItem(id,tagItem.getItem());
+                    ItemTag.get().log("Updated item &e" + id);
+                    Actions.setActions(tagItem, actions);
+                    storage.setItem(id, tagItem.getItem());
                 }
                 ItemTag.get().log("&cWARNING");
                 ItemTag.get().log("A severe security bug was patched, items from (/serveritem or /si)");

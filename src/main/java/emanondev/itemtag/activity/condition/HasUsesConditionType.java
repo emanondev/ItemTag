@@ -8,31 +8,31 @@ import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-public class HasUsesConditionType extends ConditionType{
+public class HasUsesConditionType extends ConditionType {
 
     public HasUsesConditionType() {
         super("hasuses");
     }
 
     @Override
-    public @NotNull Condition read(@NotNull String info, boolean reversed) {
-        return new WorldCondition(info,reversed);
+    public @NotNull ConditionType.Condition read(@NotNull String info, boolean reversed) {
+        return new Condition(info, reversed);
     }
 
-    private class WorldCondition extends Condition {
+    private class Condition extends ConditionType.Condition {
 
         private final int uses;
 
-        public WorldCondition(@NotNull String info, boolean reversed) {
+        public Condition(@NotNull String info, boolean reversed) {
             super(info, reversed);
-            this.uses = info.isEmpty()?1:Integer.parseInt(info);
-            if (uses<0)
+            this.uses = info.isEmpty() ? 1 : Integer.parseInt(info);
+            if (uses < 0)
                 throw new IllegalArgumentException();
         }
 
         @Override
         protected boolean evaluateImpl(@NotNull Player player, @NotNull ItemStack item, Event event) {
-            return TriggerHandler.getUsesLeft(ItemTag.getTagItem(item))>uses;
+            return TriggerHandler.getUsesLeft(ItemTag.getTagItem(item)) >= uses;
         }
     }
 }

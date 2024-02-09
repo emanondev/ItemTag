@@ -16,7 +16,10 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
 
 public class UsePermission extends ListenerSubCmd {
 
@@ -25,6 +28,20 @@ public class UsePermission extends ListenerSubCmd {
 
     public UsePermission(AbstractCommand cmd) {
         super("usepermission", cmd, true, true);
+    }
+
+    public static void setUseKey(@NotNull TagItem item, @Nullable String value) {
+        if (value != null && !value.isEmpty()) //default
+            item.setTag(USE_KEY, value);
+        else
+            item.removeTag(USE_KEY);
+    }
+
+    public static void setUseMsgKey(@NotNull TagItem item, @Nullable String value) {
+        if (value != null && !value.isEmpty()) //default
+            item.setTag(USEMSG_KEY, value);
+        else
+            item.removeTag(USEMSG_KEY);
     }
 
     /*
@@ -48,36 +65,22 @@ public class UsePermission extends ListenerSubCmd {
                     return;
                 }
                 String permission = args.length == 2 ? null : args[2].toLowerCase(Locale.ENGLISH);
-                setUseKey(tagItem,permission);
+                setUseKey(tagItem, permission);
                 //TODO feedback
             }
             case "setmessage": {
-                if (args.length ==2) {
+                if (args.length == 2) {
                     //TODO feedback
-                    setUseMsgKey(tagItem,null);
+                    setUseMsgKey(tagItem, null);
                     return;
                 }
-                String msg = UtilsString.fix(String.join(" ",Arrays.asList(args).subList(2, args.length)),null,true);
-                setUseMsgKey(tagItem,msg);
+                String msg = UtilsString.fix(String.join(" ", Arrays.asList(args).subList(2, args.length)), null, true);
+                setUseMsgKey(tagItem, msg);
                 //TODO feedback
             }
         }
 
 
-    }
-
-    public static void setUseKey(@NotNull TagItem item, @Nullable String value) {
-        if (value!=null&& !value.isEmpty()) //default
-            item.setTag(USE_KEY, value);
-        else
-            item.removeTag(USE_KEY);
-    }
-
-    public static void setUseMsgKey(@NotNull TagItem item, @Nullable String value) {
-        if (value!=null&& !value.isEmpty()) //default
-            item.setTag(USEMSG_KEY, value);
-        else
-            item.removeTag(USEMSG_KEY);
     }
 
     @Override
@@ -88,7 +91,7 @@ public class UsePermission extends ListenerSubCmd {
     }
 
     @EventHandler
-    private void event(PlayerInteractEvent event){
+    private void event(PlayerInteractEvent event) {
         if (event.getAction() == Action.PHYSICAL)
             return;
 
@@ -99,10 +102,10 @@ public class UsePermission extends ListenerSubCmd {
         if (event.getPlayer().hasPermission(perm))
             return;
         event.setUseItemInHand(Event.Result.DENY);
-        if (tagItem.hasStringTag(USEMSG_KEY)){
-            Util.sendMessage(event.getPlayer(),UtilsString.fix(tagItem.getString(USEMSG_KEY), event.getPlayer(), true,"%permission%", perm));
+        if (tagItem.hasStringTag(USEMSG_KEY)) {
+            Util.sendMessage(event.getPlayer(), UtilsString.fix(tagItem.getString(USEMSG_KEY), event.getPlayer(), true, "%permission%", perm));
             return;
         }
-        this.getCommand().sendPermissionLackMessage(perm,event.getPlayer());
+        this.getCommand().sendPermissionLackMessage(perm, event.getPlayer());
     }
 }

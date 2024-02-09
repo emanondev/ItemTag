@@ -27,8 +27,8 @@ public class TriggerGui implements PagedGui {
     private final Inventory inventory;
     private final Player target;
     private final ItemStack item;
-    private int page = 1;
     private final List<TriggerType> triggers = new ArrayList<>();
+    private int page = 1;
 
 
     public TriggerGui(Player target, ItemStack item) {
@@ -89,11 +89,11 @@ public class TriggerGui implements PagedGui {
         TriggerType type = triggers.get(TRIGGER_SLOTS * (page - 1) + event.getSlot());
         TagItem tagItem = ItemTag.getTagItem(getTargetPlayer().getItemInHand());//TODO
         //if (TriggerHandler.hasTrigger(type,tagItem))
-        Activity activity = TriggerHandler.getTriggerActivity(type,tagItem);
-        if (activity==null){
+        Activity activity = TriggerHandler.getTriggerActivity(type, tagItem);
+        if (activity == null) {
             //TODO select activity
-        }else{
-            getTargetPlayer().openInventory(new ActivityGui(activity,getTargetPlayer(),this).getInventory());
+        } else {
+            getTargetPlayer().openInventory(new ActivityGui(activity, getTargetPlayer(), this).getInventory());
         }
 
     }

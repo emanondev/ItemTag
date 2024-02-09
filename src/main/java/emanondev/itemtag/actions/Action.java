@@ -35,7 +35,7 @@ public abstract class Action {
 
     public abstract List<String> getInfo();
 
-    public String fixActionInfo(String actionInfo){
+    public String fixActionInfo(String actionInfo) {
         return actionInfo;
     }
 }

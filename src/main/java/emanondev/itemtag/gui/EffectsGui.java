@@ -26,13 +26,13 @@ import java.util.List;
 
 public class EffectsGui implements PagedGui {
 
+    private static final int EFFECTS_SLOTS = 5 * 9;
     private final Player target;
     private final Inventory inventory;
     private final List<EffectData> effects = new ArrayList<>();
     private final List<EquipData> equips = new ArrayList<>();
     private final EffectsInfo info;
     private int page = 1;
-    private static final int EFFECTS_SLOTS = 5 * 9;
 
     public EffectsGui(Player target, ItemStack item) {
         String title = this.getLanguageMessage("gui.effects.title",
@@ -127,13 +127,9 @@ public class EffectsGui implements PagedGui {
     private void update(EffectData effectData) {
         if (effectData.amplifier < 0)
             info.removeEffect(effectData.type);
-        else if (ItemEdit.GAME_VERSION > 12)
-            info.addEffect(new PotionEffect(effectData.type, effectData.type.isInstant() ? 1 : (20 * 3600 * 12),
-                    effectData.amplifier, effectData.ambient, effectData.particles, effectData.icon));
         else
-            info.addEffect(new PotionEffect(effectData.type, effectData.type.isInstant() ? 1 : (20 * 3600 * 12),
-                    effectData.amplifier, effectData.ambient, effectData.particles));
-
+            info.addEffect(EffectsInfo.craftPotionEffect(effectData.type,
+                    effectData.amplifier, effectData.ambient, effectData.particles, effectData.icon));
         info.update();
         target.setItemInHand(info.getItem());
         updateInventory();
@@ -175,8 +171,8 @@ public class EffectsGui implements PagedGui {
 
     private class EquipData {
         private final EquipmentSlot slot;
-        private boolean enabled;
         private final ItemStack item;
+        private boolean enabled;
 
         private EquipData(EquipmentSlot slot, boolean enabled) {
             this.slot = slot;
@@ -227,11 +223,11 @@ public class EffectsGui implements PagedGui {
 
     private class EffectData {
         private final PotionEffectType type;
+        private final ItemStack item;
         private int amplifier;
         private boolean ambient;
         private boolean particles;
         private boolean icon;
-        private final ItemStack item;
 
         private EffectData(PotionEffectType type, int amplifier, boolean ambient, boolean particles, boolean icon) {
             this.type = type;

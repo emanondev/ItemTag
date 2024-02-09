@@ -20,9 +20,9 @@ public class ConditionManager {
         String info = index == -1 ? "" : line.substring(index + 1);
         boolean reversed = id.startsWith("!");
         ConditionType type = getConditionType(id);
-        if (type==null)
+        if (type == null)
             return null;
-        return type.read(info,reversed);
+        return type.read(info, reversed);
     }
 
     public static void register(@NotNull ConditionType condition) {
@@ -30,7 +30,7 @@ public class ConditionManager {
         if (conditionTypes.containsKey(id))
             throw new IllegalArgumentException();
         conditionTypes.put(id, condition);
-        ItemTag.get().log("ConditionManager registered Condition Type &e"+condition.getId());
+        ItemTag.get().log("ConditionManager registered Condition Type &e" + condition.getId());
     }
 
     public static void load() {
@@ -39,6 +39,30 @@ public class ConditionManager {
         register(new LuckPermGroupConditionType()); //doesn't actually require luckperms
         register(new HasUsesConditionType());
         register(new IsPvpConditionType());
+        register(new AirLevelConditionType());
+        register(new FoodLevelConditionType());
+        register(new HealthConditionType());
+        register(new IsSneakingConditionType());
+        register(new IsSprintingConditionType());
+        register(new XLocConditionType());
+        register(new YLocConditionType());
+        register(new ZLocConditionType());
+        register(new TimeConditionType());
+        register(new IsNightConditionType());
+        register(new IsDayConditionType());
+        register(new IsDawnConditionType());
+        register(new IsDuskConditionType());
+        register(new IsSunnyConditionType());
+        register(new IsRainingConditionType());
+        register(new IsThunderingConditionType());
+        register(new EnvironmentConditionType());
+        register(new IsOnGroundConditionType());
+        register(new IsInWaterConditionType());
+        register(new IsFlyingConditionType());
+        register(new IsInvulnerableConditionType());
+        register(new IsFrozenConditionType());
+        register(new IsOnFireConditionType());
+        register(new IsOutsideConditionType());
         register(new IsFullChargedConditionType()); //1.13+?
         //TODO event
     }

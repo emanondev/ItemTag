@@ -29,7 +29,7 @@ public class TriggerListener implements Listener {
             return;
         try {
             event.setItem(CONSUME_ITEM.handle(event, event.getPlayer(), item, event.getHand()));
-        } catch (Exception e) {
+        } catch (NoSuchMethodError e) {
             event.setItem(CONSUME_ITEM.handle(event, event.getPlayer(), item, EquipmentSlot.HAND));
         }
     }
@@ -41,7 +41,7 @@ public class TriggerListener implements Listener {
             case RIGHT_CLICK_BLOCK: {
                 try {
                     RIGHT_INTERACT.handle(event, event.getPlayer(), event.getItem(), event.getHand());
-                } catch (Exception e) {
+                } catch (NoSuchMethodError e) {
                     RIGHT_INTERACT.handle(event, event.getPlayer(), event.getItem(), EquipmentSlot.HAND);
                 }
             }
@@ -50,7 +50,7 @@ public class TriggerListener implements Listener {
             case LEFT_CLICK_BLOCK: {
                 try {
                     LEFT_INTERACT.handle(event, event.getPlayer(), event.getItem(), event.getHand());
-                } catch (Exception e) {
+                } catch (NoSuchMethodError e) {
                     LEFT_INTERACT.handle(event, event.getPlayer(), event.getItem(), EquipmentSlot.HAND);
                 }
             }
@@ -60,24 +60,24 @@ public class TriggerListener implements Listener {
 
     @EventHandler
     private void event(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Player){
+        if (event.getDamager() instanceof Player) {
             Player player = (Player) event.getDamager();
-            for (EquipmentSlot slot:EquipmentSlot.values()) {
+            for (EquipmentSlot slot : EquipmentSlot.values()) {
                 MELEE_HIT.handle(event, player, player.getInventory().getItem(slot), slot);
             }
         }
-        if (event.getDamager() instanceof Projectile){
+        if (event.getDamager() instanceof Projectile) {
             Projectile prj = (Projectile) event.getDamager();
             if (prj.getShooter() instanceof Player) {
                 Player player = (Player) prj.getShooter();
-                for (EquipmentSlot slot:EquipmentSlot.values()) {
+                for (EquipmentSlot slot : EquipmentSlot.values()) {
                     RANGED_HIT.handle(event, player, player.getInventory().getItem(slot), slot);
                 }
             }
         }
-        if (event.getEntity() instanceof Player){
+        if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
-            for (EquipmentSlot slot:EquipmentSlot.values()) {
+            for (EquipmentSlot slot : EquipmentSlot.values()) {
                 HITTED.handle(event, player, player.getInventory().getItem(slot), slot);
             }
         }

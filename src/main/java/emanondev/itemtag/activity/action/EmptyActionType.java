@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 public final class EmptyActionType extends ActionType {
 
     public static final EmptyActionType INST = new EmptyActionType();
+
     private EmptyActionType() {
         super("empty");
     }
@@ -23,17 +24,17 @@ public final class EmptyActionType extends ActionType {
 
     public final class EmptyAction extends Action {
 
-        public @NotNull String toString(){
+        public EmptyAction(@NotNull String info) {
+            super(info);
+        }
+
+        public @NotNull String toString() {
             return getInfo();
         }
 
         @Override
         public boolean execute(@NotNull Player player, @NotNull ItemStack item, Event event) {
             return false;
-        }
-
-        public EmptyAction(@NotNull String info) {
-            super(info);
         }
 
     }

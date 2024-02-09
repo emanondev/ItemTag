@@ -5,6 +5,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -17,7 +18,7 @@ public class EffectsInfo {
     private final ItemStack item;
     private final TagItem tagItem;
 
-    public EffectsInfo(ItemStack item) {
+    public EffectsInfo(@Nullable ItemStack item) {
         this.item = item;
         this.tagItem = ItemTag.getTagItem(this.item);
         if (tagItem.hasStringTag(EFFECTS_LIST_KEY))
@@ -47,6 +48,20 @@ public class EffectsInfo {
         return str.toString();
     }
 
+    /**
+     * @return an effect with unlimited duration (or just big if < 1.19.4)
+     */
+    public static PotionEffect craftPotionEffect(PotionEffectType type, int amplifier, boolean ambient,
+                                                 boolean particles,
+                                                 boolean icon) {
+        int duration = type.isInstant() ? 1 :
+                (((ItemEdit.GAME_VERSION == 19 && ItemEdit.GAME_SUB_VERSION < 4) || ItemEdit.GAME_VERSION < 19 ) ?
+                        (20 * 3600 * 12) : PotionEffect.INFINITE_DURATION);
+        if (ItemEdit.GAME_VERSION > 12)
+            return new PotionEffect(type, duration, amplifier, ambient, particles, icon);
+        return new PotionEffect(type, duration, amplifier, ambient, particles);
+    }
+
     private List<PotionEffect> stringToEffects(String txt) {
         List<PotionEffect> list = new ArrayList<>();
         if (txt == null || txt.isEmpty())
@@ -54,15 +69,9 @@ public class EffectsInfo {
         String[] effects = txt.split(";");
         for (String rawEffect : effects) {
             String[] args = rawEffect.split(",");
-            if (ItemEdit.GAME_VERSION > 12)
-                list.add(new PotionEffect(PotionEffectType.getByName(args[0]),
-                        PotionEffectType.getByName(args[0]).isInstant() ? 1 : (20 * 3600 * 12),
-                        Integer.parseInt(args[1]), Boolean.parseBoolean(args[2]), Boolean.parseBoolean(args[3]),
-                        Boolean.parseBoolean(args[4])));
-            else
-                list.add(new PotionEffect(PotionEffectType.getByName(args[0]),
-                        PotionEffectType.getByName(args[0]).isInstant() ? 1 : (20 * 3600 * 12),
-                        Integer.parseInt(args[1]), Boolean.parseBoolean(args[2]), Boolean.parseBoolean(args[3])));
+            list.add(craftPotionEffect(PotionEffectType.getByName(args[0]),
+                    Integer.parseInt(args[1]), Boolean.parseBoolean(args[2]), Boolean.parseBoolean(args[3]),
+                    Boolean.parseBoolean(args[4])));
         }
         return list;
     }
@@ -100,13 +109,15 @@ public class EffectsInfo {
         return effects.values();
     }
 
+    public Map<PotionEffectType, PotionEffect> getEffectsMap() {
+        return Collections.unmodifiableMap(effects);
+    }
+
     /**
      * Note: if no slot is specified all slots are considered valid
-     * @param slot
-     * @return
      */
     public boolean isValidSlot(EquipmentSlot slot) {
-        return slots.isEmpty()||slots.contains(slot);
+        return slots.isEmpty() || slots.contains(slot);
     }
 
     public EnumSet<EquipmentSlot> getValidSlots() {

@@ -59,7 +59,7 @@ public class ItemTagUpdateOldItem implements TabExecutor {
         }
         TagItem tagItem = ItemTag.getTagItem(item);
         if (!Actions.hasActions(tagItem)) {
-            Util.sendMessage(sender, ChatColor.RED+"[ItemTag] This item doesn't require any update");
+            Util.sendMessage(sender, ChatColor.RED + "[ItemTag] This item doesn't require any update");
             return true;
         }
         List<String> actions = new ArrayList<>(Actions.getActions(tagItem));
@@ -67,25 +67,25 @@ public class ItemTagUpdateOldItem implements TabExecutor {
         for (int i = 0; i < actions.size(); i++) {
             String action = actions.get(i);
             String prefix = null;
-            if (action.startsWith("commandasop%%:%%")&&!action.startsWith("commandasop%%:%%-pin")) {
+            if (action.startsWith("commandasop%%:%%") && !action.startsWith("commandasop%%:%%-pin")) {
                 prefix = "commandasop%%:%%";
-            } else if (action.startsWith("servercommand%%:%%")&&!action.startsWith("servercommand%%:%%-pin")) {
+            } else if (action.startsWith("servercommand%%:%%") && !action.startsWith("servercommand%%:%%-pin")) {
                 prefix = "servercommand%%:%%";
             }
             if (prefix == null)
                 continue;
-            Util.sendMessage(sender, ChatColor.GREEN+"[ItemTag] Updated Action "+ChatColor.YELLOW+prefix.substring(0,prefix.length()-5)+" "+action.substring(prefix.length()));
+            Util.sendMessage(sender, ChatColor.GREEN + "[ItemTag] Updated Action " + ChatColor.YELLOW + prefix.substring(0, prefix.length() - 5) + " " + action.substring(prefix.length()));
             actions.set(i, prefix + "-pin" +
-                    SecurityUtil.generateControlKey(action.substring(prefix.length())) + " "+ action.substring(prefix.length()));
-            updating=true;
+                    SecurityUtil.generateControlKey(action.substring(prefix.length())) + " " + action.substring(prefix.length()));
+            updating = true;
         }
         if (updating) {
-            Actions.setActions(tagItem,actions);
+            Actions.setActions(tagItem, actions);
             ((Player) sender).getInventory().setItemInMainHand(tagItem.getItem());
-            Util.sendMessage(sender, ChatColor.GREEN+"[ItemTag] Item was updated");
+            Util.sendMessage(sender, ChatColor.GREEN + "[ItemTag] Item was updated");
             return true;
         }
-        Util.sendMessage(sender, ChatColor.RED+"[ItemTag] This item doesn't require any update");
+        Util.sendMessage(sender, ChatColor.RED + "[ItemTag] This item doesn't require any update");
         return true;
     }
 

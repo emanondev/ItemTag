@@ -11,14 +11,14 @@ public class NBTAPITagItem implements TagItem {
     private final ItemStack item;
     private NBTItem nbtItem = null;
 
+    public NBTAPITagItem(@Nullable ItemStack item) {
+        this.item = item;
+    }
+
     public NBTItem getNbtItem() {
         if (nbtItem == null)
             nbtItem = new NBTItem(item, true);
         return nbtItem;
-    }
-
-    public NBTAPITagItem(@Nullable ItemStack item) {
-        this.item = item;
     }
 
     public boolean hasTag(@NotNull String key) {

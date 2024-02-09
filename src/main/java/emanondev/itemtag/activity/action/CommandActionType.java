@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-public class CommandActionType  extends ActionType {
+public class CommandActionType extends ActionType {
 
     public CommandActionType() {
         super("command");

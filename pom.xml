@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>emanondev.itemtag</groupId>
     <artifactId>ItemTag</artifactId>
-    <version>3.2.2</version>
+    <version>4.0.0 - ALPHA</version>
     <packaging>jar</packaging>
 
     <properties>

@@ -14,22 +14,22 @@ public abstract class ConditionType {
     private final String id;
     private final Class<? extends Event> clazz;
 
-    public ConditionType(@NotNull String id){
-        this(id,null);
+    public ConditionType(@NotNull String id) {
+        this(id, null);
     }
 
-    public ConditionType(@NotNull String id, @Nullable Class<? extends Event> clazz){
+    public ConditionType(@NotNull String id, @Nullable Class<? extends Event> clazz) {
         if (!Pattern.compile("[a-z][_a-z0-9]*").matcher(id).matches())
             throw new IllegalArgumentException();
         this.id = id;
         this.clazz = clazz;
     }
 
-    public final @NotNull Condition read(@NotNull String info){
-        return read(info,false);
+    public final @NotNull Condition read(@NotNull String info) {
+        return read(info, false);
     }
 
-    public abstract @NotNull Condition read(@NotNull String info,boolean reversed);
+    public abstract @NotNull Condition read(@NotNull String info, boolean reversed);
 
     public final @NotNull String getId() {
         return this.id;
@@ -40,7 +40,7 @@ public abstract class ConditionType {
         private final String info;
         private final boolean reversed;
 
-        public Condition(@NotNull String info,boolean reversed){
+        public Condition(@NotNull String info, boolean reversed) {
             this.info = info;
             this.reversed = reversed;
         }
@@ -49,24 +49,24 @@ public abstract class ConditionType {
             return info;
         }
 
-        public final @NotNull String getId(){
+        public final @NotNull String getId() {
             return ConditionType.this.getId();
         }
 
-        public @NotNull String toString(){
-            return (reversed?"":"!")+getId()+(getInfo().isEmpty()?"":(" "+getInfo()));
+        public @NotNull String toString() {
+            return (reversed ? "" : "!") + getId() + (getInfo().isEmpty() ? "" : (" " + getInfo()));
         }
 
-        public boolean evaluate(@NotNull Player player,@NotNull ItemStack item, @Nullable Event event){
-            return reversed != evaluateImpl(player,item, event);
+        public boolean evaluate(@NotNull Player player, @NotNull ItemStack item, @Nullable Event event) {
+            return reversed != evaluateImpl(player, item, event);
         }
 
         protected abstract boolean evaluateImpl(@NotNull Player player, @NotNull ItemStack item, @Nullable Event event);
 
-        public boolean isCompatible(@Nullable Event event){
+        public boolean isCompatible(@Nullable Event event) {
             if (clazz == null)
                 return true;
-            return event!=null && clazz.isAssignableFrom(event.getClass());
+            return event != null && clazz.isAssignableFrom(event.getClass());
         }
     }
 }

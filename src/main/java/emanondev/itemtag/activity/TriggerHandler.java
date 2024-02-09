@@ -51,7 +51,7 @@ public class TriggerHandler {
     private final static String TRIGGER_DISPLAY_USES = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":t_displayuses";
     private final static String TRIGGER_VISUAL_COOLDOWN = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":t_visualcooldown";
     private final static String TRIGGER_PERMISSION_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":t_perm";
-
+    private static final HashMap<String, TriggerType> triggers = new HashMap<>();
 
     public static boolean hasTrigger(@NotNull TriggerType trigger, @NotNull TagItem item) {
         return getTriggerActivity(trigger, item) != null;
@@ -119,16 +119,8 @@ public class TriggerHandler {
             item.setTag(TRIGGER_NOT_CONSUME_AT_END_KEY, true);
     }
 
-
     public static boolean isDisplayUses(@NotNull TagItem item) {
         return item.hasBooleanTag(TRIGGER_DISPLAY_USES);
-    }
-
-    public static void setDisplayUses(@NotNull TagItem item, boolean value) {
-        if (!value)
-            item.removeTag(TRIGGER_DISPLAY_USES);
-        else
-            item.setTag(TRIGGER_DISPLAY_USES, false);
     }
 /*
     public static int getConsumeUses(@NotNull TriggerType trigger, @NotNull TagItem item) {
@@ -143,29 +135,35 @@ public class TriggerHandler {
             item.setTag(TRIGGER_USES_CONSUME_KEY + trigger.getId(), value);
     }*/
 
-    public static int getUsesLeft( @NotNull TagItem item) {
+    public static void setDisplayUses(@NotNull TagItem item, boolean value) {
+        if (!value)
+            item.removeTag(TRIGGER_DISPLAY_USES);
+        else
+            item.setTag(TRIGGER_DISPLAY_USES, false);
+    }
+
+    public static int getUsesLeft(@NotNull TagItem item) {
         Integer value = item.getInteger(TRIGGER_USES_KEY);
         return value == null ? 1 : value;
     }
 
-    public static void setUsesLeft( @NotNull TagItem item, int value) {
+    public static void setUsesLeft(@NotNull TagItem item, int value) {
         if (value == 1)
-            item.removeTag(TRIGGER_USES_KEY );
+            item.removeTag(TRIGGER_USES_KEY);
         else
-            item.setTag(TRIGGER_USES_KEY , Math.max(-1, value));
+            item.setTag(TRIGGER_USES_KEY, Math.max(-1, value));
     }
 
-
-    public static int getMaxUses( @NotNull TagItem item) {
+    public static int getMaxUses(@NotNull TagItem item) {
         Integer value = item.getInteger(TRIGGER_MAXUSES_KEY);
         return value == null ? 1 : value;
     }
 
-    public static void setMaxUses( @NotNull TagItem item, int value) {
+    public static void setMaxUses(@NotNull TagItem item, int value) {
         if (value == 1)
-            item.removeTag(TRIGGER_MAXUSES_KEY );
+            item.removeTag(TRIGGER_MAXUSES_KEY);
         else
-            item.setTag(TRIGGER_MAXUSES_KEY , Math.max(-1, value));
+            item.setTag(TRIGGER_MAXUSES_KEY, Math.max(-1, value));
     }
 
     public static boolean hasVisualCooldown(@NotNull TagItem item) {
@@ -179,7 +177,6 @@ public class TriggerHandler {
             item.setTag(TRIGGER_VISUAL_COOLDOWN, true);
     }
 
-
     public static long getCooldownAmountMs(@NotNull TriggerType trigger, @NotNull TagItem item) {
         Integer value = item.getInteger(TRIGGER_COOLDOWN_KEY + trigger.getId());
         return value == null ? 0L : value * 10;
@@ -192,12 +189,6 @@ public class TriggerHandler {
             item.setTag(TRIGGER_COOLDOWN_KEY + trigger.getId(), (int) value / 10);
     }
 
-    public static String getCooldownId(@NotNull TriggerType trigger /*, @NotNull TagItem item*/) {
-        return "t_cd_"+trigger.getId();
-        //String value = item.getString(TRIGGER_COOLDOWN_ID_KEY + trigger.getId());
-        //return value == null ? "default" : value;
-    }
-
     /*
     public static void setCooldownId(@NotNull TriggerType trigger, @NotNull TagItem item, String value) {
         if (value == null || value.isEmpty())
@@ -206,15 +197,14 @@ public class TriggerHandler {
             item.setTag(TRIGGER_COOLDOWN_ID_KEY + trigger.getId(), value);
     }*/
 
-    public static String getPermission(@NotNull TagItem item) {
-        return item.getString(TRIGGER_PERMISSION_KEY);
+    public static String getCooldownId(@NotNull TriggerType trigger /*, @NotNull TagItem item*/) {
+        return "t_cd_" + trigger.getId();
+        //String value = item.getString(TRIGGER_COOLDOWN_ID_KEY + trigger.getId());
+        //return value == null ? "default" : value;
     }
 
-    public static void setPermission(@NotNull TagItem item, String value) {
-        if (value == null || value.isEmpty())
-            item.removeTag(TRIGGER_PERMISSION_KEY);
-        else
-            item.setTag(TRIGGER_PERMISSION_KEY, value);
+    public static String getPermission(@NotNull TagItem item) {
+        return item.getString(TRIGGER_PERMISSION_KEY);
     }
 
 
@@ -229,7 +219,12 @@ public class TriggerHandler {
         if ()
     }*/
 
-    private static final HashMap<String, TriggerType> triggers = new HashMap<>();
+    public static void setPermission(@NotNull TagItem item, String value) {
+        if (value == null || value.isEmpty())
+            item.removeTag(TRIGGER_PERMISSION_KEY);
+        else
+            item.setTag(TRIGGER_PERMISSION_KEY, value);
+    }
 
     public static void registerTrigger(TriggerType trigger) {
         if (trigger == null)

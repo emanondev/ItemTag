@@ -30,19 +30,19 @@ public class DelayedActionType extends ActionType {
             if (index == -1)
                 throw new IllegalArgumentException("Invalid format: '" + getInfo() + "' must be '<delay> <action>'");
             delay = Integer.parseInt(info.substring(0, index));
-            if (delay<=0)
+            if (delay <= 0)
                 throw new IllegalArgumentException("Invalid delay amount (must be >0)");
             action = ActionManager.read(info.substring(index + 1));
         }
 
         @Override
         public boolean execute(@NotNull Player player, @NotNull ItemStack item, Event event) {
-            new BukkitRunnable(){
+            new BukkitRunnable() {
                 @Override
                 public void run() {
                     action.execute(player, item, event);
                 }
-            }.runTaskLater(ItemTag.get(),delay);
+            }.runTaskLater(ItemTag.get(), delay);
             return true;
         }
     }

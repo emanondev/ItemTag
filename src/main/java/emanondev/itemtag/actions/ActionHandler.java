@@ -10,11 +10,11 @@ import java.util.Locale;
 
 public class ActionHandler {
 
+    private static final HashMap<String, Action> actions = new HashMap<>();
+
     public static void handleAction(Player player, String type, String action) {
         actions.get(type).execute(player, action);
     }
-
-    private static final HashMap<String, Action> actions = new HashMap<>();
 
     public static void registerAction(Action action) {
         if (action == null)
@@ -52,6 +52,6 @@ public class ActionHandler {
     }
 
     public static String fixActionInfo(String type, String actionInfo) {
-       return actions.get(type.toLowerCase(Locale.ENGLISH)).fixActionInfo(actionInfo);
+        return actions.get(type.toLowerCase(Locale.ENGLISH)).fixActionInfo(actionInfo);
     }
 }

@@ -10,24 +10,24 @@ import java.util.HashMap;
 import java.util.Locale;
 
 public class ActionManager {
-    private static final HashMap<String,ActionType> actionTypes = new HashMap<>();
+    private static final HashMap<String, ActionType> actionTypes = new HashMap<>();
 
     public static @NotNull ActionType.Action read(@NotNull String line) {
         int index = line.indexOf(" ");
-        String id = (index==-1?line:line.substring(0,index)).toLowerCase(Locale.ENGLISH);
-        String info = index==-1?"":line.substring(index+1);
+        String id = (index == -1 ? line : line.substring(0, index)).toLowerCase(Locale.ENGLISH);
+        String info = index == -1 ? "" : line.substring(index + 1);
         return actionTypes.get(id).read(info);
     }
 
-    public static void register(@NotNull ActionType action){
+    public static void register(@NotNull ActionType action) {
         String id = action.getId();
         if (actionTypes.containsKey(id))
-            throw  new IllegalArgumentException();
-        actionTypes.put(id,action);
-        ItemTag.get().log("ActionManager registered Action Type &e"+action.getId());
+            throw new IllegalArgumentException();
+        actionTypes.put(id, action);
+        ItemTag.get().log("ActionManager registered Action Type &e" + action.getId());
     }
 
-    public static void load(){
+    public static void load() {
         register(new CommandActionType());
         register(new CommandAsOpActionType());
         register(new ServerCommandActionType());
@@ -37,6 +37,7 @@ public class ActionManager {
         register(new DelayedActionType());
         register(new ConditionalActionType());
         register(new RandomActionType());
+        register(new PlaySoundActionType());
         //TODO event
     }
 

@@ -196,6 +196,81 @@ itemtag:
       feedback:
         set: '&9[&fItemTag&9] &aNow item shows uses left and max uses'
         unset: '&9[&fItemTag&9] &aNow item won''t show uses left and max uses'
+  activity:
+    description:
+      - '&b&lSets an activity (some actions)'
+      - '&ban activity may be activated by triggers'
+      - '&btriggers may be associated to items (/it trigger)'
+      - ''
+      - '&eCreate <id> &b- create a new activity'
+      - '&eOpen <id> &b- open a gui for selected activity'
+      - '&eDelete <id> &b- delete selected activity'
+      - '&eClone <id> <new id>&b- clone selected activity'
+      - '&eRename <id> <new id>&b- rename selected activity'
+    params: '[...]'
+    feedback:
+      invalid_activity_id: '&4[&cItemTag&4] &cActivity &6%id% &cdoesn''t exist'
+      already_used_activity_id: '&4[&cItemTag&4] &cActivity &6%id% &cis already used'
+    create:
+      params: 'create <new id>'
+      description:
+        - '&b&lCreate a new activity'
+        - ''
+        - '&e<new id> &bis the id of the activity'
+        - "  &bid must start with a letter and can be alphanumeric"
+        - '  &bmay also contains _ symbol'
+      feedback: '&9[&fItemTag&9] &aActivity &e%id% &acreated'
+    rename:
+      params: "rename <id> <new id>"
+      description:
+        - '&b&lRename activity id'
+        - ''
+        - '&e<id> &bis the current id of the activity'
+        - '&e<new id> &bis the new id of the activity'
+        - "  &bid must start with a letter and can be alphanumeric"
+        - '  &bmay also contains _ symbol'
+      feedback: '&9[&fItemTag&9] &aActivity &e%id% &arenamed &e%new_id%'
+    open:
+      params: "open <id>"
+      description:
+        - '&b&lOpen a gui to edit the activity'
+        - ''
+        - '&e<id> &bis the id of the activity'
+    delete:
+      params: "delete <id>"
+      description:
+        - '&b&lDelete selected activity'
+        - ''
+        - '&e<id> &bis the id of the activity'
+      feedback: '&9[&fItemTag&9] &aActivity &e%id% &adeleted'
+    clone:
+      params: "clone <id> <clone id>"
+      description:
+        - '&b&lClone selected activity'
+        - ''
+        - '&e<id> &bis the id of the activity to clone'
+        - '&e<clone id> &bis the id of the clone'
+        - "  &bid must start with a letter and can be alphanumeric"
+        - '  &bmay also contains _ symbol'
+      feedback: '&9[&fItemTag&9] &aActivity &e%id% &acloned to &e%clone_id%'
+    setconsumes:
+      params: "setconsumes <id> <amount>"
+      description:
+        - '&b&lSet uses required for selected activity'
+        - ''
+        - '&e<id> &bis the id of the activity to clone'
+        - '&e<amount> &bamount of uses consumed by activity activation'
+      feedback: '&9[&fItemTag&9] &aActivity &e%id% &auses consumption is &e%amount%'
+    addcondition:
+      params: "addcondition <id> [!]<conditiontype> [condition info]"
+      description:
+        - '&b&lAdd a condition to activate the activity'
+        - ''
+        - '&e<id> &bis the id of the activity'
+        - '&e[!] &bis the ''!'' if you want the condition to be reversed'
+        - '&e<conditiontype> &bis the type of condition'
+        - '&e[condition info] &bis additional information the condition type may need'
+      feedback: '&9[&fItemTag&9] &aActivity &e%id% &aadded condition &e%condition%'
   consumeactions:
     description:
       - '&b&lSets actions done when the item is consumed like food and drinks'
@@ -509,3 +584,18 @@ gui:
     potion-instant: 'instant'
     potion-unlimited: 'unlimited'
     icon-unsupported: '&conly for 1.13+'
+  activity:
+    title_main: "&9Activity &e%activity_id%"
+  triggers:
+    title_main: "&9Triggers"
+trigger:
+  consume_item:
+    description:
+      - "&6activated when a player consume the item"
+      - "&6(drink or eat)"
+  right_interact:
+    gui_material:
+      - "&6activated when a player right click"
+  left_interact:
+    gui_material:
+      - "&6activated when a player left click"

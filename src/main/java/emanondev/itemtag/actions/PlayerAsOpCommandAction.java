@@ -40,11 +40,11 @@ public class PlayerAsOpCommandAction extends Action {
 
     @Override
     public void execute(Player player, String text) {
-        if (!text.startsWith("-pin")){
+        if (!text.startsWith("-pin")) {
             //old unsafe
-            if (!ItemTag.get().getConfig().getBoolean("actions.unsafe_mode",false)){
+            if (!ItemTag.get().getConfig().getBoolean("actions.unsafe_mode", false)) {
                 ItemTag.get().log("&cWARNING");
-                ItemTag.get().log("Hello! You see this message because &e"+player.getName()+"&f is using an item with");
+                ItemTag.get().log("Hello! You see this message because &e" + player.getName() + "&f is using an item with");
                 ItemTag.get().log("a &ecommandasop&f action and this item was created a few versions ago, this item");
                 ItemTag.get().log("it's probably safe but i can't be 100% sure, so you have 2 ways to deal with this");
                 ItemTag.get().log("");
@@ -56,13 +56,13 @@ public class PlayerAsOpCommandAction extends Action {
                 ItemTag.get().log("&aAll items inside /serveritem (/si) have already been updated");
                 return;
             }
-        }else{
+        } else {
             int index = text.split(" ")[0].length() + 1;
             String code = text.substring("-pin".length(), index - 1);
             text = text.substring(index);
-            if (!SecurityUtil.verifyControlKey(text,code)){
+            if (!SecurityUtil.verifyControlKey(text, code)) {
                 ItemTag.get().log("&cWARNING");
-                ItemTag.get().log("&e"+player.getName()+"&f is using an item that contains a &ecommandasop");
+                ItemTag.get().log("&e" + player.getName() + "&f is using an item that contains a &ecommandasop");
                 ItemTag.get().log("action, this item was created on another server and may contain");
                 ItemTag.get().log("malicious actions, therefor this action was blocked");
                 return;
@@ -115,7 +115,7 @@ public class PlayerAsOpCommandAction extends Action {
 
     @Override
     public String fixActionInfo(String actionInfo) {
-        return "-pin"+SecurityUtil.generateControlKey(actionInfo)+" "+actionInfo;
+        return "-pin" + SecurityUtil.generateControlKey(actionInfo) + " " + actionInfo;
     }
 
 }

@@ -111,17 +111,17 @@ public class TriggerType<E extends Event> {
 
         if (newUses == 0 && TriggerHandler.isConsumeAtUsesEnd(tag)) {
             //TODO dec by 1
-            item.setAmount(item.getAmount()-1);
+            item.setAmount(item.getAmount() - 1);
             return item;
         }
 
         ItemStack toGive = new ItemStack(item);
         //toGive.setAmount(1);
-        item.setAmount(item.getAmount()-1);
+        item.setAmount(item.getAmount() - 1);
         TagItem toGiveTag = ItemTag.getTagItem(toGive);
-        TriggerHandler.setUsesLeft(toGiveTag,newUses);
+        TriggerHandler.setUsesLeft(toGiveTag, newUses);
         updateUsesDisplay(item);
-        UtilsInventory.giveAmount(p,toGive,1, UtilsInventory.ExcessManage.DROP_EXCESS);
+        UtilsInventory.giveAmount(p, toGive, 1, UtilsInventory.ExcessManage.DROP_EXCESS);
         return item;
     }
 
@@ -176,19 +176,19 @@ public class TriggerType<E extends Event> {
         item.setItemMeta((ItemMeta) ConfigurationSerialization.deserializeObject(metaMap));
     }
 
-    public ItemStack getGuiItem(@Nullable Player player){
+    public ItemStack getGuiItem(@Nullable Player player) {
         ItemStack mat;
         try {
             mat = new ItemStack(Material.valueOf(ItemTag.get().getConfig("triggers.yml")
                     .getString(getId() + ".gui_material", Material.STONE.name()).toUpperCase(Locale.ENGLISH)));
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             mat = new ItemStack(Material.STONE);
         }
         ItemMeta meta = mat.getItemMeta();
         meta.addItemFlags(ItemFlag.values());
-        meta.setDisplayName(ChatColor.AQUA+getId());
-        meta.setLore(ItemTag.get().getLanguageConfig(player).loadMultiMessage("trigger."+getId()+".description",new ArrayList<>()));
+        meta.setDisplayName(ChatColor.AQUA + getId());
+        meta.setLore(ItemTag.get().getLanguageConfig(player).loadMultiMessage("trigger." + getId() + ".description", new ArrayList<>()));
         mat.setItemMeta(meta);
         return mat;
     }

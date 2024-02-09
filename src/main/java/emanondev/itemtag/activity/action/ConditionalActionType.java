@@ -9,7 +9,7 @@ import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-public class ConditionalActionType extends ActionType{
+public class ConditionalActionType extends ActionType {
 
     public ConditionalActionType() {
         super("conditional");

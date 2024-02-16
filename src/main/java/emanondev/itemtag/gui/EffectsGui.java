@@ -56,7 +56,7 @@ public class EffectsGui implements PagedGui {
                     effects.add(new EffectData(type, -1, true, true, true));
                 }
         for (EquipmentSlot slot : EquipmentSlot.values())
-            equips.add(new EquipData(slot, info.isValidSlot(slot)));
+            equips.add(new EquipData(slot/*, info.isValidSlot(slot)*/));
         effects.sort((e1, e2) -> Aliases.POTION_EFFECT.getName(e1.type).compareToIgnoreCase(Aliases.POTION_EFFECT.getName(e2.type)));
         updateInventory();
     }
@@ -117,7 +117,7 @@ public class EffectsGui implements PagedGui {
 
     @SuppressWarnings("deprecation")
     private void update(EquipData equipData) {
-        info.setSlot(equipData.slot, equipData.enabled);
+        info.toggleSlot(equipData.slot);
         info.update();
         target.setItemInHand(info.getItem());
         updateInventory();
@@ -172,11 +172,11 @@ public class EffectsGui implements PagedGui {
     private class EquipData {
         private final EquipmentSlot slot;
         private final ItemStack item;
-        private boolean enabled;
+        //private boolean enabled;
 
-        private EquipData(EquipmentSlot slot, boolean enabled) {
+        private EquipData(EquipmentSlot slot/*, boolean enabled*/) {
             this.slot = slot;
-            this.enabled = enabled;
+            //this.enabled = enabled;
             switch (slot) {
                 case CHEST:
                     item = new ItemStack(Material.IRON_CHESTPLATE);
@@ -206,8 +206,8 @@ public class EffectsGui implements PagedGui {
 
         public ItemStack getItem() {
             ItemMeta meta = loadLanguageDescription(item.getItemMeta(), "gui.effects.slot", "%slot%", Aliases.EQUIPMENT_SLOTS.getName(slot),
-                    "%value%", Aliases.BOOLEAN.getName(enabled));
-            if (enabled)
+                    "%value%", Aliases.BOOLEAN.getName(info.isValidSlot(slot)));
+            if (info.isValidSlot(slot))
                 meta.addEnchant(Enchantment.DURABILITY, 1, true);
             else
                 meta.removeEnchant(Enchantment.DURABILITY);
@@ -216,7 +216,6 @@ public class EffectsGui implements PagedGui {
         }
 
         public void onClick(InventoryClickEvent event) {
-            this.enabled = !enabled;
             update(this);
         }
     }

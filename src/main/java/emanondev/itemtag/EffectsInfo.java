@@ -26,6 +26,8 @@ public class EffectsInfo {
                 effects.put(effect.getType(), effect);
         if (tagItem.hasStringTag(EFFECTS_EQUIPS_KEY))
             slots.addAll(stringToEquips(tagItem.getString(EFFECTS_EQUIPS_KEY)));
+        if (slots.isEmpty())
+            slots.addAll(Arrays.asList(EquipmentSlot.values()));
     }
 
     private String effectsToString() {
@@ -55,7 +57,7 @@ public class EffectsInfo {
                                                  boolean particles,
                                                  boolean icon) {
         int duration = type.isInstant() ? 1 :
-                (((ItemEdit.GAME_VERSION == 19 && ItemEdit.GAME_SUB_VERSION < 4) || ItemEdit.GAME_VERSION < 19 ) ?
+                (((ItemEdit.GAME_VERSION == 19 && ItemEdit.GAME_SUB_VERSION < 4) || ItemEdit.GAME_VERSION < 19) ?
                         (20 * 3600 * 12) : PotionEffect.INFINITE_DURATION);
         if (ItemEdit.GAME_VERSION > 12)
             return new PotionEffect(type, duration, amplifier, ambient, particles, icon);
@@ -77,7 +79,7 @@ public class EffectsInfo {
     }
 
     private String equipsToString() {
-        if (slots.isEmpty())
+        if (slots.size() == EquipmentSlot.values().length)
             return null;
         List<EquipmentSlot> list = new ArrayList<>(slots);
         StringBuilder str = new StringBuilder();
@@ -113,11 +115,8 @@ public class EffectsInfo {
         return Collections.unmodifiableMap(effects);
     }
 
-    /**
-     * Note: if no slot is specified all slots are considered valid
-     */
     public boolean isValidSlot(EquipmentSlot slot) {
-        return slots.isEmpty() || slots.contains(slot);
+        return slots.contains(slot);
     }
 
     public EnumSet<EquipmentSlot> getValidSlots() {
@@ -132,11 +131,14 @@ public class EffectsInfo {
         effects.remove(type);
     }
 
-    public void setSlot(EquipmentSlot slot, boolean value) {
-        if (value)
-            slots.add(slot);
-        else
+    public void toggleSlot(EquipmentSlot slot) {
+        if (slots.contains(slot)) {
             slots.remove(slot);
+            if (slots.isEmpty())
+                slots.addAll(Arrays.asList(EquipmentSlot.values()));
+            return;
+        }
+        slots.add(slot);
     }
 
     public void update() {
@@ -144,7 +146,7 @@ public class EffectsInfo {
             tagItem.removeTag(EFFECTS_LIST_KEY);
         else
             tagItem.setTag(EFFECTS_LIST_KEY, effectsToString());
-        if (slots.isEmpty())
+        if (slots.size() == EquipmentSlot.values().length)
             tagItem.removeTag(EFFECTS_EQUIPS_KEY);
         else
             tagItem.setTag(EFFECTS_EQUIPS_KEY, equipsToString());

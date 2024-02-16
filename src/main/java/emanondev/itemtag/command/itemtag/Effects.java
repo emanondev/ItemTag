@@ -148,7 +148,8 @@ public class Effects extends ListenerSubCmd {
 
             EffectsInfo info = new EffectsInfo(getItemInHand(p));
             for (EquipmentSlot slot : EquipmentSlot.values())
-                info.setSlot(slot, slots.contains(slot));
+                if (slots.contains(slot) !=info.isValidSlot(slot))
+                    info.toggleSlot(slot);
             info.update();
             p.setItemInHand(info.getItem());
         } catch (Exception e) {

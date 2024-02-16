@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 class ConfigurationUpdater {
-    private static final int CURRENT_VERSION = 5;
+    private static final int CURRENT_VERSION = 6;
 
     static void update() {
         ItemTag plugin = ItemTag.get();
@@ -95,6 +95,11 @@ class ConfigurationUpdater {
                 ItemTag.get().log("If you need more info feel free to ask for support on our discord");
                 ItemTag.get().log("Discord: https://discord.gg/w5HVCDPtRp");
             }
+        }
+        if (version<=5){
+            YMLConfig config = ItemTag.get().getConfig();
+            config.set("flag.vanishcurse.override_keepinventory", false);
+            config.save();
         }
 
 

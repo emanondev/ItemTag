@@ -20,6 +20,14 @@ actions:
     #Should use playercommandpreprocessevent ?
     #true - if you need other plugins to listen to cancel or handle commands fired by items, like CombatLog MyCommands etc...
     fires_playercommandpreprocessevent: true
+flag:
+  vanishcurse:
+    #Should vanish curse flag (not the enchantment) override keep inventory gamerule?
+    override_keepinventory: false
 equipment_change:
+  # EquipmentChangeEvent may not fire if a plugin changes the equipment, a timer check fix this issue for a 100% compatibility
+  # with other plugins, you can set how many users may be checked each tick and how frequently
+  #How many player's equipments shall be checked each tick at most
   max_checked_players_per_tick: 3
+  #How often the check should be done (there are 20 ticks in a second)
   frequency_ticks: 5

@@ -6,10 +6,7 @@ import emanondev.itemedit.aliases.Aliases;
 import emanondev.itemedit.command.ReloadCommand;
 import emanondev.itemedit.compability.Hooks;
 import emanondev.itemtag.actions.*;
-import emanondev.itemtag.activity.ActionManager;
 import emanondev.itemtag.activity.ActivityManager;
-import emanondev.itemtag.activity.ConditionManager;
-import emanondev.itemtag.activity.TriggerManager;
 import emanondev.itemtag.activity.target.TargetManager;
 import emanondev.itemtag.command.ItemTagCommand;
 import emanondev.itemtag.command.ItemTagUpdateOldItem;
@@ -25,13 +22,14 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
+import java.util.Locale;
 
 public class ItemTag extends APlugin {
     private final static int PROJECT_ID = 89634;
     private static final int BSTATS_PLUGIN_ID = 15077;
     private static ItemTag plugin = null;
     private static TagManager tagManager = null;
-    private static boolean OLD_TAGS;
+    private static boolean USE_NBTAPI;
     private EquipmentChangeListenerBase equipChangeListener;
     private TargetManager targetManager;
 
@@ -40,7 +38,7 @@ public class ItemTag extends APlugin {
     }
 
     public static TagItem getTagItem(@Nullable ItemStack item) {
-        return OLD_TAGS ? new NBTAPITagItem(item) : new SpigotTagItem(item);
+        return USE_NBTAPI ? new NBTAPITagItem(item) : new SpigotTagItem(item);
     }
 
     public EquipmentChangeListenerBase getEquipChangeListener() {
@@ -61,28 +59,56 @@ public class ItemTag extends APlugin {
         return PROJECT_ID;
     }
 
+    private void initNBTAPI() throws Exception {
+        new NBTAPITagItem(new ItemStack(Material.STONE));//force load NBTAPI classes or fails
+        USE_NBTAPI = true;
+        tagManager = new NBTAPITagManager();
+        this.log("Data using NBTAPI");
+    }
+
+    private void initSpigotPersistentDataAPI() throws Exception {
+        USE_NBTAPI = false;
+        tagManager = new SpigotTagManager();
+        this.log("Data using Spigot PersistentDataContainer");
+    }
+
+    private void initDefault() throws Exception {
+        if (ItemEdit.GAME_VERSION <= 13)
+            try {
+                initNBTAPI();
+            } catch (Exception e) {
+                String error = "NBTAPI is required on this server version check www.spigotmc.org/resources/7939/";
+                //this.enableWithError(error);
+                ItemTag.TabExecutorError exec = new ItemTag.TabExecutorError(ChatColor.RED + error);
+                for (String command : this.getDescription().getCommands().keySet())
+                    registerCommand(command, exec, null);
+                log(org.bukkit.ChatColor.RED + error);
+                return;
+            }
+        else
+            initSpigotPersistentDataAPI();
+    }
+
     @Override
     public void enable() {
         try {
-
-            //set tagapi
-            if (ItemEdit.GAME_VERSION <= 13)
-                try {
-                    new NBTAPITagItem(new ItemStack(Material.STONE));//force load NBTAPI classes or fails
-                    OLD_TAGS = true;
-                    tagManager = new NBTAPITagManager();
-                } catch (Exception e) {
-                    String error = "NBTAPI is required on this server version check www.spigotmc.org/resources/7939/";
-                    //this.enableWithError(error);
-                    ItemEdit.TabExecutorError exec = new ItemEdit.TabExecutorError(ChatColor.RED + error);
-                    for (String command : this.getDescription().getCommands().keySet())
-                        registerCommand(command, exec, null);
-                    log(org.bukkit.ChatColor.RED + error);
-                    return;
-                }
-            else {
-                OLD_TAGS = false;
-                tagManager = new SpigotTagManager();
+            switch (getConfig().getString("data.preference", "SPIGOT").toUpperCase(Locale.ENGLISH)) {
+                case "NBTAPI":
+                    try {
+                        initNBTAPI();
+                    } catch (Exception e) {
+                        Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "NBTAPI is selected as data.preference but it's not installed/working, " +
+                                "if you wish to use NBTAPI get the plugin at www.spigotmc.org/resources/7939/");
+                        initDefault();
+                    }
+                    break;
+                case "SPIGOT":
+                    initDefault();
+                    break;
+                default:
+                    Bukkit.getConsoleSender().sendMessage(ChatColor.RED + getConfig().getString("data.preference", "SPIGOT") + " is selected as data.preference but it's unknown");
+                    initDefault();
+                    break;
             }
         } catch (Exception e) {
             Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Error while enabling ItemTag, disabling it");

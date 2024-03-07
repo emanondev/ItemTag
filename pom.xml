@@ -60,7 +60,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.20.1-R0.1-SNAPSHOT</version>
+            <version>1.20.3-R0.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>provided</scope>
         </dependency>
@@ -90,6 +90,12 @@
             <artifactId>placeholderapi</artifactId>
             <version>2.10.9</version>
             <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- ItemEdit -->
         <dependency>

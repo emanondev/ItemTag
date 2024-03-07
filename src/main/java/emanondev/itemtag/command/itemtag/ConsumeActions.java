@@ -401,6 +401,8 @@ public class ConsumeActions extends ListenerSubCmd {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        //know issue: if you have an item to execute /si give itself as action it'll get duped
+        //any command altering current item will deny item consumption
     }
 
 }

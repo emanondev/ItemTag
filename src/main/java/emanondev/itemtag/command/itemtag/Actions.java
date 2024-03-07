@@ -639,6 +639,7 @@ public class Actions extends ListenerSubCmd {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+
                 if (uses > 0) {
                     if (uses == 1 && getConsume(tagItem)) {
                         if (event.getItem().getAmount() == 1) { //1.8 doesn't like  event.getItem().setAmount(event.getItem().getAmount() - 1); on single items
@@ -650,9 +651,18 @@ public class Actions extends ListenerSubCmd {
                             } catch (Error e) {
                                 event.getPlayer().getInventory().setItemInHand(null);
                             }
-                        } else
-                            event.getItem().setAmount(event.getItem().getAmount() - 1);
-
+                        } else {
+                            ItemStack clone = event.getItem().clone();
+                            clone.setAmount(clone.getAmount() - 1);
+                            try {
+                                if (event.getHand() == EquipmentSlot.HAND)
+                                    event.getPlayer().getInventory().setItemInMainHand(clone);
+                                else
+                                    event.getPlayer().getInventory().setItemInOffHand(clone);
+                            } catch (Error e) {
+                                event.getPlayer().getInventory().setItemInHand(clone);
+                            }
+                        }
                     } else {
                         try {
                             if (event.getItem().getAmount() == 1) {
@@ -685,7 +695,6 @@ public class Actions extends ListenerSubCmd {
                             }
                         }
                     }
-
                 }
             default:
         }

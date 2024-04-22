@@ -25,6 +25,10 @@ public class Enchantable extends CustomFlag {
 
     @Override
     public ItemStack getGuiItem() {
-        return new ItemStack(Material.ENCHANTING_TABLE);
+        try {
+            return new ItemStack(Material.ENCHANTING_TABLE);
+        } catch (Throwable t) {
+            return new ItemStack(Material.valueOf("ENCHANTMENT_TABLE"));
+        }
     }
 }

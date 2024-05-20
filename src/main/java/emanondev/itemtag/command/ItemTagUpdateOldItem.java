@@ -53,7 +53,7 @@ public class ItemTagUpdateOldItem implements TabExecutor {
         }
         @SuppressWarnings("deprecation")
         ItemStack item = ((Player) sender).getInventory().getItemInHand();
-        if (item == null || item.getType() == Material.AIR) {
+        if (Util.isAirOrNull(item )) {
             sendNoItemInHand(sender);
             return false;
         }

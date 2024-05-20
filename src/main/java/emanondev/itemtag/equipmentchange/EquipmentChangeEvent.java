@@ -170,7 +170,7 @@ public class EquipmentChangeEvent extends PlayerEvent {
          */
         INVENTORY_DROP,
         /**
-         * When player take an equipment with his cursor
+         * When player take equipment with his cursor
          */
         INVENTORY_PICKUP,
         /**
@@ -186,7 +186,7 @@ public class EquipmentChangeEvent extends PlayerEvent {
          */
         INVENTORY_MOVE_TO_OTHER_INVENTORY,
         /**
-         * When player take an equipment with a double click
+         * When player take equipment with a double click
          */
         INVENTORY_COLLECT_TO_CURSOR,
         /**

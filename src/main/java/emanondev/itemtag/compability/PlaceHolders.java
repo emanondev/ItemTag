@@ -1,10 +1,10 @@
 package emanondev.itemtag.compability;
 
+import emanondev.itemedit.Util;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.command.itemtag.Actions;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import net.md_5.bungee.api.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -111,14 +111,14 @@ public class PlaceHolders extends PlaceholderExpansion {
                 }
                 case "handcooldown": {
                     ItemStack item = player.getInventory().getItemInHand();
-                    if (item == null || item.getType() == Material.AIR)
+                    if (Util.isAirOrNull(item ))
                         return "0";
                     id = Actions.getCooldownId(ItemTag.getTagItem(item));
                     break;
                 }
                 case "usesleft": {
                     ItemStack item = player.getInventory().getItemInHand();
-                    if (item == null || item.getType() == Material.AIR)
+                    if (Util.isAirOrNull(item ))
                         return "0";
                     return String.valueOf(Actions.getUses(ItemTag.getTagItem(item)));
                 }

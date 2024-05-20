@@ -34,9 +34,11 @@ public class Usable extends CustomFlag {
                     if (event.getItem().getType() == Material.BUCKET &&
                             Util.isVersionAfter(1, 15)) {
                         b = event.getPlayer().getTargetBlockExact(7, FluidCollisionMode.SOURCE_ONLY);
-                    } else b = null;
+                    } else
+                        b = null;
                     Bukkit.getScheduler().runTaskLater(ItemTag.get(), () -> {
-                        event.getPlayer().updateInventory();
+                        if (!Util.isVersionAfter(1, 20))
+                            event.getPlayer().updateInventory();
                         if (b != null) //reduce clientside visual glich on liquids only for 1.14+
                             event.getPlayer().sendBlockChange(b.getLocation(), b.getBlockData());
                     }, 1L);

@@ -285,9 +285,7 @@ public class ConsumeActions extends ListenerSubCmd {
             if (args.length < 4)
                 throw new IllegalArgumentException("Wrong param number");
             int line = Integer.parseInt(args[2]) - 1;
-            ArrayList<String> tmp = new ArrayList<>();
-            for (int i = 4; i < args.length; i++)
-                tmp.add(args[i]);
+            ArrayList<String> tmp = new ArrayList<>(Arrays.asList(args).subList(4, args.length));
             String actionType = args[3].toLowerCase(Locale.ENGLISH);
             String actionInfo = String.join(" ", tmp.toArray(new String[0]));
             try {
@@ -338,9 +336,7 @@ public class ConsumeActions extends ListenerSubCmd {
             case 4:
                 switch (args[1].toLowerCase(Locale.ENGLISH)) {
                     case "add": {
-                        List<String> params = new ArrayList<>();
-                        for (int i = 3; i < args.length; i++)
-                            params.add(args[i]);
+                        List<String> params = new ArrayList<>(Arrays.asList(args).subList(3, args.length));
                         return ActionHandler.tabComplete(sender, args[2].toLowerCase(Locale.ENGLISH), params);
                     }
                     case "set":
@@ -351,16 +347,12 @@ public class ConsumeActions extends ListenerSubCmd {
             default:
                 switch (args[1].toLowerCase(Locale.ENGLISH)) {
                     case "add": {
-                        List<String> params = new ArrayList<>();
-                        for (int i = 3; i < args.length; i++)
-                            params.add(args[i]);
+                        List<String> params = new ArrayList<>(Arrays.asList(args).subList(3, args.length));
                         return ActionHandler.tabComplete(sender, args[2].toLowerCase(Locale.ENGLISH), params);
                     }
                     case "set":
                     case "addline": {
-                        List<String> params = new ArrayList<>();
-                        for (int i = 4; i < args.length; i++)
-                            params.add(args[i]);
+                        List<String> params = new ArrayList<>(Arrays.asList(args).subList(4, args.length));
                         return ActionHandler.tabComplete(sender, args[2].toLowerCase(Locale.ENGLISH), params);
                     }
                 }

@@ -22,7 +22,7 @@ public abstract class CustomFlag implements Listener, Comparable<CustomFlag> {
     private final YMLConfig config;
 
     public CustomFlag(@NotNull String id, @NotNull String key, @NotNull Flag subCommand) {
-        if (id.equals("") || id.contains(" "))
+        if (id.isEmpty() || id.contains(" "))
             throw new IllegalArgumentException();
         this.ID = id;
         this.key = key;

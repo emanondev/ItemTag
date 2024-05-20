@@ -120,7 +120,7 @@ public class EquipmentChangeListener extends EquipmentChangeListenerBase {
                     }
                 else if (event.getCursor().isSimilar(getEquip(p, EquipmentSlot.HAND)))
                     slots.add(EquipmentSlot.HAND);
-                if (slots.size() > 0)
+                if (!slots.isEmpty())
                     new SlotCheck(p, EquipmentChangeEvent.EquipMethod.INVENTORY_COLLECT_TO_CURSOR, slots).runTaskLater(ItemTag.get(), 1L);
                 return;
             case PICKUP_SOME:

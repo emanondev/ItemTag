@@ -14,6 +14,9 @@ language:
   #Allowed on ServerVersion 1.12+
   #When true the plugin will use the client language if a language file exist for that client
   use_multilanguage: true
+  # Regenerate language files on version change?
+  # if true delete the files and replace them with latest version when game version change is detected
+  regen_files: true
 data:
   #What API should be used for item informations?
   #WARNING: changing this value may invalidate ItemTag properties for items created before the change

@@ -31,7 +31,6 @@ public class Grindable extends CustomFlag {
         if (event.getSlotType() == SlotType.RESULT) {
             event.setCancelled(true);
             //TODO lascia glich visivo quando usi F
-            return;
         }
     }
 

@@ -26,8 +26,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 
 public class Effects extends ListenerSubCmd {
-    //private final boolean is1_8 = ItemEdit.GAME_VERSION < 9;
-    //private final boolean is1_10orLower = ItemEdit.GAME_VERSION < 11;
 
     public Effects(ItemTagCommand cmd) {
         super("effects", cmd, true, true);

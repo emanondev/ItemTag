@@ -1,7 +1,6 @@
 package emanondev.itemtag.command.itemtag;
 
 import emanondev.itemedit.APlugin;
-import emanondev.itemedit.ItemEdit;
 import emanondev.itemedit.Util;
 import emanondev.itemedit.aliases.AliasSet;
 import emanondev.itemedit.aliases.Aliases;
@@ -54,11 +53,11 @@ public class Flag extends SubCmd {
         this.registerFlag(new FurnaceFuel(this));
         this.registerFlag(new Enchantable(this));
         this.registerFlag(new EntityFood(this));
-        if (ItemEdit.GAME_VERSION > 8)
+        if (Util.isVersionAfter(1, 9))
             this.registerFlag(new Renamable(this));
         else
             this.registerFlag(new RenamableOld(this));
-        if (ItemEdit.GAME_VERSION > 13)
+        if (Util.isVersionAfter(1, 14))
             this.registerFlag(new Grindable(this));
         this.registerFlag(new EquipmentFlag(this));
         this.registerFlag(new VanishCurse(this));
@@ -173,7 +172,7 @@ public class Flag extends SubCmd {
                 this.loadLanguageDescription(meta, "gui.flags." + flag.getId(), "%value%"
                         , Aliases.BOOLEAN.getName(value));
                 if (flag.defaultValue() != value)
-                    meta.addEnchant(Enchantment.DURABILITY, 1, true);
+                    meta.addEnchant(Enchantment.AQUA_AFFINITY, 1, true);
                 meta.addItemFlags(ItemFlag.values());
                 item.setItemMeta(meta);
                 this.inventory.setItem(i, item);

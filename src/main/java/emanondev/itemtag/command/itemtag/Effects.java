@@ -1,6 +1,5 @@
 package emanondev.itemtag.command.itemtag;
 
-import emanondev.itemedit.ItemEdit;
 import emanondev.itemedit.Util;
 import emanondev.itemedit.aliases.Aliases;
 import emanondev.itemtag.EffectsInfo;
@@ -27,13 +26,13 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 
 public class Effects extends ListenerSubCmd {
-    private final boolean is1_8 = ItemEdit.GAME_VERSION < 9;
-    private final boolean is1_10orLower = ItemEdit.GAME_VERSION < 11;
+    //private final boolean is1_8 = ItemEdit.GAME_VERSION < 9;
+    //private final boolean is1_10orLower = ItemEdit.GAME_VERSION < 11;
 
     public Effects(ItemTagCommand cmd) {
         super("effects", cmd, true, true);
         this.load();
-        if (ItemEdit.GAME_VERSION >= 11)
+        if (Util.isVersionAfter(1, 11))
             getPlugin().registerListener(new EffectsResurrectListener(this));
     }
 
@@ -148,7 +147,7 @@ public class Effects extends ListenerSubCmd {
 
             EffectsInfo info = new EffectsInfo(getItemInHand(p));
             for (EquipmentSlot slot : EquipmentSlot.values())
-                if (slots.contains(slot) !=info.isValidSlot(slot))
+                if (slots.contains(slot) != info.isValidSlot(slot))
                     info.toggleSlot(slot);
             info.update();
             p.setItemInHand(info.getItem());
@@ -286,7 +285,7 @@ public class Effects extends ListenerSubCmd {
 
                         else {
                             PotionEffect currentEffect = null;
-                            if (!is1_10orLower)// safe
+                            if (Util.isVersionAfter(1, 11))// safe
                                 currentEffect = event.getPlayer().getPotionEffect(effect.getType());
                             else
                                 for (PotionEffect k : event.getPlayer().getActivePotionEffects())
@@ -295,7 +294,7 @@ public class Effects extends ListenerSubCmd {
                                         break;
                                     }
                             if (currentEffect.getDuration() < 3600 * 20 && currentEffect.getDuration() >= 0) //could be changed checking the whole equipment effects, but this way seems faster and still fair
-                                if (ItemEdit.GAME_VERSION >= 16)
+                                if (Util.isVersionAfter(1, 16))
                                     addEffect(event.getPlayer(), effect.getType(), effect);
                                 else if (currentEffect.getAmplifier() <= effect.getAmplifier())
                                     addEffect(event.getPlayer(), effect.getType(), effect);
@@ -317,7 +316,7 @@ public class Effects extends ListenerSubCmd {
             target.addPotionEffect(effect);
             return;
         }
-        if (ItemEdit.GAME_VERSION >= 16) {
+        if (Util.isVersionAfter(1, 16)) {
             if (target.hasPotionEffect(effect.getType()))
                 target.removePotionEffect(effect.getType());
             target.addPotionEffect(effect);
@@ -366,7 +365,7 @@ public class Effects extends ListenerSubCmd {
             case LEGS:
                 return p.getEquipment().getLeggings();
         }// safe
-        if (!is1_8 && slot == EquipmentSlot.OFF_HAND)
+        if (Util.isVersionAfter(1, 9) && slot == EquipmentSlot.OFF_HAND)
             return p.getInventory().getItemInOffHand();
         return null;
     }

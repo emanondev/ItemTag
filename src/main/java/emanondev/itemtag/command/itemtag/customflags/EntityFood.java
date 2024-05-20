@@ -1,6 +1,6 @@
 package emanondev.itemtag.command.itemtag.customflags;
 
-import emanondev.itemedit.ItemEdit;
+import emanondev.itemedit.Util;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.command.itemtag.Flag;
 import org.bukkit.Material;
@@ -22,7 +22,7 @@ public class EntityFood extends CustomFlag {
     private void event(PlayerInteractEntityEvent event) {
         if (!(event.getRightClicked() instanceof Animals))
             return;
-        ItemStack item = ItemEdit.GAME_VERSION == 8 ? this.getItemInHand(event.getPlayer()) : event.getPlayer().getInventory().getItem(event.getHand());
+        ItemStack item = Util.isVersionUpTo(1, 8, 9) ? this.getItemInHand(event.getPlayer()) : event.getPlayer().getInventory().getItem(event.getHand());
         if (!ItemTag.getTagItem(item).hasBooleanTag(ENTITYFOOD_KEY))
             return;
         if (((Animals) event.getRightClicked()).isBreedItem(item))

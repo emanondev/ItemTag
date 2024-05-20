@@ -1,6 +1,6 @@
 package emanondev.itemtag.command.itemtag.customflags;
 
-import emanondev.itemedit.ItemEdit;
+import emanondev.itemedit.Util;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.command.itemtag.Flag;
 import org.bukkit.Bukkit;
@@ -32,7 +32,7 @@ public class Usable extends CustomFlag {
                     event.setUseItemInHand(Result.DENY);
                     Block b;
                     if (event.getItem().getType() == Material.BUCKET &&
-                            ItemEdit.GAME_VERSION > 14) {
+                            Util.isVersionAfter(1, 15)) {
                         b = event.getPlayer().getTargetBlockExact(7, FluidCollisionMode.SOURCE_ONLY);
                     } else b = null;
                     Bukkit.getScheduler().runTaskLater(ItemTag.get(), () -> {
@@ -47,10 +47,10 @@ public class Usable extends CustomFlag {
 
     @EventHandler
     private void event(PlayerBucketFillEvent event) { //obsolete and unrequired on 1.18
-        if (ItemEdit.GAME_VERSION >= 18)
+        if (Util.isVersionAfter(1, 18))
             return;
         ItemStack item = this.getItemInHand(event.getPlayer());
-        if (ItemEdit.GAME_VERSION == 8 && (item == null || item.getType() != Material.BUCKET))
+        if (Util.isVersionUpTo(1, 8, 9) && (item == null || item.getType() != Material.BUCKET))
             item = event.getPlayer().getInventory().getItemInOffHand();
 
         if (ItemTag.getTagItem(item).hasBooleanTag(USABLE_KEY))
@@ -60,10 +60,10 @@ public class Usable extends CustomFlag {
 
     @EventHandler
     private void event(PlayerBucketEmptyEvent event) { //obsolete and unrequired on 1.18
-        if (ItemEdit.GAME_VERSION >= 18)
+        if (Util.isVersionAfter(1, 18))
             return;
         ItemStack item = this.getItemInHand(event.getPlayer());
-        if (ItemEdit.GAME_VERSION != 8 && (item == null ||
+        if (Util.isVersionAfter(1, 9) && (item == null ||
                 (item.getType() != Material.LAVA_BUCKET && item.getType() != Material.WATER_BUCKET)))
             item = event.getPlayer().getInventory().getItemInOffHand();
         if (ItemTag.getTagItem(item).hasBooleanTag(USABLE_KEY))

@@ -1,6 +1,6 @@
 package emanondev.itemtag;
 
-import emanondev.itemedit.ItemEdit;
+import emanondev.itemedit.Util;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -33,19 +33,20 @@ public class EffectsInfo {
     private String effectsToString() {
         if (effects.isEmpty())
             return null;
-        StringBuilder str = new StringBuilder();
         List<PotionEffect> list = new ArrayList<>(effects.values());
-
-        if (ItemEdit.GAME_VERSION > 12)
-            str.append(list.get(0).getType().getName()).append(",").append(list.get(0).getAmplifier()).append(",").append(list.get(0).isAmbient()).append(",").append(list.get(0).hasParticles()).append(",").append(list.get(0).hasIcon());
+        StringBuilder str = new StringBuilder().append(list.get(0).getType().getName()).append(",").append(list.get(0).getAmplifier())
+                .append(",").append(list.get(0).isAmbient()).append(",").append(list.get(0).hasParticles());
+        if (Util.isVersionAfter(1, 13))
+            str.append(",").append(list.get(0).hasIcon());
         else
-            str.append(list.get(0).getType().getName()).append(",").append(list.get(0).getAmplifier()).append(",").append(list.get(0).isAmbient()).append(",").append(list.get(0).hasParticles()).append(",true");
+            str.append(",true");
         for (int i = 1; i < list.size(); i++) {
-            str.append(";");
-            if (ItemEdit.GAME_VERSION > 12)
-                str.append(list.get(i).getType().getName()).append(",").append(list.get(i).getAmplifier()).append(",").append(list.get(i).isAmbient()).append(",").append(list.get(i).hasParticles()).append(",").append(list.get(i).hasIcon());
+            str.append(";").append(list.get(i).getType().getName()).append(",").append(list.get(i).getAmplifier()).append(",")
+                    .append(list.get(i).isAmbient()).append(",").append(list.get(i).hasParticles());
+            if (Util.isVersionAfter(1, 13))
+                str.append(",").append(list.get(i).hasIcon());
             else
-                str.append(list.get(i).getType().getName()).append(",").append(list.get(i).getAmplifier()).append(",").append(list.get(i).isAmbient()).append(",").append(list.get(i).hasParticles()).append(",true");
+                str.append(",true");
         }
         return str.toString();
     }
@@ -56,10 +57,9 @@ public class EffectsInfo {
     public static PotionEffect craftPotionEffect(PotionEffectType type, int amplifier, boolean ambient,
                                                  boolean particles,
                                                  boolean icon) {
-        int duration = type.isInstant() ? 1 :
-                (((ItemEdit.GAME_VERSION == 19 && ItemEdit.GAME_SUB_VERSION < 4) || ItemEdit.GAME_VERSION < 19) ?
-                        (20 * 3600 * 12) : PotionEffect.INFINITE_DURATION);
-        if (ItemEdit.GAME_VERSION > 12)
+        int duration = type.isInstant() ? 1 : (Util.isVersionUpTo(1, 19, 3) ?
+                (20 * 3600 * 12) : PotionEffect.INFINITE_DURATION);
+        if (Util.isVersionAfter(1, 12))
             return new PotionEffect(type, duration, amplifier, ambient, particles, icon);
         return new PotionEffect(type, duration, amplifier, ambient, particles);
     }

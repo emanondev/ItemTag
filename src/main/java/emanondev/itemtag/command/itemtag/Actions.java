@@ -1,6 +1,5 @@
 package emanondev.itemtag.command.itemtag;
 
-import emanondev.itemedit.ItemEdit;
 import emanondev.itemedit.Util;
 import emanondev.itemedit.UtilsInventory;
 import emanondev.itemedit.UtilsInventory.ExcessManage;
@@ -917,9 +916,9 @@ public class Actions extends ListenerSubCmd {
             meta = this.loadLanguageDescription(item.getItemMeta(), "gui.actions.consume",
                     "%value%", Aliases.BOOLEAN.getName(getConsume(tagItem)));
             if (!getConsume(tagItem))
-                meta.addEnchant(Enchantment.DURABILITY, 1, true);
+                meta.addEnchant(Enchantment.AQUA_AFFINITY, 1, true);
             else
-                meta.removeEnchant(Enchantment.DURABILITY);
+                meta.removeEnchant(Enchantment.AQUA_AFFINITY);
             item.setItemMeta(meta);
             this.getInventory().setItem(7, item);
 
@@ -928,7 +927,7 @@ public class Actions extends ListenerSubCmd {
                     "%value%", getUses(tagItem) == -1 ? "-1 (Unlimited)" : String.valueOf(getUses(tagItem)), "%editor%", String.valueOf(editorValue)
                     , "%editor-prev%", String.valueOf(Math.max(1, editorValue / 10)), "%editor-next%", String.valueOf(Math.min(1000000, editorValue * 10))));
 
-            if (ItemEdit.GAME_VERSION > 8) {
+            if (Util.isVersionAfter(1, 9)) {
                 //max uses
                 this.getInventory().setItem(17, this.loadLanguageDescription(this.getGuiItem("gui.actions.maxuses", Material.DIAMOND_PICKAXE), "gui.actions.maxuses",
                         "%value%", getMaxUses(tagItem) == -1 ? "-1 (Unlimited)" : String.valueOf(getMaxUses(tagItem)), "%editor%", String.valueOf(editorValue)
@@ -938,9 +937,9 @@ public class Actions extends ListenerSubCmd {
                 item = this.getGuiItem("gui.actions.displayuses", Material.PAINTING);
                 meta = this.loadLanguageDescription(item.getItemMeta(), "gui.actions.displayuses", "%value%", Aliases.BOOLEAN.getName(getDisplayUses(tagItem)));
                 if (getDisplayUses(tagItem))
-                    meta.addEnchant(Enchantment.DURABILITY, 1, true);
+                    meta.addEnchant(Enchantment.AQUA_AFFINITY, 1, true);
                 else
-                    meta.removeEnchant(Enchantment.DURABILITY);
+                    meta.removeEnchant(Enchantment.AQUA_AFFINITY);
                 item.setItemMeta(meta);
                 //max uses
                 this.getInventory().setItem(14, item);
@@ -967,9 +966,9 @@ public class Actions extends ListenerSubCmd {
             item = this.getGuiItem("gui.actions.visualcooldown", Material.ENDER_PEARL);
             meta = this.loadLanguageDescription(item.getItemMeta(), "gui.actions.visualcooldown", "%value%", Aliases.BOOLEAN.getName(getVisualCooldown(tagItem)));
             if (getVisualCooldown(tagItem))
-                meta.addEnchant(Enchantment.DURABILITY, 1, true);
+                meta.addEnchant(Enchantment.AQUA_AFFINITY, 1, true);
             else
-                meta.removeEnchant(Enchantment.DURABILITY);
+                meta.removeEnchant(Enchantment.AQUA_AFFINITY);
             item.setItemMeta(meta);
             this.getInventory().setItem(15, item);
 

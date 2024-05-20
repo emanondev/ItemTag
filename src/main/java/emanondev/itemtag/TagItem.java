@@ -82,17 +82,20 @@ public interface TagItem {
     /**
      * @param key with format similar to NamespacedKey "pluginname:truekey"
      */
-    @Nullable Boolean getBoolean(@NotNull String key);
+    @Nullable
+    Boolean getBoolean(@NotNull String key);
 
     /**
      * @param key with format similar to NamespacedKey "pluginname:truekey"
      */
-    @Nullable String getString(@NotNull String key);
+    @Nullable
+    String getString(@NotNull String key);
 
     /**
      * @param key with format similar to NamespacedKey "pluginname:truekey"
      */
-    default @Nullable List<String> getStringList(@NotNull String key) {
+    @Nullable
+    default List<String> getStringList(@NotNull String key) {
         String value = getString(key);
         return value == null ? null : Arrays.asList(value.split("%%;%%"));
     }
@@ -100,12 +103,14 @@ public interface TagItem {
     /**
      * @param key with format similar to NamespacedKey "pluginname:truekey"
      */
-    @Nullable Integer getInteger(@NotNull String key);
+    @Nullable
+    Integer getInteger(@NotNull String key);
 
     /**
      * @param key with format similar to NamespacedKey "pluginname:truekey"
      */
-    @Nullable Double getDouble(@NotNull String key);
+    @Nullable
+    Double getDouble(@NotNull String key);
 
     /**
      * @return true if it's possible to apply tags to item

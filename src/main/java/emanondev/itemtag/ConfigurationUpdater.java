@@ -96,7 +96,7 @@ class ConfigurationUpdater {
                 ItemTag.get().log("Discord: https://discord.gg/w5HVCDPtRp");
             }
         }
-        if (version<=5){
+        if (version <= 5) {
             YMLConfig config = ItemTag.get().getConfig();
             config.set("flag.vanishcurse.override_keepinventory", false);
             config.save();

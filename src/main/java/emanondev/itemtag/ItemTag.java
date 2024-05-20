@@ -1,7 +1,7 @@
 package emanondev.itemtag;
 
 import emanondev.itemedit.APlugin;
-import emanondev.itemedit.ItemEdit;
+import emanondev.itemedit.Util;
 import emanondev.itemedit.aliases.Aliases;
 import emanondev.itemedit.command.ReloadCommand;
 import emanondev.itemedit.compability.Hooks;
@@ -73,7 +73,7 @@ public class ItemTag extends APlugin {
     }
 
     private void initDefault() throws Exception {
-        if (ItemEdit.GAME_VERSION <= 13)
+        if (!Util.isVersionAfter(1, 14))
             try {
                 initNBTAPI();
             } catch (Exception e) {
@@ -83,7 +83,6 @@ public class ItemTag extends APlugin {
                 for (String command : this.getDescription().getCommands().keySet())
                     registerCommand(command, exec, null);
                 log(org.bukkit.ChatColor.RED + error);
-                return;
             }
         else
             initSpigotPersistentDataAPI();
@@ -121,9 +120,9 @@ public class ItemTag extends APlugin {
 
         try {
             //register equipmentchange listener
-            if (ItemEdit.GAME_VERSION == 8)
+            if (Util.isVersionUpTo(1, 8, 9))
                 equipChangeListener = new EquipmentChangeListenerUpTo1_8();
-            else if (ItemEdit.GAME_VERSION < 13)
+            else if (Util.isVersionUpTo(1, 12, 2))
                 equipChangeListener = new EquipmentChangeListenerUpTo1_13();
             else
                 equipChangeListener = new EquipmentChangeListener();

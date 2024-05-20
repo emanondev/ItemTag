@@ -275,8 +275,8 @@ public abstract class EquipmentChangeListenerBase implements Listener {
 
     @SuppressWarnings({"incomplete-switch", "deprecation"})
     protected ItemStack getEquip(Player p, EquipmentSlot slot) {
-        if (Util.isVersionAfter(1, 16))
-            return p.getEquipment().getItem(slot);
+        //if (Util.isVersionAfter(1, 16))
+        //    return p.getEquipment().getItem(slot);
 
         //old versions
         switch (slot) {

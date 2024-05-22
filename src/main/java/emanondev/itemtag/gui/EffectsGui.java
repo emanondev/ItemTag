@@ -208,9 +208,9 @@ public class EffectsGui implements PagedGui {
             ItemMeta meta = loadLanguageDescription(item.getItemMeta(), "gui.effects.slot", "%slot%", Aliases.EQUIPMENT_SLOTS.getName(slot),
                     "%value%", Aliases.BOOLEAN.getName(info.isValidSlot(slot)));
             if (info.isValidSlot(slot))
-                meta.addEnchant(Enchantment.AQUA_AFFINITY, 1, true);
+                meta.addEnchant(Enchantment.LURE, 1, true);
             else
-                meta.removeEnchant(Enchantment.AQUA_AFFINITY);
+                meta.removeEnchant(Enchantment.LURE);
             item.setItemMeta(meta);
             return item;
         }

@@ -172,7 +172,7 @@ public class Flag extends SubCmd {
                 this.loadLanguageDescription(meta, "gui.flags." + flag.getId(), "%value%"
                         , Aliases.BOOLEAN.getName(value));
                 if (flag.defaultValue() != value)
-                    meta.addEnchant(Enchantment.AQUA_AFFINITY, 1, true);
+                    meta.addEnchant(Enchantment.LURE, 1, true);
                 meta.addItemFlags(ItemFlag.values());
                 item.setItemMeta(meta);
                 this.inventory.setItem(i, item);

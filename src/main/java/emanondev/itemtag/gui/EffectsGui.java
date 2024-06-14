@@ -56,7 +56,8 @@ public class EffectsGui implements PagedGui {
                     effects.add(new EffectData(type, -1, true, true, true));
                 }
         for (EquipmentSlot slot : EquipmentSlot.values())
-            equips.add(new EquipData(slot/*, info.isValidSlot(slot)*/));
+            if (!slot.name().equals("BODY"))
+                equips.add(new EquipData(slot/*, info.isValidSlot(slot)*/));
         effects.sort((e1, e2) -> Aliases.POTION_EFFECT.getName(e1.type).compareToIgnoreCase(Aliases.POTION_EFFECT.getName(e2.type)));
         updateInventory();
     }

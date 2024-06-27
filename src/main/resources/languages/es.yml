@@ -502,7 +502,7 @@ gui:
       - '&bNivel: &e%level% &7[Clic Izquierdo/Derecho para Cambiar]'
       - '&bPartículas: &e%particles% &7[Mantén Shift y Haz Clic Izquierdo para Alternar]'
       - '&bAmbiente: &e%ambient% &7[Mantén Shift y Haz Clic Derecho para Alternar]'
-      - '&bIcono: &e%icon% &7[Alternar con %clic_medio%]'
+      - '&bIcono: &e%icon% &7[Alternar con %middle_click%]'
       - '&bDuración: &e%duration%'
     potion-instant: 'instantáneo'
     potion-unlimited: 'ilimitado'

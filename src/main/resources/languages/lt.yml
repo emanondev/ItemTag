@@ -1,0 +1,516 @@
+player-only: '&4[&cItemTag&4] &cKomanda tik žaidėjams'
+no-item-on-hand: '&4[&cItemTag&4] &cReikia laikyti daiktą rankoje'
+lack-permission: '&4[&cItemTag&4] &cJums trūksta leidimo %permission%'
+lack-permission-generic: '&4[&cItemTag&4] &cJūs neturite leidimo naudoti šią komandą'
+itemtag:
+  help-header: '&9&lItemTag - Pagalba'
+  flag:
+    wrong-flag: '&4[&cItemTag&4] &cNeteisinga vėliavos reikšmė! &4[&6užveskite čia&4]'
+    description:
+      - '&b&lPerjungti pasirinktines vėliavas ant daikto'
+      - ''
+      - '&e<flag> &bvėliavos pavadinimas'
+      - '&e[true/false] &bvėliavos reikšmė, pagal numatytuosius nustatymus perjungti'
+    params: <flag> [true/false]
+    placeable:
+      feedback:
+        standard: '&c✘'
+        custom: '&c✘'
+        failed-place-attempt: '&c✘'
+    usable:
+      feedback:
+        standard: '&9[&fItemTag&9] &aDaiktą galima naudoti.'
+        custom: '&9[&fItemTag&9] &aDaikto negalima naudoti (Dešiniuoju pelės mygtuku).'
+    smelt:
+      feedback:
+        standard: '&9[&fItemTag&9] &aDaiktą galima kepti/kaitinti krosnyse.'
+        custom: '&9[&fItemTag&9] &aDaikto negalima kepti/kaitinti krosnyje.'
+    furnacefuel:
+      feedback:
+        standard: '&9[&fItemTag&9] &aDaiktą galima naudoti kaip krosnies kurą.'
+        custom: '&9[&fItemTag&9] &aDaikto negalima naudoti kaip krosnies kurą.'
+    recipeingredient:
+      feedback:
+        standard: '&9[&fItemTag&9] &aDaiktą galima naudoti kaip recepto ingredientą.'
+        custom: '&9[&fItemTag&9] &aDaikto negalima naudoti kaip recepto ingredientą.'
+    enchantable:
+      feedback:
+        standard: '&9[&fItemTag&9] &aDaiktą galima užkerėti.'
+        custom: '&9[&fItemTag&9] &aDaikto negalima užkerėti.'
+    renamable:
+      feedback:
+        standard: '&9[&fItemTag&9] &aDaiktą galima naudoti ant priekalo.'
+        custom: '&9[&fItemTag&9] &aDaikto negalima naudoti ant priekalo.'
+    grindable:
+      feedback:
+        standard: '&9[&fItemTag&9] &aDaiktą galima nužavėti su šlifavimo akmeniu.'
+        custom: '&9[&fItemTag&9] &aDaikto negalima nužavėti su šlifavimo akmeniu.'
+    equipment:
+      feedback:
+        standard: '&9[&fItemTag&9] &aDaiktą galima naudoti kaip įrangą.'
+        custom: '&9[&fItemTag&9] &aDaikto negalima naudoti kaip įrangą.'
+    entityfood:
+      feedback:
+        standard: '&9[&fItemTag&9] &aDaiktą galima naudoti kaip gyvūno maistą.'
+        custom: '&9[&fItemTag&9] &aDaikto negalima naudoti kaip gyvūno maistą.'
+  actions:
+    invalid-action:
+      message: '&4[&cItemTag&4] &c''&6%error%&c'' nėra galiojantis tipas &4[&6užveskite čia&4]'
+      hover-pre: '&6&lGaliojantys tipai'
+      first_color: '&b'
+      second_color: '&e'
+    invalid-actioninfo:
+      message: '&4[&cItemTag&4] &c''&6%error%&c'' nėra galiojanti informacija &6%action%
+        &4[&6užveskite čia&4]'
+    description:
+      - '&b&lNustato veiksmus, atliekamus naudojant daiktą'
+      - ''
+      - '&ePridėti <type> <action> &b- pridėti pasirinktą veiksmą'
+      - '&eNustatyti <line> <type> <action> &b- pakeisti veiksmą pasirinktoje eilutėje'
+      - '&ePašalinti <line> &b- pašalinti veiksmą pasirinktoje eilutėje'
+      - '&eIšvalyti &b- pašalinti visus veiksmus'
+      - '&eLeidimas [permission] &b- nustatyti reikiamą leidimą naudoti šį daiktą'
+      - '&eAtvėsimo laikas <ms> &b- nustatyti atvėsimo laiką, kad vėl būtų galima naudoti šį daiktą'
+      - '&eAtvėsimo laiko id [id] &b- nustatyti naudojamą atvėsimo laiko id'
+      - '&eNaudojimai [amount] &b- nustatyti, kiek kartų šį daiktą galima naudoti'
+      - '&eInformacija &b- rodyti informaciją apie veiksmus ant dabartinio daikto'
+    params: '[...]'
+    add:
+      params: pridėti <type> <action>
+      description:
+        - '&b&lPridėti pasirinktą veiksmą'
+        - ''
+        - '&e<type> &bveiksmo tipas'
+        - '&e<action> &bpapildoma informacija apie veiksmą'
+      feedback: '&9[&fItemTag&9] &aPridėta &e%action%'
+    addline:
+      params: pridėti eilutę <line> <type> <action>
+      description:
+        - '&b&lPridėti pasirinktą veiksmą pasirinktoje eilutėje'
+        - ''
+        - '&e<line> &beilutė, į kurią pridėti'
+        - '&e<type> &bveiksmo tipas'
+        - '&e<action> &bpapildoma informacija apie veiksmą'
+      feedback: '&9[&fItemTag&9] &aEilutė &e%line% &apridėta kaip &e%action%'
+    set:
+      params: nustatyti <line> <type> <action>
+      description:
+        - '&b&lPakeisti veiksmą pasirinktoje eilutėje'
+        - ''
+        - '&e<line> &bpakeičiama eilutė'
+        - '&e<type> &bveiksmo tipas'
+        - '&e<action> &bpapildoma informacija apie veiksmą'
+      feedback: '&9[&fItemTag&9] &aEilutė &e%line% &anustatyta kaip &e%action%'
+    remove:
+      params: pašalinti <line>
+      description:
+        - '&b&lPašalinti veiksmą pasirinktoje eilutėje'
+        - ''
+        - '&e<line> &bpakeičiama eilutė'
+      feedback: '&9[&fItemTag&9] &aPašalinta eilutė &e%line% &a(&e%action%&a)'
+    permission:
+      params: leidimas [permission]
+      description:
+        - '&b&lNustatyti leidimą naudoti šį daiktą'
+        - ''
+        - '&e[permission] &bnustatomas leidimas, pagal numatytuosius nustatymus nėra'
+      feedback:
+        set: '&9[&fItemTag&9] &aLeidimas &e%permission% &adabar reikalingas naudoti šį daiktą'
+        removed: '&9[&fItemTag&9] &aDabar leidimas nereikalingas naudoti šį daiktą'
+    cooldown:
+      params: atvėsimo laikas [ms]
+      description:
+        - '&b&lNustatyti atvėsimo laiką, kad vėl būtų galima naudoti daiktą'
+        - ''
+        - '&e[ms] &bkiek laiko reikia laukti, kad vėl būtų galima naudoti daiktą, pagal numatytuosius nustatymus 0'
+        - '&bPastaba: atvėsimo laikas nustatomas pagal atvėsimo laiko id, skirtingi'
+        - '&b  daiktai su tuo pačiu atvėsimo laiko id dalijasi tuo pačiu atvėsimo laiku'
+        - '&bPastaba: atvėsimo laikas išsaugomas žaidėjui atsijungus ir serveriui perkraunant'
+      feedback:
+        set: '&9[&fItemTag&9] &aŠis daiktas turi &e%cooldown_seconds% &aatvėsimo sekundžių'
+        removed: '&9[&fItemTag&9] &aŠis daiktas neturi atvėsimo laiko'
+    cooldownid:
+      params: atvėsimo laiko id [id]
+      description:
+        - '&b&lNustatyti atvėsimo laiko id daiktui'
+        - ''
+        - '&e[id] &bkiek laiko reikia laukti, kad vėl būtų galima naudoti daiktą'
+        - '&bPastaba: atvėsimo laikas nustatomas pagal atvėsimo laiko id, skirtingi'
+        - '&b  daiktai su tuo pačiu atvėsimo laiko id dalijasi tuo pačiu atvėsimo laiku'
+      feedback:
+        set: '&9[&fItemTag&9] &aŠis daiktas naudoja id &e%id% &aatvėsimo laikui'
+        removed: '&9[&fItemTag&9] &aŠis daiktas naudoja &enumatytąjį &aid atvėsimo laikui'
+    uses:
+      params: naudojimai [amount]
+      description:
+        - '&b&lNustatyti, kiek kartų daiktą galima naudoti'
+        - ''
+        - '&bPastaba: naudokite &e-1 &bneribotam naudojimui'
+      feedback:
+        set: '&9[&fItemTag&9] &aŠis daiktas turi &e%uses% &anaudojimų prieš sunaudojimą'
+        unlimited: '&9[&fItemTag&9] &aŠis daiktas turi &eneribotą &anaudojimų skaičių'
+    maxuses:
+      params: maksimalūs naudojimai [amount]
+      description:
+        - '&b&lNustatyti maksimalų naudojimų skaičių daiktui'
+        - '&bNaudojama daugiausia estetiniams tikslams su'
+        - '&brodomais naudojimais kaip tiesa'
+        - ''
+        - '&bPastaba: naudokite &e-1 &bneribotam naudojimui'
+      feedback:
+        set: '&9[&fItemTag&9] &aŠis daiktas turi &e%uses% &amaksimalių naudojimų'
+        unlimited: '&9[&fItemTag&9] &aŠis daiktas turi &eneribotą &amaksimalių naudojimų skaičių'
+    consume:
+      params: sunaudoti [true/false]
+      description:
+        - '&6&lSunaudoti daiktą paskutiniam naudojimui'
+        - ''
+        - '&bPastaba: kai tiesa ir daiktas sunaudojamas'
+        - '&b paskutinis naudojimas, daiktas sunaikinamas'
+      feedback:
+        set: '&9[&fItemTag&9] &aDaiktas sunaikinamas pasiekus paskutinį naudojimą'
+        unset: '&9[&fItemTag&9] &aDaiktas nesunaikinamas pasiekus paskutinį naudojimą'
+    visualcooldown:
+      params: vizualinis atvėsimo laikas [true/false]
+      description:
+        - '&6&lVizualiai rodyti atvėsimo laiką'
+        - ''
+        - '&bKai tiesa, taikomas atvėsimo efektas, panašus į'
+        - '&bendrinių perlų atvėsimo laiką daiktui'
+        - ''
+        - '&bPastaba: Deja, šis vizualinis efektas taip pat'
+        - '&b taikomas bet kokiam to paties tipo daiktui'
+      feedback:
+        set: '&9[&fItemTag&9] &aDabar daiktas rodo vizualinį atvėsimo laiką'
+        unset: '&9[&fItemTag&9] &aDabar daiktas nerodo vizualinio atvėsimo laiko'
+    displayuses:
+      params: rodyti naudojimus [true/false]
+      description:
+        - '&6&lRodyti likusius naudojimus'
+        - ''
+        - '&bKai tiesa, pridedama eilutė, aprašanti'
+        - '&bkiek liko naudojimų'
+        - ''
+        - '&bPastaba: Deja, šis vizualinis efektas taip pat'
+        - '&b taikomas bet kokiam to paties tipo daiktui'
+      feedback:
+        set: '&9[&fItemTag&9] &aDabar daiktas rodo likusius ir maksimalius naudojimus'
+        unset: '&9[&fItemTag&9] &aDabar daiktas nerodo likusių ir maksimalių naudojimų'
+  consumeactions:
+    description:
+      - '&b&lNustato veiksmus, atliekamus sunaudojant daiktą, pvz., maistą ir gėrimus'
+      - ''
+      - '&ePridėti <type> <action> &b- pridėti pasirinktą veiksmą'
+      - '&eNustatyti <line> <type> <action> &b- pakeisti veiksmą pasirinktoje eilutėje'
+      - '&ePašalinti <line> &b- pašalinti veiksmą pasirinktoje eilutėje'
+      - '&eIšvalyti &b- pašalinti visus veiksmus'
+      - '&eLeidimas [permission] &b- nustatyti reikiamą leidimą sunaudoti šį daiktą'
+      - '&eAtvėsimo laikas <ms> &b- nustatyti atvėsimo laiką, kad vėl būtų galima naudoti šį daiktą'
+      - '&eAtvėsimo laiko id [id] &b- nustatyti naudojamą atvėsimo laiko id'
+      - '&eInformacija &b- rodyti informaciją apie veiksmus ant dabartinio daikto'
+    params: '[...]'
+    add:
+      params: pridėti <type> <action>
+      description:
+        - '&b&lPridėti pasirinktą veiksmą'
+        - ''
+        - '&e<type> &bveiksmo tipas'
+        - '&e<action> &bpapildoma informacija apie veiksmą'
+    addline:
+      params: pridėti eilutę <line> <type> <action>
+      description:
+        - '&b&lPridėti pasirinktą veiksmą pasirinktoje eilutėje'
+        - ''
+        - '&e<line> &beilutė, į kurią pridėti'
+        - '&e<type> &bveiksmo tipas'
+        - '&e<action> &bpapildoma informacija apie veiksmą'
+    set:
+      params: nustatyti <line> <type> <action>
+      description:
+        - '&b&lPakeisti veiksmą pasirinktoje eilutėje'
+        - ''
+        - '&e<line> &bpakeičiama eilutė'
+        - '&e<type> &bveiksmo tipas'
+        - '&e<action> &bpapildoma informacija apie veiksmą'
+    remove:
+      params: pašalinti <line>
+      description:
+        - '&b&lPašalinti veiksmą pasirinktoje eilutėje'
+        - ''
+        - '&e<line> &bpakeičiama eilutė'
+    permission:
+      params: leidimas [permission]
+      description:
+        - '&b&lNustatyti leidimą sunaudoti šį daiktą'
+        - ''
+        - '&e[permission] &bnustatomas leidimas, pagal numatytuosius nustatymus nėra'
+    cooldown:
+      params: atvėsimo laikas [ms]
+      description:
+        - '&b&lNustatyti atvėsimo laiką, kad vėl būtų galima sunaudoti daiktą'
+        - ''
+        - '&e[ms] &bkiek laiko reikia laukti, kad vėl būtų galima sunaudoti daiktą, pagal numatytuosius nustatymus 0'
+        - '&bPastaba: atvėsimo laikas nustatomas pagal atvėsimo laiko id, skirtingi'
+        - '&b  daiktai su tuo pačiu atvėsimo laiko id dalijasi tuo pačiu atvėsimo laiku'
+        - '&bPastaba: atvėsimo laikas išsaugomas žaidėjui atsijungus ir serveriui perkraunant'
+    cooldownid:
+      params: atvėsimo laiko id [id]
+      description:
+        - '&b&lNustatyti atvėsimo laiko id daiktui'
+        - ''
+        - '&e[id] &bkiek laiko reikia laukti, kad vėl būtų galima sunaudoti daiktą'
+        - '&bPastaba: atvėsimo laikas nustatomas pagal atvėsimo laiko id, skirtingi'
+        - '&b  daiktai su tuo pačiu atvėsimo laiko id dalijasi tuo pačiu atvėsimo laiku'
+    feedback:
+      actions:
+        set: '&aEilutė &e%line% &anustatyta kaip &e%action%'
+        remove: '&aPašalinta eilutė &e%line% &a(&e%action%&a)'
+        clear: '&aIšvalyti sunaudojimo veiksmai ant šio daikto'
+        permission:
+          set: '&aLeidimas &e%permission% &adabar reikalingas sunaudoti šį daiktą'
+          removed: '&aDabar leidimas nereikalingas sunaudoti šį daiktą'
+        cooldownid:
+          set: '&aŠis daiktas naudoja id &e%id% &aatvėsimo laikui'
+          removed: '&aŠis daiktas naudoja &enumatytąjį &aid atvėsimo laikui'
+        cooldown:
+          set: '&aŠis daiktas turi &e%cooldown_seconds% &aatvėsimo sekundžių'
+          removed: '&aŠis daiktas neturi atvėsimo laiko'
+  effects:
+    description:
+      - '&b&lPridėti nuolatinius potion efektus'
+      - '&bAtidaryti GUI'
+      - '&bPrisiminkite pasirinkti, kuriam įrangos'
+      - '&b lizdui taikyti efektą'
+    params: ''
+  usepermission:
+    params: ''
+    description: []
+itemtagreload:
+  success: '&9[&fItemTag&9] &aPerkrauta'
+gui:
+  middleclick: # vidurinis paspaudimas negali būti naudojamas, nebent kūrybos režime, alternatyva viduriniam paspaudimui yra paspausti karštosios juostos mygtuką 1
+    creative: Vidurinis paspaudimas
+    other: Paspauskite 1
+  previous-page:
+    # Laikikliai: %player_name% %page% %target_page%
+    description:
+      - '&6&lAnkstesnis puslapis'
+      - ''
+      - '&7[&fPaspauskite&7]&b Eiti į puslapį &e%target_page%'
+  next-page:
+    # Laikikliai: %player_name% %page% %target_page%
+    description:
+      - '&6&lKitas puslapis'
+      - ''
+      - '&7[&fPaspauskite&7]&b Eiti į puslapį &e%target_page%'
+  back:
+    # Laikikliai: %player_name%
+    description:
+      - '&6&lGrįžti atgal'
+      - ''
+      - '&7[&fPaspauskite&7]&b Grįžti į ankstesnį GUI'
+  actions:
+    title: '&9Veiksmai'
+    click-interact: '&9[&fItemTag&9] &b[Paspauskite čia]'
+    click-hover: '&6Paspauskite, kad pasiūlytumėte komandą'
+    addline:
+      - '&6&lPridėti veiksmą'
+      - ''
+      - '&7[&fPaspauskite&7]&b Keisti reikšmes'
+      - '&9/it actions add <action type> <action info>'
+      - '&9/it actions addline <line> <action type> <action info>'
+    set:
+      - '&6&lNustatyti veiksmą'
+      - ''
+      - '&7[&fPaspauskite&7]&b Keisti reikšmes'
+      - '&9/it actions set <line> <action type> <action info>'
+    remove:
+      - '&6&lPašalinti veiksmą'
+      - ''
+      - '&7[&fPaspauskite&7]&b Keisti reikšmes'
+      - '&9/it actions remove <line>'
+    consume:
+      - '&6&lSunaudoti ant &e&l0&6&l naudojimų liko'
+      - '&bĮjungta: &e%value%'
+      - '&7Pastaba: kai tiesa ir daiktas sunaudojamas'
+      - '&7 paskutinis naudojimas, daiktas sunaikinamas'
+      - ''
+      - '&7[&fPaspauskite&7]&b Perjungti'
+      - '&9/it actions consume [true/false]'
+    uses:
+      - '&6&lGalimi naudojimai &e&l%value%'
+      - '&7(-1 neribotam naudojimui)'
+      - ''
+      - '&7[&fDešinysis paspaudimas&7]&b Pridėti &e%editor%'
+      - '&7[&fKairysis paspaudimas&7]&b Pašalinti &e%editor%'
+      - '&7[&fShift Kairysis/Dešinysis paspaudimas&7]&b %editor-prev% << &e%editor% &b>> %editor-next%'
+      - '&9/it actions uses <amount>'
+    maxuses:
+      - '&6&lMaksimalūs naudojimai &e&l%value%'
+      - '&7(-1 neribotam naudojimui)'
+      - '&7Daugiausia naudojama estetiniams tikslams su Rodyti naudojimus'
+      - ''
+      - '&7[&fDešinysis paspaudimas&7]&b Pridėti &e%editor%'
+      - '&7[&fKairysis paspaudimas&7]&b Pašalinti &e%editor%'
+      - '&7[&fShift Kairysis/Dešinysis paspaudimas&7]&b %editor-prev% << &e%editor% &b>> %editor-next%'
+      - '&9/it actions maxuses <amount>'
+    permission:
+      - '&6&lLeidimas naudoti: &e&l%value%'
+      - '&7Pastaba: jei neturite šio leidimo'
+      - '&7 negalėsite naudoti daikto arba'
+      - '&7 sumažinti jo naudojimų skaičių'
+      - ''
+      - '&7[&fPaspauskite&7]&b Redaguoti'
+      - '&9/it actions permission [permission]'
+    cooldown:
+      - '&6&lAtvėsimo laikas: &e&l%value_s% &9s'
+      - '&7Pastaba: taikomas atvėsimo laikas dešiniuoju pelės mygtuku naudojimui'
+      - ''
+      - '&7[&fDešinysis paspaudimas&7]&b Pridėti &e%editor%'
+      - '&7[&fKairysis paspaudimas&7]&b Pašalinti &e%editor%'
+      - '&7[&fShift Kairysis/Dešinysis paspaudimas&7]&b %editor-prev% << &e%editor% &b>> %editor-next%'
+      - '&9/it actions cooldown <cooldown &nms&9>'
+    cooldownid:
+      - '&6&lAtvėsimo laiko id: &e&l%value%'
+      - '&7Pastaba: visi daiktai su tuo pačiu atvėsimo laiko id'
+      - '&7 dalijasi atvėsimo laiku'
+      - ''
+      - '&7[&fPaspauskite&7]&b Redaguoti'
+      - '&9/it actions cooldownid [cooldown id]'
+    info:
+      - '&6&lVeiksmų sąrašas:'
+    visualcooldown:
+      - '&6&lRodyti vizualinį atvėsimo laiką'
+      - '&bĮjungta: &e%value%'
+      - '&7Pastaba: Deja, šis vizualinis efektas taip pat'
+      - '&7 taikomas bet kokiam to paties tipo daiktui'
+      - ''
+      - '&7[&fPaspauskite&7]&b Perjungti'
+      - '&9/it actions visualdisplay [true/false]'
+    displayuses:
+      - '&6&lRodyti likusius naudojimus'
+      - '&bĮjungta: &e%value%'
+      - ''
+      - '&7[&fPaspauskite&7]&b Perjungti'
+      - '&9/it actions displayuses [true/false]'
+  actionslines:
+    actionformat: '&e%type% &f%info%'
+    element:
+      - '%action%'
+      - '&7[&fDešinysis paspaudimas&7]&b Pakeisti šį veiksmą'
+      - '&7[&fKairysis paspaudimas&7]&b Pridėti naują veiksmą prieš šį'
+      - '&7[&fShift Dešinysis paspaudimas&7]&b Pašalinti šį veiksmą'
+    add:
+      - ' '
+      - '&7[&fKairysis paspaudimas&7]&b Pridėti naują veiksmą'
+  flags:
+    placeable:
+      - '&6Nustato, ar daiktą galima padėti'
+      - '&bReikšmė: &e%value%'
+      - ''
+      - '&7[&fPaspauskite&7]&b Perjungti'
+    usable:
+      - '&6Nustato, ar daiktą galima naudoti'
+      - '&bReikšmė: &e%value%'
+      - ''
+      - '&7Jei nustatyta kaip klaidinga, neleidžiama naudoti vanilės elgesio'
+      - '&7 dešiniuoju pelės mygtuku ant daikto'
+      - '&7Kas yra naudojimas, priklauso nuo daikto tipo'
+      - '&7Maisto negalima valgyti, meškerės negalima žvejoti,'
+      - '&7 kiaušinių negalima mesti, veisimo kiaušinių negalima veisti...'
+      - ''
+      - '&7[&fPaspauskite&7]&b Perjungti'
+    smelt:
+      - '&6Nustato, ar daiktą galima kepti'
+      - '&bReikšmė: &e%value%'
+      - ''
+      - '&7Jei nustatyta kaip klaidinga, neleidžiama naudoti vanilės elgesio'
+      - '&7 krosnyje kepant'
+      - '&7Veikia tiek maistui, tiek rūdai'
+      - ''
+      - '&7[&fPaspauskite&7]&b Perjungti'
+    furnacefuel:
+      - '&6Nustato, ar daiktą galima naudoti kaip krosnies kurą'
+      - '&bReikšmė: &e%value%'
+      - ''
+      - '&7Jei nustatyta kaip klaidinga, neleidžiama naudoti vanilės elgesio'
+      - '&7 krosnyse naudojant šį daiktą kaip kurą'
+      - ''
+      - '&7[&fPaspauskite&7]&b Perjungti'
+    recipeingredient:
+      - '&6Nustato, ar daiktą galima naudoti kaip recepto ingredientą'
+      - '&bReikšmė: &e%value%'
+      - ''
+      - '&7Jei nustatyta kaip klaidinga, neleidžiama naudoti vanilės elgesio'
+      - '&7 kai šis daiktas yra vienas iš ingredientų'
+      - ''
+      - '&7[&fPaspauskite&7]&b Perjungti'
+    enchantable:
+      - '&6Nustato, ar daiktą galima užkerėti'
+      - '&bReikšmė: &e%value%'
+      - ''
+      - '&7Jei nustatyta kaip klaidinga, neleidžiama naudoti vanilės elgesio'
+      - '&7 užkerėjimo stalo ant šio daikto'
+      - ''
+      - '&7[&fPaspauskite&7]&b Perjungti'
+    renamable:
+      - '&6Nustato, ar daiktą galima naudoti ant priekalo'
+      - '&bReikšmė: &e%value%'
+      - ''
+      - '&7Jei nustatyta kaip klaidinga, neleidžiama naudoti vanilės elgesio'
+      - '&7 ant šio daikto'
+      - ''
+      - '&7[&fPaspauskite&7]&b Perjungti'
+    grindable:
+      - '&6Nustato, ar daiktą galima nukerėti su šlifavimo akmeniu'
+      - '&bReikšmė: &e%value%'
+      - ''
+      - '&7Jei nustatyta kaip klaidinga, neleidžiama naudoti vanilės elgesio'
+      - '&7 šlifavimo akmeniu ant šio daikto'
+      - ''
+      - '&7[&fPaspauskite&7]&b Perjungti'
+    equipment:
+      - '&6Nustato, ar daiktą galima naudoti kaip įrangą'
+      - '&bReikšmė: &e%value%'
+      - ''
+      - '&7Jei nustatyta kaip klaidinga ir daiktas yra naudojamas kaip įranga, jis bus išmestas'
+      - '&7 atgal į žaidėjo inventorių'
+      - '&7Pastaba: ranka ir antrankis nėra laikomi įrangos dalimi'
+      - ''
+      - '&7[&fPaspauskite&7]&b Perjungti'
+    entityfood:
+      - '&6Nustato, ar daiktą galima naudoti kaip gyvūno maistą'
+      - '&bReikšmė: &e%value%'
+      - ''
+      - '&7Jei nustatyta kaip klaidinga, neleidžiama naudoti vanilės elgesio'
+      - '&7 veisimo ir greito augimo elgesio'
+      - '&7 ant šio daikto'
+      - ''
+      - '&7[&fPaspauskite&7]&b Perjungti'
+    vanishcurse:
+      - '&6Nustato, ar daiktas išnyksta po mirties'
+      - '&bReikšmė: &e%value%'
+      - ''
+      - '&7Veikia lygiai taip pat kaip prakeikimo užkeikimas'
+      - '&7Bet tai nėra užkeikimas'
+      - ''
+      - '&7[&fPaspauskite&7]&b Perjungti'
+  effects:
+    # %player_name%
+    title: '&9Efektai'
+    # %slot% %value%
+    slot:
+      - '&6&l%slot%'
+      - '&bĮjungta: &e%value%'
+    # %effect% %level% %particles% %ambient% %icon% %duration% %middle_click%
+    potion:
+      - '&6&l%effect%'
+      - ''
+      - '&bLygis: &e%level% &7[Kairysis/Dešinysis paspaudimas keisti]'
+      - '&bDalelės: &e%particles% &7[ShiftKairysis paspaudimas perjungti]'
+      - '&bAplinka: &e%ambient% &7[ShiftDešinysis paspaudimas perjungti]'
+      - '&bPiktograma: &e%icon% &7[%middle_click% perjungti]'
+      - '&bTrukmė: &e%duration%'
+    potion-instant: akimirksniu
+    potion-unlimited: neribotas
+    icon-unsupported: '&ctik 1.13+'

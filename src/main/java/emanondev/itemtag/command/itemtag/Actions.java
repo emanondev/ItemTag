@@ -24,6 +24,7 @@ import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -612,6 +613,7 @@ public class Actions extends ListenerSubCmd {
                 TagItem tagItem = ItemTag.getTagItem(item);
                 if (!hasActions(tagItem))
                     return;
+
                 String permission = getPermission(tagItem);
                 if (permission != null && !event.getPlayer().hasPermission(permission))
                     return;
@@ -638,7 +640,7 @@ public class Actions extends ListenerSubCmd {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
+                event.setCancelled(true);
                 if (uses > 0) {
                     if (uses == 1 && getConsume(tagItem)) {
                         if (event.getItem().getAmount() == 1) { //1.8 doesn't like  event.getItem().setAmount(event.getItem().getAmount() - 1); on single items

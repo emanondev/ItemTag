@@ -53,6 +53,14 @@ itemtag:
       feedback:
         standard: '&9[&fItemTag&9] &aThe item can be used as animal''s food.'
         custom: '&9[&fItemTag&9] &aThe item can''t be used as animal''s food.'
+    clickmove:
+      feedback:
+        standard: '&9[&fItemTag&9] &aThe item can be moved on inventory.'
+        custom: '&9[&fItemTag&9] &aThe item can''t be moved on inventory.'
+    tradeable:
+      feedback:
+        standard: '&9[&fItemTag&9] &aThe item can be traded with villagers.'
+        custom: '&9[&fItemTag&9] &aThe item can''t be traded with villagers.'
   actions:
     invalid-action:
       message: '&4[&cItemTag&4] &c''&6%error%&c'' is not a valid type &4[&6hover here&4]'
@@ -566,6 +574,20 @@ gui:
       - ''
       - '&7Works exactly as the enchantment Vanish Curse'
       - '&7But it''s not an enchantment'
+      - ''
+      - '&7[&fClick&7]&b Toggle'
+    clickmove:
+      - '&6Sets whether the item can be moved on inventory'
+      - '&bValue: &e%value%'
+      - ''
+      - '&7Op players have permission to bypass that limit'
+      - ''
+      - '&7[&fClick&7]&b Toggle'
+    tradeable:
+      - '&6Sets whether the item can be traded for other items with villagers'
+      - '&bValue: &e%value%'
+      - ''
+      - '&7If set to false deny vanilla trading behavior'
       - ''
       - '&7[&fClick&7]&b Toggle'
   effects:

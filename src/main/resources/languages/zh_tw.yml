@@ -53,6 +53,14 @@ itemtag:
       feedback:
         standard: '&9[&fItemTag&9] &a現在該物品可以餵養動物.'
         custom: '&9[&fItemTag&9] &a現在該物品不能餵養動物.'
+    clickmove:
+      feedback:
+        standard: '&9[&fItemTag&9] &a物品可以在庫存中移動。'
+        custom: '&9[&fItemTag&9] &a物品不能在庫存中移動。'
+    tradeable:
+      feedback:
+        standard: '&9[&fItemTag&9] &a物品可以與村民交易。'
+        custom: '&9[&fItemTag&9] &a物品不能與村民交易。'
   actions:
     invalid-action:
       message: '&4[&cItemTag&4] &c''&6%error%&c'' 不是有效類型 &4[&6懸停查看&4]'
@@ -508,6 +516,20 @@ gui:
       - ''
       - '&7Works exactly as the enchantment Vanish Curse'
       - '&7But it''s not an enchantment'
+      - ''
+      - '&7[&f點擊&7]&b 切換'
+    clickmove:
+      - '&6設置物品是否可以在庫存中移動'
+      - '&b值: &e%value%'
+      - ''
+      - '&7操作員玩家有權限繞過此限制'
+      - ''
+      - '&7[&f點擊&7]&b 切換'
+    tradeable:
+      - '&6設置物品是否可以與村民交換其他物品'
+      - '&b值: &e%value%'
+      - ''
+      - '&7如果設置為 false，則拒絕原版交易行為'
       - ''
       - '&7[&f點擊&7]&b 切換'
   effects:

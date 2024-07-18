@@ -53,6 +53,14 @@ itemtag:
       feedback:
         standard: '&9[&fItemTag&9] &a现在该物品可以喂养动物.'
         custom: '&9[&fItemTag&9] &a现在该物品不能喂养动物.'
+    clickmove:
+      feedback:
+        standard: '&9[&fItemTag&9] &a物品可以在库存中移动。'
+        custom: '&9[&fItemTag&9] &a物品不能在库存中移动。'
+    tradeable:
+      feedback:
+        standard: '&9[&fItemTag&9] &a物品可以与村民交易。'
+        custom: '&9[&fItemTag&9] &a物品不能与村民交易。'
   actions:
     invalid-action:
       message: '&4[&cItemTag&4] &c''&6%error%&c'' 不是有效类型 &4[&6悬停查看&4]'
@@ -510,6 +518,20 @@ gui:
     - '&7不过它不是附魔'
     - ''
     - '&7[&f点击&7]&b 切换'
+    clickmove:
+      - '&6设置物品是否可以在库存中移动'
+      - '&b值: &e%value%'
+      - ''
+      - '&7操作员玩家有权限绕过该限制'
+      - ''
+      - '&7[&f点击&7]&b 切换'
+    tradeable:
+      - '&6设置物品是否可以与村民交换其他物品'
+      - '&b值: &e%value%'
+      - ''
+      - '&7如果设置为 false，则拒绝原版交易行为'
+      - ''
+      - '&7[&f点击&7]&b 切换'
   effects:
     # %player_name%
     title: '&9状态效果'

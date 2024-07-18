@@ -53,6 +53,14 @@ itemtag:
       feedback:
         standard: '&9[&fItemTag&9] &aDaiktą galima naudoti kaip gyvūno maistą.'
         custom: '&9[&fItemTag&9] &aDaikto negalima naudoti kaip gyvūno maistą.'
+    clickmove:
+      feedback:
+        standard: '&9[&fItemTag&9] &aThe item can be moved on inventory.'
+        custom: '&9[&fItemTag&9] &aThe item can''t be moved on inventory.'
+    tradeable:
+      feedback:
+        standard: '&9[&fItemTag&9] &aThe item can be traded with villagers.'
+        custom: '&9[&fItemTag&9] &aThe item can''t be traded with villagers.'
   actions:
     invalid-action:
       message: '&4[&cItemTag&4] &c''&6%error%&c'' nėra galiojantis tipas &4[&6užveskite čia&4]'
@@ -495,6 +503,20 @@ gui:
       - '&7Bet tai nėra užkeikimas'
       - ''
       - '&7[&fPaspauskite&7]&b Perjungti'
+    clickmove:
+      - '&6Sets whether the item can be moved on inventory'
+      - '&bValue: &e%value%'
+      - ''
+      - '&7Op players have permission to bypass that limit'
+      - ''
+      - '&7[&fClick&7]&b Toggle'
+    tradeable:
+      - '&6Sets whether the item can be traded for other items with villagers'
+      - '&bValue: &e%value%'
+      - ''
+      - '&7If set to false deny vanilla trading behavior'
+      - ''
+      - '&7[&fClick&7]&b Toggle'
   effects:
     # %player_name%
     title: '&9Efektai'

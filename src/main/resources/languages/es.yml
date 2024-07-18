@@ -53,6 +53,14 @@ itemtag:
       feedback:
         standard: '&9[&fItemTag&9] &aEl objeto se puede usar como alimento para animales.'
         custom: '&9[&fItemTag&9] &aEl objeto no se puede usar como alimento para animales.'
+    clickmove:
+      feedback:
+        standard: '&9[&fItemTag&9] &aEl objeto se puede mover en el inventario.'
+        custom: '&9[&fItemTag&9] &aEl objeto no se puede mover en el inventario.'
+    tradeable:
+      feedback:
+        standard: '&9[&fItemTag&9] &aEl objeto se puede intercambiar con aldeanos.'
+        custom: '&9[&fItemTag&9] &aEl objeto no se puede intercambiar con aldeanos.'
   actions:
     invalid-action:
       message: '&4[&cItemTag&4] &c''&6%error%&c'' no es un tipo válido &4[pasa el puntero aquí&4]'
@@ -489,6 +497,20 @@ gui:
       - ''
       - '&7Funciona exactamente como el encantamiento Maldición de Desvanecimiento'
       - '&7Pero no es un encantamiento'
+      - ''
+      - '&7[&fClic&7]&b Alternar'
+    clickmove:
+      - '&6Establece si el objeto se puede mover en el inventario'
+      - '&bValor: &e%value%'
+      - ''
+      - '&7Los jugadores con permisos de operador pueden pasar por alto este límite'
+      - ''
+      - '&7[&fClic&7]&b Alternar'
+    tradeable:
+      - '&6Establece si el objeto se puede intercambiar por otros objetos con aldeanos'
+      - '&bValor: &e%value%'
+      - ''
+      - '&7Si se establece en false, se deniega el comportamiento de intercambio de vanilla'
       - ''
       - '&7[&fClic&7]&b Alternar'
   effects:

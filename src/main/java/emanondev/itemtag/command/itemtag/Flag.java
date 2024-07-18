@@ -61,6 +61,8 @@ public class Flag extends SubCmd {
             this.registerFlag(new Grindable(this));
         this.registerFlag(new EquipmentFlag(this));
         this.registerFlag(new VanishCurse(this));
+        this.registerFlag(new ClickMove(this));
+        this.registerFlag(new Tradeable(this));
         //aliases.reload();
         Aliases.registerAliasType(FLAG_ALIASES, true);
     }

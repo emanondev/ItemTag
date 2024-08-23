@@ -21,9 +21,9 @@ public class Grindable extends CustomFlag {
 
     @EventHandler
     public void event(InventoryClickEvent event) {
-        if (!(event.getView().getTopInventory() instanceof GrindstoneInventory))
+        if (!(event.getInventory() instanceof GrindstoneInventory))
             return;
-        GrindstoneInventory grind = (GrindstoneInventory) event.getView().getTopInventory();
+        GrindstoneInventory grind = (GrindstoneInventory) event.getInventory();
         boolean found = ItemTag.getTagItem(grind.getItem(0)).hasBooleanTag(GRINDABLE_KEY)
                 || ItemTag.getTagItem(grind.getItem(1)).hasBooleanTag(GRINDABLE_KEY);
         if (!found)

@@ -23,7 +23,7 @@ public class Tradeable extends CustomFlag {
     public void event(InventoryClickEvent event) {
         if (!(event.getClickedInventory() instanceof MerchantInventory))
             return;
-        if (event.getSlotType()!= InventoryType.SlotType.RESULT)
+        if (event.getSlotType() != InventoryType.SlotType.RESULT)
             return;
         MerchantInventory inv = (MerchantInventory) event.getClickedInventory();
         if (ItemTag.getTagItem(inv.getItem(0)).hasBooleanTag(TRADEABLE_KEY) ||

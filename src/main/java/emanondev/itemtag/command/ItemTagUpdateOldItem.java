@@ -6,7 +6,6 @@ import emanondev.itemtag.TagItem;
 import emanondev.itemtag.command.itemtag.Actions;
 import emanondev.itemtag.command.itemtag.SecurityUtil;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -53,7 +52,7 @@ public class ItemTagUpdateOldItem implements TabExecutor {
         }
         @SuppressWarnings("deprecation")
         ItemStack item = ((Player) sender).getInventory().getItemInHand();
-        if (Util.isAirOrNull(item )) {
+        if (Util.isAirOrNull(item)) {
             sendNoItemInHand(sender);
             return false;
         }

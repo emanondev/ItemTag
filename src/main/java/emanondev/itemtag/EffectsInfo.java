@@ -30,11 +30,25 @@ public class EffectsInfo {
             slots.addAll(Arrays.asList(EquipmentSlot.values()));
     }
 
+    /**
+     * @return an effect with unlimited duration (or just big if < 1.19.4)
+     */
+    public static PotionEffect craftPotionEffect(PotionEffectType type, int amplifier, boolean ambient,
+                                                 boolean particles,
+                                                 boolean icon) {
+        int duration = type.isInstant() ? 1 : (Util.isVersionUpTo(1, 19, 3) ?
+                (20 * 3600 * 12) : PotionEffect.INFINITE_DURATION);
+        if (Util.isVersionAfter(1, 12))
+            return new PotionEffect(type, duration, amplifier, ambient, particles, icon);
+        return new PotionEffect(type, duration, amplifier, ambient, particles);
+    }
+
     private String effectsToString() {
         if (effects.isEmpty())
             return null;
         List<PotionEffect> list = new ArrayList<>(effects.values());
-        StringBuilder str = new StringBuilder().append(list.get(0).getType().getName()).append(",").append(list.get(0).getAmplifier())
+        StringBuilder str = new StringBuilder().append(list.get(0).getType().getName())//TODO should use list.get(0).getType().getKey() for 1.20.6+
+                .append(",").append(list.get(0).getAmplifier())
                 .append(",").append(list.get(0).isAmbient()).append(",").append(list.get(0).hasParticles());
         if (Util.isVersionAfter(1, 13))
             str.append(",").append(list.get(0).hasIcon());
@@ -51,19 +65,6 @@ public class EffectsInfo {
         return str.toString();
     }
 
-    /**
-     * @return an effect with unlimited duration (or just big if < 1.19.4)
-     */
-    public static PotionEffect craftPotionEffect(PotionEffectType type, int amplifier, boolean ambient,
-                                                 boolean particles,
-                                                 boolean icon) {
-        int duration = type.isInstant() ? 1 : (Util.isVersionUpTo(1, 19, 3) ?
-                (20 * 3600 * 12) : PotionEffect.INFINITE_DURATION);
-        if (Util.isVersionAfter(1, 12))
-            return new PotionEffect(type, duration, amplifier, ambient, particles, icon);
-        return new PotionEffect(type, duration, amplifier, ambient, particles);
-    }
-
     private List<PotionEffect> stringToEffects(String txt) {
         List<PotionEffect> list = new ArrayList<>();
         if (txt == null || txt.isEmpty())
@@ -71,7 +72,14 @@ public class EffectsInfo {
         String[] effects = txt.split(";");
         for (String rawEffect : effects) {
             String[] args = rawEffect.split(",");
-            list.add(craftPotionEffect(PotionEffectType.getByName(args[0]),
+            PotionEffectType type = PotionEffectType.getByName(args[0]);
+            /* TODO should use Registry.EFFECT.getByKey for 1.20.6+
+            if (type==null)
+                type = Registry.EFFECT.getByKey(args[0]);
+             */
+            if (type == null)
+                continue;
+            list.add(craftPotionEffect(type,
                     Integer.parseInt(args[1]), Boolean.parseBoolean(args[2]), Boolean.parseBoolean(args[3]),
                     Boolean.parseBoolean(args[4])));
         }

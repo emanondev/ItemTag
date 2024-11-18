@@ -1,10 +1,14 @@
 package emanondev.itemtag.command.itemtag.customflags;
 
+import emanondev.itemedit.UtilLegacy;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.command.itemtag.Flag;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.CraftItemEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Locale;
@@ -17,13 +21,32 @@ public class CraftRecipeIngredient extends CustomFlag {
         super("recipeingredient", CRAFTING_INGREDIENT_KEY, cmd);
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void event(CraftItemEvent event) {
         for (ItemStack item : event.getInventory().getMatrix())
             if (ItemTag.getTagItem(item).hasBooleanTag(CRAFTING_INGREDIENT_KEY)) {
                 event.setCancelled(true);
                 return;
             }
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void event(InventoryClickEvent event) {
+        Inventory inv = UtilLegacy.getTopInventory(event);
+        if (inv==null || !inv.getType().name().equals("CARTOGRAPHY"))
+            return;
+
+        if (event.getSlotType()!= InventoryType.SlotType.RESULT){
+            return;
+        }
+
+        if (ItemTag.getTagItem(inv.getItem(0)).hasBooleanTag(CRAFTING_INGREDIENT_KEY)) {
+            event.setCancelled(true);
+            return;
+        }
+        if (ItemTag.getTagItem(inv.getItem(1)).hasBooleanTag(CRAFTING_INGREDIENT_KEY)) {
+            event.setCancelled(true);
+        }
     }
 
     @Override

@@ -1,11 +1,12 @@
 package emanondev.itemtag.command.itemtag;
 
 import emanondev.itemedit.APlugin;
-import emanondev.itemedit.Util;
 import emanondev.itemedit.aliases.AliasSet;
 import emanondev.itemedit.aliases.Aliases;
 import emanondev.itemedit.command.SubCmd;
 import emanondev.itemedit.gui.Gui;
+import emanondev.itemedit.utility.CompleteUtility;
+import emanondev.itemedit.utility.VersionUtils;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.TagItem;
 import emanondev.itemtag.command.ItemTagCommand;
@@ -53,11 +54,11 @@ public class Flag extends SubCmd {
         this.registerFlag(new FurnaceFuel(this));
         this.registerFlag(new Enchantable(this));
         this.registerFlag(new EntityFood(this));
-        if (Util.isVersionAfter(1, 9))
+        if (VersionUtils.isVersionAfter(1, 9))
             this.registerFlag(new Renamable(this));
         else
             this.registerFlag(new RenamableOld(this));
-        if (Util.isVersionAfter(1, 14))
+        if (VersionUtils.isVersionAfter(1, 14))
             this.registerFlag(new Grindable(this));
         this.registerFlag(new EquipmentFlag(this));
         this.registerFlag(new VanishCurse(this));
@@ -106,9 +107,9 @@ public class Flag extends SubCmd {
     @Override
     public List<String> onComplete(CommandSender sender, String[] args) {
         if (args.length == 2)
-            return Util.complete(args[1], FLAG_ALIASES);
+            return CompleteUtility.complete(args[1], FLAG_ALIASES);
         if (args.length == 3)
-            return Util.complete(args[2], Aliases.BOOLEAN);
+            return CompleteUtility.complete(args[2], Aliases.BOOLEAN);
         return Collections.emptyList();
     }
 

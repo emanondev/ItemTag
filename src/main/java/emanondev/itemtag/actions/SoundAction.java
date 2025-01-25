@@ -1,6 +1,6 @@
 package emanondev.itemtag.actions;
 
-import emanondev.itemedit.Util;
+import emanondev.itemedit.utility.CompleteUtility;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -63,13 +63,13 @@ public class SoundAction extends Action {
     public List<String> tabComplete(CommandSender sender, List<String> params) {
         switch (params.size()) {
             case 1:
-                return Util.complete(params.get(0), Sound.class);
+                return CompleteUtility.complete(params.get(0), Sound.class);
             case 2:
-                return Util.complete(params.get(1), Arrays.asList("0.5", "1"));
+                return CompleteUtility.complete(params.get(1), Arrays.asList("0.5", "1"));
             case 3:
-                return Util.complete(params.get(2), Arrays.asList("1", "2", "5", "10"));
+                return CompleteUtility.complete(params.get(2), Arrays.asList("1", "2", "5", "10"));
             case 4:
-                return Util.complete(params.get(3), Arrays.asList("true", "false"));
+                return CompleteUtility.complete(params.get(3), Arrays.asList("true", "false"));
         }
         return Collections.emptyList();
     }

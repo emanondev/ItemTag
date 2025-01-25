@@ -1,10 +1,10 @@
 package emanondev.itemtag;
 
 import emanondev.itemedit.APlugin;
-import emanondev.itemedit.Util;
 import emanondev.itemedit.aliases.Aliases;
 import emanondev.itemedit.command.ReloadCommand;
 import emanondev.itemedit.compability.Hooks;
+import emanondev.itemedit.utility.VersionUtils;
 import emanondev.itemtag.actions.*;
 import emanondev.itemtag.activity.ActivityManager;
 import emanondev.itemtag.activity.target.TargetManager;
@@ -59,6 +59,11 @@ public class ItemTag extends APlugin {
         return PROJECT_ID;
     }
 
+    @Override
+    public @Nullable Integer getMetricsId() {
+        return BSTATS_PLUGIN_ID;
+    }
+
     private void initNBTAPI() throws Exception {
         new NBTAPITagItem(new ItemStack(Material.STONE));//force load NBTAPI classes or fails
         USE_NBTAPI = true;
@@ -73,7 +78,7 @@ public class ItemTag extends APlugin {
     }
 
     private void initDefault() throws Exception {
-        if (!Util.isVersionAfter(1, 14))
+        if (!VersionUtils.isVersionAfter(1, 14))
             try {
                 initNBTAPI();
             } catch (Exception e) {
@@ -120,9 +125,9 @@ public class ItemTag extends APlugin {
 
         try {
             //register equipmentchange listener
-            if (Util.isVersionUpTo(1, 8, 9))
+            if (VersionUtils.isVersionUpTo(1, 8, 9))
                 equipChangeListener = new EquipmentChangeListenerUpTo1_8();
-            else if (Util.isVersionUpTo(1, 12, 2))
+            else if (VersionUtils.isVersionUpTo(1, 12, 2))
                 equipChangeListener = new EquipmentChangeListenerUpTo1_13();
             else
                 equipChangeListener = new EquipmentChangeListener();
@@ -158,7 +163,6 @@ public class ItemTag extends APlugin {
                     t.printStackTrace();
                 }
             }
-            registerMetrics(BSTATS_PLUGIN_ID);
         } catch (Exception e) {
             Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Error while enabling ItemTag, disabling it");
             e.printStackTrace();

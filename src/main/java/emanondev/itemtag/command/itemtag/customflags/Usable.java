@@ -1,6 +1,7 @@
 package emanondev.itemtag.command.itemtag.customflags;
 
-import emanondev.itemedit.Util;
+import emanondev.itemedit.utility.InventoryUtils;
+import emanondev.itemedit.utility.VersionUtils;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.command.itemtag.Flag;
 import org.bukkit.Bukkit;
@@ -32,13 +33,13 @@ public class Usable extends CustomFlag {
                     event.setUseItemInHand(Result.DENY);
                     Block b;
                     if (event.getItem().getType() == Material.BUCKET &&
-                            Util.isVersionAfter(1, 15)) {
+                            VersionUtils.isVersionAfter(1, 15)) {
                         b = event.getPlayer().getTargetBlockExact(7, FluidCollisionMode.SOURCE_ONLY);
                     } else
                         b = null;
-                    Bukkit.getScheduler().runTaskLater(ItemTag.get(), () -> {
-                        if (!Util.isVersionAfter(1, 20))
-                            event.getPlayer().updateInventory();
+                    Bukkit.getScheduler().runTaskLater(ItemTag.get(), () -> { //TODO folia fix
+                        if (!VersionUtils.isVersionAfter(1, 20))
+                            InventoryUtils.updateView(event.getPlayer());
                         if (b != null) //reduce clientside visual glich on liquids only for 1.14+
                             event.getPlayer().sendBlockChange(b.getLocation(), b.getBlockData());
                     }, 1L);
@@ -49,10 +50,10 @@ public class Usable extends CustomFlag {
 
     @EventHandler
     private void event(PlayerBucketFillEvent event) { //obsolete and unrequired on 1.18
-        if (Util.isVersionAfter(1, 18))
+        if (VersionUtils.isVersionAfter(1, 18))
             return;
         ItemStack item = this.getItemInHand(event.getPlayer());
-        if (Util.isVersionUpTo(1, 8, 9) && (item == null || item.getType() != Material.BUCKET))
+        if (VersionUtils.isVersionUpTo(1, 8, 9) && (item == null || item.getType() != Material.BUCKET))
             item = event.getPlayer().getInventory().getItemInOffHand();
 
         if (ItemTag.getTagItem(item).hasBooleanTag(USABLE_KEY))
@@ -62,10 +63,10 @@ public class Usable extends CustomFlag {
 
     @EventHandler
     private void event(PlayerBucketEmptyEvent event) { //obsolete and unrequired on 1.18
-        if (Util.isVersionAfter(1, 18))
+        if (VersionUtils.isVersionAfter(1, 18))
             return;
         ItemStack item = this.getItemInHand(event.getPlayer());
-        if (Util.isVersionAfter(1, 9) && (item == null ||
+        if (VersionUtils.isVersionAfter(1, 9) && (item == null ||
                 (item.getType() != Material.LAVA_BUCKET && item.getType() != Material.WATER_BUCKET)))
             item = event.getPlayer().getInventory().getItemInOffHand();
         if (ItemTag.getTagItem(item).hasBooleanTag(USABLE_KEY))

@@ -2,6 +2,7 @@ package emanondev.itemtag.command.itemtag;
 
 import emanondev.itemedit.Util;
 import emanondev.itemedit.command.SubCmd;
+import emanondev.itemedit.utility.CompleteUtility;
 import emanondev.itemtag.activity.*;
 import emanondev.itemtag.command.ItemTagCommand;
 import emanondev.itemtag.gui.ActivityGui;
@@ -102,7 +103,7 @@ public class ActivitySubCommand extends SubCmd {
 
     private void create(Player player, String label, String[] args) {
         if (args.length != 3) {
-            Util.sendMessage(player, this.craftFailFeedback(getLanguageString("create.params", null, player),
+            Util.sendMessage(player, this.craftFailFeedback(label, getLanguageString("create.params", null, player),
                     getLanguageStringList("create.description", null, player)));
             return;
         }
@@ -120,7 +121,7 @@ public class ActivitySubCommand extends SubCmd {
     //activity rename <id> <newId>
     private void rename(Player player, String label, String[] args) {
         if (args.length != 4) {
-            Util.sendMessage(player, this.craftFailFeedback(getLanguageString("rename.params", null, player),
+            Util.sendMessage(player, this.craftFailFeedback(label, getLanguageString("rename.params", null, player),
                     getLanguageStringList("rename.description", null, player)));
             return;
         }
@@ -141,7 +142,7 @@ public class ActivitySubCommand extends SubCmd {
     //open <action id>
     private void open(Player player, String label, String[] args) {
         if (args.length != 3) {
-            Util.sendMessage(player, this.craftFailFeedback(getLanguageString("open.params", null, player),
+            Util.sendMessage(player, this.craftFailFeedback(label, getLanguageString("open.params", null, player),
                     getLanguageStringList("open.description", null, player)));
             return;
         }
@@ -155,7 +156,7 @@ public class ActivitySubCommand extends SubCmd {
 
     private void delete(Player player, String label, String[] args) {
         if (args.length != 3) {
-            Util.sendMessage(player, this.craftFailFeedback(getLanguageString("delete.params", null, player),
+            Util.sendMessage(player, this.craftFailFeedback(label, getLanguageString("delete.params", null, player),
                     getLanguageStringList("delete.description", null, player)));
             return;
         }
@@ -170,7 +171,7 @@ public class ActivitySubCommand extends SubCmd {
 
     private void clone(Player player, String label, String[] args) {
         if (args.length != 4) {
-            Util.sendMessage(player, this.craftFailFeedback(getLanguageString("clone.params", null, player),
+            Util.sendMessage(player, this.craftFailFeedback(label, getLanguageString("clone.params", null, player),
                     getLanguageStringList("clone.description", null, player)));
             return;
         }
@@ -192,7 +193,7 @@ public class ActivitySubCommand extends SubCmd {
     //setconsumes <activity> <amount>
     private void setconsumes(Player player, String label, String[] args) {
         if (args.length != 4) {
-            Util.sendMessage(player, this.craftFailFeedback(getLanguageString("setconsumes.params", null, player),
+            Util.sendMessage(player, this.craftFailFeedback(label, getLanguageString("setconsumes.params", null, player),
                     getLanguageStringList("setconsumes.description", null, player)));
             return;
         }
@@ -205,7 +206,7 @@ public class ActivitySubCommand extends SubCmd {
         try {
             amount = Integer.parseInt(args[3]);
         } catch (Exception e) {
-            Util.sendMessage(player, this.craftFailFeedback(getLanguageString("setconsumes.params", null, player),
+            Util.sendMessage(player, this.craftFailFeedback(label, getLanguageString("setconsumes.params", null, player),
                     getLanguageStringList("setconsumes.description", null, player)));
             //TODO NaN
             return;
@@ -221,7 +222,7 @@ public class ActivitySubCommand extends SubCmd {
     //addcondition <activity> <conditiontype> <condition arguments>
     private void addcondition(Player player, String label, String[] args) {
         if (args.length < 4) {
-            Util.sendMessage(player, this.craftFailFeedback(getLanguageString("addcondition.params", null, player),
+            Util.sendMessage(player, this.craftFailFeedback(label, getLanguageString("addcondition.params", null, player),
                     getLanguageStringList("addcondition.description", null, player)));
             return;
         }
@@ -232,7 +233,7 @@ public class ActivitySubCommand extends SubCmd {
         }
         ConditionType type = ConditionManager.getConditionType(args[3]);
         if (type == null) {
-            Util.sendMessage(player, this.craftFailFeedback(getLanguageString("addcondition.params", null, player),
+            Util.sendMessage(player, this.craftFailFeedback(label, getLanguageString("addcondition.params", null, player),
                     getLanguageStringList("addcondition.description", null, player)));
             //TODO
             return;
@@ -244,13 +245,13 @@ public class ActivitySubCommand extends SubCmd {
         try {
             condition = ConditionManager.read(b.toString());
         } catch (Exception e) {
-            Util.sendMessage(player, this.craftFailFeedback(getLanguageString("addcondition.params", null, player),
+            Util.sendMessage(player, this.craftFailFeedback(label, getLanguageString("addcondition.params", null, player),
                     getLanguageStringList("addcondition.description", null, player)));
             //TODO bad format
             return;
         }
         if (condition == null) {
-            Util.sendMessage(player, this.craftFailFeedback(getLanguageString("addcondition.params", null, player),
+            Util.sendMessage(player, this.craftFailFeedback(label, getLanguageString("addcondition.params", null, player),
                     getLanguageStringList("addcondition.description", null, player)));
             //TODO invalid condition type
             return;
@@ -341,7 +342,7 @@ public class ActivitySubCommand extends SubCmd {
     public List<String> onComplete(CommandSender sender, String[] args) {
         switch (args.length) {
             case 2:
-                return Util.complete(args[1], "create", "delete", "clone", "rename", "open", "setconsumes",
+                return CompleteUtility.complete(args[1], "create", "delete", "clone", "rename", "open", "setconsumes",
                         "addcondition", "insertcondition", "setcondition", "removecondition",
                         "addaction", "insertaction", "setaction", "removeaction",
                         "addalternativeaction", "insertalternativeaction", "setalternativeaction", "removealternativeaction",
@@ -369,7 +370,7 @@ public class ActivitySubCommand extends SubCmd {
                     case "insertnoconsumesaction":
                     case "setnoconsumesaction":
                     case "removenoconsumesaction":
-                        return Util.complete(args[1], ActivityManager.getActivityIds());
+                        return CompleteUtility.complete(args[1], ActivityManager.getActivityIds());
                     default:
                         return Collections.emptyList();
                 }
@@ -392,12 +393,12 @@ public class ActivitySubCommand extends SubCmd {
                         return Collections.emptyList();
                     //? <condition id>
                     case "addcondition":
-                        return Util.complete(args[3], ConditionManager.getConditionTypeIds());
+                        return CompleteUtility.complete(args[3], ConditionManager.getConditionTypeIds());
                     //? <action id>
                     case "addaction":
                     case "addalternativeaction":
                     case "addnoconsumesaction":
-                        return Util.complete(args[3], ActionManager.getActionTypeIds());
+                        return CompleteUtility.complete(args[3], ActionManager.getActionTypeIds());
                     default:
                         return Collections.emptyList();
                 }
@@ -407,7 +408,7 @@ public class ActivitySubCommand extends SubCmd {
                     case "insertcondition":
                     case "setcondition":
                     case "removecondition":
-                        return Util.complete(args[4], ConditionManager.getConditionTypeIds());
+                        return CompleteUtility.complete(args[4], ConditionManager.getConditionTypeIds());
                     //? <actiontype>
                     case "insertaction":
                     case "setaction":
@@ -418,7 +419,7 @@ public class ActivitySubCommand extends SubCmd {
                     case "insertnoconsumesaction":
                     case "setnoconsumesaction":
                     case "removenoconsumesaction":
-                        return Util.complete(args[4], ActionManager.getActionTypeIds());
+                        return CompleteUtility.complete(args[4], ActionManager.getActionTypeIds());
                     default:
                         return Collections.emptyList();
                 }

@@ -3,6 +3,7 @@ package emanondev.itemtag.command.itemtag.customflags;
 import emanondev.itemedit.APlugin;
 import emanondev.itemedit.Util;
 import emanondev.itemedit.YMLConfig;
+import emanondev.itemedit.utility.ItemUtils;
 import emanondev.itemtag.TagItem;
 import emanondev.itemtag.command.itemtag.Flag;
 import org.bukkit.command.CommandSender;
@@ -103,7 +104,7 @@ public abstract class CustomFlag implements Listener, Comparable<CustomFlag> {
     }
 
     protected ItemStack getItemInHand(Player p) {
-        return p.getInventory().getItemInHand();
+        return ItemUtils.getHandItem(p);
     }
 
 }

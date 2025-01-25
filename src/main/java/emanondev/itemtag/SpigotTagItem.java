@@ -1,5 +1,6 @@
 package emanondev.itemtag;
 
+import emanondev.itemedit.utility.ItemUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -36,7 +37,7 @@ public class SpigotTagItem implements TagItem {
 
     private PersistentDataContainer getData() {
         if (data == null) {
-            this.meta = this.item.getItemMeta();
+            this.meta = ItemUtils.getMeta(this.item);
             this.data = this.meta.getPersistentDataContainer();
         }
         return data;

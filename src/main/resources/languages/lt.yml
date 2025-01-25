@@ -292,7 +292,7 @@ itemtag:
     params: ''
   usepermission:
     params: ''
-    description: []
+    description: [ ]
 itemtagreload:
   success: '&9[&fItemTag&9] &aPerkrauta'
 gui:

@@ -59,7 +59,7 @@ public class SpigotTagManager implements TagManager {
     @Override
     public Boolean getBoolean(String key, ItemStack item) {
         Integer value = get(key, item, PersistentDataType.INTEGER);
-        return value == null ? null : (value != 0 ? true : false);
+        return value == null ? null : (value != 0);
     }
 
     @Override
@@ -108,7 +108,6 @@ public class SpigotTagManager implements TagManager {
         return item.getItemMeta().getPersistentDataContainer().get(keys.get(key), type);
     }
 
-    @SuppressWarnings("deprecation")
     private void putKeyIfAbsent(String key) {
         if (!keys.containsKey(key)) {
             String[] args = key.split(":");

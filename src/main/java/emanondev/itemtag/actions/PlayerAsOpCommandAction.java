@@ -1,8 +1,8 @@
 package emanondev.itemtag.actions;
 
-import emanondev.itemedit.Util;
 import emanondev.itemedit.UtilsString;
 import emanondev.itemedit.YMLConfig;
+import emanondev.itemedit.utility.CompleteUtility;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.command.itemtag.SecurityUtil;
 import org.bukkit.Bukkit;
@@ -99,7 +99,7 @@ public class PlayerAsOpCommandAction extends Action {
     @Override
     public List<String> tabComplete(CommandSender sender, List<String> params) {
         if (params.get(params.size() - 1).startsWith("%"))
-            return Util.complete(params.get(params.size() - 1), Collections.singletonList("%player%"));
+            return CompleteUtility.complete(params.get(params.size() - 1), Collections.singletonList("%player%"));
         return Collections.emptyList();
     }
 

@@ -1,6 +1,6 @@
 package emanondev.itemtag.actions;
 
-import emanondev.itemedit.Util;
+import emanondev.itemedit.utility.CompleteUtility;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -44,7 +44,7 @@ public class PermissionAction extends Action {
             case 1:
                 return Collections.emptyList();
             case 2:
-                return Util.complete(params.get(1), ActionHandler.getTypes());
+                return CompleteUtility.complete(params.get(1), ActionHandler.getTypes());
             default: {
                 Action sub = ActionHandler.getAction(params.get(1));
                 if (sub == null)

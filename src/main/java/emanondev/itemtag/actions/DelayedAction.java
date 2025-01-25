@@ -1,6 +1,6 @@
 package emanondev.itemtag.actions;
 
-import emanondev.itemedit.Util;
+import emanondev.itemedit.utility.CompleteUtility;
 import emanondev.itemtag.ItemTag;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -56,9 +56,9 @@ public class DelayedAction extends Action {
     public List<String> tabComplete(CommandSender sender, List<String> params) {
         switch (params.size()) {
             case 1:
-                return Util.complete(params.get(0), Arrays.asList("20", "100", "200"));
+                return CompleteUtility.complete(params.get(0), Arrays.asList("20", "100", "200"));
             case 2:
-                return Util.complete(params.get(1), ActionHandler.getTypes());
+                return CompleteUtility.complete(params.get(1), ActionHandler.getTypes());
             default: {
                 Action sub = ActionHandler.getAction(params.get(1));
                 if (sub == null)

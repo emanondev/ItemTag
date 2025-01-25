@@ -8,6 +8,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class Placeable extends CustomFlag {
 
@@ -26,7 +27,8 @@ public class Placeable extends CustomFlag {
             if (cooldownSeconds == 0 || !getPlugin().getCooldownAPI().hasCooldown(event.getPlayer(), PLACEABLE_KEY)) {
                 sendLanguageString("feedback.failed-place-attempt", null, event.getPlayer());
                 if (cooldownSeconds != 0)
-                    getPlugin().getCooldownAPI().setCooldownSeconds(event.getPlayer(), PLACEABLE_KEY, cooldownSeconds);
+                    getPlugin().getCooldownAPI().setCooldown(event.getPlayer(), PLACEABLE_KEY,
+                            cooldownSeconds, TimeUnit.SECONDS);
             }
         }
     }

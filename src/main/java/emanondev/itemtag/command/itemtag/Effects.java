@@ -1,7 +1,8 @@
 package emanondev.itemtag.command.itemtag;
 
-import emanondev.itemedit.Util;
 import emanondev.itemedit.aliases.Aliases;
+import emanondev.itemedit.utility.CompleteUtility;
+import emanondev.itemedit.utility.VersionUtils;
 import emanondev.itemtag.EffectsInfo;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.command.ItemTagCommand;
@@ -30,7 +31,7 @@ public class Effects extends ListenerSubCmd {
     public Effects(ItemTagCommand cmd) {
         super("effects", cmd, true, true);
         this.load();
-        if (Util.isVersionAfter(1, 11))
+        if (VersionUtils.isVersionAfter(1, 11))
             getPlugin().registerListener(new EffectsResurrectListener(this));
     }
 
@@ -159,17 +160,17 @@ public class Effects extends ListenerSubCmd {
     public List<String> onComplete(CommandSender sender, String[] args) {
         switch (args.length) {
             case 2: {
-                return Util.complete(args[1], "set", "modify", "slots", "remove");
+                return CompleteUtility.complete(args[1], "set", "modify", "slots", "remove");
             }
             case 3: {
                 switch (args[1].toLowerCase()) {
                     case "set":
                     case "modify":
                     case "remove": {
-                        return Util.complete(args[2], Aliases.POTION_EFFECT);
+                        return CompleteUtility.complete(args[2], Aliases.POTION_EFFECT);
                     }
                     case "slots": {
-                        return Util.complete(args[2], Aliases.EQUIPMENT_SLOTS);
+                        return CompleteUtility.complete(args[2], Aliases.EQUIPMENT_SLOTS);
                     }
                 }
                 return Collections.emptyList();
@@ -178,10 +179,10 @@ public class Effects extends ListenerSubCmd {
                 switch (args[1].toLowerCase()) {
                     case "set":
                     case "modify": {
-                        return Util.complete(args[3], "1", "2", "3");
+                        return CompleteUtility.complete(args[3], "1", "2", "3");
                     }
                     case "slots": {
-                        return Util.complete(args[3], Aliases.EQUIPMENT_SLOTS);
+                        return CompleteUtility.complete(args[3], Aliases.EQUIPMENT_SLOTS);
                     }
                 }
                 return Collections.emptyList();
@@ -192,17 +193,17 @@ public class Effects extends ListenerSubCmd {
                 switch (args[1].toLowerCase()) {
                     case "set":
                     case "modify": {
-                        return Util.complete(args[4], Aliases.BOOLEAN);
+                        return CompleteUtility.complete(args[4], Aliases.BOOLEAN);
                     }
                     case "slots": {
-                        return Util.complete(args[4], Aliases.EQUIPMENT_SLOTS);
+                        return CompleteUtility.complete(args[4], Aliases.EQUIPMENT_SLOTS);
                     }
                 }
                 return Collections.emptyList();
             }
             case 8: {
                 if ("slots".equalsIgnoreCase(args[1])) {
-                    return Util.complete(args[4], Aliases.EQUIPMENT_SLOTS);
+                    return CompleteUtility.complete(args[4], Aliases.EQUIPMENT_SLOTS);
                 }
                 return Collections.emptyList();
             }
@@ -283,7 +284,7 @@ public class Effects extends ListenerSubCmd {
 
                         else {
                             PotionEffect currentEffect = null;
-                            if (Util.isVersionAfter(1, 11))// safe
+                            if (VersionUtils.isVersionAfter(1, 11))// safe
                                 currentEffect = event.getPlayer().getPotionEffect(effect.getType());
                             else
                                 for (PotionEffect k : event.getPlayer().getActivePotionEffects())
@@ -292,7 +293,7 @@ public class Effects extends ListenerSubCmd {
                                         break;
                                     }
                             if (currentEffect.getDuration() < 3600 * 20 && currentEffect.getDuration() >= 0) //could be changed checking the whole equipment effects, but this way seems faster and still fair
-                                if (Util.isVersionAfter(1, 16))
+                                if (VersionUtils.isVersionAfter(1, 16))
                                     addEffect(event.getPlayer(), effect.getType(), effect);
                                 else if (currentEffect.getAmplifier() <= effect.getAmplifier())
                                     addEffect(event.getPlayer(), effect.getType(), effect);
@@ -314,7 +315,7 @@ public class Effects extends ListenerSubCmd {
             target.addPotionEffect(effect);
             return;
         }
-        if (Util.isVersionAfter(1, 16)) {
+        if (VersionUtils.isVersionAfter(1, 16)) {
             if (target.hasPotionEffect(effect.getType()))
                 target.removePotionEffect(effect.getType());
             target.addPotionEffect(effect);
@@ -363,7 +364,7 @@ public class Effects extends ListenerSubCmd {
             case LEGS:
                 return p.getEquipment().getLeggings();
         }// safe
-        if (Util.isVersionAfter(1, 9) && slot == EquipmentSlot.OFF_HAND)
+        if (VersionUtils.isVersionAfter(1, 9) && slot == EquipmentSlot.OFF_HAND)
             return p.getInventory().getItemInOffHand();
         return null;
     }

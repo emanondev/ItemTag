@@ -1,6 +1,6 @@
 package emanondev.itemtag.command.itemtag.customflags;
 
-import emanondev.itemedit.UtilLegacy;
+import emanondev.itemedit.utility.InventoryUtils;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.command.itemtag.Flag;
 import org.bukkit.Material;
@@ -23,7 +23,7 @@ public class Grindable extends CustomFlag {
 
     @EventHandler
     public void event(InventoryClickEvent event) {
-        Inventory inv = UtilLegacy.getTopInventory(event);
+        Inventory inv = InventoryUtils.getTopInventory(event);
         if (!(inv instanceof GrindstoneInventory))
             return;
         boolean found = ItemTag.getTagItem(inv.getItem(0)).hasBooleanTag(GRINDABLE_KEY)

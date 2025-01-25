@@ -1,6 +1,6 @@
 package emanondev.itemtag.command.itemtag.customflags;
 
-import emanondev.itemedit.UtilLegacy;
+import emanondev.itemedit.utility.InventoryUtils;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.command.itemtag.Flag;
 import org.bukkit.Material;
@@ -32,11 +32,11 @@ public class CraftRecipeIngredient extends CustomFlag {
 
     @EventHandler(ignoreCancelled = true)
     public void event(InventoryClickEvent event) {
-        Inventory inv = UtilLegacy.getTopInventory(event);
-        if (inv==null || !inv.getType().name().equals("CARTOGRAPHY"))
+        Inventory inv = InventoryUtils.getTopInventory(event);
+        if (inv == null || !inv.getType().name().equals("CARTOGRAPHY"))
             return;
 
-        if (event.getSlotType()!= InventoryType.SlotType.RESULT){
+        if (event.getSlotType() != InventoryType.SlotType.RESULT) {
             return;
         }
 

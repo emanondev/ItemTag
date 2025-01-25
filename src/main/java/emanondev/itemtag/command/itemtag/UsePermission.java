@@ -3,6 +3,7 @@ package emanondev.itemtag.command.itemtag;
 import emanondev.itemedit.Util;
 import emanondev.itemedit.UtilsString;
 import emanondev.itemedit.command.AbstractCommand;
+import emanondev.itemedit.utility.CompleteUtility;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.TagItem;
 import emanondev.itemtag.command.ListenerSubCmd;
@@ -86,7 +87,7 @@ public class UsePermission extends ListenerSubCmd {
     @Override
     public List<String> onComplete(CommandSender sender, String[] args) {
         if (args.length == 2)
-            return Util.complete(args[0], "setpermission", "setmessage");
+            return CompleteUtility.complete(args[0], "setpermission", "setmessage");
         return Collections.emptyList();
     }
 

@@ -1,6 +1,7 @@
 package emanondev.itemtag.equipmentchange;
 
 import emanondev.itemedit.Util;
+import emanondev.itemedit.utility.VersionUtils;
 import emanondev.itemtag.ItemTag;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -156,7 +157,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
         if (event.getPlayer().hasMetadata("NPC") || event.getPlayer().hasMetadata("BOT"))
             return;
         EquipmentSlot slot;
-        if (Util.isVersionAfter(1, 9))// safe
+        if (VersionUtils.isVersionAfter(1, 9))// safe
             slot = event.getHand();
         else
             slot = EquipmentSlot.HAND;
@@ -200,7 +201,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
         if (e.getPlayer().hasMetadata("NPC") || e.getPlayer().hasMetadata("BOT"))
             return;
         EquipmentSlot slot;
-        if (Util.isVersionAfter(1, 9))// safe
+        if (VersionUtils.isVersionAfter(1, 9))// safe
             slot = e.getHand();
         else
             slot = EquipmentSlot.HAND;
@@ -238,7 +239,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
         if (event.getItem().equals(getEquip(event.getPlayer(), EquipmentSlot.HAND)))
             slots.add(EquipmentSlot.HAND);
         // safe
-        if (Util.isVersionAfter(1, 9) && event.getItem().equals(getEquip(event.getPlayer(), EquipmentSlot.OFF_HAND)))
+        if (VersionUtils.isVersionAfter(1, 9) && event.getItem().equals(getEquip(event.getPlayer(), EquipmentSlot.OFF_HAND)))
             slots.add(EquipmentSlot.OFF_HAND);
         if (slots.size() == 1)
             onEquipChange(event.getPlayer(), EquipmentChangeEvent.EquipMethod.CONSUME, slots.get(0), event.getItem(),
@@ -246,7 +247,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
         else if (slots.size() > 1)
             new SlotCheck(event.getPlayer(), EquipmentChangeEvent.EquipMethod.CONSUME, slots).runTaskLater(ItemTag.get(), 1L);
         else // 3rd party plugin
-            if (Util.isVersionAfter(1, 9))// safe
+            if (VersionUtils.isVersionAfter(1, 9))// safe
                 new SlotCheck(event.getPlayer(), EquipmentChangeEvent.EquipMethod.CONSUME,
                         Arrays.asList(EquipmentSlot.HAND, EquipmentSlot.OFF_HAND)).runTaskLater(ItemTag.get(), 1L);
     }
@@ -325,7 +326,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
         if (slot == null && item != null) {
             if (item.getType().name().endsWith("PUMPKIN"))
                 return EquipmentSlot.HEAD;
-            else if (Util.isVersionAfter(1, 9) && item.getType() == Material.SHIELD)// safe
+            else if (VersionUtils.isVersionAfter(1, 9) && item.getType() == Material.SHIELD)// safe
                 return EquipmentSlot.OFF_HAND;
         }
         return slot;
@@ -346,7 +347,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
                 case FEET:
                     return 8;
             }
-            if (Util.isVersionAfter(1, 9) && slot == EquipmentSlot.OFF_HAND)// safe
+            if (VersionUtils.isVersionAfter(1, 9) && slot == EquipmentSlot.OFF_HAND)// safe
                 return 45;
             return -1;
         }
@@ -368,7 +369,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
                 case 8:
                     return EquipmentSlot.FEET;
                 case 45:
-                    if (Util.isVersionAfter(1, 9))// safe
+                    if (VersionUtils.isVersionAfter(1, 9))// safe
                         return EquipmentSlot.OFF_HAND;
                 default:
                     return p.getInventory().getHeldItemSlot() + 36 == pos ? EquipmentSlot.HAND : null;

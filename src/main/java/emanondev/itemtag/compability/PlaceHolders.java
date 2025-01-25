@@ -1,6 +1,6 @@
 package emanondev.itemtag.compability;
 
-import emanondev.itemedit.Util;
+import emanondev.itemedit.utility.ItemUtils;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.command.itemtag.Actions;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This class will automatically register as a placeholder expansion when a jar
@@ -110,15 +111,15 @@ public class PlaceHolders extends PlaceholderExpansion {
                     break;
                 }
                 case "handcooldown": {
-                    ItemStack item = player.getInventory().getItemInHand();
-                    if (Util.isAirOrNull(item))
+                    ItemStack item = ItemUtils.getHandItem(player);
+                    if (ItemUtils.isAirOrNull(item))
                         return "0";
                     id = Actions.getCooldownId(ItemTag.getTagItem(item));
                     break;
                 }
                 case "usesleft": {
-                    ItemStack item = player.getInventory().getItemInHand();
-                    if (Util.isAirOrNull(item))
+                    ItemStack item = ItemUtils.getHandItem(player);
+                    if (ItemUtils.isAirOrNull(item))
                         return "0";
                     return String.valueOf(Actions.getUses(ItemTag.getTagItem(item)));
                 }
@@ -127,11 +128,17 @@ public class PlaceHolders extends PlaceholderExpansion {
             }
             switch (args[1].toLowerCase(Locale.ENGLISH)) {
                 case "h":
-                    return String.valueOf(ItemTag.get().getCooldownAPI().getCooldownHours(player, id));
+                    return String.valueOf(ItemTag.get().getCooldownAPI()
+                            .getCooldown(player, id, TimeUnit.HOURS));
                 case "s":
-                    return String.valueOf(ItemTag.get().getCooldownAPI().getCooldownSeconds(player, id));
+                    return String.valueOf(ItemTag.get().getCooldownAPI()
+                            .getCooldown(player, id, TimeUnit.SECONDS));
+                case "m":
+                    return String.valueOf(ItemTag.get().getCooldownAPI()
+                            .getCooldown(player, id, TimeUnit.MINUTES));
                 case "ms":
-                    return String.valueOf(ItemTag.get().getCooldownAPI().getCooldownMillis(player, id));
+                    return String.valueOf(ItemTag.get().getCooldownAPI()
+                            .getCooldown(player, id, TimeUnit.MILLISECONDS));
                 default:
                     throw new IllegalStateException();
             }

@@ -1,6 +1,7 @@
 package emanondev.itemtag.command;
 
 import emanondev.itemedit.Util;
+import emanondev.itemedit.utility.ItemUtils;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.TagItem;
 import emanondev.itemtag.command.itemtag.Actions;
@@ -52,7 +53,7 @@ public class ItemTagUpdateOldItem implements TabExecutor {
         }
         @SuppressWarnings("deprecation")
         ItemStack item = ((Player) sender).getInventory().getItemInHand();
-        if (Util.isAirOrNull(item)) {
+        if (ItemUtils.isAirOrNull(item)) {
             sendNoItemInHand(sender);
             return false;
         }

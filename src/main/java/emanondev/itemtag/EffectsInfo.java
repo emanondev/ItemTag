@@ -1,6 +1,6 @@
 package emanondev.itemtag;
 
-import emanondev.itemedit.Util;
+import emanondev.itemedit.utility.VersionUtils;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -36,9 +36,9 @@ public class EffectsInfo {
     public static PotionEffect craftPotionEffect(PotionEffectType type, int amplifier, boolean ambient,
                                                  boolean particles,
                                                  boolean icon) {
-        int duration = type.isInstant() ? 1 : (Util.isVersionUpTo(1, 19, 3) ?
+        int duration = type.isInstant() ? 1 : (VersionUtils.isVersionUpTo(1, 19, 3) ?
                 (20 * 3600 * 12) : PotionEffect.INFINITE_DURATION);
-        if (Util.isVersionAfter(1, 12))
+        if (VersionUtils.isVersionAfter(1, 12))
             return new PotionEffect(type, duration, amplifier, ambient, particles, icon);
         return new PotionEffect(type, duration, amplifier, ambient, particles);
     }
@@ -50,14 +50,14 @@ public class EffectsInfo {
         StringBuilder str = new StringBuilder().append(list.get(0).getType().getName())//TODO should use list.get(0).getType().getKey() for 1.20.6+
                 .append(",").append(list.get(0).getAmplifier())
                 .append(",").append(list.get(0).isAmbient()).append(",").append(list.get(0).hasParticles());
-        if (Util.isVersionAfter(1, 13))
+        if (VersionUtils.isVersionAfter(1, 13))
             str.append(",").append(list.get(0).hasIcon());
         else
             str.append(",true");
         for (int i = 1; i < list.size(); i++) {
             str.append(";").append(list.get(i).getType().getName()).append(",").append(list.get(i).getAmplifier()).append(",")
                     .append(list.get(i).isAmbient()).append(",").append(list.get(i).hasParticles());
-            if (Util.isVersionAfter(1, 13))
+            if (VersionUtils.isVersionAfter(1, 13))
                 str.append(",").append(list.get(i).hasIcon());
             else
                 str.append(",true");

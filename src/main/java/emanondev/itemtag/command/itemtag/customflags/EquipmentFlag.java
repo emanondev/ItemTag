@@ -1,6 +1,6 @@
 package emanondev.itemtag.command.itemtag.customflags;
 
-import emanondev.itemedit.UtilsInventory;
+import emanondev.itemedit.utility.InventoryUtils;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.command.itemtag.Flag;
 import emanondev.itemtag.equipmentchange.EquipmentChangeEvent;
@@ -47,7 +47,7 @@ public class EquipmentFlag extends CustomFlag {
                     return;
                 event.getPlayer().getInventory().setItem(event.getSlotType(), null);
                 event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_ITEM_BREAK, 1F, 1F);
-                UtilsInventory.giveAmount(event.getPlayer(), item, item.getAmount(), UtilsInventory.ExcessManage.DROP_EXCESS);
+                InventoryUtils.giveAmount(event.getPlayer(), item, item.getAmount(), InventoryUtils.ExcessMode.DROP_EXCESS);
                 ItemTag.get().getEquipChangeListener().onEquipChange(event.getPlayer(), EquipmentChangeEvent.EquipMethod.UNKNOWN
                         , event.getSlotType(), item, null);
             }, 1L);

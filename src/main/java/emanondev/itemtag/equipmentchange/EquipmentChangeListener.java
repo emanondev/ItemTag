@@ -1,6 +1,6 @@
 package emanondev.itemtag.equipmentchange;
 
-import emanondev.itemedit.UtilLegacy;
+import emanondev.itemedit.utility.InventoryUtils;
 import emanondev.itemtag.ItemTag;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -99,7 +99,7 @@ public class EquipmentChangeListener extends EquipmentChangeListenerBase {
                 return;
             }
             case MOVE_TO_OTHER_INVENTORY: {
-                EquipmentSlot slot = UtilLegacy.getTopInventory(event).getType() == InventoryType.CRAFTING
+                EquipmentSlot slot = InventoryUtils.getTopInventory(event).getType() == InventoryType.CRAFTING
                         ? guessDispenserSlotType(event.getCurrentItem())
                         : null;
                 if (slot != null && isAirOrNull(getEquip(p, slot)))
@@ -114,7 +114,7 @@ public class EquipmentChangeListener extends EquipmentChangeListenerBase {
             }
             case COLLECT_TO_CURSOR:
                 ArrayList<EquipmentSlot> slots = new ArrayList<>();
-                if (UtilLegacy.getTopInventory(event).getType() == InventoryType.CRAFTING)
+                if (InventoryUtils.getTopInventory(event).getType() == InventoryType.CRAFTING)
                     for (EquipmentSlot slot : EquipmentSlot.values()) {
                         if (event.getCursor().isSimilar(getEquip(p, slot)))
                             slots.add(slot);

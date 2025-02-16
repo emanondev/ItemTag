@@ -29,20 +29,28 @@ public class ItemTagUpdateOldItem implements TabExecutor {
     }
 
     @Override
-    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+    public List<String> onTabComplete(@NotNull CommandSender sender,
+                                      @NotNull Command command,
+                                      @NotNull String label,
+                                      String[] args) {
         return Collections.emptyList();
     }
 
 
-    public void sendPermissionLackMessage(@NotNull String permission, CommandSender sender) {
-        Util.sendMessage(sender, plugin.getLanguageConfig(sender).loadMessage("lack-permission", "&cYou lack of permission %permission%",
+    public void sendPermissionLackMessage(@NotNull String permission,
+                                          CommandSender sender) {
+        Util.sendMessage(sender, plugin.getLanguageConfig(sender)
+                .loadMessage("lack-permission", "&cYou lack of permission %permission%",
                 sender instanceof Player ? (Player) sender : null, true
                 , "%permission%",
                 permission));
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+    public boolean onCommand(CommandSender sender,
+                             @NotNull Command command,
+                             @NotNull String label,
+                             String[] args) {
         if (!sender.hasPermission(permission)) {
             sendPermissionLackMessage(permission, sender);
             return true;
@@ -51,8 +59,8 @@ public class ItemTagUpdateOldItem implements TabExecutor {
             sendPlayerOnly(sender);
             return false;
         }
-        @SuppressWarnings("deprecation")
-        ItemStack item = ((Player) sender).getInventory().getItemInHand();
+        Player player = ((Player) sender);
+        ItemStack item = ItemUtils.getHandItem(player);
         if (ItemUtils.isAirOrNull(item)) {
             sendNoItemInHand(sender);
             return false;
@@ -74,14 +82,15 @@ public class ItemTagUpdateOldItem implements TabExecutor {
             }
             if (prefix == null)
                 continue;
-            Util.sendMessage(sender, ChatColor.GREEN + "[ItemTag] Updated Action " + ChatColor.YELLOW + prefix.substring(0, prefix.length() - 5) + " " + action.substring(prefix.length()));
-            actions.set(i, prefix + "-pin" +
-                    SecurityUtil.generateControlKey(action.substring(prefix.length())) + " " + action.substring(prefix.length()));
+            Util.sendMessage(sender, ChatColor.GREEN + "[ItemTag] Updated Action " + ChatColor.YELLOW
+                    + prefix.substring(0, prefix.length() - 5) + " " + action.substring(prefix.length()));
+            actions.set(i, prefix + "-pin" + SecurityUtil.generateControlKey(action.substring(prefix.length()))
+                    + " " + action.substring(prefix.length()));
             updating = true;
         }
         if (updating) {
             Actions.setActions(tagItem, actions);
-            ((Player) sender).getInventory().setItemInMainHand(tagItem.getItem());
+            ItemUtils.setHandItem(player, tagItem.getItem());
             Util.sendMessage(sender, ChatColor.GREEN + "[ItemTag] Item was updated");
             return true;
         }
@@ -91,15 +100,17 @@ public class ItemTagUpdateOldItem implements TabExecutor {
 
 
     public void sendPlayerOnly(CommandSender sender) {
-        Util.sendMessage(sender, plugin.getLanguageConfig(sender).loadMessage("player-only", "&cCommand for Players only",
-                sender instanceof Player ? (Player) sender : null, true
-        ));
+        Util.sendMessage(sender, plugin.getLanguageConfig(sender)
+                .loadMessage("player-only", "&cCommand for Players only",
+                        sender instanceof Player ? (Player) sender : null, true
+                ));
     }
 
     public void sendNoItemInHand(CommandSender sender) {
-        Util.sendMessage(sender, plugin.getLanguageConfig(sender).loadMessage("no-item-on-hand", "&cYou need to hold an item in hand",
-                sender instanceof Player ? (Player) sender : null, true
-        ));
+        Util.sendMessage(sender, plugin.getLanguageConfig(sender)
+                .loadMessage("no-item-on-hand", "&cYou need to hold an item in hand",
+                        sender instanceof Player ? (Player) sender : null, true
+                ));
     }
 
 }

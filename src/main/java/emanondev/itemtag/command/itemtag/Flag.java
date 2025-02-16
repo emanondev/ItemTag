@@ -6,6 +6,7 @@ import emanondev.itemedit.aliases.Aliases;
 import emanondev.itemedit.command.SubCmd;
 import emanondev.itemedit.gui.Gui;
 import emanondev.itemedit.utility.CompleteUtility;
+import emanondev.itemedit.utility.ItemUtils;
 import emanondev.itemedit.utility.VersionUtils;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.TagItem;
@@ -170,7 +171,7 @@ public class Flag extends SubCmd {
             for (int i = 0; i < flags.size(); i++) {
                 CustomFlag flag = flags.get(i);
                 ItemStack item = flag.getGuiItem();
-                ItemMeta meta = item.getItemMeta();
+                ItemMeta meta = ItemUtils.getMeta(item);
                 boolean value = flag.getValue(tagItem);
                 this.loadLanguageDescription(meta, "gui.flags." + flag.getId(), "%value%"
                         , Aliases.BOOLEAN.getName(value));

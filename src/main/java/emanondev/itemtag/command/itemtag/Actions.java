@@ -7,6 +7,9 @@ import emanondev.itemedit.UtilsString;
 import emanondev.itemedit.aliases.Aliases;
 import emanondev.itemedit.gui.Gui;
 import emanondev.itemedit.gui.PagedGui;
+import emanondev.itemedit.utility.CompleteUtility;
+import emanondev.itemedit.utility.ItemUtils;
+import emanondev.itemedit.utility.VersionUtils;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.TagItem;
 import emanondev.itemtag.actions.ActionHandler;
@@ -59,7 +62,8 @@ public class Actions extends ListenerSubCmd {
         return item.hasStringListTag(ACTIONS_KEY);
     }
 
-    public static @Nullable List<String> getActions(TagItem item) {
+    @Nullable
+    public static List<String> getActions(TagItem item) {
         return item.getStringList(ACTIONS_KEY);
     }
 
@@ -71,7 +75,7 @@ public class Actions extends ListenerSubCmd {
     }
 
     public static int getUses(TagItem item) {
-        return item.hasIntegerTag(ACTION_USES_KEY) ? item.getInteger(ACTION_USES_KEY) : 1;
+        return item.getInteger(ACTION_USES_KEY, 1);
     }
 
     public static void setUses(TagItem item, int amount) {
@@ -82,7 +86,7 @@ public class Actions extends ListenerSubCmd {
     }
 
     public static int getMaxUses(TagItem item) {
-        return item.hasIntegerTag(ACTION_MAXUSES_KEY) ? item.getInteger(ACTION_MAXUSES_KEY) : -1;
+        return item.getInteger(ACTION_MAXUSES_KEY, -1);
     }
 
     public static void setMaxUses(TagItem item, int amount) {
@@ -115,7 +119,7 @@ public class Actions extends ListenerSubCmd {
     }
 
     public static int getCooldownMs(TagItem item) {
-        return item.hasIntegerTag(ACTION_COOLDOWN_KEY) ? item.getInteger(ACTION_COOLDOWN_KEY) : 0;
+        return item.getInteger(ACTION_COOLDOWN_KEY, 0);
     }
 
     public static void setCooldownMs(TagItem item, int amount) {
@@ -126,7 +130,7 @@ public class Actions extends ListenerSubCmd {
     }
 
     public static String getCooldownId(TagItem item) {
-        return item.hasStringTag(ACTION_COOLDOWN_ID_KEY) ? item.getString(ACTION_COOLDOWN_ID_KEY) : DEFAULT_COOLDOWN_ID;
+        return item.getString(ACTION_COOLDOWN_ID_KEY, DEFAULT_COOLDOWN_ID);
     }
 
     public static void setCooldownId(TagItem item, String value) {
@@ -137,7 +141,7 @@ public class Actions extends ListenerSubCmd {
     }
 
     public static String getPermission(TagItem item) {
-        return item.hasStringTag(ACTION_PERMISSION_KEY) ? item.getString(ACTION_PERMISSION_KEY) : null;
+        return item.getString(ACTION_PERMISSION_KEY, null);
     }
 
     public static void setPermission(TagItem item, String value) {
@@ -174,40 +178,40 @@ public class Actions extends ListenerSubCmd {
         try {
             switch (args[1].toLowerCase(Locale.ENGLISH)) {
                 case "add":
-                    add(p, args, item);
+                    add(p, alias, args, item);
                     return;
                 case "addline":
-                    addLine(p, args, item);
+                    addLine(p, alias, args, item);
                     return;
                 case "remove":
-                    remove(p, args, item);
+                    remove(p, alias, args, item);
                     return;
                 case "set":
-                    set(p, args, item);
+                    set(p, alias, args, item);
                     return;
                 case "uses":
-                    uses(p, args, item);
+                    uses(p, alias, args, item);
                     return;
                 case "maxuses":
-                    maxUses(p, args, item);
+                    maxUses(p, alias, args, item);
                     return;
                 case "consume":
-                    consume(p, args, item);
+                    consume(p, alias, args, item);
                     return;
                 case "cooldown":
-                    cooldown(p, args, item);
+                    cooldown(p, alias, args, item);
                     return;
                 case "cooldownid":
-                    cooldownId(p, args, item);
+                    cooldownId(p, alias, args, item);
                     return;
                 case "permission":
-                    permission(p, args, item);
+                    permission(p, alias, args, item);
                     return;
                 case "visualcooldown":
-                    visualCooldown(p, args, item);
+                    visualCooldown(p, alias, args, item);
                     return;
                 case "displayuses":
-                    displayUses(p, args, item);
+                    displayUses(p, alias, args, item);
                 case "info":
                     p.openInventory(new ActionsGui(p, item).getInventory());
                     //info(p, args, item);
@@ -221,7 +225,7 @@ public class Actions extends ListenerSubCmd {
     }
 
     //it actions displayUses [boolean]
-    private void displayUses(Player p, String[] args, ItemStack item) {
+    private void displayUses(Player p, String label, String[] args, ItemStack item) {
         TagItem tagItem = ItemTag.getTagItem(item);
         boolean value = args.length >= 3 ? Aliases.BOOLEAN.convertAlias(args[2]) : !getDisplayUses(tagItem);
         setDisplayUses(tagItem, value);
@@ -238,7 +242,7 @@ public class Actions extends ListenerSubCmd {
     private void updateUsesDisplay(ItemStack item) {
         TagItem tagItem = ItemTag.getTagItem(item);
         boolean show = getDisplayUses(tagItem);
-        Map<String, Object> metaMap = new LinkedHashMap<>(item.getItemMeta().serialize());
+        Map<String, Object> metaMap = new LinkedHashMap<>(ItemUtils.getMeta(item).serialize());
         /*if (show && !map.containsKey("meta"))
             map.put("meta",new LinkedHashMap<String,Object>());
 
@@ -271,7 +275,7 @@ public class Actions extends ListenerSubCmd {
     }
 
     //it actions visualcooldown [boolean]
-    private void visualCooldown(Player sender, String[] args, ItemStack item) {
+    private void visualCooldown(Player sender, String label, String[] args, ItemStack item) {
         TagItem tagItem = ItemTag.getTagItem(item);
         boolean value = args.length >= 3 ? Aliases.BOOLEAN.convertAlias(args[2]) : !getVisualCooldown(tagItem);
         setVisualCooldown(tagItem, value);
@@ -282,7 +286,7 @@ public class Actions extends ListenerSubCmd {
     }
 
     //it actions consume [boolean]
-    private void consume(Player sender, String[] args, ItemStack item) {
+    private void consume(Player sender, String label, String[] args, ItemStack item) {
         TagItem tagItem = ItemTag.getTagItem(item);
         boolean value = args.length >= 3 ? Aliases.BOOLEAN.convertAlias(args[2]) : !getConsume(tagItem);
         setConsume(tagItem, value);
@@ -293,7 +297,7 @@ public class Actions extends ListenerSubCmd {
     }
 
     // itemtag actions setpermission <permission>
-    private void permission(Player p, String[] args, ItemStack item) {
+    private void permission(Player p, String label, String[] args, ItemStack item) {
         try {
             if (args.length > 3)
                 throw new IllegalArgumentException("Wrong param number");
@@ -305,12 +309,12 @@ public class Actions extends ListenerSubCmd {
             else
                 sendLanguageString("permission.feedback.removed", "", p);
         } catch (Exception e) {
-            Util.sendMessage(p, this.craftFailFeedback(getLanguageString("permission.params", null, p),
+            Util.sendMessage(p, this.craftFailFeedback(label, getLanguageString("permission.params", null, p),
                     getLanguageStringList("permission.description", null, p)));
         }
     }
 
-    private void cooldownId(Player p, String[] args, ItemStack item) {
+    private void cooldownId(Player p, String label, String[] args, ItemStack item) {
         try {
             if (args.length > 3)
                 throw new IllegalArgumentException("Wrong param number");
@@ -323,12 +327,12 @@ public class Actions extends ListenerSubCmd {
                 sendLanguageString("cooldownid.feedback.removed", "", p);
 
         } catch (Exception e) {
-            Util.sendMessage(p, this.craftFailFeedback(getLanguageString("cooldownid.params", null, p),
+            Util.sendMessage(p, this.craftFailFeedback(label, getLanguageString("cooldownid.params", null, p),
                     getLanguageStringList("cooldownid.description", null, p)));
         }
     }
 
-    private void cooldown(Player p, String[] args, ItemStack item) {
+    private void cooldown(Player p, String label, String[] args, ItemStack item) {
         try {
             if (args.length > 3)
                 throw new IllegalArgumentException("Wrong param number");
@@ -341,13 +345,13 @@ public class Actions extends ListenerSubCmd {
             else
                 sendLanguageString("cooldown.feedback.removed", "", p);
         } catch (Exception e) {
-            Util.sendMessage(p, this.craftFailFeedback(getLanguageString("cooldown.params", null, p),
+            Util.sendMessage(p, this.craftFailFeedback(label, getLanguageString("cooldown.params", null, p),
                     getLanguageStringList("cooldown.description", null, p)));
         }
     }
 
 
-    private void maxUses(Player p, String[] args, ItemStack item) {
+    private void maxUses(Player p, String label, String[] args, ItemStack item) {
         try {
             if (args.length > 3)
                 throw new IllegalArgumentException("Wrong param number");
@@ -364,12 +368,12 @@ public class Actions extends ListenerSubCmd {
                 sendLanguageString("maxuses.feedback.set", "", p,
                         "%uses%", String.valueOf(uses));
         } catch (Exception e) {
-            Util.sendMessage(p, this.craftFailFeedback(getLanguageString("maxuses.params", null, p),
+            Util.sendMessage(p, this.craftFailFeedback(label, getLanguageString("maxuses.params", null, p),
                     getLanguageStringList("maxuses.description", null, p)));
         }
     }
 
-    private void uses(Player p, String[] args, ItemStack item) {
+    private void uses(Player p, String label, String[] args, ItemStack item) {
         try {
             if (args.length > 3)
                 throw new IllegalArgumentException("Wrong param number");
@@ -386,7 +390,7 @@ public class Actions extends ListenerSubCmd {
                 sendLanguageString("uses.feedback.set", "", p,
                         "%uses%", String.valueOf(uses));
         } catch (Exception e) {
-            Util.sendMessage(p, this.craftFailFeedback(getLanguageString("uses.params", null, p),
+            Util.sendMessage(p, this.craftFailFeedback(label, getLanguageString("uses.params", null, p),
                     getLanguageStringList("uses.description", null, p)));
         }
     }
@@ -422,7 +426,7 @@ public class Actions extends ListenerSubCmd {
                 new ComponentBuilder(String.join("\n", UtilsString.fix(ActionHandler.getAction(actionType).getInfo(), p, true))).create())).create());
     }
 
-    private void set(Player p, String[] args, ItemStack item) {
+    private void set(Player p, String label, String[] args, ItemStack item) {
         try {
             if (args.length < 4)
                 throw new IllegalArgumentException("Wrong param number");
@@ -458,12 +462,12 @@ public class Actions extends ListenerSubCmd {
             sendLanguageString("set.feedback", "", p, "%line%",
                     String.valueOf(line + 1), "%action%", originalAction);
         } catch (Exception e) {
-            Util.sendMessage(p, this.craftFailFeedback(getLanguageString("set.params", null, p),
+            Util.sendMessage(p, this.craftFailFeedback(label, getLanguageString("set.params", null, p),
                     getLanguageStringList("set.description", null, p)));
         }
     }
 
-    private void remove(Player p, String[] args, ItemStack item) {
+    private void remove(Player p, String label, String[] args, ItemStack item) {
         try {
             if (args.length != 3)
                 throw new IllegalArgumentException("Wrong param number");
@@ -482,12 +486,12 @@ public class Actions extends ListenerSubCmd {
             sendLanguageString("remove.feedback", "", p, "%line%",
                     String.valueOf(line + 1), "%action%", action.split(TYPE_SEPARATOR)[0]);
         } catch (Exception e) {
-            Util.sendMessage(p, this.craftFailFeedback(getLanguageString("remove.params", null, p),
+            Util.sendMessage(p, this.craftFailFeedback(label, getLanguageString("remove.params", null, p),
                     getLanguageStringList("remove.description", null, p)));
         }
     }
 
-    private void add(Player p, String[] args, ItemStack item) {
+    private void add(Player p, String label, String[] args, ItemStack item) {
         try {
             if (args.length < 3)
                 throw new IllegalArgumentException("Wrong param number");
@@ -521,12 +525,12 @@ public class Actions extends ListenerSubCmd {
                     originalAction);
         } catch (Exception e) {
             e.printStackTrace();
-            Util.sendMessage(p, this.craftFailFeedback(getLanguageString("add.params", null, p),
+            Util.sendMessage(p, this.craftFailFeedback(label, getLanguageString("add.params", null, p),
                     getLanguageStringList("add.description", null, p)));
         }
     }
 
-    private void addLine(Player p, String[] args, ItemStack item) {
+    private void addLine(Player p, String label, String[] args, ItemStack item) {
         try {
             if (args.length < 4)
                 throw new IllegalArgumentException("Wrong param number");
@@ -558,7 +562,7 @@ public class Actions extends ListenerSubCmd {
             sendLanguageString("addline.feedback", "", p, "%action%",
                     originalAction, "%line%", String.valueOf(line + 1));
         } catch (Exception e) {
-            Util.sendMessage(p, this.craftFailFeedback(getLanguageString("addline.params", null, p),
+            Util.sendMessage(p, this.craftFailFeedback(label, getLanguageString("addline.params", null, p),
                     getLanguageStringList("addline.description", null, p)));
         }
     }
@@ -567,18 +571,18 @@ public class Actions extends ListenerSubCmd {
     public List<String> onComplete(CommandSender sender, String[] args) {
         switch (args.length) {
             case 2:
-                return Util.complete(args[1], actionsSub);
+                return CompleteUtility.complete(args[1], actionsSub);
             case 3:
                 switch (args[1].toLowerCase(Locale.ENGLISH)) {
                     case "add":
-                        return Util.complete(args[2], ActionHandler.getTypes());
+                        return CompleteUtility.complete(args[2], ActionHandler.getTypes());
                     case "uses":
                     case "maxuses":
-                        return Util.complete(args[2], Arrays.asList("-1", "1", "5", "10"));
+                        return CompleteUtility.complete(args[2], Arrays.asList("-1", "1", "5", "10"));
                     case "visualcooldown":
                     case "consume":
                     case "displayuses":
-                        return Util.complete(args[2], Aliases.BOOLEAN);
+                        return CompleteUtility.complete(args[2], Aliases.BOOLEAN);
                 }
                 return Collections.emptyList();
             case 4:
@@ -587,7 +591,7 @@ public class Actions extends ListenerSubCmd {
                         return ActionHandler.tabComplete(sender, args[2].toLowerCase(Locale.ENGLISH), new ArrayList<>(Arrays.asList(args).subList(3, args.length)));
                     case "set":
                     case "addline":
-                        return Util.complete(args[3], ActionHandler.getTypes());
+                        return CompleteUtility.complete(args[3], ActionHandler.getTypes());
                 }
                 return Collections.emptyList();
             default:
@@ -914,7 +918,7 @@ public class Actions extends ListenerSubCmd {
 
             //consume on last use
             item = this.getGuiItem("gui.actions.consume", Material.APPLE);
-            meta = this.loadLanguageDescription(item.getItemMeta(), "gui.actions.consume",
+            meta = this.loadLanguageDescription(ItemUtils.getMeta(item), "gui.actions.consume",
                     "%value%", Aliases.BOOLEAN.getName(getConsume(tagItem)));
             if (!getConsume(tagItem))
                 meta.addEnchant(Enchantment.LURE, 1, true);
@@ -928,7 +932,7 @@ public class Actions extends ListenerSubCmd {
                     "%value%", getUses(tagItem) == -1 ? "-1 (Unlimited)" : String.valueOf(getUses(tagItem)), "%editor%", String.valueOf(editorValue)
                     , "%editor-prev%", String.valueOf(Math.max(1, editorValue / 10)), "%editor-next%", String.valueOf(Math.min(1000000, editorValue * 10))));
 
-            if (Util.isVersionAfter(1, 9)) {
+            if (VersionUtils.isVersionAfter(1, 9)) {
                 //max uses
                 this.getInventory().setItem(17, this.loadLanguageDescription(this.getGuiItem("gui.actions.maxuses", Material.DIAMOND_PICKAXE), "gui.actions.maxuses",
                         "%value%", getMaxUses(tagItem) == -1 ? "-1 (Unlimited)" : String.valueOf(getMaxUses(tagItem)), "%editor%", String.valueOf(editorValue)
@@ -936,7 +940,7 @@ public class Actions extends ListenerSubCmd {
 
 
                 item = this.getGuiItem("gui.actions.displayuses", Material.PAINTING);
-                meta = this.loadLanguageDescription(item.getItemMeta(), "gui.actions.displayuses", "%value%", Aliases.BOOLEAN.getName(getDisplayUses(tagItem)));
+                meta = this.loadLanguageDescription(ItemUtils.getMeta(item), "gui.actions.displayuses", "%value%", Aliases.BOOLEAN.getName(getDisplayUses(tagItem)));
                 if (getDisplayUses(tagItem))
                     meta.addEnchant(Enchantment.LURE, 1, true);
                 else
@@ -965,7 +969,7 @@ public class Actions extends ListenerSubCmd {
 
             //visualcooldown
             item = this.getGuiItem("gui.actions.visualcooldown", Material.ENDER_PEARL);
-            meta = this.loadLanguageDescription(item.getItemMeta(), "gui.actions.visualcooldown", "%value%", Aliases.BOOLEAN.getName(getVisualCooldown(tagItem)));
+            meta = this.loadLanguageDescription(ItemUtils.getMeta(item), "gui.actions.visualcooldown", "%value%", Aliases.BOOLEAN.getName(getVisualCooldown(tagItem)));
             if (getVisualCooldown(tagItem))
                 meta.addEnchant(Enchantment.LURE, 1, true);
             else
@@ -975,7 +979,7 @@ public class Actions extends ListenerSubCmd {
 
             //info
             item = this.getGuiItem("gui.actions.info", Material.PAPER);
-            meta = this.loadLanguageDescription(item.getItemMeta(), "gui.actions.info");
+            meta = this.loadLanguageDescription(ItemUtils.getMeta(item), "gui.actions.info");
             List<String> lore = new ArrayList<>(meta.hasLore() ? meta.getLore() : Collections.emptyList());
             List<String> list = Actions.getActions(tagItem);
             if (list != null)

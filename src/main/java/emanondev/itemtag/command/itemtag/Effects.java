@@ -2,6 +2,7 @@ package emanondev.itemtag.command.itemtag;
 
 import emanondev.itemedit.aliases.Aliases;
 import emanondev.itemedit.utility.CompleteUtility;
+import emanondev.itemedit.utility.ItemUtils;
 import emanondev.itemedit.utility.VersionUtils;
 import emanondev.itemtag.EffectsInfo;
 import emanondev.itemtag.ItemTag;
@@ -88,7 +89,7 @@ public class Effects extends ListenerSubCmd {
             else
                 info.addEffect(EffectsInfo.craftPotionEffect(type, amplifier, ambient, particles, icon));
             info.update();
-            p.setItemInHand(info.getItem());
+            ItemUtils.setHandItem(p,info.getItem());
         } catch (Exception e) {
             //TODO
             onFail(p, alias);
@@ -113,7 +114,7 @@ public class Effects extends ListenerSubCmd {
             else
                 info.addEffect(EffectsInfo.craftPotionEffect(type, amplifier, ambient, particles, icon));
             info.update();
-            p.setItemInHand(info.getItem());
+            ItemUtils.setHandItem(p,info.getItem());
         } catch (Exception e) {
             //TODO
             onFail(p, alias);
@@ -131,7 +132,7 @@ public class Effects extends ListenerSubCmd {
                 return;
             info.removeEffect(type);
             info.update();
-            p.setItemInHand(info.getItem());
+            ItemUtils.setHandItem(p,info.getItem());
         } catch (Exception e) {
             //TODO
             onFail(p, alias);
@@ -149,7 +150,7 @@ public class Effects extends ListenerSubCmd {
                 if (slots.contains(slot) != info.isValidSlot(slot))
                     info.toggleSlot(slot);
             info.update();
-            p.setItemInHand(info.getItem());
+            ItemUtils.setHandItem(p,info.getItem());
         } catch (Exception e) {
             //TODO
             onFail(p, alias);
@@ -212,7 +213,7 @@ public class Effects extends ListenerSubCmd {
     }
 
     private Map<PotionEffectType, PotionEffect> getPotionEffects(ItemStack item, EquipmentSlot slot, boolean ignoreInstant) {
-        if (isAirOrNull(item))
+        if (ItemUtils.isAirOrNull(item))
             return Collections.emptyMap();
         EffectsInfo info = new EffectsInfo(item);
         if (!info.isValidSlot(slot) || !info.hasAnyEffects())
@@ -271,7 +272,7 @@ public class Effects extends ListenerSubCmd {
             public void run() {
                 for (EquipmentSlot slot : EquipmentSlot.values()) {
                     ItemStack equip = getEquip(event.getPlayer(), slot);
-                    if (isAirOrNull(equip))
+                    if (ItemUtils.isAirOrNull(equip))
                         continue;
                     EffectsInfo newInfo = new EffectsInfo(equip);
                     if (!(newInfo.isValidSlot(slot) && newInfo.hasAnyEffects()))
@@ -341,14 +342,6 @@ public class Effects extends ListenerSubCmd {
             });
         }
         newEffects.forEach((k, v) -> addEffect(p, k, v));
-    }
-
-
-    /**
-     * A utility method to support versions that use null or air ItemStacks.
-     */
-    public boolean isAirOrNull(ItemStack item) {
-        return item == null || item.getType().equals(Material.AIR);
     }
 
     protected ItemStack getEquip(Player p, EquipmentSlot slot) {

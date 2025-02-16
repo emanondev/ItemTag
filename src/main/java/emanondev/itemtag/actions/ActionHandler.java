@@ -1,16 +1,16 @@
 package emanondev.itemtag.actions;
 
+import emanondev.itemedit.utility.VersionUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ActionHandler {
 
-    private static final HashMap<String, Action> actions = new HashMap<>();
+    private static final Map<String, Action> actions = VersionUtils.hasFoliaAPI() ?
+            new ConcurrentHashMap<>() : new HashMap<>();
 
     public static void handleAction(Player player, String type, String action) {
         actions.get(type).execute(player, action);

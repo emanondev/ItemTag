@@ -33,7 +33,7 @@ public abstract class Action {
      */
     public abstract List<String> tabComplete(CommandSender sender, List<String> params);
 
-    public abstract List<String> getInfo();
+    public abstract List<String> getInfo();//TODO move on configuration
 
     public String fixActionInfo(String actionInfo) {
         return actionInfo;

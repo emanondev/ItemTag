@@ -80,7 +80,8 @@ public abstract class CustomFlag implements Listener, Comparable<CustomFlag> {
     }
 
     public boolean getValue(TagItem item) {
-        return item.hasBooleanTag(key) ? item.getBoolean(key) : this.defaultValue();
+        Boolean value = item.getBoolean(key);
+        return value == null ? this.defaultValue() : value;
     }
 
     public void setValue(TagItem item, boolean val) {

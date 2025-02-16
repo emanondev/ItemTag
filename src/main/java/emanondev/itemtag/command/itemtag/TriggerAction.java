@@ -3,6 +3,7 @@ package emanondev.itemtag.command.itemtag;
 import emanondev.itemedit.Util;
 import emanondev.itemedit.aliases.Aliases;
 import emanondev.itemedit.command.SubCmd;
+import emanondev.itemedit.utility.CompleteUtility;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.TagItem;
 import emanondev.itemtag.activity.*;
@@ -218,35 +219,35 @@ public class TriggerAction extends SubCmd {
     public List<String> onComplete(CommandSender sender, String[] args) {
         switch (args.length) {
             case 2:
-                return Util.complete(args[1], "set", "delete", "setuses", "setallowedslots", "consumeatusesend", "setmaxuses", "visualcooldown", "cooldownamount");
+                return CompleteUtility.complete(args[1], "set", "delete", "setuses", "setallowedslots", "consumeatusesend", "setmaxuses", "visualcooldown", "cooldownamount");
             case 3:
                 switch (args[1].toLowerCase(Locale.ENGLISH)) {
                     case "set":
                     case "delete":
                     case "setallowedslots":
                     case "cooldownamount":
-                        return Util.complete(args[2], TriggerManager.getTriggerTypeIds());
+                        return CompleteUtility.complete(args[2], TriggerManager.getTriggerTypeIds());
                     case "setuses":
                     case "setmaxuses":
-                        return Util.complete(args[2], "-1", "1", "50");
+                        return CompleteUtility.complete(args[2], "-1", "1", "50");
                     case "consumeatusesend":
                     case "visualcooldown":
-                        return Util.complete(args[2], Aliases.BOOLEAN);
+                        return CompleteUtility.complete(args[2], Aliases.BOOLEAN);
                     default:
                         return Collections.emptyList();
                 }
             case 4:
                 switch (args[1].toLowerCase(Locale.ENGLISH)) {
                     case "set":
-                        return Util.complete(args[3], ActivityManager.getActivityIds());
+                        return CompleteUtility.complete(args[3], ActivityManager.getActivityIds());
                     case "setallowedslots":
-                        return Util.complete(args[2], Aliases.EQUIPMENT_SLOTS);
+                        return CompleteUtility.complete(args[2], Aliases.EQUIPMENT_SLOTS);
                     default:
                         return Collections.emptyList();
                 }
             default:
                 if (args[1].equalsIgnoreCase("setallowedslots"))
-                    return Util.complete(args[2], Aliases.EQUIPMENT_SLOTS);
+                    return CompleteUtility.complete(args[2], Aliases.EQUIPMENT_SLOTS);
                 return Collections.emptyList();
         }
     }

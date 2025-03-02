@@ -1,0 +1,530 @@
+player-only: '&4[&cItemTag&4] &cComando apenas para jogadores'
+no-item-on-hand: '&4[&cItemTag&4] &cVocê precisa segurar um item na mão'
+lack-permission: '&4[&cItemTag&4] &cVocê não tem permissão %permission%'
+lack-permission-generic: '&4[&cItemTag&4] &cVocê não tem permissão para usar este comando'
+itemtag:
+  help-header: '&9&lItemTag - Ajuda'
+  flag:
+    wrong-flag: '&4[&cItemTag&4] &cValor de flag incorreto! &4[&6passe o mouse aqui&4]'
+    description:
+      - '&b&lAlternar flags personalizadas no item'
+      - ''
+      - '&e<flag> &bnome da flag'
+      - '&e[true/false] &bvalor da flag, por padrão alterna'
+    params: '<flag> [true/false]'
+    placeable:
+      feedback:
+        standard: '&9[&fItemTag&9] &aO item pode ser colocado.'
+        custom: '&9[&fItemTag&9] &aO item não pode ser colocado.'
+        failed-place-attempt: '&4[&cItemTag&4] &cVocê não pode colocar este item'
+    usable:
+      feedback:
+        standard: '&9[&fItemTag&9] &aO item pode ser usado.'
+        custom: '&9[&fItemTag&9] &aO item não pode ser usado (Clique direito).'
+    smelt:
+      feedback:
+        standard: '&9[&fItemTag&9] &aO item pode ser cozido/fundido em fornos.'
+        custom: '&9[&fItemTag&9] &aO item não pode ser cozido/fundido em fornos.'
+    furnacefuel:
+      feedback:
+        standard: '&9[&fItemTag&9] &aO item pode ser usado como combustível de fornalha.'
+        custom: '&9[&fItemTag&9] &aO item não pode ser usado como combustível de fornalha.'
+    recipeingredient:
+      feedback:
+        standard: '&9[&fItemTag&9] &aO item pode ser usado como ingrediente de receita.'
+        custom: '&9[&fItemTag&9] &aO item não pode ser usado como ingrediente de receita.'
+    enchantable:
+      feedback:
+        standard: '&9[&fItemTag&9] &aO item pode ser encantado.'
+        custom: '&9[&fItemTag&9] &aO item não pode ser encantado.'
+    renamable:
+      feedback:
+        standard: '&9[&fItemTag&9] &aO item pode ser renomeado em bigornas.'
+        custom: '&9[&fItemTag&9] &aO item não pode ser renomeado em bigornas.'
+    grindable:
+      feedback:
+        standard: '&9[&fItemTag&9] &aO item pode ser desenfeitiçado com uma esmeril.'
+        custom: '&9[&fItemTag&9] &aO item não pode ser desenfeitiçado com uma esmeril.'
+    equipment:
+      feedback:
+        standard: '&9[&fItemTag&9] &aO item pode ser equipado.'
+        custom: '&9[&fItemTag&9] &aO item não pode ser equipado.'
+    entityfood:
+      feedback:
+        standard: '&9[&fItemTag&9] &aO item pode ser usado como comida para animais.'
+        custom: '&9[&fItemTag&9] &aO item não pode ser usado como comida para animais.'
+    clickmove:
+      feedback:
+        standard: '&9[&fItemTag&9] &aO item pode ser movido no inventário.'
+        custom: '&9[&fItemTag&9] &aO item não pode ser movido no inventário.'
+    tradeable:
+      feedback:
+        standard: '&9[&fItemTag&9] &aO item pode ser trocado com aldeões.'
+        custom: '&9[&fItemTag&9] &aO item não pode ser trocado com aldeões.'
+  actions:
+    invalid-action:
+      message: '&4[&cItemTag&4] &c''&6%error%&c'' não é um tipo válido &4[&6passe o mouse aqui&4]'
+      hover-pre: '&6&lTipos válidos'
+      first_color: '&b'
+      second_color: '&e'
+    invalid-actioninfo:
+      message: '&4[&cItemTag&4] &c''&6%error%&c'' não é uma informação válida para &6%action% &4[&6passe o mouse aqui&4]'
+    description:
+      - '&b&lDefine ações executadas quando o item é usado'
+      - ''
+      - '&eAdd <type> <action> &b- adicionar ação selecionada'
+      - '&eSet <line> <type> <action> &b- substituir ação na linha escolhida'
+      - '&eRemove <line> &b- remover ação na linha escolhida'
+      - '&eClear &b- remover todas as ações'
+      - '&ePermission [permission] &b- definir uma permissão necessária para usar este item'
+      - '&eCooldown <ms> &b- definir um tempo de recarga para usar este item novamente'
+      - '&eCooldownid [id] &b- definir o ID de recarga usado para este item'
+      - '&eUses [amount] &b- definir quantas vezes este item pode ser usado'
+      - '&eInfo &b- mostrar informações sobre ações no item atual'
+    params: '[...]'
+    add:
+      params: 'add <type> <action>'
+      description:
+        - '&b&lAdicionar ação selecionada'
+        - ''
+        - '&e<type> &btipo de ação'
+        - '&e<action> &binformação adicional para a ação'
+      feedback: '&9[&fItemTag&9] &aAção &e%action% &aadicionada'
+    addline:
+      params: 'addline <line> <type> <action>'
+      description:
+        - '&b&lAdicionar ação selecionada na linha especificada'
+        - ''
+        - '&e<line> &blinha para adicionar'
+        - '&e<type> &btipo de ação'
+        - '&e<action> &binformação adicional para a ação'
+      feedback: '&9[&fItemTag&9] &aLinha &e%line% &aadicionada como &e%action%'
+    set:
+      params: 'set <line> <type> <action>'
+      description:
+        - '&b&lSubstituir ação na linha selecionada'
+        - ''
+        - '&e<line> &ba linha a ser substituída'
+        - '&e<type> &btipo de ação'
+        - '&e<action> &binformação adicional para a ação'
+      feedback: '&9[&fItemTag&9] &aLinha &e%line% &adefinida como &e%action%'
+    remove:
+      params: 'remove <line>'
+      description:
+        - '&b&lRemover ação na linha selecionada'
+        - ''
+        - '&e<line> &ba linha a ser removida'
+      feedback: '&9[&fItemTag&9] &aLinha &e%line% &aremovida (&e%action%&a)'
+    permission:
+      params: 'permission [permission]'
+      description:
+        - '&b&lDefinir permissão para usar este item'
+        - ''
+        - '&e[permission] &ba permissão a ser definida, por padrão nenhuma'
+      feedback:
+        set: '&9[&fItemTag&9] &aAgora é necessária a permissão &e%permission% &apara usar este item'
+        removed: '&9[&fItemTag&9] &aAgora nenhuma permissão é necessária para usar este item'
+    cooldown:
+      params: 'cooldown [ms]'
+      description:
+        - '&b&lDefinir um tempo de recarga para usar o item novamente'
+        - ''
+        - '&e[ms] &btempo necessário antes de poder usar o item novamente, por padrão 0'
+        - '&bNota: a recarga é definida com base no cooldownid, diferentes'
+        - '&b  itens com o mesmo cooldownid compartilham a mesma recarga'
+        - '&bNota: a recarga é preservada ao sair do jogo e reiniciar o servidor'
+      feedback:
+        set: '&9[&fItemTag&9] &aEste item tem um tempo de recarga de &e%cooldown_seconds% &asegundos'
+        removed: '&9[&fItemTag&9] &aEste item não tem tempo de recarga'
+    cooldownid:
+      params: 'cooldownid [id]'
+      description:
+        - '&b&lDefinir um ID de recarga para um item'
+        - ''
+        - '&e[id] &btempo necessário antes de poder usar o item novamente'
+        - '&bNota: a recarga é definida com base no cooldownid, diferentes'
+        - '&b  itens com o mesmo cooldownid compartilham a mesma recarga'
+      feedback:
+        set: '&9[&fItemTag&9] &aEste item usa o ID &e%id% &apara recarga'
+        removed: '&9[&fItemTag&9] &aEste item usa o ID &epadrão &apara recarga'
+    uses:
+      params: 'uses [amount]'
+      description:
+        - '&b&lDefinir quantas vezes o item pode ser usado'
+        - ''
+        - '&bNota: use &e-1 &bpara usos ilimitados'
+      feedback:
+        set: '&9[&fItemTag&9] &aEste item pode ser usado &e%uses% &avezes antes de ser consumido'
+        unlimited: '&9[&fItemTag&9] &aEste item tem &eusos ilimitados'
+    maxuses:
+      params: 'maxuses [amount]'
+      description:
+        - '&b&lDefinir usos máximos para o item'
+        - '&bUsado principalmente para fins estéticos com'
+        - '&bexibição de usos ativada'
+        - ''
+        - '&bNota: use &e-1 &bpara usos ilimitados'
+      feedback:
+        set: '&9[&fItemTag&9] &aEste item tem &e%uses% &ausos máximos'
+        unlimited: '&9[&fItemTag&9] &aEste item tem &eusos ilimitados'
+    consume:
+      params: 'consume [true/false]'
+      description:
+        - '&6&lConsumir o item no último uso'
+        - ''
+        - '&bNota: quando ativado e o item consumir'
+        - '&b seu último uso, ele será destruído'
+      feedback:
+        set: '&9[&fItemTag&9] &aO item será destruído ao atingir seu último uso'
+        unset: '&9[&fItemTag&9] &aO item não será destruído ao atingir seu último uso'
+    visualcooldown:
+      params: 'visualcooldown [true/false]'
+      description:
+        - '&6&lExibir visualmente o tempo de recarga restante'
+        - ''
+        - '&bQuando ativado, aplica um efeito visual semelhante ao'
+        - '&btempo de recarga da pérola do Ender no item'
+        - ''
+        - '&bNota: Infelizmente, esse efeito visual também'
+        - '&b se aplica a qualquer item do mesmo tipo'
+      feedback:
+        set: '&9[&fItemTag&9] &aAgora o item exibe o tempo de recarga visualmente'
+        unset: '&9[&fItemTag&9] &aAgora o item não exibirá o tempo de recarga visualmente'
+    displayuses:
+      params: 'displayuses [true/false]'
+      description:
+        - '&6&lExibir usos restantes'
+        - ''
+        - '&bQuando ativado, adiciona uma linha mostrando'
+        - '&bquantos usos restam'
+        - ''
+        - '&bNota: Infelizmente, esse efeito visual também'
+        - '&b se aplica a qualquer item do mesmo tipo'
+      feedback:
+        set: '&9[&fItemTag&9] &aAgora o item mostra usos restantes e usos máximos'
+        unset: '&9[&fItemTag&9] &aAgora o item não mostrará usos restantes e usos máximos'
+  consumeactions:
+    description:
+      - '&b&lDefine ações executadas quando o item é consumido, como comida e bebidas'
+      - ''
+      - '&eAdd <type> <action> &b- adicionar a ação selecionada'
+      - '&eSet <line> <type> <action> &b- substituir a ação na linha escolhida'
+      - '&eRemove <line> &b- remover a ação na linha escolhida'
+      - '&eClear &b- remover todas as ações'
+      - '&ePermission [permission] &b- definir uma permissão necessária para consumir este item'
+      - '&eCooldown <ms> &b- definir um tempo de espera para usar este item novamente'
+      - '&eCooldownid [id] &b- definir o ID de cooldown utilizado para este item'
+      - '&eInfo &b- mostrar informações sobre as ações no item atual'
+    params: '[...]'
+    add:
+      params: 'add <type> <action>'
+      description:
+        - '&b&lAdicionar a ação selecionada'
+        - ''
+        - '&e<type> &btipo de ação'
+        - '&e<action> &binformação adicional sobre a ação'
+    addline:
+      params: 'addline <line> <type> <action>'
+      description:
+        - '&b&lAdicionar a ação selecionada na linha escolhida'
+        - ''
+        - '&e<line> &blinha onde adicionar'
+        - '&e<type> &btipo de ação'
+        - '&e<action> &binformação adicional sobre a ação'
+    set:
+      params: 'set <line> <type> <action>'
+      description:
+        - '&b&lSubstituir a ação na linha escolhida'
+        - ''
+        - '&e<line> &ba linha a substituir'
+        - '&e<type> &btipo de ação'
+        - '&e<action> &binformação adicional sobre a ação'
+    remove:
+      params: 'remove <line>'
+      description:
+        - '&b&lRemover a ação na linha escolhida'
+        - ''
+        - '&e<line> &ba linha a remover'
+    permission:
+      params: 'permission [permission]'
+      description:
+        - '&b&lDefinir permissão para consumir este item'
+        - ''
+        - '&e[permission] &ba permissão a definir, por padrão nenhuma'
+    cooldown:
+      params: 'cooldown [ms]'
+      description:
+        - '&b&lDefinir um tempo de espera para consumir o item novamente'
+        - ''
+        - '&e[ms] &btempo antes de poder consumir o item novamente'
+        - '     &bpor padrão é 0'
+        - '&bNota: o tempo de espera é baseado no ID de cooldown, itens diferentes'
+        - '&b  com o mesmo ID de cooldown partilham o mesmo tempo de espera'
+        - '&bNota: o tempo de espera é mantido após logout e reinício do servidor'
+    cooldownid:
+      params: 'cooldownid [id]'
+      description:
+        - '&b&lDefinir um ID de cooldown para um item'
+        - ''
+        - '&e[id] &btempo antes de poder consumir o item novamente'
+        - '&bNota: o tempo de espera é baseado no ID de cooldown, itens diferentes'
+        - '&b  com o mesmo ID de cooldown partilham o mesmo tempo de espera'
+    feedback:
+      actions:
+        set: '&aLinha &e%line% &adefinida como &e%action%'
+        remove: '&aLinha removida &e%line% &a(&e%action%&a)'
+        clear: '&aAções de consumo apagadas neste item'
+        permission:
+          set: '&aAgora é necessária a permissão &e%permission% &apara consumir este item'
+          removed: '&aAgora não é necessária permissão para consumir este item'
+        cooldownid:
+          set: '&aEste item usa o ID &e%id% &apara cooldown'
+          removed: '&aEste item usa o ID &edefault &apara cooldown'
+        cooldown:
+          set: '&aEste item tem um cooldown de &e%cooldown_seconds% &asegundos'
+          removed: '&aEste item não tem cooldown'
+  effects:
+    description:
+      - '&b&lAdicionar efeitos permanentes de poção'
+      - '&bAbrir um menu GUI'
+      - '&bLembra-te de selecionar em que parte do equipamento'
+      - '&b o efeito será aplicado'
+    params: ''
+itemtagreload:
+  success: '&9[&fItemTag&9] &aRecarregado'
+gui:
+  middleclick: #o clique do meio não pode ser usado a menos que esteja no modo criativo, uma alternativa é pressionar o botão 1 da hotbar
+    creative: 'Clique do Meio'
+    other: 'Pressiona 1'
+  previous-page:
+    #Marcadores: %player_name% %page% %target_page%
+    description:
+      - '&6&lPágina Anterior'
+      - ''
+      - '&7[&fClique&7]&b Ir para a página &e%target_page%'
+  next-page:
+    #Marcadores: %player_name% %page% %target_page%
+    description:
+      - '&6&lPágina Seguinte'
+      - ''
+      - '&7[&fClique&7]&b Ir para a página &e%target_page%'
+  back:
+    #Marcadores: %player_name%
+    description:
+      - '&6&lVoltar'
+      - ''
+      - '&7[&fClique&7]&b Voltar ao menu anterior'
+  actions:
+    title: '&9Ações'
+    click-interact: '&9[&fItemTag&9] &b[Clica aqui]'
+    click-hover: '&6Clica para sugerir comando'
+    addline:
+      - '&6&lAdicionar Ação'
+      - ''
+      - '&7[&fClique&7]&b Alterar valores'
+      - '&9/it actions add <tipo de ação> <info da ação>'
+      - '&9/it actions addline <linha> <tipo de ação> <info da ação>'
+    set:
+      - '&6&lDefinir Ação'
+      - ''
+      - '&7[&fClique&7]&b Alterar valores'
+      - '&9/it actions set <linha> <tipo de ação> <info da ação>'
+    remove:
+      - '&6&lRemover Ação'
+      - ''
+      - '&7[&fClique&7]&b Alterar valores'
+      - '&9/it actions remove <linha>'
+    consume:
+      - '&6&lConsumir quando &e&l0&6&l usos restantes'
+      - '&bAtivado: &e%value%'
+      - '&7Nota: quando verdadeiro e o item consome'
+      - '&7 o seu último uso, o item é destruído'
+      - ''
+      - '&7[&fClique&7]&b Alternar'
+      - '&9/it actions consume [true/false]'
+    uses:
+      - '&6&lUsos Disponíveis &e&l%value%'
+      - '&7(-1 para Ilimitado)'
+      - ''
+      - '&7[&fClique Direito&7]&b Adicionar &e%editor%'
+      - '&7[&fClique Esquerdo&7]&b Remover &e%editor%'
+      - '&7[&fShift + Clique Esquerdo/Direito&7]&b %editor-prev% << &e%editor% &b>> %editor-next%'
+      - '&9/it actions uses <quantidade>'
+    maxuses:
+      - '&6&lUsos Máximos &e&l%value%'
+      - '&7(-1 para Ilimitado)'
+      - '&7Principalmente usado para fins estéticos com Usos Visíveis'
+      - ''
+      - '&7[&fClique Direito&7]&b Adicionar &e%editor%'
+      - '&7[&fClique Esquerdo&7]&b Remover &e%editor%'
+      - '&7[&fShift + Clique Esquerdo/Direito&7]&b %editor-prev% << &e%editor% &b>> %editor-next%'
+      - '&9/it actions maxuses <quantidade>'
+    permission:
+      - '&6&lPermissão para usar: &e&l%value%'
+      - '&7Nota: se não tiveres esta permissão'
+      - '&7 não poderás usar o item ou'
+      - '&7 diminuir os seus usos'
+      - ''
+      - '&7[&fClique&7]&b Editar'
+      - '&9/it actions permission [permissão]'
+    cooldown:
+      - '&6&lTempo de Recarga: &e&l%value_s% &9s'
+      - '&7Nota: aplica um tempo de recarga ao usar com clique direito'
+      - ''
+      - '&7[&fClique Direito&7]&b Adicionar &e%editor%'
+      - '&7[&fClique Esquerdo&7]&b Remover &e%editor%'
+      - '&7[&fShift + Clique Esquerdo/Direito&7]&b %editor-prev% << &e%editor% &b>> %editor-next%'
+      - '&9/it actions cooldown <cooldown &nms&9>'
+    cooldownid:
+      - '&6&lID de Recarga: &e&l%value%'
+      - '&7Nota: todos os itens com o mesmo cooldownid'
+      - '&7 partilham o tempo de recarga'
+      - ''
+      - '&7[&fClique&7]&b Editar'
+      - '&9/it actions cooldownid [cooldown id]'
+    info:
+      - '&6&lLista de Ações:'
+    visualcooldown:
+      - '&6&lExibir tempo de recarga visual'
+      - '&bAtivado: &e%value%'
+      - '&7Nota: Infelizmente, este efeito visual também'
+      - '&7 se aplica a qualquer item do mesmo tipo'
+      - ''
+      - '&7[&fClique&7]&b Alternar'
+      - '&9/it actions visualdisplay [true/false]'
+    displayuses:
+      - '&6&lExibir Usos Restantes'
+      - '&bAtivado: &e%value%'
+      - ''
+      - '&7[&fClique&7]&b Alternar'
+      - '&9/it actions displayuses [true/false]'
+  actionslines:
+    actionformat: '&e%type% &f%info%'
+    element:
+      - '%action%'
+      - '&7[&fClique Direito&7]&b Substituir esta ação'
+      - '&7[&fClique Esquerdo&7]&b Adicionar nova ação antes desta'
+      - '&7[&fShift + Clique Direito&7]&b Apagar esta ação'
+    add:
+      - ' '
+      - '&7[&fClique Esquerdo&7]&b Adicionar nova ação'
+  flags:
+    placeable:
+      - '&6Define se o item pode ser colocado'
+      - '&bValor: &e%value%'
+      - ''
+      - '&7[&fClique&7]&b Alternar'
+    usable:
+      - '&6Define se o item pode ser usado'
+      - '&bValor: &e%value%'
+      - ''
+      - '&7Se definido como falso, impede o comportamento padrão'
+      - '&7 do clique direito do item no Minecraft'
+      - '&7A definição do que é "usar" varia conforme o tipo do item'
+      - '&7Comida não pode ser comida, vara de pesca não pode pescar,'
+      - '&7 ovos não podem ser atirados, ovos de gerador não podem gerar...'
+      - ''
+      - '&7[&fClique&7]&b Alternar'
+    smelt:
+      - '&6Define se o item pode ser cozinhado'
+      - '&bValor: &e%value%'
+      - ''
+      - '&7Se definido como falso, impede a mecânica padrão'
+      - '&7 de cozinhar na fornalha'
+      - '&7Funciona tanto para comida quanto para minérios'
+      - ''
+      - '&7[&fClique&7]&b Alternar'
+    furnacefuel:
+      - '&6Define se o item pode ser usado como combustível de fornalha'
+      - '&bValor: &e%value%'
+      - ''
+      - '&7Se definido como falso, impede que a fornalha'
+      - '&7 use este item como combustível'
+      - ''
+      - '&7[&fClique&7]&b Alternar'
+    recipeingredient:
+      - '&6Define se o item pode ser usado em receitas de crafting'
+      - '&bValor: &e%value%'
+      - ''
+      - '&7Se definido como falso, impede que o item'
+      - '&7 seja usado como ingrediente em receitas'
+      - ''
+      - '&7[&fClique&7]&b Alternar'
+    enchantable:
+      - '&6Define se o item pode ser encantado'
+      - '&bValor: &e%value%'
+      - ''
+      - '&7Se definido como falso, impede o uso na mesa de encantamentos'
+      - ''
+      - '&7[&fClique&7]&b Alternar'
+    renamable:
+      - '&6Define se o item pode ser renomeado na bigorna'
+      - '&bValor: &e%value%'
+      - ''
+      - '&7Se definido como falso, impede que o item seja renomeado'
+      - '&7 na bigorna'
+      - ''
+      - '&7[&fClique&7]&b Alternar'
+    grindable:
+      - '&6Define se o item pode ser desencantado na rebarbadora'
+      - '&bValor: &e%value%'
+      - ''
+      - '&7Se definido como falso, impede que o item'
+      - '&7 seja desencantado na rebarbadora'
+      - ''
+      - '&7[&fClique&7]&b Alternar'
+    equipment:
+      - '&6Define se o item pode ser usado como equipamento'
+      - '&bValor: &e%value%'
+      - ''
+      - '&7Se definido como falso e o item estiver equipado, será retirado'
+      - '&7 e devolvido ao inventário do jogador'
+      - '&7Nota: mão principal e mão secundária não são considerados equipamentos'
+      - ''
+      - '&7[&fClique&7]&b Alternar'
+    entityfood:
+      - '&6Define se o item pode ser usado como comida para animais'
+      - '&bValor: &e%value%'
+      - ''
+      - '&7Se definido como falso, impede que os animais se reproduzam'
+      - '&7 e que os bebés cresçam mais rápido ao comer este item'
+      - ''
+      - '&7[&fClique&7]&b Alternar'
+    vanishcurse:
+      - '&6Define se o item desaparece ao morrer'
+      - '&bValor: &e%value%'
+      - ''
+      - '&7Funciona exatamente como o encantamento "Maldição do Desaparecimento"'
+      - '&7Mas não é um encantamento'
+      - ''
+      - '&7[&fClique&7]&b Alternar'
+    clickmove:
+      - '&6Define se o item pode ser movido no inventário'
+      - '&bValor: &e%value%'
+      - ''
+      - '&7Os jogadores OP têm permissão para ignorar essa restrição'
+      - ''
+      - '&7[&fClique&7]&b Alternar'
+    tradeable:
+      - '&6Define se o item pode ser trocado com aldeões'
+      - '&bValor: &e%value%'
+      - ''
+      - '&7Se definido como falso, impede a troca padrão do Minecraft'
+      - ''
+      - '&7[&fClique&7]&b Alternar'
+  effects:
+    title: '&9Efeitos'
+    slot:
+      - '&6&l%slot%'
+      - '&bAtivado: &e%value%'
+    potion:
+      - '&6&l%effect%'
+      - ''
+      - '&bNível: &e%level% &7[Clique Esquerdo/Direito para alterar]'
+      - '&bPartículas: &e%particles% &7[Shift + Clique Esquerdo para alternar]'
+      - '&bAmbiente: &e%ambient% &7[Shift + Clique Direito para alternar]'
+      - '&bÍcone: &e%icon% &7[%middle_click% para alternar]'
+      - '&bDuração: &e%duration%'
+    potion-instant: 'instantâneo'
+    potion-unlimited: 'ilimitado'
+    icon-unsupported: '&cApenas disponível na versão 1.13+'

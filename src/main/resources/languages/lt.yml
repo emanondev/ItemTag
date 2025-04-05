@@ -61,6 +61,10 @@ itemtag:
       feedback:
         standard: '&9[&fItemTag&9] &aThe item can be traded with villagers.'
         custom: '&9[&fItemTag&9] &aThe item can''t be traded with villagers.'
+    smithing_table:
+      feedback:
+        standard: '&9[&fItemTag&9] &aŠį daiktą galima naudoti kaip ingredientą kalvio stalui.'
+        custom: '&9[&fItemTag&9] &aŠio daikto negalima naudoti kaip ingrediento kalvio stalui.'
   actions:
     invalid-action:
       message: '&4[&cItemTag&4] &c''&6%error%&c'' nėra galiojantis tipas &4[&6užveskite čia&4]'
@@ -517,6 +521,14 @@ gui:
       - '&7If set to false deny vanilla trading behavior'
       - ''
       - '&7[&fClick&7]&b Toggle'
+    smithing_table:
+      - '&6Nustato, ar daiktą galima naudoti kalvio stale'
+      - '&bReikšmė: &e%value%'
+      - ''
+      - '&7Jei nustatyta kaip klaidinga, draudžiamas numatytasis'
+      - '&7 priekalo elgesys su šiuo daiktu'
+      - ''
+      - '&7[&fClick&7]&b Perjungti'
   effects:
     # %player_name%
     title: '&9Efektai'

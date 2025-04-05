@@ -61,6 +61,10 @@ itemtag:
       feedback:
         standard: '&9[&fItemTag&9] &a物品可以與村民交易。'
         custom: '&9[&fItemTag&9] &a物品不能與村民交易。'
+    smithing_table:
+      feedback:
+        standard: '&9[&fItemTag&9] &a該物品可用作鍛造台的材料。'
+        custom: '&9[&fItemTag&9] &a該物品不可用作鍛造台的材料。'
   actions:
     invalid-action:
       message: '&4[&cItemTag&4] &c''&6%error%&c'' 不是有效類型 &4[&6懸停查看&4]'
@@ -532,6 +536,14 @@ gui:
       - '&7如果設置為 false，則拒絕原版交易行為'
       - ''
       - '&7[&f點擊&7]&b 切換'
+    smithing_table:
+      - '&6設定此物品是否可用於鍛造台'
+      - '&b數值: &e%value%'
+      - ''
+      - '&7若設為false，將禁止該物品的'
+      - '&7 原版鐵砧行為'
+      - ''
+      - '&7[&fClick&7]&b 切換'
   effects:
     # %player_name%
     title: '&9狀態效果'

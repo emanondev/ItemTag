@@ -61,6 +61,10 @@ itemtag:
       feedback:
         standard: '&9[&fItemTag&9] &aThe item can be traded with villagers.'
         custom: '&9[&fItemTag&9] &aThe item can''t be traded with villagers.'
+    smithing_table:
+      feedback:
+        standard: '&9[&fItemTag&9] &aThe item can be used as ingredient for smithing table.'
+        custom: '&9[&fItemTag&9] &aThe item can''t be used as ingredient for smithing table.'
   actions:
     invalid-action:
       message: '&4[&cItemTag&4] &c''&6%error%&c'' is not a valid type &4[&6hover here&4]'
@@ -588,6 +592,14 @@ gui:
       - '&bValue: &e%value%'
       - ''
       - '&7If set to false deny vanilla trading behavior'
+      - ''
+      - '&7[&fClick&7]&b Toggle'
+    smithing_table:
+      - '&6Sets whether the item can be used on smithing table'
+      - '&bValue: &e%value%'
+      - ''
+      - '&7If set to false deny vanilla anvil behavior'
+      - '&7 on this item'
       - ''
       - '&7[&fClick&7]&b Toggle'
   effects:

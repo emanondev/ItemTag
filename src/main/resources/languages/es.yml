@@ -61,6 +61,10 @@ itemtag:
       feedback:
         standard: '&9[&fItemTag&9] &aEl objeto se puede intercambiar con aldeanos.'
         custom: '&9[&fItemTag&9] &aEl objeto no se puede intercambiar con aldeanos.'
+    smithing_table:
+      feedback:
+        standard: '&9[&fItemTag&9] &aEl objeto puede usarse como ingrediente en la mesa de herrería.'
+        custom: '&9[&fItemTag&9] &aEl objeto no puede usarse como ingrediente en la mesa de herrería.'
   actions:
     invalid-action:
       message: '&4[&cItemTag&4] &c''&6%error%&c'' no es un tipo válido &4[pasa el puntero aquí&4]'
@@ -513,6 +517,14 @@ gui:
       - '&7Si se establece en false, se deniega el comportamiento de intercambio de vanilla'
       - ''
       - '&7[&fClic&7]&b Alternar'
+    smithing_table:
+      - '&6Establece si el objeto puede usarse en la mesa de herrería'
+      - '&bValor: &e%value%'
+      - ''
+      - '&7Si se establece en falso, se deniega el comportamiento'
+      - '&7 por defecto del yunque con este objeto'
+      - ''
+      - '&7[&fClick&7]&b Alternar'
   effects:
     title: '&9Efectos'
     slot:

@@ -61,6 +61,10 @@ itemtag:
       feedback:
         standard: '&9[&fItemTag&9] &aO item pode ser trocado com aldeões.'
         custom: '&9[&fItemTag&9] &aO item não pode ser trocado com aldeões.'
+    smithing_table:
+      feedback:
+        standard: '&9[&fItemTag&9] &aO item pode ser usado como ingrediente na mesa de ferraria.'
+        custom: '&9[&fItemTag&9] &aO item não pode ser usado como ingrediente na mesa de ferraria.'
   actions:
     invalid-action:
       message: '&4[&cItemTag&4] &c''&6%error%&c'' não é um tipo válido &4[&6passe o mouse aqui&4]'
@@ -512,6 +516,14 @@ gui:
       - '&7Se definido como falso, impede a troca padrão do Minecraft'
       - ''
       - '&7[&fClique&7]&b Alternar'
+    smithing_table:
+      - '&6Define se o item pode ser usado na mesa de ferraria'
+      - '&bValor: &e%value%'
+      - ''
+      - '&7Se definido como falso, impede o comportamento padrão'
+      - '&7 da bigorna com este item'
+      - ''
+      - '&7[&fClick&7]&b Alternar'
   effects:
     title: '&9Efeitos'
     slot:

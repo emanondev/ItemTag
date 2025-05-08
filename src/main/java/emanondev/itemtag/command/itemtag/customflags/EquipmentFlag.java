@@ -48,32 +48,34 @@ public class EquipmentFlag extends CustomFlag {
         Bukkit.getScheduler().runTaskLater(getPlugin(), () -> {
             if (!event.getPlayer().isOnline())
                 return;
-            ItemStack originalItem;
+            ItemStack originalItem = null;
             try {
                 originalItem = event.getPlayer().getInventory().getItem(event.getSlotType());
             } catch (Exception e) {
                 EntityEquipment equip = event.getPlayer().getEquipment();
-                switch (event.getSlotType().name()) {
-                    case "HAND":
-                        originalItem = equip.getItemInHand();
-                        break;
-                    case "LEGS":
-                        originalItem = equip.getLeggings();
-                        break;
-                    case "CHEST":
-                        originalItem = equip.getChestplate();
-                        break;
-                    case "HEAD":
-                        originalItem = equip.getHelmet();
-                        break;
-                    case "FEET":
-                        originalItem = equip.getBoots();
-                        break;
-                    case "OFF_HAND":
-                        originalItem = equip.getItemInOffHand();
-                        break;
-                    default:
-                        throw new IllegalArgumentException();
+                if (equip!=null) {
+                    switch (event.getSlotType().name()) {
+                        case "HAND":
+                            originalItem = equip.getItemInHand();
+                            break;
+                        case "LEGS":
+                            originalItem = equip.getLeggings();
+                            break;
+                        case "CHEST":
+                            originalItem = equip.getChestplate();
+                            break;
+                        case "HEAD":
+                            originalItem = equip.getHelmet();
+                            break;
+                        case "FEET":
+                            originalItem = equip.getBoots();
+                            break;
+                        case "OFF_HAND":
+                            originalItem = equip.getItemInOffHand();
+                            break;
+                        default:
+                            throw new IllegalArgumentException();
+                    }
                 }
             }
             if (ItemUtils.isAirOrNull(originalItem)) {

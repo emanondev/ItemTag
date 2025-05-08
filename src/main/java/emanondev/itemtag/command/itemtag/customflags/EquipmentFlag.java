@@ -47,7 +47,33 @@ public class EquipmentFlag extends CustomFlag {
         Bukkit.getScheduler().runTaskLater(getPlugin(), () -> {
             if (!event.getPlayer().isOnline())
                 return;
-            ItemStack originalItem = event.getPlayer().getInventory().getItem(event.getSlotType());
+            ItemStack originalItem;
+            try {
+                originalItem = event.getPlayer().getInventory().getItem(event.getSlotType());
+            } catch (Exception e) {
+                switch (event.getSlotType().name()) {
+                    case "HAND":
+                        originalItem = event.getPlayer().getEquipment().getItemInHand();
+                        break;
+                    case "LEGS":
+                        originalItem = event.getPlayer().getEquipment().getLeggings();
+                        break;
+                    case "CHEST":
+                        originalItem = event.getPlayer().getEquipment().getChestplate();
+                        break;
+                    case "HEAD":
+                        originalItem = event.getPlayer().getEquipment().getHelmet();
+                        break;
+                    case "FEET":
+                        originalItem = event.getPlayer().getEquipment().getBoots();
+                        break;
+                    case "OFF_HAND":
+                        originalItem = event.getPlayer().getEquipment().getItemInOffHand();
+                        break;
+                    default:
+                        throw new IllegalArgumentException();
+                }
+            }
             if (ItemUtils.isAirOrNull(originalItem)) {
                 return;
             }

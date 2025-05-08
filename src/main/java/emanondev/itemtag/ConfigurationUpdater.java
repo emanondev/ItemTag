@@ -3,6 +3,7 @@ package emanondev.itemtag;
 import emanondev.itemedit.ItemEdit;
 import emanondev.itemedit.YMLConfig;
 import emanondev.itemedit.storage.ServerStorage;
+import emanondev.itemtag.actions.ActionsUtility;
 import emanondev.itemtag.command.itemtag.Actions;
 import emanondev.itemtag.command.itemtag.SecurityUtil;
 import org.bukkit.inventory.ItemStack;
@@ -24,9 +25,9 @@ class ConfigurationUpdater {
             for (String id : storage.getIds()) {
                 ItemStack item = storage.getItem(id);
                 TagItem tagItem = ItemTag.getTagItem(item);
-                if (!Actions.hasActions(tagItem))
+                if (!ActionsUtility.hasActions(tagItem))
                     continue;
-                List<String> actions = new ArrayList<>(Actions.getActions(tagItem));
+                List<String> actions = new ArrayList<>(ActionsUtility.getActions(tagItem));
                 boolean updating = false;
                 for (int i = 0; i < actions.size(); i++) {
                     String action = actions.get(i);
@@ -44,7 +45,7 @@ class ConfigurationUpdater {
                 }
                 if (updating) {
                     ItemTag.get().log("Updated item &e" + id);
-                    Actions.setActions(tagItem, actions);
+                    ActionsUtility.setActions(tagItem, actions);
                     storage.setItem(id, tagItem.getItem());
                 }
                 ItemTag.get().log("&cWARNING");

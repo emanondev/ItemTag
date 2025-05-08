@@ -4,7 +4,7 @@ import emanondev.itemedit.Util;
 import emanondev.itemedit.utility.ItemUtils;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.TagItem;
-import emanondev.itemtag.command.itemtag.Actions;
+import emanondev.itemtag.actions.ActionsUtility;
 import emanondev.itemtag.command.itemtag.SecurityUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -41,9 +41,9 @@ public class ItemTagUpdateOldItem implements TabExecutor {
                                           CommandSender sender) {
         Util.sendMessage(sender, plugin.getLanguageConfig(sender)
                 .loadMessage("lack-permission", "&cYou lack of permission %permission%",
-                sender instanceof Player ? (Player) sender : null, true
-                , "%permission%",
-                permission));
+                        sender instanceof Player ? (Player) sender : null, true
+                        , "%permission%",
+                        permission));
     }
 
     @Override
@@ -66,11 +66,11 @@ public class ItemTagUpdateOldItem implements TabExecutor {
             return false;
         }
         TagItem tagItem = ItemTag.getTagItem(item);
-        if (!Actions.hasActions(tagItem)) {
+        if (!ActionsUtility.hasActions(tagItem)) {
             Util.sendMessage(sender, ChatColor.RED + "[ItemTag] This item doesn't require any update");
             return true;
         }
-        List<String> actions = new ArrayList<>(Actions.getActions(tagItem));
+        List<String> actions = new ArrayList<>(ActionsUtility.getActions(tagItem));
         boolean updating = false;
         for (int i = 0; i < actions.size(); i++) {
             String action = actions.get(i);
@@ -89,7 +89,7 @@ public class ItemTagUpdateOldItem implements TabExecutor {
             updating = true;
         }
         if (updating) {
-            Actions.setActions(tagItem, actions);
+            ActionsUtility.setActions(tagItem, actions);
             ItemUtils.setHandItem(player, tagItem.getItem());
             Util.sendMessage(sender, ChatColor.GREEN + "[ItemTag] Item was updated");
             return true;
@@ -102,15 +102,13 @@ public class ItemTagUpdateOldItem implements TabExecutor {
     public void sendPlayerOnly(CommandSender sender) {
         Util.sendMessage(sender, plugin.getLanguageConfig(sender)
                 .loadMessage("player-only", "&cCommand for Players only",
-                        sender instanceof Player ? (Player) sender : null, true
-                ));
+                        sender instanceof Player ? (Player) sender : null, true));
     }
 
     public void sendNoItemInHand(CommandSender sender) {
         Util.sendMessage(sender, plugin.getLanguageConfig(sender)
                 .loadMessage("no-item-on-hand", "&cYou need to hold an item in hand",
-                        sender instanceof Player ? (Player) sender : null, true
-                ));
+                        sender instanceof Player ? (Player) sender : null, true));
     }
 
 }

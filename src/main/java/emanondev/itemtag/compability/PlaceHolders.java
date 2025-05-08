@@ -2,6 +2,7 @@ package emanondev.itemtag.compability;
 
 import emanondev.itemedit.utility.ItemUtils;
 import emanondev.itemtag.ItemTag;
+import emanondev.itemtag.actions.ActionsUtility;
 import emanondev.itemtag.command.itemtag.Actions;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import net.md_5.bungee.api.ChatColor;
@@ -107,21 +108,21 @@ public class PlaceHolders extends PlaceholderExpansion {
             String id;
             switch (args[0].toLowerCase(Locale.ENGLISH)) {
                 case "cooldown": {
-                    id = args.length >= 3 ? value.substring(2 + args[0].length() + args[1].length()) : Actions.getDefaultCooldownId();
+                    id = args.length >= 3 ? value.substring(2 + args[0].length() + args[1].length()) : ActionsUtility.getDefaultCooldownId();
                     break;
                 }
                 case "handcooldown": {
                     ItemStack item = ItemUtils.getHandItem(player);
                     if (ItemUtils.isAirOrNull(item))
                         return "0";
-                    id = Actions.getCooldownId(ItemTag.getTagItem(item));
+                    id = ActionsUtility.getCooldownId(ItemTag.getTagItem(item));
                     break;
                 }
                 case "usesleft": {
                     ItemStack item = ItemUtils.getHandItem(player);
                     if (ItemUtils.isAirOrNull(item))
                         return "0";
-                    return String.valueOf(Actions.getUses(ItemTag.getTagItem(item)));
+                    return String.valueOf(ActionsUtility.getUses(ItemTag.getTagItem(item)));
                 }
                 default:
                     throw new IllegalStateException();

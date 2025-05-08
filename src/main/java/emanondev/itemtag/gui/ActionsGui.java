@@ -34,15 +34,17 @@ public class ActionsGui implements Gui {
     private final Player target;
     private int editorCooldown = 1;
     private int editorValue = 1;
-    private String commandAlias;
+    private final String commandAlias;
+    private final String subCommandAlias;
 
-    public ActionsGui(Player target, ItemStack item, String commandAlias) {
+    public ActionsGui(Player target, ItemStack item, String commandAlias, String subCommandAlias) {
         String title = this.getLanguageMessage("gui.actions.title",
                 "%player_name%", target.getName());
         this.inventory = Bukkit.createInventory(this, 2 * 9, title);
         this.target = target;
         tagItem = ItemTag.getTagItem(item);
         this.commandAlias = commandAlias;
+        this.subCommandAlias = subCommandAlias;
         updateInventory();
     }
 
@@ -326,9 +328,11 @@ public class ActionsGui implements Gui {
     }
 
     private void sendClickableText(Gui gui, String postClickable) {
-        Util.sendMessage(gui.getTargetPlayer(), new ComponentBuilder(gui.getLanguageMessage("gui.actions.click-interact")).event(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+        Util.sendMessage(gui.getTargetPlayer(), new ComponentBuilder(gui.getLanguageMessage("gui.actions.click-interact"))
+                .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
                         new ComponentBuilder(gui.getLanguageMessage("gui.actions.click-hover")).create()))
-                .event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/it " + commandAlias + " " + postClickable + " ")).create());
+                .event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
+                        "/" + commandAlias + " " + subCommandAlias + " " + postClickable + " ")).create());
     }
 
     private class ActionTypeGui implements PagedGui {
@@ -348,14 +352,14 @@ public class ActionsGui implements Gui {
             String title = this.getLanguageMessage("gui.actions.title",
                     "%player_name%", target.getName());
             this.inventory = Bukkit.createInventory(this, (ROWS + 1) * 9, title);
-            updateInventory();
             List<String> actionsList = ActionsUtility.getActions(tagItem);
-            int actions = actionsList == null ? 0 : actionsList.size() + 1;
+            int actions = (actionsList == null ? 0 : actionsList.size()) + 1; //+1 for add action
             int maxPages = (actions) / (ROWS * 9) + ((actions) % (ROWS * 9) == 0 ? 0 : 1);
             if (page > maxPages)
                 page = maxPages;
             this.maxPages = maxPages;
             this.page = page;
+            updateInventory();
         }
 
         /**
@@ -393,11 +397,13 @@ public class ActionsGui implements Gui {
             List<String> actions = ActionsUtility.getActions(tagItem);
             if (actions == null)
                 actions = Collections.emptyList();
-            if (page > 1)//based on page
-                if ((page - 1) * ROWS * 9 > actions.size())
+            if (page > 1) {//based on page
+                if ((page - 1) * ROWS * 9 > actions.size()) {
                     actions = Collections.emptyList();
-                else
+                } else {
                     actions = actions.subList((page - 1) * ROWS * 9, actions.size());
+                }
+            }
             if (actions.size() > event.getSlot()) {
                 switch (event.getClick()) {
                     case RIGHT:
@@ -446,15 +452,15 @@ public class ActionsGui implements Gui {
             final List<String> actions = ActionsUtility.getActions(tagItem);
             //add actions
             if (actions != null) {
-                for (int i = 0; i < 45; i++) {
-                    int elIndex = (page - 1) * ROWS * 9 + i;
-                    if (elIndex >= actions.size()) {
-                        this.inventory.setItem(i, null);
+                for (int guiIndex = 0; guiIndex < 45; guiIndex++) {
+                    int elementIndex = (page - 1) * ROWS * 9 + guiIndex;
+                    if (elementIndex >= actions.size()) {
+                        this.inventory.setItem(guiIndex, null);
                         continue;
                     }
-                    int index = actions.get(elIndex).indexOf(ActionsUtility.TYPE_SEPARATOR);
-                    String actionPre = actions.get(elIndex).substring(0, index);
-                    String actionPost = actions.get(elIndex).substring(index + ActionsUtility.TYPE_SEPARATOR.length());
+                    int separatorIndex = actions.get(elementIndex).indexOf(ActionsUtility.TYPE_SEPARATOR);
+                    String actionPre = actions.get(elementIndex).substring(0, separatorIndex);
+                    String actionPost = actions.get(elementIndex).substring(separatorIndex + ActionsUtility.TYPE_SEPARATOR.length());
                     if (actionPost.startsWith("-pin")) {
                         try {
                             actionPost = actionPost.substring(69);
@@ -471,9 +477,9 @@ public class ActionsGui implements Gui {
                     String action = this.getPlugin().getLanguageConfig(target).getMessage("gui.actionslines.actionformat"
                             , "", "%type%", actionPre, "%info%", actionPost);
                     this.loadLanguageDescription(meta, "gui.actionslines.element", "%action%", action);
-                    item.setAmount(Math.max(125, elIndex + 1));
+                    item.setAmount(Math.min(125, elementIndex + 1));
                     item.setItemMeta(meta);
-                    this.inventory.setItem(i, item);
+                    this.inventory.setItem(guiIndex, item);
                 }
             }
             //add action button

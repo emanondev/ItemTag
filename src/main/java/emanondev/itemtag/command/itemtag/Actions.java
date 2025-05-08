@@ -38,7 +38,7 @@ public class Actions extends ListenerSubCmd {
         Player p = (Player) sender;
         ItemStack item = this.getItemInHand(p);
         if (args.length == 1) {
-            p.openInventory(new ActionsGui(p, item, alias).getInventory());
+            p.openInventory(new ActionsGui(p, item, alias,this.getName()).getInventory());
             //onFail(p, alias);
             return;
         }
@@ -80,7 +80,7 @@ public class Actions extends ListenerSubCmd {
                 case "displayuses":
                     displayUses(p, alias, args, item);
                 case "info":
-                    p.openInventory(new ActionsGui(p, item, alias).getInventory());
+                    p.openInventory(new ActionsGui(p, item, alias, this.getName()).getInventory());
                     //info(p, args, item);
                     return;
             }

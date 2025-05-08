@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.EventHandler;
+import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -51,24 +52,25 @@ public class EquipmentFlag extends CustomFlag {
             try {
                 originalItem = event.getPlayer().getInventory().getItem(event.getSlotType());
             } catch (Exception e) {
+                EntityEquipment equip = event.getPlayer().getEquipment();
                 switch (event.getSlotType().name()) {
                     case "HAND":
-                        originalItem = event.getPlayer().getEquipment().getItemInHand();
+                        originalItem = equip.getItemInHand();
                         break;
                     case "LEGS":
-                        originalItem = event.getPlayer().getEquipment().getLeggings();
+                        originalItem = equip.getLeggings();
                         break;
                     case "CHEST":
-                        originalItem = event.getPlayer().getEquipment().getChestplate();
+                        originalItem = equip.getChestplate();
                         break;
                     case "HEAD":
-                        originalItem = event.getPlayer().getEquipment().getHelmet();
+                        originalItem = equip.getHelmet();
                         break;
                     case "FEET":
-                        originalItem = event.getPlayer().getEquipment().getBoots();
+                        originalItem = equip.getBoots();
                         break;
                     case "OFF_HAND":
-                        originalItem = event.getPlayer().getEquipment().getItemInOffHand();
+                        originalItem = equip.getItemInOffHand();
                         break;
                     default:
                         throw new IllegalArgumentException();

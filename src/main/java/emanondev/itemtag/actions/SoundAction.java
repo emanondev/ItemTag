@@ -1,5 +1,6 @@
 package emanondev.itemtag.actions;
 
+import emanondev.itemedit.aliases.Aliases;
 import emanondev.itemedit.utility.CompleteUtility;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
@@ -63,7 +64,10 @@ public class SoundAction extends Action {
     public List<String> tabComplete(CommandSender sender, List<String> params) {
         switch (params.size()) {
             case 1:
-                return CompleteUtility.complete(params.get(0), Sound.class);
+                if (Aliases.SOUND != null) {
+                    return CompleteUtility.complete(params.get(0), Aliases.SOUND);
+                }
+                return Collections.emptyList();
             case 2:
                 return CompleteUtility.complete(params.get(1), Arrays.asList("0.5", "1"));
             case 3:

@@ -3,6 +3,7 @@ package emanondev.itemtag.equipmentchange;
 import emanondev.itemedit.Util;
 import emanondev.itemedit.utility.VersionUtils;
 import emanondev.itemtag.ItemTag;
+import emanondev.itemtag.ItemTagUtility;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -65,7 +66,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
     private void event(PlayerDeathEvent event) {
         if (event.getEntity().hasMetadata("NPC") || event.getEntity().hasMetadata("BOT"))
             return;
-        for (EquipmentSlot type : EquipmentSlot.values()) {
+        for (EquipmentSlot type : ItemTagUtility.getPlayerEquipmentSlots()) {
             ItemStack item = getEquip(event.getEntity(), type);
             if (!isAirOrNull(item))
                 onEquipChange(event.getEntity(), EquipmentChangeEvent.EquipMethod.DEATH, type, item, null);
@@ -78,7 +79,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
             return;
         if (!equips.containsKey(event.getPlayer()))
             return; // some plugins teleport players just after login, before join this listener
-        new SlotCheck(event.getPlayer(), EquipmentChangeEvent.EquipMethod.PLUGIN_WORLD_CHANGE, EquipmentSlot.values())
+        new SlotCheck(event.getPlayer(), EquipmentChangeEvent.EquipMethod.PLUGIN_WORLD_CHANGE, ItemTagUtility.getPlayerEquipmentSlots())
                 .runTaskLater(ItemTag.get(), 1L);
     }
 
@@ -86,7 +87,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
     private void event(PlayerRespawnEvent event) {
         if (event.getPlayer().hasMetadata("NPC") || event.getPlayer().hasMetadata("BOT"))
             return;
-        for (EquipmentSlot type : EquipmentSlot.values()) {
+        for (EquipmentSlot type : ItemTagUtility.getPlayerEquipmentSlots()) {
             ItemStack item = getEquip(event.getPlayer(), type);
             if (!isAirOrNull(item))
                 onEquipChange(event.getPlayer(), EquipmentChangeEvent.EquipMethod.RESPAWN, type, null, item);
@@ -100,7 +101,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
         if (event.getWhoClicked().hasMetadata("NPC") || event.getWhoClicked().hasMetadata("BOT"))
             return;
         Player p = (Player) event.getWhoClicked();
-        for (EquipmentSlot type : EquipmentSlot.values()) {
+        for (EquipmentSlot type : ItemTagUtility.getPlayerEquipmentSlots()) {
             int pos = getSlotPosition(type, p, event.getView());
             if (pos != -1 && event.getNewItems().containsKey(pos)) {
                 ItemStack itemOld = event.getView().getItem(pos);
@@ -116,7 +117,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
         if (e.getPlayer().hasMetadata("NPC") || e.getPlayer().hasMetadata("BOT"))
             return;
         ArrayList<EquipmentSlot> slots = new ArrayList<>();
-        for (EquipmentSlot slot : EquipmentSlot.values()) {
+        for (EquipmentSlot slot : ItemTagUtility.getPlayerEquipmentSlots()) {
             if (e.getBrokenItem().equals(getEquip(e.getPlayer(), slot)))
                 slots.add(slot);
         }
@@ -383,7 +384,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
             return false;
         EnumMap<EquipmentSlot, ItemStack> map = new EnumMap<>(EquipmentSlot.class);
         equips.put(p, map);
-        for (EquipmentSlot slot : EquipmentSlot.values()) {
+        for (EquipmentSlot slot : ItemTagUtility.getPlayerEquipmentSlots()) {
             map.put(slot, null);
             onEquipChange(p, EquipmentChangeEvent.EquipMethod.JOIN, slot, null, getEquip(p, slot));
         }
@@ -447,7 +448,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
                         continue;
                     trackPlayer(p);
                     counter++;
-                    for (EquipmentSlot slot : EquipmentSlot.values()) {
+                    for (EquipmentSlot slot : ItemTagUtility.getPlayerEquipmentSlots()) {
                         ItemStack newItem = getEquip(p, slot);
                         ItemStack oldItem = equips.get(p).get(slot);
                         if (!isSimilarIgnoreDamage(oldItem, newItem))

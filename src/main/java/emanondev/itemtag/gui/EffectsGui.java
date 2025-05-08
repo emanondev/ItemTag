@@ -6,6 +6,7 @@ import emanondev.itemedit.utility.ItemUtils;
 import emanondev.itemedit.utility.VersionUtils;
 import emanondev.itemtag.EffectsInfo;
 import emanondev.itemtag.ItemTag;
+import emanondev.itemtag.ItemTagUtility;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -56,9 +57,9 @@ public class EffectsGui implements PagedGui {
                 } else {
                     effects.add(new EffectData(type, -1, true, true, true));
                 }
-        for (EquipmentSlot slot : EquipmentSlot.values())
-            if (!slot.name().equals("BODY"))
-                equips.add(new EquipData(slot/*, info.isValidSlot(slot)*/));
+        for (EquipmentSlot slot : ItemTagUtility.getPlayerEquipmentSlots()) {
+            equips.add(new EquipData(slot/*, info.isValidSlot(slot)*/));
+        }
         effects.sort((e1, e2) -> Aliases.POTION_EFFECT.getName(e1.type).compareToIgnoreCase(Aliases.POTION_EFFECT.getName(e2.type)));
         updateInventory();
     }
@@ -289,5 +290,4 @@ public class EffectsGui implements PagedGui {
         }
 
     }
-
 }

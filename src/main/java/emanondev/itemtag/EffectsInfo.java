@@ -27,7 +27,7 @@ public class EffectsInfo {
         if (tagItem.hasStringTag(EFFECTS_EQUIPS_KEY))
             slots.addAll(stringToEquips(tagItem.getString(EFFECTS_EQUIPS_KEY)));
         if (slots.isEmpty())
-            slots.addAll(Arrays.asList(EquipmentSlot.values()));
+            slots.addAll(ItemTagUtility.getPlayerEquipmentSlots());
     }
 
     /**
@@ -87,7 +87,7 @@ public class EffectsInfo {
     }
 
     private String equipsToString() {
-        if (slots.size() == EquipmentSlot.values().length)
+        if (slots.size() == ItemTagUtility.getPlayerEquipmentSlots().size())
             return null;
         List<EquipmentSlot> list = new ArrayList<>(slots);
         StringBuilder str = new StringBuilder();
@@ -143,7 +143,7 @@ public class EffectsInfo {
         if (slots.contains(slot)) {
             slots.remove(slot);
             if (slots.isEmpty())
-                slots.addAll(Arrays.asList(EquipmentSlot.values()));
+                slots.addAll(ItemTagUtility.getPlayerEquipmentSlots());
             return;
         }
         slots.add(slot);
@@ -154,7 +154,7 @@ public class EffectsInfo {
             tagItem.removeTag(EFFECTS_LIST_KEY);
         else
             tagItem.setTag(EFFECTS_LIST_KEY, effectsToString());
-        if (slots.size() == EquipmentSlot.values().length)
+        if (slots.size() == ItemTagUtility.getPlayerEquipmentSlots().size())
             tagItem.removeTag(EFFECTS_EQUIPS_KEY);
         else
             tagItem.setTag(EFFECTS_EQUIPS_KEY, equipsToString());

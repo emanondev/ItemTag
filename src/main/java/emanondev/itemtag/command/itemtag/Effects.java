@@ -6,6 +6,7 @@ import emanondev.itemedit.utility.ItemUtils;
 import emanondev.itemedit.utility.VersionUtils;
 import emanondev.itemtag.EffectsInfo;
 import emanondev.itemtag.ItemTag;
+import emanondev.itemtag.ItemTagUtility;
 import emanondev.itemtag.command.ItemTagCommand;
 import emanondev.itemtag.command.ListenerSubCmd;
 import emanondev.itemtag.equipmentchange.EquipmentChangeEvent;
@@ -146,7 +147,7 @@ public class Effects extends ListenerSubCmd {
                 slots.add(Aliases.EQUIPMENT_SLOTS.convertAlias(args[i]));
 
             EffectsInfo info = new EffectsInfo(getItemInHand(p));
-            for (EquipmentSlot slot : EquipmentSlot.values())
+            for (EquipmentSlot slot : ItemTagUtility.getPlayerEquipmentSlots())
                 if (slots.contains(slot) != info.isValidSlot(slot))
                     info.toggleSlot(slot);
             info.update();
@@ -239,7 +240,7 @@ public class Effects extends ListenerSubCmd {
         if (oldEffects.isEmpty() && newEffects.isEmpty())
             return;
         Map<PotionEffectType, PotionEffect> equipsEffects = new HashMap<>();
-        for (EquipmentSlot slot : EquipmentSlot.values()) {
+        for (EquipmentSlot slot : ItemTagUtility.getPlayerEquipmentSlots()) {
             //for each slot (except event slot) look on effects
             if (slot == event.getSlotType())
                 continue;
@@ -270,7 +271,7 @@ public class Effects extends ListenerSubCmd {
     private void onPlayerRespawn(PlayerRespawnEvent event) {
         new BukkitRunnable() {
             public void run() {
-                for (EquipmentSlot slot : EquipmentSlot.values()) {
+                for (EquipmentSlot slot : ItemTagUtility.getPlayerEquipmentSlots()) {
                     ItemStack equip = getEquip(event.getPlayer(), slot);
                     if (ItemUtils.isAirOrNull(equip))
                         continue;
@@ -334,7 +335,7 @@ public class Effects extends ListenerSubCmd {
         if (!p.isOnline() || p.isDead())
             return;
         HashMap<PotionEffectType, PotionEffect> newEffects = new HashMap<>();
-        for (EquipmentSlot slot : EquipmentSlot.values()) {
+        for (EquipmentSlot slot : ItemTagUtility.getPlayerEquipmentSlots()) {
             Map<PotionEffectType, PotionEffect> newInfo = getPotionEffects(getEquip(p, slot), slot, true);
             newInfo.forEach((k, v) -> {
                 if (getAmplifier(newEffects, k) < v.getAmplifier())

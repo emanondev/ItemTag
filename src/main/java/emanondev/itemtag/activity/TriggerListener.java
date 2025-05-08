@@ -1,6 +1,7 @@
 package emanondev.itemtag.activity;
 
 import emanondev.itemtag.ItemTag;
+import emanondev.itemtag.ItemTagUtility;
 import emanondev.itemtag.TagItem;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -62,7 +63,7 @@ public class TriggerListener implements Listener {
     private void event(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player) {
             Player player = (Player) event.getDamager();
-            for (EquipmentSlot slot : EquipmentSlot.values()) {
+            for (EquipmentSlot slot : ItemTagUtility.getPlayerEquipmentSlots()) {
                 MELEE_HIT.handle(event, player, player.getInventory().getItem(slot), slot);
             }
         }
@@ -70,14 +71,14 @@ public class TriggerListener implements Listener {
             Projectile prj = (Projectile) event.getDamager();
             if (prj.getShooter() instanceof Player) {
                 Player player = (Player) prj.getShooter();
-                for (EquipmentSlot slot : EquipmentSlot.values()) {
+                for (EquipmentSlot slot : ItemTagUtility.getPlayerEquipmentSlots()) {
                     RANGED_HIT.handle(event, player, player.getInventory().getItem(slot), slot);
                 }
             }
         }
         if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
-            for (EquipmentSlot slot : EquipmentSlot.values()) {
+            for (EquipmentSlot slot : ItemTagUtility.getPlayerEquipmentSlots()) {
                 HITTED.handle(event, player, player.getInventory().getItem(slot), slot);
             }
         }

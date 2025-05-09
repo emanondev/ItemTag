@@ -19,8 +19,8 @@ public class ItemTagUtility {
         slots.add(EquipmentSlot.FEET);
         slots.add(EquipmentSlot.HAND);
         try {
-            slots.add(EquipmentSlot.OFF_HAND);
-        } catch (Exception ignored){
+            slots.add(EquipmentSlot.valueOf("OFF_HAND"));
+        } catch (Throwable ignored){
             //1.8
         }
         return slots;

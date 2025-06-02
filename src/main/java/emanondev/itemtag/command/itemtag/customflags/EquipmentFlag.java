@@ -30,6 +30,9 @@ public class EquipmentFlag extends CustomFlag {
 
     @EventHandler
     public void event(EquipmentChangeEvent event) {
+        if (!InventoryUtils.getPlayerEquipmentSlots().contains(event.getSlotType())){
+            return;
+        }
         switch (event.getSlotType()) {
             case FEET:
             case LEGS:
@@ -51,7 +54,7 @@ public class EquipmentFlag extends CustomFlag {
             ItemStack originalItem = null;
             try {
                 originalItem = event.getPlayer().getInventory().getItem(event.getSlotType());
-            } catch (Exception e) {
+            } catch (Throwable e) {
                 EntityEquipment equip = event.getPlayer().getEquipment();
                 if (equip!=null) {
                     switch (event.getSlotType().name()) {

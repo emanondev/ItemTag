@@ -1,6 +1,7 @@
 package emanondev.itemtag;
 
 import de.tr7zw.nbtapi.NBTItem;
+import emanondev.itemedit.utility.ItemUtils;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -11,19 +12,21 @@ public class NBTAPITagItem implements TagItem {
     private final ItemStack item;
     private NBTItem nbtItem = null;
 
-    public NBTAPITagItem(@Nullable ItemStack item) {
+    public NBTAPITagItem(final @Nullable ItemStack item) {
         this.item = item;
     }
 
     public NBTItem getNbtItem() {
-        if (nbtItem == null)
+        if (!ItemUtils.isAirOrNull(item)) {
             nbtItem = new NBTItem(item, true);
+        }
         return nbtItem;
     }
 
     public boolean hasTag(@NotNull String key) {
-        if (item == null || item.getType() == Material.AIR || !item.hasItemMeta())
+        if (item == null || item.getType() == Material.AIR || !item.hasItemMeta()) {
             return false;
+        }
         return getNbtItem().hasKey(key);
     }
 

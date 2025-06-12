@@ -1,6 +1,7 @@
 package emanondev.itemtag.equipmentchange;
 
 import emanondev.itemedit.Util;
+import emanondev.itemedit.utility.ItemUtils;
 import emanondev.itemedit.utility.VersionUtils;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.ItemTagUtility;
@@ -22,7 +23,9 @@ import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -30,9 +33,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
 
     protected final HashMap<Player, EnumMap<EquipmentSlot, ItemStack>> equips = new HashMap<>();
     protected final HashSet<Player> clickDrop = new HashSet<>();
-    //private final boolean is1_8 = ItemEdit.GAME_VERSION < 9;
     private int maxCheckedPlayerPerTick = 5;
-    //private final boolean is1_10orLower = ItemEdit.GAME_VERSION < 11;
     private TimerCheckTask timerTask = null;
 
     public void reload() {
@@ -68,7 +69,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
             return;
         for (EquipmentSlot type : ItemTagUtility.getPlayerEquipmentSlots()) {
             ItemStack item = getEquip(event.getEntity(), type);
-            if (!isAirOrNull(item))
+            if (!ItemUtils.isAirOrNull(item))
                 onEquipChange(event.getEntity(), EquipmentChangeEvent.EquipMethod.DEATH, type, item, null);
         }
     }
@@ -89,7 +90,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
             return;
         for (EquipmentSlot type : ItemTagUtility.getPlayerEquipmentSlots()) {
             ItemStack item = getEquip(event.getPlayer(), type);
-            if (!isAirOrNull(item))
+            if (!ItemUtils.isAirOrNull(item))
                 onEquipChange(event.getPlayer(), EquipmentChangeEvent.EquipMethod.RESPAWN, type, null, item);
         }
     }
@@ -148,7 +149,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
             return;
         if (event.isCancelled())
             return;
-        if (isAirOrNull(getEquip(event.getPlayer(), EquipmentSlot.HAND)))
+        if (ItemUtils.isAirOrNull(getEquip(event.getPlayer(), EquipmentSlot.HAND)))
             onEquipChange(event.getPlayer(), EquipmentChangeEvent.EquipMethod.DROP, EquipmentSlot.HAND, event.getItemDrop().getItemStack(),
                     null);
     }
@@ -165,7 +166,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
         ItemStack handItem;
         handItem = getEquip(event.getPlayer(), slot);
 
-        if (isAirOrNull(handItem) || handItem.getAmount() > 1
+        if (ItemUtils.isAirOrNull(handItem) || handItem.getAmount() > 1
                 || (event.getRightClicked().getType() == EntityType.ARMOR_STAND
                 && handItem.getType() != Material.NAME_TAG))
             return;
@@ -195,7 +196,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR) // compability -> !=priority
     private void event(PlayerInteractEvent e) {
-        if (isAirOrNull(e.getItem()))
+        if (ItemUtils.isAirOrNull(e.getItem()))
             return;
         if (e.useItemInHand() == Event.Result.DENY)
             return;
@@ -209,7 +210,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
         EquipmentSlot type = guessRightClickSlotType(e.getItem());
         switch (e.getAction()) {
             case RIGHT_CLICK_AIR:
-                if (type != null && isAirOrNull(getEquip(e.getPlayer(), type))) {
+                if (type != null && ItemUtils.isAirOrNull(getEquip(e.getPlayer(), type))) {
                     onEquipChange(e.getPlayer(), EquipmentChangeEvent.EquipMethod.RIGHT_CLICK, type, null, e.getItem());
                     if (e.getPlayer().getGameMode() != GameMode.CREATIVE)
                         onEquipChange(e.getPlayer(), EquipmentChangeEvent.EquipMethod.RIGHT_CLICK, slot, e.getItem(), null);
@@ -219,7 +220,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
             case RIGHT_CLICK_BLOCK:
                 if (e.useItemInHand() == Event.Result.DENY)
                     return;
-                if (type != null && isAirOrNull(getEquip(e.getPlayer(), type))) {
+                if (type != null && ItemUtils.isAirOrNull(getEquip(e.getPlayer(), type))) {
                     new SlotCheck(e.getPlayer(), EquipmentChangeEvent.EquipMethod.RIGHT_CLICK, slot, type).runTaskLater(ItemTag.get(), 1L);
                 } else if (e.getItem().getAmount() == 1)
                     new SlotCheck(e.getPlayer(), EquipmentChangeEvent.EquipMethod.USE, slot).runTaskLater(ItemTag.get(), 1L);
@@ -266,13 +267,6 @@ public abstract class EquipmentChangeListenerBase implements Listener {
         onEquipChange(event.getPlayer(), EquipmentChangeEvent.EquipMethod.HOTBAR_HAND_CHANGE, EquipmentSlot.HAND, i1, i2);
     }
 
-    /**
-     * A utility method to support versions that use null or air ItemStacks.
-     */
-    public boolean isAirOrNull(ItemStack item) {
-        return item == null || item.getType().equals(Material.AIR);
-    }
-
     public abstract boolean isSimilarIgnoreDamage(ItemStack item, ItemStack item2);
 
     @SuppressWarnings({"incomplete-switch", "deprecation"})
@@ -295,20 +289,31 @@ public abstract class EquipmentChangeListenerBase implements Listener {
             case LEGS:
                 return p.getEquipment().getLeggings();
         }// safe
-        if (Util.isVersionAfter(1, 9) && slot == EquipmentSlot.OFF_HAND)
+        if (Util.isVersionAfter(1, 9) && slot == EquipmentSlot.OFF_HAND) {
             return p.getInventory().getItemInOffHand();
+        }
         return null;
     }
 
-    public void onEquipChange(Player p, EquipmentChangeEvent.EquipMethod reason, EquipmentSlot type, ItemStack oldItem,
+    public void onEquipChange(Player p,
+                              EquipmentChangeEvent.EquipMethod reason,
+                              @NotNull EquipmentSlot type,
+                              ItemStack oldItem,
                               ItemStack newItem) {
-        equips.get(p).put(type, isAirOrNull(newItem) ? null : new ItemStack(newItem));
+        equips.get(p).put(type, ItemUtils.isAirOrNull(newItem) ? null : new ItemStack(newItem));
         Bukkit.getPluginManager().callEvent(new EquipmentChangeEvent(p, reason, type, oldItem, newItem));
     }
 
     protected EquipmentSlot guessRightClickSlotType(ItemStack item) {
-        if (isAirOrNull(item))
+        if (ItemUtils.isAirOrNull(item))
             return null;
+
+        if (VersionUtils.isVersionAfter(1,21,5)) {
+            ItemMeta meta = ItemUtils.getMeta(item);
+            if (meta.hasEquippable()) {
+                return meta.getEquippable().getSlot();
+            }
+        }
         String type = item.getType().name();
         if (type.endsWith("_HELMET") || type.endsWith("_SKULL") || type.endsWith("_HEAD"))
             return EquipmentSlot.HEAD;
@@ -324,6 +329,14 @@ public abstract class EquipmentChangeListenerBase implements Listener {
 
     protected EquipmentSlot guessDispenserSlotType(ItemStack item) {
         EquipmentSlot slot = guessRightClickSlotType(item);
+
+        if (VersionUtils.isVersionAfter(1,21,5)) {
+            ItemMeta meta = ItemUtils.getMeta(item);
+            if (meta.hasEquippable()) {
+                return meta.getEquippable().getSlot();
+            }
+        }
+
         if (slot == null && item != null) {
             if (item.getType().name().endsWith("PUMPKIN"))
                 return EquipmentSlot.HEAD;
@@ -492,7 +505,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
                 new IllegalStateException().printStackTrace();
             for (EquipmentSlot slot : slots) {
                 ItemStack equip = getEquip(p, slot);
-                if (isAirOrNull(equip))
+                if (ItemUtils.isAirOrNull(equip))
                     equip = null;
                 else
                     equip = new ItemStack(equip);
@@ -510,7 +523,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
                 new IllegalStateException().printStackTrace();
             for (EquipmentSlot slot : slots) {
                 ItemStack item = getEquip(p, slot);
-                if (isAirOrNull(item))
+                if (ItemUtils.isAirOrNull(item))
                     item = null;
                 if (isSimilarIgnoreDamage(item, equips.get(p).get(slot))) {
                     continue;

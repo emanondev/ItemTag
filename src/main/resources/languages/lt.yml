@@ -295,8 +295,21 @@ itemtag:
       - '&b lizdui taikyti efektą'
     params: ''
   usepermission:
-    params: ''
-    description: [ ]
+    description:
+      - '&b&lNustatyti leidimą naudoti šį daiktą (dešiniojo pelės mygtuko veiksmas pagal nutylėjimą)'
+      - '&b'
+      - '&esetpermission <leidimas> &bnustatyti reikiamą leidimą'
+      - '&esetmessage <leidimas> &bnustatyti leidimo trūkumo žinutę'
+    params: '[...]'
+  wearpermission:
+    description:
+      - '&b&lNustatyti leidimą dėvėti šį daiktą'
+      - '&bBandant dėvėti daiktą, jis bus išmestas į inventorių,'
+      - '&barba ant žemės, jei inventorius pilnas'
+      - '&b'
+      - '&esetpermission <leidimas> &bnustatyti reikiamą leidimą'
+      - '&esetmessage <leidimas> &bnustatyti leidimo trūkumo žinutę'
+    params: '[...]'
 itemtagreload:
   success: '&9[&fItemTag&9] &aPerkrauta'
 gui:

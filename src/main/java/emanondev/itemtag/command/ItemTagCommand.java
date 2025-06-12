@@ -18,6 +18,7 @@ public class ItemTagCommand extends AbstractCommand {
         this.registerSubCommand(new Actions(this));
         this.registerSubCommand(new ConsumeActions(this));
         this.registerSubCommand(new UsePermission(this));
+        this.registerSubCommand(new WearPermission(this));
         this.registerSubCommand(new Flag(this));
         //TODO this.registerSubCommand(new ActivitySubCommand(this));
         //TODO this.registerSubCommand(new TriggerAction(this));

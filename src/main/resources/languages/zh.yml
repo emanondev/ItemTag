@@ -297,8 +297,21 @@ itemtag:
       - '&b生效时的的盔甲位'
     params: ''
   usepermission:
-    params: ''
-    description: [ ]
+    description:
+      - '&b&l设置使用此物品的权限（右键原版行为）'
+      - '&b'
+      - '&esetpermission <权限> &b设置所需权限'
+      - '&esetmessage <权限> &b设置无权限时的提示信息'
+    params: '[...]'
+  wearpermission:
+    description:
+      - '&b&l设置穿戴此物品的权限'
+      - '&b尝试穿戴时将其丢入背包，'
+      - '&b若背包已满则掉落在地上'
+      - '&b'
+      - '&esetpermission <权限> &b设置所需权限'
+      - '&esetmessage <权限> &b设置无权限时的提示信息'
+    params: '[...]'
 itemtagreload:
   success: '&9[&fItemTag&9] &a重载成功'
 gui:

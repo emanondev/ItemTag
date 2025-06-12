@@ -79,7 +79,7 @@ public class Flag extends SubCmd {
 
     //it flag <name> [value]
     @Override
-    public void onCommand(CommandSender sender, String alias, String[] args) {
+    public void onCommand(@NotNull CommandSender sender, @NotNull String alias, String[] args) {
         Player p = (Player) sender;
         ItemStack item = this.getItemInHand(p);
         try {
@@ -109,7 +109,7 @@ public class Flag extends SubCmd {
     }
 
     @Override
-    public List<String> onComplete(CommandSender sender, String[] args) {
+    public List<String> onComplete(@NotNull CommandSender sender, String[] args) {
         if (args.length == 2)
             return CompleteUtility.complete(args[1], FLAG_ALIASES);
         if (args.length == 3)

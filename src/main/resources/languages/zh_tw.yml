@@ -299,6 +299,22 @@ itemtag:
       - '&b切記選擇一個藥水'
       - '&b生效時的的盔甲位'
     params: ''
+  usepermission:
+    description:
+      - '&b&l設定使用此物品的權限（右鍵原版行為）'
+      - '&b'
+      - '&esetpermission <權限> &b設定所需權限'
+      - '&esetmessage <權限> &b設定無權限時的提示訊息'
+    params: '[...]'
+  wearpermission:
+    description:
+      - '&b&l設定穿戴此物品的權限'
+      - '&b嘗試穿戴時會將其丟入背包，'
+      - '&b若背包已滿則掉落在地上'
+      - '&b'
+      - '&esetpermission <權限> &b設定所需權限'
+      - '&esetmessage <權限> &b設定無權限時的提示訊息'
+    params: '[...]'
 itemtagreload:
   success: '&9[&fItemTag&9] &a重載成功'
 gui:

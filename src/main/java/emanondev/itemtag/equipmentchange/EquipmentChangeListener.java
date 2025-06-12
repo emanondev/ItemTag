@@ -1,6 +1,7 @@
 package emanondev.itemtag.equipmentchange;
 
 import emanondev.itemedit.utility.InventoryUtils;
+import emanondev.itemedit.utility.ItemUtils;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.ItemTagUtility;
 import org.bukkit.entity.Player;
@@ -38,14 +39,14 @@ public class EquipmentChangeListener extends EquipmentChangeListenerBase {
                 clickDrop.add(p);
                 return;
             case DROP_ONE_SLOT:
-                if (!isAirOrNull(event.getCursor()))
+                if (!ItemUtils.isAirOrNull(event.getCursor()))
                     return;
                 if (clickedSlot != null && event.getCurrentItem().getAmount() == 1)
                     onEquipChange(p, EquipmentChangeEvent.EquipMethod.INVENTORY_DROP, clickedSlot, event.getCurrentItem(), null);
                 clickDrop.add(p);
                 return;
             case DROP_ALL_SLOT:
-                if (!isAirOrNull(event.getCursor()))
+                if (!ItemUtils.isAirOrNull(event.getCursor()))
                     return;
                 if (clickedSlot != null)
                     onEquipChange(p, EquipmentChangeEvent.EquipMethod.INVENTORY_DROP, clickedSlot, event.getCurrentItem(), null);
@@ -76,7 +77,7 @@ public class EquipmentChangeListener extends EquipmentChangeListenerBase {
             case PLACE_SOME:
                 if (clickedSlot == null)
                     return;
-                if (isAirOrNull(event.getCurrentItem()))
+                if (ItemUtils.isAirOrNull(event.getCurrentItem()))
                     onEquipChange(p, EquipmentChangeEvent.EquipMethod.INVENTORY_PLACE, clickedSlot, null, event.getCursor());
                 return;
             case SWAP_WITH_CURSOR:
@@ -103,7 +104,7 @@ public class EquipmentChangeListener extends EquipmentChangeListenerBase {
                 EquipmentSlot slot = InventoryUtils.getTopInventory(event).getType() == InventoryType.CRAFTING
                         ? guessDispenserSlotType(event.getCurrentItem())
                         : null;
-                if (slot != null && isAirOrNull(getEquip(p, slot)))
+                if (slot != null && ItemUtils.isAirOrNull(getEquip(p, slot)))
                     onEquipChange(p, EquipmentChangeEvent.EquipMethod.INVENTORY_MOVE_TO_OTHER_INVENTORY, slot, null, event.getCurrentItem());
                 if (clickedSlot == null || clickedSlot == EquipmentSlot.HAND)
                     new SlotCheck(p, EquipmentChangeEvent.EquipMethod.INVENTORY_MOVE_TO_OTHER_INVENTORY, EquipmentSlot.HAND)
@@ -163,18 +164,18 @@ public class EquipmentChangeListener extends EquipmentChangeListenerBase {
             return;
         Player p = (Player) event.getEntity();
 
-        if (!isAirOrNull(getEquip(p, EquipmentSlot.HAND)))
+        if (!ItemUtils.isAirOrNull(getEquip(p, EquipmentSlot.HAND)))
             return;
         for (int i = 0; i < p.getInventory().getHeldItemSlot(); i++)
-            if (isAirOrNull(p.getInventory().getItem(i)))
+            if (ItemUtils.isAirOrNull(p.getInventory().getItem(i)))
                 return;
         new SlotCheck(p, EquipmentChangeEvent.EquipMethod.PICKUP, EquipmentSlot.HAND).runTaskLater(ItemTag.get(), 1L);
     }
 
     public boolean isSimilarIgnoreDamage(ItemStack item, ItemStack item2) {
-        if (isAirOrNull(item))
-            return isAirOrNull(item2);
-        if (isAirOrNull(item2))
+        if (ItemUtils.isAirOrNull(item))
+            return ItemUtils.isAirOrNull(item2);
+        if (ItemUtils.isAirOrNull(item2))
             return false;
         if (item.isSimilar(item2))
             return true;

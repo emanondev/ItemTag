@@ -20,7 +20,7 @@ public class ActivitySubCommand extends SubCmd {
     }
 
     @Override
-    public void onCommand(CommandSender sender, String label, String[] args) {
+    public void onCommand(@NotNull CommandSender sender, @NotNull String label, String[] args) {
         Player player = (Player) sender;
         if (args.length == 1) {
             help(player, label, args);
@@ -339,7 +339,7 @@ public class ActivitySubCommand extends SubCmd {
     }
 
     @Override
-    public List<String> onComplete(CommandSender sender, String[] args) {
+    public List<String> onComplete(@NotNull CommandSender sender, String[] args) {
         switch (args.length) {
             case 2:
                 return CompleteUtility.complete(args[1], "create", "delete", "clone", "rename", "open", "setconsumes",

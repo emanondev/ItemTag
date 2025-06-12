@@ -296,6 +296,22 @@ itemtag:
       - '&bRecuerda seleccionar en qué ranura de equipo'
       - '&b aplicar el efecto'
     params: ''
+  usepermission:
+    description:
+      - '&b&lEstablece un permiso para usar este objeto (comportamiento predeterminado al hacer clic derecho)'
+      - '&b'
+      - '&esetpermission <permiso> &bestablece el permiso requerido'
+      - '&esetmessage <permiso> &bestablece el mensaje de falta de permiso'
+    params: '[...]'
+  wearpermission:
+    description:
+      - '&b&lEstablece un permiso para llevar este objeto puesto'
+      - '&bIntentar equiparlo lo soltará en el inventario,'
+      - '&bo al suelo si está lleno'
+      - '&b'
+      - '&esetpermission <permiso> &bestablece el permiso requerido'
+      - '&esetmessage <permiso> &bestablece el mensaje de falta de permiso'
+    params: '[...]'
 itemtagreload:
   success: '&9[&fItemTag&9] &aRecargado'
 gui:

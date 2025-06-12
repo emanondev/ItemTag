@@ -50,18 +50,18 @@ public class UsePermission extends ListenerSubCmd {
         it useperm setmessage ...
      */
     @Override
-    public void onCommand(CommandSender sender, String label, String[] args) {
+    public void onCommand(@NotNull CommandSender sender, @NotNull String alias, String[] args) {
+        Player p = (Player) sender;
         if (args.length == 1) {
-            //TODO help
-
+            onFail(p, alias);
             return;
         }
-        Player p = (Player) sender;
         ItemStack item = this.getItemInHand(p);
         TagItem tagItem = ItemTag.getTagItem(item);
         switch (args[1].toLowerCase(Locale.ENGLISH)) {
             case "setpermission": {
                 if (args.length > 3) {
+                    onFail(p, alias);
                     //TODO args amount
                     return;
                 }
@@ -85,9 +85,9 @@ public class UsePermission extends ListenerSubCmd {
     }
 
     @Override
-    public List<String> onComplete(CommandSender sender, String[] args) {
+    public List<String> onComplete(@NotNull CommandSender sender, String[] args) {
         if (args.length == 2)
-            return CompleteUtility.complete(args[0], "setpermission", "setmessage");
+            return CompleteUtility.complete(args[1], "setpermission", "setmessage");
         return Collections.emptyList();
     }
 

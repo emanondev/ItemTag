@@ -294,6 +294,22 @@ itemtag:
       - '&bLembra-te de selecionar em que parte do equipamento'
       - '&b o efeito será aplicado'
     params: ''
+  usepermission:
+    description:
+      - '&b&lDefine uma permissão para usar este item (comportamento padrão do clique direito)'
+      - '&b'
+      - '&esetpermission <permissão> &bdefine a permissão necessária'
+      - '&esetmessage <permissão> &bdefine a mensagem de falta de permissão'
+    params: '[...]'
+  wearpermission:
+    description:
+      - '&b&lDefine uma permissão para equipar este item'
+      - '&bTentar equipar o item fará com que ele caia no inventário,'
+      - '&bou no chão se o inventário estiver cheio'
+      - '&b'
+      - '&esetpermission <permissão> &bdefine a permissão necessária'
+      - '&esetmessage <permissão> &bdefine a mensagem de falta de permissão'
+    params: '[...]'
 itemtagreload:
   success: '&9[&fItemTag&9] &aRecarregado'
 gui:

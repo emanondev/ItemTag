@@ -370,6 +370,22 @@ itemtag:
       - '&bRemember to select which equipment'
       - '&b slot apply the effect'
     params: ''
+  usepermission:
+    description:
+      - '&b&lSet a permission to use this item (right click vanilla behavior)'
+      - '&b'
+      - '&esetpermission <permission> &bset required permission'
+      - '&esetmessage <permission> &bset lack of permission message'
+    params: '[...]'
+  wearpermission:
+    description:
+      - '&b&lSet a permission to wear this item'
+      - '&bAttempting to wear the item will drop'
+      - '&bit to inventory, or on floor if full'
+      - '&b'
+      - '&esetpermission <permission> &bset required permission'
+      - '&esetmessage <permission> &bset lack of permission message'
+    params: '[...]'
 itemtagreload:
   success: '&9[&fItemTag&9] &aReloaded'
 gui:

@@ -1,11 +1,13 @@
 package emanondev.itemtag.equipmentchange;
 
+import emanondev.itemedit.utility.InventoryUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * EquipmentChangeEvent purpose is to provide a read only / notify event for equipment changes<br>
@@ -22,8 +24,15 @@ public class EquipmentChangeEvent extends PlayerEvent {
     private final EquipmentSlot slot;
     private final EquipMethod method;
 
-    public EquipmentChangeEvent(Player who, EquipMethod method, EquipmentSlot slot, ItemStack from, ItemStack to) {
+    public EquipmentChangeEvent(final @NotNull Player who,
+                                final @NotNull EquipMethod method,
+                                final @NotNull EquipmentSlot slot,
+                                final @Nullable ItemStack from,
+                                final @Nullable ItemStack to) {
         super(who);
+        if (!InventoryUtils.getPlayerEquipmentSlots().contains(slot)) {
+            throw new IllegalArgumentException("Slot type not supported");
+        }
         this.from = from;
         this.to = to;
         this.slot = slot;
@@ -44,7 +53,7 @@ public class EquipmentChangeEvent extends PlayerEvent {
      *
      * @return the item before changing
      */
-    public ItemStack getFrom() {
+    public @Nullable ItemStack getFrom() {
         return from;
     }
 
@@ -53,14 +62,14 @@ public class EquipmentChangeEvent extends PlayerEvent {
      *
      * @return the item after changing
      */
-    public ItemStack getTo() {
+    public @Nullable ItemStack getTo() {
         return to;
     }
 
     /**
      * @return where the change is happening
      */
-    public EquipmentSlot getSlotType() {
+    public @NotNull EquipmentSlot getSlotType() {
         return slot;
     }
 
@@ -69,11 +78,11 @@ public class EquipmentChangeEvent extends PlayerEvent {
      *
      * @return why the event occurred
      */
-    public EquipMethod getMethod() {
+    public @NotNull EquipMethod getMethod() {
         return method;
     }
 
-    public enum EquipMethod {// These have got to be the worst documentations ever.
+    public enum EquipMethod {
         /**
          * When you shift click an armor piece to equip or unequip
          */

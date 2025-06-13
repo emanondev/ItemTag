@@ -3,6 +3,7 @@ main: ${groupId}.${project.name}
 version: "${project.version}"
 author: emanon
 api-version: 1.13
+modrinth-project-id: "dr0F8gew"
 folia-supported: true
 depend: [ ItemEdit ]
 softdepend: [ NBTAPI ]

@@ -1,6 +1,7 @@
 package emanondev.itemtag;
 
 import emanondev.itemedit.utility.ItemUtils;
+import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -27,6 +28,7 @@ public class SpigotTagItem implements TagItem {
         }
     };
 
+    @Getter
     private final ItemStack item;
     private ItemMeta meta = null;
     private PersistentDataContainer data = null;
@@ -138,8 +140,4 @@ public class SpigotTagItem implements TagItem {
         return item != null && item.getType() != Material.AIR;
     }
 
-    @Override
-    public ItemStack getItem() {
-        return item;
-    }
 }

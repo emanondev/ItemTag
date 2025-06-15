@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class EquipmentChangeListener extends EquipmentChangeListenerBase {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void event(final InventoryClickEvent event) {
+    public void event(InventoryClickEvent event) {
         ItemTag.get().log(event.getAction().name());
         if (!(event.getWhoClicked() instanceof Player))
             return;

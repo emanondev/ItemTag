@@ -1,6 +1,6 @@
 package emanondev.itemtag.activity;
 
-import emanondev.itemedit.UtilsInventory;
+import emanondev.itemedit.utility.InventoryUtils;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.TagItem;
 import org.bukkit.ChatColor;
@@ -121,7 +121,7 @@ public class TriggerType<E extends Event> {
         TagItem toGiveTag = ItemTag.getTagItem(toGive);
         TriggerHandler.setUsesLeft(toGiveTag, newUses);
         updateUsesDisplay(item);
-        UtilsInventory.giveAmount(p, toGive, 1, UtilsInventory.ExcessManage.DROP_EXCESS);
+        InventoryUtils.giveAmount(p, toGive, 1, InventoryUtils.ExcessMode.DROP_EXCESS);
         return item;
     }
 

@@ -20,17 +20,17 @@ public class ItemTagUtility {
         slots.add(EquipmentSlot.HAND);
         try {
             slots.add(EquipmentSlot.valueOf("OFF_HAND"));
-        } catch (Throwable ignored){
+        } catch (Throwable ignored) {
             //1.8
         }
         return slots;
     }
 
-    @Deprecated
     /**
      * @see InventoryUtils#getPlayerEquipmentSlots()
      */
-    public static Set<EquipmentSlot> getPlayerEquipmentSlots(){
+    @Deprecated
+    public static Set<EquipmentSlot> getPlayerEquipmentSlots() {
         return Collections.unmodifiableSet(playerEquipmentSlots);
     }
 }

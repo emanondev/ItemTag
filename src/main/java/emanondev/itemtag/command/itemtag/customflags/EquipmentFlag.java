@@ -30,7 +30,7 @@ public class EquipmentFlag extends CustomFlag {
 
     @EventHandler
     public void event(EquipmentChangeEvent event) {
-        if (!InventoryUtils.getPlayerEquipmentSlots().contains(event.getSlotType())){
+        if (!InventoryUtils.getPlayerEquipmentSlots().contains(event.getSlotType())) {
             return;
         }
         switch (event.getSlotType()) {
@@ -56,7 +56,7 @@ public class EquipmentFlag extends CustomFlag {
                 originalItem = event.getPlayer().getInventory().getItem(event.getSlotType());
             } catch (Throwable e) {
                 EntityEquipment equip = event.getPlayer().getEquipment();
-                if (equip!=null) {
+                if (equip != null) {
                     switch (event.getSlotType().name()) {
                         case "HAND":
                             originalItem = equip.getItemInHand();

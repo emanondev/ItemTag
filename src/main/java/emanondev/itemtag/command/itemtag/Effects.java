@@ -90,7 +90,7 @@ public class Effects extends ListenerSubCmd {
             else
                 info.addEffect(EffectsInfo.craftPotionEffect(type, amplifier, ambient, particles, icon));
             info.update();
-            ItemUtils.setHandItem(p,info.getItem());
+            ItemUtils.setHandItem(p, info.getItem());
         } catch (Exception e) {
             //TODO
             onFail(p, alias);
@@ -115,7 +115,7 @@ public class Effects extends ListenerSubCmd {
             else
                 info.addEffect(EffectsInfo.craftPotionEffect(type, amplifier, ambient, particles, icon));
             info.update();
-            ItemUtils.setHandItem(p,info.getItem());
+            ItemUtils.setHandItem(p, info.getItem());
         } catch (Exception e) {
             //TODO
             onFail(p, alias);
@@ -133,7 +133,7 @@ public class Effects extends ListenerSubCmd {
                 return;
             info.removeEffect(type);
             info.update();
-            ItemUtils.setHandItem(p,info.getItem());
+            ItemUtils.setHandItem(p, info.getItem());
         } catch (Exception e) {
             //TODO
             onFail(p, alias);
@@ -151,7 +151,7 @@ public class Effects extends ListenerSubCmd {
                 if (slots.contains(slot) != info.isValidSlot(slot))
                     info.toggleSlot(slot);
             info.update();
-            ItemUtils.setHandItem(p,info.getItem());
+            ItemUtils.setHandItem(p, info.getItem());
         } catch (Exception e) {
             //TODO
             onFail(p, alias);

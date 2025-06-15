@@ -1,11 +1,10 @@
 package emanondev.itemtag.command.itemtag;
 
 import emanondev.itemedit.Util;
-import emanondev.itemedit.UtilsInventory;
-import emanondev.itemedit.UtilsInventory.ExcessManage;
 import emanondev.itemedit.UtilsString;
 import emanondev.itemedit.aliases.Aliases;
 import emanondev.itemedit.utility.CompleteUtility;
+import emanondev.itemedit.utility.InventoryUtils;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.TagItem;
 import emanondev.itemtag.actions.ActionHandler;
@@ -24,6 +23,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class Actions extends ListenerSubCmd {
 
@@ -39,7 +39,7 @@ public class Actions extends ListenerSubCmd {
         Player p = (Player) sender;
         ItemStack item = this.getItemInHand(p);
         if (args.length == 1) {
-            p.openInventory(new ActionsGui(p, item, alias,this.getName()).getInventory());
+            p.openInventory(new ActionsGui(p, item, alias, this.getName()).getInventory());
             //onFail(p, alias);
             return;
         }
@@ -479,7 +479,7 @@ public class Actions extends ListenerSubCmd {
                     String cooldownId = ActionsUtility.getCooldownId(tagItem);
                     if (ItemTag.get().getCooldownAPI().hasCooldown(event.getPlayer(), cooldownId))
                         return;
-                    ItemTag.get().getCooldownAPI().setCooldown(event.getPlayer(), cooldownId, cooldown);
+                    ItemTag.get().getCooldownAPI().setCooldown(event.getPlayer(), cooldownId, cooldown, TimeUnit.MILLISECONDS);
                     if (ActionsUtility.getVisualCooldown(tagItem))
                         event.getPlayer().setCooldown(item.getType(), (int) (cooldown / 50));
                 }
@@ -541,7 +541,7 @@ public class Actions extends ListenerSubCmd {
                                 if (ActionsUtility.getDisplayUses(tagItem)) {
                                     ActionsUtility.updateUsesDisplay(clone);
                                 }
-                                UtilsInventory.giveAmount(event.getPlayer(), clone, 1, ExcessManage.DROP_EXCESS);
+                                InventoryUtils.giveAmount(event.getPlayer(), clone, 1, InventoryUtils.ExcessMode.DROP_EXCESS);
                             }
 
                         } catch (Throwable t) { //1.8 compability
@@ -553,7 +553,7 @@ public class Actions extends ListenerSubCmd {
                                 event.getPlayer().getInventory().setItemInHand(clone);
                                 ActionsUtility.setUses(ItemTag.getTagItem(clone), uses - 1);
                                 //has no displayuses on 1.8
-                                UtilsInventory.giveAmount(event.getPlayer(), clone, 1, ExcessManage.DROP_EXCESS);
+                                InventoryUtils.giveAmount(event.getPlayer(), clone, 1, InventoryUtils.ExcessMode.DROP_EXCESS);
                             }
                         }
                     }

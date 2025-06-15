@@ -3,7 +3,6 @@ package emanondev.itemtag.compability;
 import emanondev.itemedit.utility.ItemUtils;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.actions.ActionsUtility;
-import emanondev.itemtag.command.itemtag.Actions;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
@@ -22,8 +21,8 @@ import java.util.concurrent.TimeUnit;
  * manually in your plugins {@code onEnable()} by using
  * {@code new YourExpansionClass().register();}
  */
-public class PlaceHolders extends PlaceholderExpansion {
-    public PlaceHolders() {
+public class Placeholders extends PlaceholderExpansion {
+    public Placeholders() {
 
         ItemTag.get().log("Hooked into PlaceHolderAPI:");
         ItemTag.get().log("placeholders:");

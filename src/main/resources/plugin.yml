@@ -3,10 +3,15 @@ main: ${groupId}.${project.name}
 version: "${project.version}"
 author: emanon
 api-version: 1.13
-modrinth-project-id: "dr0F8gew"
-folia-supported: true
 depend: [ ItemEdit ]
 softdepend: [ NBTAPI ]
+
+# Additional info
+modrinth-project-id: "dr0F8gew"
+modrinth-project-name: "itemtag"
+spigot-resource-id: 89634
+bstats-plugin-id: 15077
+folia-supported: true
 
 commands:
   itemtag:

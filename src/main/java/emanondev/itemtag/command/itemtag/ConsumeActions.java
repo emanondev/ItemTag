@@ -16,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class ConsumeActions extends ListenerSubCmd {
 
@@ -197,7 +198,7 @@ public class ConsumeActions extends ListenerSubCmd {
             if (!ItemTag.getTagItem(item).hasStringTag(ACTIONS_KEY))
                 ItemTag.getTagItem(item).setTag(ACTIONS_KEY, action);
             else {
-                List<String> list = new ArrayList<>(ItemTag.getTagItem(item).getStringList(ACTIONS_KEY,Collections.emptyList()));
+                List<String> list = new ArrayList<>(ItemTag.getTagItem(item).getStringList(ACTIONS_KEY, Collections.emptyList()));
                 list.set(line, action);
                 ItemTag.getTagItem(item).setTag(ACTIONS_KEY, list);
             }
@@ -379,7 +380,7 @@ public class ConsumeActions extends ListenerSubCmd {
                 event.setCancelled(true);
                 return;
             }
-            ItemTag.get().getCooldownAPI().setCooldown(event.getPlayer(), cooldownId, cooldown);
+            ItemTag.get().getCooldownAPI().setCooldown(event.getPlayer(), cooldownId, cooldown, TimeUnit.MILLISECONDS);
         }
 
         for (String action : tagItem.getStringList(ACTIONS_KEY))

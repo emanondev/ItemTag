@@ -1,6 +1,5 @@
 package emanondev.itemtag.equipmentchange;
 
-import emanondev.itemedit.Util;
 import emanondev.itemedit.utility.ItemUtils;
 import emanondev.itemedit.utility.VersionUtils;
 import emanondev.itemtag.ItemTag;
@@ -281,7 +280,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
             case FEET:
                 return p.getEquipment().getBoots();
             case HAND:
-                if (Util.isVersionAfter(1, 9))// safe
+                if (VersionUtils.isVersionAfter(1, 9))// safe
                     return p.getInventory().getItemInMainHand();
                 return p.getInventory().getItemInHand();
             case HEAD:
@@ -289,7 +288,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
             case LEGS:
                 return p.getEquipment().getLeggings();
         }// safe
-        if (Util.isVersionAfter(1, 9) && slot == EquipmentSlot.OFF_HAND) {
+        if (VersionUtils.isVersionAfter(1, 9) && slot == EquipmentSlot.OFF_HAND) {
             return p.getInventory().getItemInOffHand();
         }
         return null;
@@ -308,7 +307,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
         if (ItemUtils.isAirOrNull(item))
             return null;
 
-        if (VersionUtils.isVersionAfter(1,21,5)) {
+        if (VersionUtils.isVersionAfter(1, 21, 5)) {
             ItemMeta meta = ItemUtils.getMeta(item);
             if (meta.hasEquippable()) {
                 return meta.getEquippable().getSlot();
@@ -330,7 +329,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
     protected EquipmentSlot guessDispenserSlotType(ItemStack item) {
         EquipmentSlot slot = guessRightClickSlotType(item);
 
-        if (VersionUtils.isVersionAfter(1,21,5)) {
+        if (VersionUtils.isVersionAfter(1, 21, 5)) {
             ItemMeta meta = ItemUtils.getMeta(item);
             if (meta.hasEquippable()) {
                 return meta.getEquippable().getSlot();

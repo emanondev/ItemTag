@@ -12,8 +12,6 @@ import java.util.*;
 
 public final class ActionsUtility {
 
-    private static final String DEFAULT_COOLDOWN_ID = "default";
-
     public final static String TYPE_SEPARATOR = "%%:%%";
     public final static String ACTIONS_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":actions";
     public final static String ACTION_USES_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":uses";
@@ -24,6 +22,7 @@ public final class ActionsUtility {
     public final static String ACTION_COOLDOWN_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":cooldown";
     public final static String ACTION_COOLDOWN_ID_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":cooldown_id";
     public final static String ACTION_PERMISSION_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":permission";
+    private static final String DEFAULT_COOLDOWN_ID = "default";
 
     public static boolean hasActions(TagItem item) {
         return item.hasStringListTag(ACTIONS_KEY);

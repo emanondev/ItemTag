@@ -1,6 +1,5 @@
 package emanondev.itemtag.command.itemtag;
 
-import emanondev.itemedit.Util;
 import emanondev.itemedit.aliases.Aliases;
 import emanondev.itemedit.command.SubCmd;
 import emanondev.itemedit.utility.CompleteUtility;

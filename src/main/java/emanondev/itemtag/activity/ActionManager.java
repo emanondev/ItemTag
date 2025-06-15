@@ -1,6 +1,6 @@
 package emanondev.itemtag.activity;
 
-import emanondev.itemedit.Util;
+import emanondev.itemedit.utility.VersionUtils;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.activity.action.*;
 import org.jetbrains.annotations.NotNull;
@@ -33,10 +33,12 @@ public class ActionManager {
         register(new CommandAsOpActionType());
         register(new ServerCommandActionType());
         register(new MessageActionType());
-        if (Util.isVersionAfter(1, 11))
+        if (VersionUtils.isVersionAfter(1, 11)) {
             register(new TitleActionType());
-        if (Util.isVersionAfter(1, 9, 2))
+        }
+        if (VersionUtils.isVersionAfter(1, 9, 2)) {
             register(new ActionBarActionType());
+        }
         register(new DelayedActionType());
         register(new ConditionalActionType());
         register(new RandomActionType());

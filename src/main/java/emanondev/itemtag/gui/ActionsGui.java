@@ -32,10 +32,10 @@ public class ActionsGui implements Gui {
     private final TagItem tagItem;
     private final Inventory inventory;
     private final Player target;
-    private int editorCooldown = 1;
-    private int editorValue = 1;
     private final String commandAlias;
     private final String subCommandAlias;
+    private int editorCooldown = 1;
+    private int editorValue = 1;
 
     public ActionsGui(Player target, ItemStack item, String commandAlias, String subCommandAlias) {
         String title = this.getLanguageMessage("gui.actions.title",

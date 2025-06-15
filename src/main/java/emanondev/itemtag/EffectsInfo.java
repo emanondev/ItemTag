@@ -1,6 +1,7 @@
 package emanondev.itemtag;
 
 import emanondev.itemedit.utility.VersionUtils;
+import lombok.Getter;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -15,6 +16,7 @@ public class EffectsInfo {
 
     private final EnumSet<EquipmentSlot> slots = EnumSet.noneOf(EquipmentSlot.class);
     private final HashMap<PotionEffectType, PotionEffect> effects = new HashMap<>();
+    @Getter
     private final ItemStack item;
     private final TagItem tagItem;
 
@@ -158,10 +160,6 @@ public class EffectsInfo {
             tagItem.removeTag(EFFECTS_EQUIPS_KEY);
         else
             tagItem.setTag(EFFECTS_EQUIPS_KEY, equipsToString());
-    }
-
-    public ItemStack getItem() {
-        return item;
     }
 
     public boolean hasAnyEffects() {

@@ -1,6 +1,7 @@
 package emanondev.itemtag;
 
 import de.tr7zw.nbtapi.NBTItem;
+import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -8,6 +9,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class NBTAPITagItem implements TagItem {
 
+    @Getter
     private final ItemStack item;
     private NBTItem nbtItem = null;
 
@@ -106,8 +108,4 @@ public class NBTAPITagItem implements TagItem {
         return item != null && item.getType() != Material.AIR;
     }
 
-    @Override
-    public ItemStack getItem() {
-        return item;
-    }
 }

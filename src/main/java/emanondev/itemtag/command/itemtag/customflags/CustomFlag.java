@@ -23,8 +23,9 @@ public abstract class CustomFlag implements Listener, Comparable<CustomFlag> {
     private final YMLConfig config;
 
     public CustomFlag(@NotNull String id, @NotNull String key, @NotNull Flag subCommand) {
-        if (id.isEmpty() || id.contains(" "))
+        if (id.isEmpty() || id.contains(" ")) {
             throw new IllegalArgumentException();
+        }
         this.ID = id;
         this.key = key;
         this.subCommand = subCommand;
@@ -85,10 +86,11 @@ public abstract class CustomFlag implements Listener, Comparable<CustomFlag> {
     }
 
     public void setValue(TagItem item, boolean val) {
-        if (val == defaultValue())
+        if (val == defaultValue()) {
             item.removeTag(getKey());
-        else
+        } else {
             item.setTag(getKey(), val);
+        }
     }
 
     public boolean defaultValue() {

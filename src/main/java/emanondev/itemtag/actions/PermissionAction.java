@@ -16,11 +16,13 @@ public class PermissionAction extends Action {
 
     @Override
     public void validateInfo(String text) {
-        if (text.isEmpty())
+        if (text.isEmpty()) {
             throw new IllegalStateException();
+        }
         String[] args = text.split(" ");
-        if (args.length < 3)
+        if (args.length < 3) {
             throw new IllegalStateException();
+        }
 
         ActionHandler.validateActionType(args[1]);
         ActionHandler.validateActionInfo(args[1], text.substring(args[0].length() + args[1].length() + 2));
@@ -30,10 +32,12 @@ public class PermissionAction extends Action {
     public void execute(Player player, String text) {
         String[] args = text.split(" ");
         if (args[0].startsWith("-")) {
-            if (player.hasPermission(args[0].substring(1)))
+            if (player.hasPermission(args[0].substring(1))) {
                 return;
-        } else if (!player.hasPermission(args[0]))
+            }
+        } else if (!player.hasPermission(args[0])) {
             return;
+        }
         ActionHandler.handleAction(player, args[1], text.substring(args[0].length() + args[1].length() + 2));
 
     }
@@ -47,8 +51,9 @@ public class PermissionAction extends Action {
                 return CompleteUtility.complete(params.get(1), ActionHandler.getTypes());
             default: {
                 Action sub = ActionHandler.getAction(params.get(1));
-                if (sub == null)
+                if (sub == null) {
                     return Collections.emptyList();
+                }
                 params.remove(0);
                 params.remove(0);
                 return sub.tabComplete(sender, params);

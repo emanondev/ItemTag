@@ -18,8 +18,9 @@ public class Smelt extends CustomFlag {
 
     @EventHandler
     public void event(FurnaceSmeltEvent event) {
-        if (ItemTag.getTagItem(event.getSource()).hasBooleanTag(SMELT))
+        if (ItemTag.getTagItem(event.getSource()).hasBooleanTag(SMELT)) {
             event.setCancelled(true);
+        }
     }
 
     @Override

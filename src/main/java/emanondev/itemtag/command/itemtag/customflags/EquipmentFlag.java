@@ -49,8 +49,9 @@ public class EquipmentFlag extends CustomFlag {
             return;
         }
         Bukkit.getScheduler().runTaskLater(getPlugin(), () -> {
-            if (!event.getPlayer().isOnline())
+            if (!event.getPlayer().isOnline()) {
                 return;
+            }
             ItemStack originalItem = null;
             try {
                 originalItem = event.getPlayer().getInventory().getItem(event.getSlotType());

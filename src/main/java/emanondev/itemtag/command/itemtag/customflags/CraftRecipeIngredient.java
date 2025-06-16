@@ -23,18 +23,20 @@ public class CraftRecipeIngredient extends CustomFlag {
 
     @EventHandler(ignoreCancelled = true)
     public void event(CraftItemEvent event) {
-        for (ItemStack item : event.getInventory().getMatrix())
+        for (ItemStack item : event.getInventory().getMatrix()) {
             if (ItemTag.getTagItem(item).hasBooleanTag(CRAFTING_INGREDIENT_KEY)) {
                 event.setCancelled(true);
                 return;
             }
+        }
     }
 
     @EventHandler(ignoreCancelled = true)
     public void event(InventoryClickEvent event) {
         Inventory inv = InventoryUtils.getTopInventory(event);
-        if (inv == null || !inv.getType().name().equals("CARTOGRAPHY"))
+        if (inv == null || !inv.getType().name().equals("CARTOGRAPHY")) {
             return;
+        }
 
         if (event.getSlotType() != InventoryType.SlotType.RESULT) {
             return;

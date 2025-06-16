@@ -17,10 +17,12 @@ public class ActionHandler {
     }
 
     public static void registerAction(Action action) {
-        if (action == null)
+        if (action == null) {
             throw new NullPointerException();
-        if (actions.containsKey(action.getID()))
+        }
+        if (actions.containsKey(action.getID())) {
             throw new IllegalArgumentException();
+        }
         actions.put(action.getID().toLowerCase(Locale.ENGLISH), action);
     }
 
@@ -29,8 +31,9 @@ public class ActionHandler {
     }
 
     public static void validateActionType(String type) {
-        if (!actions.containsKey(type.toLowerCase(Locale.ENGLISH)))
+        if (!actions.containsKey(type.toLowerCase(Locale.ENGLISH))) {
             throw new IllegalArgumentException();
+        }
     }
 
     public static void validateActionInfo(String type, String text) {
@@ -38,8 +41,9 @@ public class ActionHandler {
     }
 
     public static List<String> tabComplete(CommandSender sender, String type, List<String> params) {
-        if (actions.containsKey(type.toLowerCase(Locale.ENGLISH)))
+        if (actions.containsKey(type.toLowerCase(Locale.ENGLISH))) {
             return actions.get(type.toLowerCase(Locale.ENGLISH)).tabComplete(sender, params);
+        }
         return new ArrayList<>();
     }
 

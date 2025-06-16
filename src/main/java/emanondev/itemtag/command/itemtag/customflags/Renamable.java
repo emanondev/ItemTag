@@ -21,8 +21,9 @@ public class Renamable extends CustomFlag {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void event(PrepareAnvilEvent event) {
         if (ItemTag.getTagItem(event.getInventory().getItem(0)).hasBooleanTag(RENAMABLE_KEY) ||
-                ItemTag.getTagItem(event.getInventory().getItem(1)).hasBooleanTag(RENAMABLE_KEY))
+                ItemTag.getTagItem(event.getInventory().getItem(1)).hasBooleanTag(RENAMABLE_KEY)) {
             event.setResult(null);
+        }
     }
 
     @Override

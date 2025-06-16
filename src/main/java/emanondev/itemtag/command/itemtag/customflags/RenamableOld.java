@@ -22,17 +22,22 @@ public class RenamableOld extends CustomFlag {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void event(InventoryClickEvent event) {
-        if (event.getInventory().getType() == InventoryType.ANVIL)
-            if (ItemTag.getTagItem(event.getInventory().getItem(0)).hasBooleanTag(RENAMABLE_KEY) ||
-                    ItemTag.getTagItem(event.getInventory().getItem(1)).hasBooleanTag(RENAMABLE_KEY)) {
-                Bukkit.getScheduler().runTaskLater(ItemTag.get(), () -> {
-                    if (ItemTag.getTagItem(event.getInventory().getItem(0)).hasBooleanTag(RENAMABLE_KEY) ||
-                            ItemTag.getTagItem(event.getInventory().getItem(1)).hasBooleanTag(RENAMABLE_KEY))
-                        event.getInventory().setItem(2, null);
-                }, 1L);
-                if (event.getSlot() == 2)
-                    event.setCancelled(true);
+        if (event.getInventory().getType() != InventoryType.ANVIL) {
+            return;
+        }
+        if (ItemTag.getTagItem(event.getInventory().getItem(0)).hasBooleanTag(RENAMABLE_KEY) ||
+                ItemTag.getTagItem(event.getInventory().getItem(1)).hasBooleanTag(RENAMABLE_KEY)) {
+            Bukkit.getScheduler().runTaskLater(ItemTag.get(), () -> {
+                if (ItemTag.getTagItem(event.getInventory().getItem(0)).hasBooleanTag(RENAMABLE_KEY) ||
+                        ItemTag.getTagItem(event.getInventory().getItem(1)).hasBooleanTag(RENAMABLE_KEY)) {
+                    event.getInventory().setItem(2, null);
+                }
+            }, 1L);
+            if (event.getSlot() == 2) {
+                event.setCancelled(true);
             }
+        }
+
     }
 
     @Override

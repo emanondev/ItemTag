@@ -24,12 +24,14 @@ public class Grindable extends CustomFlag {
     @EventHandler
     public void event(InventoryClickEvent event) {
         Inventory inv = InventoryUtils.getTopInventory(event);
-        if (!(inv instanceof GrindstoneInventory))
+        if (!(inv instanceof GrindstoneInventory)) {
             return;
+        }
         boolean found = ItemTag.getTagItem(inv.getItem(0)).hasBooleanTag(GRINDABLE_KEY)
                 || ItemTag.getTagItem(inv.getItem(1)).hasBooleanTag(GRINDABLE_KEY);
-        if (!found)
+        if (!found) {
             return;
+        }
         if (event.getSlotType() == SlotType.RESULT) {
             event.setCancelled(true);
             //TODO lascia glich visivo quando usi F

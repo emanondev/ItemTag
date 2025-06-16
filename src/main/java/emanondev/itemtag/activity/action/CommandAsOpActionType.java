@@ -55,8 +55,9 @@ public class CommandAsOpActionType extends ActionType {
                         true)) {
                     PlayerCommandPreprocessEvent evt = new PlayerCommandPreprocessEvent(player, text);
                     Bukkit.getPluginManager().callEvent(evt);
-                    if (evt.isCancelled())
+                    if (evt.isCancelled()) {
                         return false; //sometimes plugins cancelling the event also handle it
+                    }
                     text = evt.getMessage();
                 }
                 result = Bukkit.dispatchCommand(player, UtilsString.fix(text, player, true));

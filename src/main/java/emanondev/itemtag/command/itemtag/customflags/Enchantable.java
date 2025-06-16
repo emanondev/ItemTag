@@ -19,8 +19,9 @@ public class Enchantable extends CustomFlag {
 
     @EventHandler
     public void event(EnchantItemEvent event) {
-        if (ItemTag.getTagItem(event.getItem()).hasBooleanTag(ENCHANTABLE_KEY))
+        if (ItemTag.getTagItem(event.getItem()).hasBooleanTag(ENCHANTABLE_KEY)) {
             event.setCancelled(true);
+        }
     }
 
     @Override

@@ -20,13 +20,16 @@ public class EntityFood extends CustomFlag {
 
     @EventHandler
     private void event(PlayerInteractEntityEvent event) {
-        if (!(event.getRightClicked() instanceof Animals))
+        if (!(event.getRightClicked() instanceof Animals)) {
             return;
+        }
         ItemStack item = ItemUtils.getHandItem(event.getPlayer());
-        if (!ItemTag.getTagItem(item).hasBooleanTag(ENTITYFOOD_KEY))
+        if (!ItemTag.getTagItem(item).hasBooleanTag(ENTITYFOOD_KEY)) {
             return;
-        if (((Animals) event.getRightClicked()).isBreedItem(item))
+        }
+        if (((Animals) event.getRightClicked()).isBreedItem(item)) {
             event.setCancelled(true);
+        }
     }
 
     @Override

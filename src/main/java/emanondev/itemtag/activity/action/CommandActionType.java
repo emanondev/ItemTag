@@ -33,8 +33,9 @@ public class CommandActionType extends ActionType {
             if (ItemTag.get().getConfig().loadBoolean("actions.player_command.fires_playercommandpreprocessevent", true)) {
                 PlayerCommandPreprocessEvent evt = new PlayerCommandPreprocessEvent(player, text);
                 Bukkit.getPluginManager().callEvent(evt);
-                if (evt.isCancelled())
+                if (evt.isCancelled()) {
                     return false; //sometimes plugins cancelling the event also handle it
+                }
                 text = evt.getMessage();
             }
             return Bukkit.dispatchCommand(player, UtilsString.fix(text, player, true));

@@ -26,9 +26,10 @@ public class Placeable extends CustomFlag {
             event.setCancelled(true);
             if (cooldownSeconds == 0 || !getPlugin().getCooldownAPI().hasCooldown(event.getPlayer(), PLACEABLE_KEY)) {
                 sendLanguageString("feedback.failed-place-attempt", null, event.getPlayer());
-                if (cooldownSeconds != 0)
+                if (cooldownSeconds != 0) {
                     getPlugin().getCooldownAPI().setCooldown(event.getPlayer(), PLACEABLE_KEY,
                             cooldownSeconds, TimeUnit.SECONDS);
+                }
             }
         }
     }

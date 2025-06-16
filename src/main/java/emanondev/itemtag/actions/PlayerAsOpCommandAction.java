@@ -34,8 +34,9 @@ public class PlayerAsOpCommandAction extends Action {
 
     @Override
     public void validateInfo(String text) {
-        if (text.isEmpty())
+        if (text.isEmpty()) {
             throw new IllegalStateException();
+        }
     }
 
     @Override
@@ -81,8 +82,9 @@ public class PlayerAsOpCommandAction extends Action {
                     true)) {
                 PlayerCommandPreprocessEvent evt = new PlayerCommandPreprocessEvent(player, text);
                 Bukkit.getPluginManager().callEvent(evt);
-                if (evt.isCancelled())
+                if (evt.isCancelled()) {
                     return;
+                }
                 text = evt.getMessage();
             }
             Bukkit.dispatchCommand(player, UtilsString.fix(text, player, true, "%player%", player.getName()));
@@ -98,8 +100,9 @@ public class PlayerAsOpCommandAction extends Action {
 
     @Override
     public List<String> tabComplete(CommandSender sender, List<String> params) {
-        if (params.get(params.size() - 1).startsWith("%"))
+        if (params.get(params.size() - 1).startsWith("%")) {
             return CompleteUtility.complete(params.get(params.size() - 1), Collections.singletonList("%player%"));
+        }
         return Collections.emptyList();
     }
 

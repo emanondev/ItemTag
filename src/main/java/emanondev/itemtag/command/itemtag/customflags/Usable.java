@@ -38,10 +38,12 @@ public class Usable extends CustomFlag {
                     } else
                         b = null;
                     Bukkit.getScheduler().runTaskLater(ItemTag.get(), () -> { //TODO folia fix
-                        if (!VersionUtils.isVersionAfter(1, 20))
+                        if (!VersionUtils.isVersionAfter(1, 20)) {
                             InventoryUtils.updateView(event.getPlayer());
-                        if (b != null) //reduce clientside visual glich on liquids only for 1.14+
+                        }
+                        if (b != null) {//reduce clientside visual glich on liquids only for 1.14+
                             event.getPlayer().sendBlockChange(b.getLocation(), b.getBlockData());
+                        }
                     }, 1L);
                 }
             default:
@@ -50,27 +52,32 @@ public class Usable extends CustomFlag {
 
     @EventHandler
     private void event(PlayerBucketFillEvent event) { //obsolete and unrequired on 1.18
-        if (VersionUtils.isVersionAfter(1, 18))
+        if (VersionUtils.isVersionAfter(1, 18)) {
             return;
+        }
         ItemStack item = this.getItemInHand(event.getPlayer());
-        if (VersionUtils.isVersionUpTo(1, 8, 9) && (item == null || item.getType() != Material.BUCKET))
+        if (VersionUtils.isVersionUpTo(1, 8, 9) && (item == null || item.getType() != Material.BUCKET)) {
             item = event.getPlayer().getInventory().getItemInOffHand();
-
-        if (ItemTag.getTagItem(item).hasBooleanTag(USABLE_KEY))
+        }
+        if (ItemTag.getTagItem(item).hasBooleanTag(USABLE_KEY)) {
             event.setCancelled(true);
+        }
     }
 
 
     @EventHandler
     private void event(PlayerBucketEmptyEvent event) { //obsolete and unrequired on 1.18
-        if (VersionUtils.isVersionAfter(1, 18))
+        if (VersionUtils.isVersionAfter(1, 18)) {
             return;
+        }
         ItemStack item = this.getItemInHand(event.getPlayer());
         if (VersionUtils.isVersionAfter(1, 9) && (item == null ||
-                (item.getType() != Material.LAVA_BUCKET && item.getType() != Material.WATER_BUCKET)))
+                (item.getType() != Material.LAVA_BUCKET && item.getType() != Material.WATER_BUCKET))) {
             item = event.getPlayer().getInventory().getItemInOffHand();
-        if (ItemTag.getTagItem(item).hasBooleanTag(USABLE_KEY))
+        }
+        if (ItemTag.getTagItem(item).hasBooleanTag(USABLE_KEY)) {
             event.setCancelled(true);
+        }
     }
 
     @Override

@@ -303,9 +303,9 @@ public class Actions extends ListenerSubCmd {
             String action = actionType + ActionsUtility.TYPE_SEPARATOR + actionInfo;
             TagItem tagItem = ItemTag.getTagItem(item);
 
-            if (!ActionsUtility.hasActions(tagItem))
+            if (!ActionsUtility.hasActions(tagItem)) {
                 ActionsUtility.setActions(tagItem, Collections.singletonList(action));
-            else {
+            } else {
                 List<String> list = new ArrayList<>(ActionsUtility.getActions(tagItem));
                 list.set(line, action);
                 ActionsUtility.setActions(tagItem, list);
@@ -329,9 +329,9 @@ public class Actions extends ListenerSubCmd {
             }
             TagItem tagItem = ItemTag.getTagItem(item);
             String action;
-            if (!ActionsUtility.hasActions(tagItem))
+            if (!ActionsUtility.hasActions(tagItem)) {
                 throw new IllegalArgumentException();
-            else {
+            } else {
                 List<String> list = new ArrayList<>(ActionsUtility.getActions(tagItem));
                 action = list.remove(line);
                 ActionsUtility.setActions(tagItem, list);
@@ -406,9 +406,9 @@ public class Actions extends ListenerSubCmd {
             }
             String action = actionType + ActionsUtility.TYPE_SEPARATOR + actionInfo;
             TagItem tagItem = ItemTag.getTagItem(item);
-            if (!ActionsUtility.hasActions(tagItem))
+            if (!ActionsUtility.hasActions(tagItem)) {
                 ActionsUtility.setActions(tagItem, Collections.singletonList(action));
-            else {
+            } else {
                 List<String> list = new ArrayList<>(ActionsUtility.getActions(tagItem));
                 list.add(line, action);
                 ActionsUtility.setActions(tagItem, list);
@@ -468,30 +468,36 @@ public class Actions extends ListenerSubCmd {
             case RIGHT_CLICK_BLOCK:
                 ItemStack item = event.getItem();
                 TagItem tagItem = ItemTag.getTagItem(item);
-                if (!ActionsUtility.hasActions(tagItem))
+                if (!ActionsUtility.hasActions(tagItem)) {
                     return;
+                }
 
                 String permission = ActionsUtility.getPermission(tagItem);
-                if (permission != null && !event.getPlayer().hasPermission(permission))
+                if (permission != null && !event.getPlayer().hasPermission(permission)) {
                     return;
+                }
                 long cooldown = ActionsUtility.getCooldownMs(tagItem);
                 if (cooldown > 0) {
                     String cooldownId = ActionsUtility.getCooldownId(tagItem);
-                    if (ItemTag.get().getCooldownAPI().hasCooldown(event.getPlayer(), cooldownId))
+                    if (ItemTag.get().getCooldownAPI().hasCooldown(event.getPlayer(), cooldownId)) {
                         return;
+                    }
                     ItemTag.get().getCooldownAPI().setCooldown(event.getPlayer(), cooldownId, cooldown, TimeUnit.MILLISECONDS);
-                    if (ActionsUtility.getVisualCooldown(tagItem))
+                    if (ActionsUtility.getVisualCooldown(tagItem)) {
                         event.getPlayer().setCooldown(item.getType(), (int) (cooldown / 50));
+                    }
                 }
 
                 int uses = ActionsUtility.getUses(tagItem);
-                if (uses == 0)
+                if (uses == 0) {
                     return;
+                }
 
                 for (String action : ActionsUtility.getActions(tagItem))
                     try {
-                        if (action.isEmpty())
+                        if (action.isEmpty()) {
                             continue;
+                        }
                         ActionHandler.handleAction(event.getPlayer(), action.split(ActionsUtility.TYPE_SEPARATOR)[0],
                                 action.split(ActionsUtility.TYPE_SEPARATOR)[1]);
                     } catch (Exception e) {
@@ -503,10 +509,11 @@ public class Actions extends ListenerSubCmd {
                     if (uses == 1 && ActionsUtility.getConsume(tagItem)) {
                         if (event.getItem().getAmount() == 1) { //1.8 doesn't like  event.getItem().setAmount(event.getItem().getAmount() - 1); on single items
                             try {
-                                if (event.getHand() == EquipmentSlot.HAND)
+                                if (event.getHand() == EquipmentSlot.HAND) {
                                     event.getPlayer().getInventory().setItemInMainHand(null);
-                                else
+                                } else {
                                     event.getPlayer().getInventory().setItemInOffHand(null);
+                                }
                             } catch (Error e) {
                                 event.getPlayer().getInventory().setItemInHand(null);
                             }
@@ -514,10 +521,11 @@ public class Actions extends ListenerSubCmd {
                             ItemStack clone = event.getItem().clone();
                             clone.setAmount(clone.getAmount() - 1);
                             try {
-                                if (event.getHand() == EquipmentSlot.HAND)
+                                if (event.getHand() == EquipmentSlot.HAND) {
                                     event.getPlayer().getInventory().setItemInMainHand(clone);
-                                else
+                                } else {
                                     event.getPlayer().getInventory().setItemInOffHand(clone);
+                                }
                             } catch (Error e) {
                                 event.getPlayer().getInventory().setItemInHand(clone);
                             }

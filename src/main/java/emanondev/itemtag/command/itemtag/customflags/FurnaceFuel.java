@@ -18,8 +18,9 @@ public class FurnaceFuel extends CustomFlag {
 
     @EventHandler
     public void event(FurnaceBurnEvent event) {
-        if (ItemTag.getTagItem(event.getFuel()).hasBooleanTag(FURNACE_FUEL))
+        if (ItemTag.getTagItem(event.getFuel()).hasBooleanTag(FURNACE_FUEL)) {
             event.setCancelled(true);
+        }
     }
 
     @Override

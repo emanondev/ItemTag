@@ -1,5 +1,6 @@
 package emanondev.itemtag.command.itemtag;
 
+import emanondev.itemedit.CooldownAPI;
 import emanondev.itemedit.Util;
 import emanondev.itemedit.UtilsString;
 import emanondev.itemedit.command.AbstractCommand;
@@ -21,6 +22,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class UsePermission extends ListenerSubCmd {
 
@@ -103,6 +105,16 @@ public class UsePermission extends ListenerSubCmd {
         if (event.getPlayer().hasPermission(perm))
             return;
         event.setUseItemInHand(Event.Result.DENY);
+
+        CooldownAPI cooldownAPI = getPlugin().getCooldownAPI();
+        String cooldownKey = "useperm_" + perm.replace(".", "_");
+
+        if (cooldownAPI.hasCooldown(event.getPlayer(), cooldownKey)) {
+            return;
+        }
+        //TODO configurable cooldown length
+        cooldownAPI.setCooldown(event.getPlayer(), cooldownKey, 1, TimeUnit.SECONDS);
+
         if (tagItem.hasStringTag(USEMSG_KEY)) {
             Util.sendMessage(event.getPlayer(), UtilsString.fix(tagItem.getString(USEMSG_KEY), event.getPlayer(), true, "%permission%", perm));
             return;

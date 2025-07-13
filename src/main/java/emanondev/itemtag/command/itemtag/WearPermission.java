@@ -72,6 +72,7 @@ public class WearPermission extends ListenerSubCmd {
                 String permission = args.length == 2 ? null : args[2].toLowerCase(Locale.ENGLISH);
                 setUseKey(tagItem, permission);
                 //TODO feedback
+                return;
             }
             case "setmessage": {
                 if (args.length == 2) {
@@ -82,6 +83,7 @@ public class WearPermission extends ListenerSubCmd {
                 String msg = UtilsString.fix(String.join(" ", Arrays.asList(args).subList(2, args.length)), null, true);
                 setUseMsgKey(tagItem, msg);
                 //TODO feedback
+                return;
             }
         }
 

@@ -1,5 +1,6 @@
 package emanondev.itemtag.command.itemtag;
 
+import emanondev.itemedit.CooldownAPI;
 import emanondev.itemedit.Util;
 import emanondev.itemedit.UtilsString;
 import emanondev.itemedit.command.AbstractCommand;
@@ -21,6 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class WearPermission extends ListenerSubCmd {
 
@@ -122,6 +124,12 @@ public class WearPermission extends ListenerSubCmd {
             TagItem tagItem = ItemTag.getTagItem(item);
             String perm = tagItem.getString(WEAR_KEY);
             if (tagItem.hasStringTag(WEARMSG_KEY)) {
+                CooldownAPI api = ItemTag.get().getCooldownAPI();
+                String cooldownKey = "wear_" + perm.replace(".", "_");
+                if (api.hasCooldown(player,cooldownKey)){
+                    return;
+                }
+                api.setCooldown(player,cooldownKey,1, TimeUnit.SECONDS);
                 Util.sendMessage(player, UtilsString.fix(tagItem.getString(WEARMSG_KEY), player, true, "%permission%", perm));
             }
         }, 1L);

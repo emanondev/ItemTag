@@ -375,8 +375,14 @@ itemtag:
       - '&b&lSet a permission to use this item (right click vanilla behavior)'
       - '&b'
       - '&esetpermission <permission> &bset required permission'
-      - '&esetmessage <permission> &bset lack of permission message'
+      - '&esetmessage <message> &bset lack of permission message'
     params: '[...]'
+    setpermission:
+      feedback: "&aUse permission is now set as &e%value%"
+      feedback-reset: "&aUse required permission has been removed"
+    setmessage:
+      feedback: "&aUse permission deny message is now set as &e%value%"
+      feedback-reset: "&aUse permission deny message has been removed"
   wearpermission:
     description:
       - '&b&lSet a permission to wear this item'
@@ -384,8 +390,14 @@ itemtag:
       - '&bit to inventory, or on floor if full'
       - '&b'
       - '&esetpermission <permission> &bset required permission'
-      - '&esetmessage <permission> &bset lack of permission message'
+      - '&esetmessage <message> &bset lack of permission message'
     params: '[...]'
+    setpermission:
+      feedback: "&aWear permission is now set as &e%value%"
+      feedback-reset: "&aWear required permission has been removed"
+    setmessage:
+      feedback: "&aWear permission deny message is now set as &e%value%"
+      feedback-reset: "&aUse permission deny message has been removed"
 itemtagreload:
   success: '&9[&fItemTag&9] &aReloaded'
 gui:

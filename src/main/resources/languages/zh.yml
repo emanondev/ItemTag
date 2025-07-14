@@ -301,17 +301,29 @@ itemtag:
       - '&b&l设置使用此物品的权限（右键原版行为）'
       - '&b'
       - '&esetpermission <权限> &b设置所需权限'
-      - '&esetmessage <权限> &b设置无权限时的提示信息'
+      - '&esetmessage <消息> &b设置无权限时的提示信息'
     params: '[...]'
+    setpermission:
+      feedback: "&a使用权限已设置为 &e%value%"
+      feedback-reset: "&a已移除使用所需权限"
+    setmessage:
+      feedback: "&a使用权限拒绝提示已设置为 &e%value%"
+      feedback-reset: "&a已移除使用权限拒绝提示"
   wearpermission:
     description:
-      - '&b&l设置穿戴此物品的权限'
-      - '&b尝试穿戴时将其丢入背包，'
-      - '&b若背包已满则掉落在地上'
+      - '&b&l设置穿戴此物品所需的权限'
+      - '&b尝试穿戴该物品时将其丢入背包'
+      - '&b如果背包已满，则掉落在地上'
       - '&b'
       - '&esetpermission <权限> &b设置所需权限'
-      - '&esetmessage <权限> &b设置无权限时的提示信息'
+      - '&esetmessage <消息> &b设置无权限时的提示信息'
     params: '[...]'
+    setpermission:
+      feedback: "&a穿戴权限已设置为 &e%value%"
+      feedback-reset: "&a已移除穿戴所需权限"
+    setmessage:
+      feedback: "&a穿戴权限拒绝提示已设置为 &e%value%"
+      feedback-reset: "&a已移除使用权限拒绝提示"
 itemtagreload:
   success: '&9[&fItemTag&9] &a重载成功'
 gui:

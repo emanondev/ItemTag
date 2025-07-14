@@ -46,6 +46,8 @@ permissions:
       itemtag.itemtag.effects: true
       itemtag.itemtag.flag: true
       itemtag.itemtag.trigger: true
+      itemtag.itemtag.usepermission: true
+      itemtag.itemtag.wearpermission: true
   itemtag.itemtag.actions:
     default: op
     description: Allow to set actions when using item
@@ -63,3 +65,9 @@ permissions:
   itemtag.itemtag.trigger:
     default: op
     description: Allow to add trigger for equipped items
+  itemtag.itemtag.usepermission:
+    default: op
+    description: Allow to set a required permission to use
+  itemtag.itemtag.wearpermission:
+    default: op
+    description: Allow to set a required permission to wear

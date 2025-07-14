@@ -301,20 +301,32 @@ itemtag:
     params: ''
   usepermission:
     description:
-      - '&b&l設定使用此物品的權限（右鍵原版行為）'
+      - '&b&l設置使用此物品的權限（右鍵原版行為）'
       - '&b'
-      - '&esetpermission <權限> &b設定所需權限'
-      - '&esetmessage <權限> &b設定無權限時的提示訊息'
+      - '&esetpermission <權限> &b設置所需權限'
+      - '&esetmessage <訊息> &b設置沒有權限時的訊息'
     params: '[...]'
+    setpermission:
+      feedback: "&a使用權限現在為 &e%value%"
+      feedback-reset: "&a已移除使用所需權限"
+    setmessage:
+      feedback: "&a使用權限拒絕訊息已設為 &e%value%"
+      feedback-reset: "&a已移除使用權限拒絕訊息"
   wearpermission:
     description:
-      - '&b&l設定穿戴此物品的權限'
-      - '&b嘗試穿戴時會將其丟入背包，'
-      - '&b若背包已滿則掉落在地上'
+      - '&b&l設置穿戴此物品所需的權限'
+      - '&b嘗試穿戴該物品將會將其丟入背包'
+      - '&b如果背包已滿，則掉落在地上'
       - '&b'
-      - '&esetpermission <權限> &b設定所需權限'
-      - '&esetmessage <權限> &b設定無權限時的提示訊息'
+      - '&esetpermission <權限> &b設置所需權限'
+      - '&esetmessage <訊息> &b設置沒有權限時的訊息'
     params: '[...]'
+    setpermission:
+      feedback: "&a穿戴權限現在為 &e%value%"
+      feedback-reset: "&a已移除穿戴所需權限"
+    setmessage:
+      feedback: "&a穿戴權限拒絕訊息已設為 &e%value%"
+      feedback-reset: "&a已移除使用權限拒絕訊息"
 itemtagreload:
   success: '&9[&fItemTag&9] &a重載成功'
 gui:

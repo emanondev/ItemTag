@@ -298,20 +298,32 @@ itemtag:
     params: ''
   usepermission:
     description:
-      - '&b&lEstablece un permiso para usar este objeto (comportamiento predeterminado al hacer clic derecho)'
+      - '&b&lEstablece un permiso para usar este objeto (clic derecho comportamiento vanilla)'
       - '&b'
       - '&esetpermission <permiso> &bestablece el permiso requerido'
-      - '&esetmessage <permiso> &bestablece el mensaje de falta de permiso'
+      - '&esetmessage <mensaje> &bestablece el mensaje de falta de permiso'
     params: '[...]'
+    setpermission:
+      feedback: "&aEl permiso de uso ahora es &e%value%"
+      feedback-reset: "&aSe ha eliminado el permiso requerido para usar"
+    setmessage:
+      feedback: "&aEl mensaje de denegación de uso ahora es &e%value%"
+      feedback-reset: "&aSe ha eliminado el mensaje de denegación de uso"
   wearpermission:
     description:
-      - '&b&lEstablece un permiso para llevar este objeto puesto'
-      - '&bIntentar equiparlo lo soltará en el inventario,'
-      - '&bo al suelo si está lleno'
+      - '&b&lEstablece un permiso para equipar este objeto'
+      - '&bIntentar equiparlo lo soltará'
+      - '&ben el inventario, o al suelo si está lleno'
       - '&b'
       - '&esetpermission <permiso> &bestablece el permiso requerido'
-      - '&esetmessage <permiso> &bestablece el mensaje de falta de permiso'
+      - '&esetmessage <mensaje> &bestablece el mensaje de falta de permiso'
     params: '[...]'
+    setpermission:
+      feedback: "&aEl permiso para equipar ahora es &e%value%"
+      feedback-reset: "&aSe ha eliminado el permiso requerido para equipar"
+    setmessage:
+      feedback: "&aEl mensaje de denegación para equipar ahora es &e%value%"
+      feedback-reset: "&aSe ha eliminado el mensaje de denegación para usar"
 itemtagreload:
   success: '&9[&fItemTag&9] &aRecargado'
 gui:

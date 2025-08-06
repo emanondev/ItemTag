@@ -9,6 +9,7 @@ import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.ItemTagUtility;
 import emanondev.itemtag.command.ItemTagCommand;
 import emanondev.itemtag.command.ListenerSubCmd;
+import emanondev.itemtag.compability.FoliaRunnable;
 import emanondev.itemtag.compability.SchedulerUtils;
 import emanondev.itemtag.equipmentchange.EquipmentChangeEvent;
 import emanondev.itemtag.gui.EffectsGui;
@@ -274,7 +275,7 @@ public class Effects extends ListenerSubCmd {
 
     @EventHandler
     private void onPlayerRespawn(PlayerRespawnEvent event) {
-        new BukkitRunnable() {
+        SchedulerUtils.runTaskLater(event.getPlayer().getLocation(), new FoliaRunnable() {
             public void run() {
                 for (EquipmentSlot slot : ItemTagUtility.getPlayerEquipmentSlots()) {
                     ItemStack equip = getEquip(event.getPlayer(), slot);
@@ -308,7 +309,7 @@ public class Effects extends ListenerSubCmd {
                     }
                 }
             }
-        }.runTaskLater(ItemTag.get(), 1L); //effect are resetted just after playerrespawnevent
+        }, 1L); //effect are resetted just after playerrespawnevent
 
     }
 

@@ -3,6 +3,8 @@ package emanondev.itemtag.activity.action;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.activity.ActionManager;
 import emanondev.itemtag.activity.ActionType;
+import emanondev.itemtag.compability.FoliaRunnable;
+import emanondev.itemtag.compability.SchedulerUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
@@ -37,12 +39,12 @@ public class DelayedActionType extends ActionType {
 
         @Override
         public boolean execute(@NotNull Player player, @NotNull ItemStack item, Event event) {
-            new BukkitRunnable() {
+            SchedulerUtils.runTaskLater(player.getLocation(), new FoliaRunnable() {
                 @Override
                 public void run() {
                     action.execute(player, item, event);
                 }
-            }.runTaskLater(ItemTag.get(), delay);
+            }, delay);
             return true;
         }
     }

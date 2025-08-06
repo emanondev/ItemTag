@@ -35,6 +35,7 @@ public class ItemTag extends APlugin {
     private static ItemTag plugin = null;
     private static TagManager tagManager = null;
     private static boolean USE_NBTAPI;
+    private static boolean USE_FOLIA;
     @Getter
     private EquipmentChangeListenerBase equipChangeListener;
     @Getter
@@ -48,6 +49,10 @@ public class ItemTag extends APlugin {
         return USE_NBTAPI ? new NBTAPITagItem(item) : new SpigotTagItem(item);
     }
 
+    public static boolean useFolia() {
+        return USE_FOLIA;
+    }
+
     @Deprecated
     public TagManager getTagManager() {
         return tagManager;
@@ -55,6 +60,12 @@ public class ItemTag extends APlugin {
 
     public void onLoad() {
         plugin = this;
+        try {
+            Class.forName("io.papermc.paper.threadedregions.scheduler.RegionScheduler");
+            USE_FOLIA = true;
+        } catch (ClassNotFoundException e) {
+            USE_FOLIA = false;
+        }
     }
 
     @Override

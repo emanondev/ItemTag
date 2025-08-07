@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Method;
 
-import static emanondev.itemtag.ItemTag.useFolia;
+import static emanondev.itemedit.utility.VersionUtils.hasFoliaAPI;
 
 public abstract class SchedulerUtils {
 
@@ -23,7 +23,7 @@ public abstract class SchedulerUtils {
      */
     public static void runTaskLater(@Nullable Location loc, @NotNull Runnable task, long delay) {
         JavaPlugin plugin = ItemTag.get();
-        if (useFolia()) {
+        if (hasFoliaAPI()) {
             try {
                 if (loc != null) {
                     Method getRegionScheduler = plugin.getServer().getClass().getMethod("getRegionScheduler");
@@ -59,7 +59,7 @@ public abstract class SchedulerUtils {
      */
     public static void runTaskTimer(@Nullable Location loc, @NotNull FoliaRunnable runnable, long delay, long period) {
         JavaPlugin plugin = ItemTag.get();
-        if (useFolia()) {
+        if (hasFoliaAPI()) {
             try {
                 ScheduledTask task;
                 if (loc != null) {
@@ -92,7 +92,7 @@ public abstract class SchedulerUtils {
 
     public static void runTaskTimerAsynchronously(@NotNull FoliaRunnable runnable, long delay, long period) {
         JavaPlugin plugin = ItemTag.get();
-        if (useFolia()) {
+        if (hasFoliaAPI()) {
             try {
                 Method getGlobalScheduler = plugin.getServer().getClass().getMethod("getGlobalRegionScheduler");
                 GlobalRegionScheduler globalScheduler = (GlobalRegionScheduler) getGlobalScheduler.invoke(plugin.getServer());
@@ -117,7 +117,7 @@ public abstract class SchedulerUtils {
 
     public static void runTaskAsynchronously(@NotNull Runnable task) {
         JavaPlugin plugin = ItemTag.get();
-        if (useFolia()) {
+        if (hasFoliaAPI()) {
             try {
                 Method getGlobalScheduler = plugin.getServer().getClass().getMethod("getGlobalRegionScheduler");
                 GlobalRegionScheduler globalScheduler = (GlobalRegionScheduler) getGlobalScheduler.invoke(plugin.getServer());
@@ -132,7 +132,7 @@ public abstract class SchedulerUtils {
 
     public static void runTask(@Nullable Location loc, @NotNull Runnable task) {
         JavaPlugin plugin = ItemTag.get();
-        if (useFolia()) {
+        if (hasFoliaAPI()) {
             try {
                 if (loc != null) {
                     Method getRegionScheduler = plugin.getServer().getClass().getMethod("getRegionScheduler");

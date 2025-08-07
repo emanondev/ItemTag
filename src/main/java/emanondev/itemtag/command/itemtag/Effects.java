@@ -25,14 +25,11 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Method;
 import java.util.*;
-
-import static emanondev.itemtag.ItemTag.useFolia;
 
 public class Effects extends ListenerSubCmd {
 
@@ -323,7 +320,7 @@ public class Effects extends ListenerSubCmd {
             target.addPotionEffect(effect);
             return;
         }
-        if(useFolia()) {
+        if(VersionUtils.hasFoliaAPI()) {
             try {
                 Method getRegionScheduler = ItemTag.get().getServer().getClass().getMethod("getRegionScheduler");
                 RegionScheduler regionScheduler = (RegionScheduler) getRegionScheduler.invoke(ItemTag.get().getServer());

@@ -1,5 +1,6 @@
 package emanondev.itemtag;
 
+import com.google.gson.Gson;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -233,4 +234,27 @@ public interface TagItem {
      * @return the ItemStack instance
      */
     ItemStack getItem();
+
+    default boolean hasObject(@NotNull String key) {
+        return hasStringTag(key);
+    }
+
+    default <T> T getObject(@NotNull String key, @NotNull Class<T> clazz) {
+        if (!hasObject(key)) {
+            return null;
+        }
+        String json = getString(key);
+        if (json == null || json.isEmpty()) {
+            return null;
+        }
+        return new Gson().fromJson(json, clazz);
+    }
+
+    default void setObject(@NotNull String key, @Nullable Object object) {
+        if (object == null) {
+            removeTag(key);
+        } else {
+            setTag(key, new Gson().toJson(object));
+        }
+    }
 }

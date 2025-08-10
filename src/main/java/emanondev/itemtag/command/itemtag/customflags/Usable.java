@@ -4,6 +4,7 @@ import emanondev.itemedit.utility.InventoryUtils;
 import emanondev.itemedit.utility.VersionUtils;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.command.itemtag.Flag;
+import emanondev.itemtag.compability.SchedulerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.FluidCollisionMode;
 import org.bukkit.Material;
@@ -37,7 +38,7 @@ public class Usable extends CustomFlag {
                         b = event.getPlayer().getTargetBlockExact(7, FluidCollisionMode.SOURCE_ONLY);
                     } else
                         b = null;
-                    Bukkit.getScheduler().runTaskLater(ItemTag.get(), () -> { //TODO folia fix
+                    SchedulerUtils.runTaskLater(event.getPlayer().getLocation(), () -> {
                         if (!VersionUtils.isVersionAfter(1, 20)) {
                             InventoryUtils.updateView(event.getPlayer());
                         }

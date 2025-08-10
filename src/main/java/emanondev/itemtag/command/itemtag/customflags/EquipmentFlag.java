@@ -4,6 +4,7 @@ import emanondev.itemedit.utility.InventoryUtils;
 import emanondev.itemedit.utility.ItemUtils;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.command.itemtag.Flag;
+import emanondev.itemtag.compability.SchedulerUtils;
 import emanondev.itemtag.equipmentchange.EquipmentChangeEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -48,7 +49,7 @@ public class EquipmentFlag extends CustomFlag {
         if (this.getValue(ItemTag.getTagItem(event.getTo()))) {
             return;
         }
-        Bukkit.getScheduler().runTaskLater(getPlugin(), () -> {
+        SchedulerUtils.runTaskLater(event.getPlayer().getLocation(), () -> {
             if (!event.getPlayer().isOnline()) {
                 return;
             }

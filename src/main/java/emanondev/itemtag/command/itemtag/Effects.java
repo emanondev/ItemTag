@@ -9,8 +9,11 @@ import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.ItemTagUtility;
 import emanondev.itemtag.command.ItemTagCommand;
 import emanondev.itemtag.command.ListenerSubCmd;
+import emanondev.itemtag.compability.FoliaRunnable;
+import emanondev.itemtag.compability.SchedulerUtils;
 import emanondev.itemtag.equipmentchange.EquipmentChangeEvent;
 import emanondev.itemtag.gui.EffectsGui;
+import io.papermc.paper.threadedregions.scheduler.RegionScheduler;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -22,10 +25,10 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.lang.reflect.Method;
 import java.util.*;
 
 public class Effects extends ListenerSubCmd {
@@ -269,7 +272,7 @@ public class Effects extends ListenerSubCmd {
 
     @EventHandler
     private void onPlayerRespawn(PlayerRespawnEvent event) {
-        new BukkitRunnable() {
+        SchedulerUtils.runTaskLater(event.getPlayer().getLocation(), new FoliaRunnable() {
             public void run() {
                 for (EquipmentSlot slot : ItemTagUtility.getPlayerEquipmentSlots()) {
                     ItemStack equip = getEquip(event.getPlayer(), slot);
@@ -303,7 +306,7 @@ public class Effects extends ListenerSubCmd {
                     }
                 }
             }
-        }.runTaskLater(ItemTag.get(), 1L); //effect are resetted just after playerrespawnevent
+        }, 1L); //effect are resetted just after playerrespawnevent
 
     }
 
@@ -317,6 +320,26 @@ public class Effects extends ListenerSubCmd {
             target.addPotionEffect(effect);
             return;
         }
+        if(VersionUtils.hasFoliaAPI()) {
+            try {
+                Method getRegionScheduler = ItemTag.get().getServer().getClass().getMethod("getRegionScheduler");
+                RegionScheduler regionScheduler = (RegionScheduler) getRegionScheduler.invoke(ItemTag.get().getServer());
+                if (VersionUtils.isVersionAfter(1, 16)) {
+                    if (target.hasPotionEffect(effect.getType()))
+                        target.removePotionEffect(effect.getType());
+                    regionScheduler.execute(ItemTag.get(), target.getLocation(), () -> {
+                        target.addPotionEffect(effect);
+                    });
+                } else
+                    regionScheduler.execute(ItemTag.get(), target.getLocation(), () -> {
+                        target.addPotionEffect(effect, true);
+                    });
+            }catch (Exception e) {
+                ItemTag.get().log("Failed to get Folia RegionScheduler");
+                return;
+            }
+            return;
+        }
         if (VersionUtils.isVersionAfter(1, 16)) {
             if (target.hasPotionEffect(effect.getType()))
                 target.removePotionEffect(effect.getType());
@@ -328,7 +351,7 @@ public class Effects extends ListenerSubCmd {
     @EventHandler(ignoreCancelled = true)
     private void event(PlayerItemConsumeEvent event) {
         if (event.getItem().getType() == Material.MILK_BUCKET)
-            Bukkit.getScheduler().runTaskLater(this.getPlugin(), () -> restoreEffects(event.getPlayer()), 1L);
+            SchedulerUtils.runTaskLater(event.getPlayer().getLocation(), () -> restoreEffects(event.getPlayer()), 1L);
     }
 
     public void restoreEffects(Player p) {

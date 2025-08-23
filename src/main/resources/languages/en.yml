@@ -83,6 +83,8 @@ itemtag:
       - '&ePermission [permission] &b- set a required permission to use this item'
       - '&eCooldown <ms> &b- set a cooldown to use this item again'
       - '&eCooldownid [id] &b- set used cooldown id for this'
+      - '&eCooldownmsg [msg] &b- set the cooldown feedback'
+      - '&eCooldownmsgtype [type] &b- set the cooldown feedback type (chat or actionbar)'
       - '&eUses [amount] &b- set how many times this item can be used'
       - '&eInfo &b- show info abouth actions on current item'
     params: '[...]'
@@ -152,6 +154,24 @@ itemtag:
       feedback:
         set: '&9[&fItemTag&9] &aThis item use id &e%id% &afor cooldown'
         removed: '&9[&fItemTag&9] &aThis item use &edefault &aid for cooldown'
+    cooldownmsg:
+      description:
+        - '&b&lSet a cooldown message'
+        - ''
+        - '&e[message] &bthe message to show when the item can''t be used'
+        - '  &byet while the cooldown is active'
+      params: 'cooldownmsg [message]'
+      feedback:
+        set: '&9[&fItemTag&9] &aFeedback Message for cooldown set as ''&f%msg%&a'' when cooldown is active'
+        removed: '&9[&fItemTag&9] &aFeedback Message for cooldown removed'
+    cooldownmsgtype:
+      description:
+        - '&b&lSet a cooldown message type'
+        - ''
+        - '&e[type] &bchat or actionbar'
+      params: 'cooldownmsgtype [type]'
+      feedback:
+        set: '&9[&fItemTag&9] &aFeedback Message for cooldown set as type ''&e%type%&a'''
     uses:
       params: 'uses [amount]'
       description:

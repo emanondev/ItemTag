@@ -20,6 +20,8 @@ public final class ActionsUtility {
     public final static String ACTION_CONSUME_AT_END_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":consume";
     public final static String ACTION_VISUAL_COOLDOWN = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":visualcooldown";
     public final static String ACTION_COOLDOWN_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":cooldown";
+    public final static String ACTION_COOLDOWN_MSG_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":cooldown_msg";
+    public final static String ACTION_COOLDOWN_MSG_TYPE_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":cooldown_msg_type";
     public final static String ACTION_COOLDOWN_ID_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":cooldown_id";
     public final static String ACTION_PERMISSION_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":permission";
     private static final String DEFAULT_COOLDOWN_ID = "default";
@@ -172,4 +174,29 @@ public final class ActionsUtility {
         metaMap.put("==", "ItemMeta");
         item.setItemMeta((ItemMeta) ConfigurationSerialization.deserializeObject(metaMap));
     }
+
+    public static void setCooldownMsg(TagItem item, String value) {
+        if (value == null || value.isEmpty()) {// default
+            item.removeTag(ACTION_COOLDOWN_MSG_KEY);
+        } else {
+            item.setTag(ACTION_COOLDOWN_MSG_KEY, value);
+        }
+    }
+
+    public static void setCooldownMsgType(TagItem item, String value) {
+        if (value == null || value.isEmpty() || Objects.equals(value,"chat")) {// default
+            item.removeTag(ACTION_COOLDOWN_MSG_TYPE_KEY);
+        } else {
+            item.setTag(ACTION_COOLDOWN_MSG_TYPE_KEY, value.toLowerCase(Locale.ENGLISH));
+        }
+    }
+
+    public static String getCooldownMsg(TagItem item) {
+        return item.getString(ACTION_COOLDOWN_MSG_KEY, null);
+    }
+
+    public static String getCooldownMsgType(TagItem item) {
+        return item.getString(ACTION_COOLDOWN_MSG_TYPE_KEY, "chat");
+    }
+
 }

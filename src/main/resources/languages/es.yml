@@ -76,14 +76,16 @@ itemtag:
     description:
       - '&b&lConfigura las acciones realizadas cuando se utiliza el objeto'
       - ''
-      - '&eAñadir <tipo> <acción> &b- añade una acción seleccionada'
-      - '&eEstablecer <línea> <tipo> <acción> &b- reemplaza la acción en la línea seleccionada'
-      - '&eEliminar <línea> &b- elimina la acción en la línea seleccionada'
-      - '&eBorrar &b- elimina todas las acciones'
-      - '&ePermiso [permiso] &b- establece un permiso requerido para usar este objeto'
-      - '&eEnfriamiento <ms> &b- establece un enfriamiento para usar este objeto nuevamente'
-      - '&eIDEnfriamiento [id] &b- establece la ID de enfriamiento utilizada para esto'
-      - '&eUsos [cantidad] &b- establece cuántas veces se puede usar este objeto'
+      - '&eAdd <tipo> <acción> &b- añade una acción seleccionada'
+      - '&eSet <línea> <tipo> <acción> &b- reemplaza la acción en la línea seleccionada'
+      - '&eremove <línea> &b- elimina la acción en la línea seleccionada'
+      - '&eClear &b- elimina todas las acciones'
+      - '&ePermission [permiso] &b- establece un permiso requerido para usar este objeto'
+      - '&eCooldown <ms> &b- establece un enfriamiento para usar este objeto nuevamente'
+      - '&eCooldownid [id] &b- establece la ID de enfriamiento utilizada para esto'
+      - '&eCooldownmsg [msg] &b- establecer el mensaje de retroalimentación del tiempo de reutilización'
+      - '&eCooldownmsgtype [type] &b- establecer el tipo de retroalimentación del tiempo de reutilización (chat o barra de acción)'
+      - '&eUses [cantidad] &b- establece cuántas veces se puede usar este objeto'
       - '&eInfo &b- muestra información sobre las acciones en el objeto actual'
     params: '[...]'
     add:
@@ -151,6 +153,24 @@ itemtag:
       feedback:
         set: '&9[&fItemTag&9] &aEste objeto usa la ID &e%id% &apara el enfriamiento'
         removed: '&9[&fItemTag&9] &aEste objeto usa la ID por defecto para el enfriamiento'
+    cooldownmsg:
+      description:
+        - '&b&lEstablecer un mensaje de reutilización'
+        - ''
+        - '&e[mensaje] &bel mensaje que se mostrará cuando el objeto aún no pueda usarse'
+        - '  &bmientras la reutilización esté activa'
+      params: 'cooldownmsg [mensaje]'
+      feedback:
+        set: '&9[&fItemTag&9] &aMensaje de reutilización establecido como ''&f%msg%&a'' mientras la reutilización está activa'
+        removed: '&9[&fItemTag&9] &aMensaje de reutilización eliminado'
+    cooldownmsgtype:
+      description:
+        - '&b&lEstablecer el tipo de mensaje de reutilización'
+        - ''
+        - '&e[tipo] &bchat o barra de acción'
+      params: 'cooldownmsgtype [tipo]'
+      feedback:
+        set: '&9[&fItemTag&9] &aMensaje de reutilización establecido como tipo ''&e%type%&a'''
     uses:
       params: 'usos [cantidad]'
       description:

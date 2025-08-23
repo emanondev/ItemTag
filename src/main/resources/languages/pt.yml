@@ -151,6 +151,24 @@ itemtag:
       feedback:
         set: '&9[&fItemTag&9] &aEste item usa o ID &e%id% &apara recarga'
         removed: '&9[&fItemTag&9] &aEste item usa o ID &epadrão &apara recarga'
+    cooldownmsg:
+      description:
+        - '&b&lDefinir uma mensagem de recarga'
+        - ''
+        - '&e[mensagem] &ba mensagem a mostrar quando o item ainda não pode ser usado'
+        - '  &benquanto a recarga está ativa'
+      params: 'cooldownmsg [mensagem]'
+      feedback:
+        set: '&9[&fItemTag&9] &aMensagem de recarga definida como ''&f%msg%&a'' enquanto a recarga está ativa'
+        removed: '&9[&fItemTag&9] &aMensagem de recarga removida'
+    cooldownmsgtype:
+      description:
+        - '&b&lDefinir o tipo de mensagem de recarga'
+        - ''
+        - '&e[tipo] &bchat ou barra de ação'
+      params: 'cooldownmsgtype [tipo]'
+      feedback:
+        set: '&9[&fItemTag&9] &aMensagem de recarga definida como tipo ''&e%type%&a'''
     uses:
       params: 'uses [amount]'
       description:

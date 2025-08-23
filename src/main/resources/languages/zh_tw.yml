@@ -155,6 +155,24 @@ itemtag:
       feedback:
         set: '&9[&fItemTag&9] &a這個物品使用 &e%id% &a 作為冷卻 ID'
         removed: '&9[&fItemTag&9] &a這個物品使用 &e默認冷卻 ID'
+    cooldownmsg:
+      description:
+        - '&b&l設定冷卻提示訊息'
+        - ''
+        - '&e[訊息] &b在物品因冷卻尚不可使用時顯示的訊息'
+        - '  &b當冷卻仍在進行時'
+      params: 'cooldownmsg [訊息]'
+      feedback:
+        set: '&9[&fItemTag&9] &a冷卻提示訊息已設定為 ''&f%msg%&a''，當冷卻啟用時顯示'
+        removed: '&9[&fItemTag&9] &a冷卻提示訊息已移除'
+    cooldownmsgtype:
+      description:
+        - '&b&l設定冷卻提示訊息類型'
+        - ''
+        - '&e[類型] &b聊天或動作列'
+      params: 'cooldownmsgtype [類型]'
+      feedback:
+        set: '&9[&fItemTag&9] &a冷卻提示訊息類型已設定為 ''&e%type%&a'''
     uses:
       params: uses [amount]
       description:

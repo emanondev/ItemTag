@@ -1,10 +1,12 @@
 package emanondev.itemtag.command.itemtag;
 
+import emanondev.itemedit.ItemEdit;
 import emanondev.itemedit.Util;
 import emanondev.itemedit.UtilsString;
 import emanondev.itemedit.aliases.Aliases;
 import emanondev.itemedit.utility.CompleteUtility;
 import emanondev.itemedit.utility.InventoryUtils;
+import emanondev.itemedit.utility.VersionUtils;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.TagItem;
 import emanondev.itemtag.actions.ActionHandler;
@@ -12,8 +14,10 @@ import emanondev.itemtag.actions.ActionsUtility;
 import emanondev.itemtag.command.ItemTagCommand;
 import emanondev.itemtag.command.ListenerSubCmd;
 import emanondev.itemtag.gui.ActionsGui;
+import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,7 +31,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Actions extends ListenerSubCmd {
 
-    private static final String[] actionsSub = new String[]{"add", "addline", "set", "permission", "cooldown",
+    private static final String[] actionsSub = new String[]{"add", "addline", "set", "permission", "cooldown", "cooldownmsg", "cooldownmsgtype",
             "cooldownid", "uses", "maxuses", "remove", "info", "consume", "visualcooldown", "displayuses"};
 
     public Actions(ItemTagCommand cmd) {
@@ -68,6 +72,12 @@ public class Actions extends ListenerSubCmd {
                     return;
                 case "cooldown":
                     cooldown(p, alias, args, item);
+                    return;
+                case "cooldownmsg":
+                    cooldownMsg(p, alias, args, item);
+                    return;
+                case "cooldownmsgtype":
+                    cooldownMsgType(p, alias, args, item);
                     return;
                 case "cooldownid":
                     cooldownId(p, alias, args, item);
@@ -167,6 +177,45 @@ public class Actions extends ListenerSubCmd {
         } catch (Exception e) {
             Util.sendMessage(p, this.craftFailFeedback(label, getLanguageString("cooldownid.params", null, p),
                     getLanguageStringList("cooldownid.description", null, p)));
+        }
+    }
+
+    //it action cooldownmsg [message  ]
+    private void cooldownMsg(Player p, String label, String[] args, ItemStack item) {
+        try {
+            String cooldownMsg = args.length == 2 ? null : String.join(" ", Arrays.copyOfRange(args, 2, args.length));
+            TagItem tagItem = ItemTag.getTagItem(item);
+            ActionsUtility.setCooldownMsg(tagItem, cooldownMsg);
+            if (cooldownMsg != null) {
+                sendLanguageString("cooldownmsg.feedback.set", "", p, "%msg%", cooldownMsg);
+            } else {
+                sendLanguageString("cooldownmsg.feedback.removed", "", p);
+            }
+        } catch (Exception e) {
+            Util.sendMessage(p, this.craftFailFeedback(label, getLanguageString("cooldownmsg.params", null, p),
+                    getLanguageStringList("cooldownmsg.description", null, p)));
+        }
+    }
+
+    private void cooldownMsgType(Player p, String label, String[] args, ItemStack item) {
+        try {
+            if (args.length != 3) {
+                throw new IllegalArgumentException("Wrong param number");
+            }
+            String type = args[2].toLowerCase(Locale.ENGLISH);
+            switch (type) {
+                case "actionbar":
+                case "chat":
+                    break;
+                default:
+                    throw new IllegalArgumentException("Wrong type");
+            }
+            TagItem tagItem = ItemTag.getTagItem(item);
+            ActionsUtility.setCooldownMsgType(tagItem, type);
+            sendLanguageString("cooldownmsgtype.feedback.set", "", p, "%type%", type);
+        } catch (Exception e) {
+            Util.sendMessage(p, this.craftFailFeedback(label, getLanguageString("cooldownmsgtype.params", null, p),
+                    getLanguageStringList("cooldownmsgtype.description", null, p)));
         }
     }
 
@@ -437,6 +486,10 @@ public class Actions extends ListenerSubCmd {
                     case "consume":
                     case "displayuses":
                         return CompleteUtility.complete(args[2], Aliases.BOOLEAN);
+                    case "cooldownmsgtype":{
+                        return CompleteUtility.complete(args[2], VersionUtils.isVersionAfter(1,11 )?
+                                Arrays.asList("chat","actionbar"): Collections.singletonList("chat"));
+                    }
                 }
                 return Collections.emptyList();
             case 4:
@@ -480,6 +533,27 @@ public class Actions extends ListenerSubCmd {
                 if (cooldown > 0) {
                     String cooldownId = ActionsUtility.getCooldownId(tagItem);
                     if (ItemTag.get().getCooldownAPI().hasCooldown(event.getPlayer(), cooldownId)) {
+                        String msg = ActionsUtility.getCooldownMsg(tagItem);
+                        if (msg==null){
+                            return;
+                        }
+                        String type = ActionsUtility.getCooldownMsgType(tagItem);
+                        msg = UtilsString.fix(msg,event.getPlayer(),true);
+                        switch (type){
+                            case "chat":
+                                Util.sendMessage(event.getPlayer(),msg);
+                                break;
+                            case "actionbar":
+                                if (VersionUtils.isVersionAfter(1,11,2)){
+                                    event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR,new TextComponent(msg));
+                                    break;
+                                }
+                                ItemTag.get().log("Invalid action cooldown message type &e"+type+"&f not available on this server version");
+                                break;
+                            default:
+                                ItemTag.get().log("Invalid action cooldown message type &e"+type);
+                        }
+
                         return;
                     }
                     ItemTag.get().getCooldownAPI().setCooldown(event.getPlayer(), cooldownId, cooldown, TimeUnit.MILLISECONDS);

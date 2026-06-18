@@ -2,7 +2,6 @@ package emanondev.itemtag.equipmentchange;
 
 import emanondev.itemedit.utility.InventoryUtils;
 import emanondev.itemedit.utility.ItemUtils;
-import emanondev.itemtag.ItemTag;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -190,10 +189,9 @@ public class EquipmentChangeListenerUpTo1_8 extends EquipmentChangeListenerBase 
                     onEquipChange(p, EquipmentChangeEvent.EquipMethod.INVENTORY_MOVE_TO_OTHER_INVENTORY, slot, null, event.getCurrentItem());
                 if (clickedSlot == null || clickedSlot == EquipmentSlot.HAND)
                     new SlotCheck(p, EquipmentChangeEvent.EquipMethod.INVENTORY_MOVE_TO_OTHER_INVENTORY, EquipmentSlot.HAND)
-                            .runTaskLater(ItemTag.get(), 1L);
+                            .schedule();
                 else
-                    new SlotCheck(p, EquipmentChangeEvent.EquipMethod.INVENTORY_MOVE_TO_OTHER_INVENTORY, clickedSlot).runTaskLater(ItemTag.get(),
-                            1L);
+                    new SlotCheck(p, EquipmentChangeEvent.EquipMethod.INVENTORY_MOVE_TO_OTHER_INVENTORY, clickedSlot).schedule();
                 return;
             }
             case COLLECT_TO_CURSOR:
@@ -206,7 +204,7 @@ public class EquipmentChangeListenerUpTo1_8 extends EquipmentChangeListenerBase 
                 else if (event.getCursor().isSimilar(getEquip(p, EquipmentSlot.HAND)))
                     slots.add(EquipmentSlot.HAND);
                 if (!slots.isEmpty())
-                    new SlotCheck(p, EquipmentChangeEvent.EquipMethod.INVENTORY_COLLECT_TO_CURSOR, slots).runTaskLater(ItemTag.get(), 1L);
+                    new SlotCheck(p, EquipmentChangeEvent.EquipMethod.INVENTORY_COLLECT_TO_CURSOR, slots).schedule();
                 return;
             case PICKUP_SOME:
             case UNKNOWN:
@@ -224,7 +222,7 @@ public class EquipmentChangeListenerUpTo1_8 extends EquipmentChangeListenerBase 
         for (int i = 0; i < event.getPlayer().getInventory().getHeldItemSlot(); i++)
             if (ItemUtils.isAirOrNull(event.getPlayer().getInventory().getItem(i)))
                 return;
-        new SlotCheck(event.getPlayer(), EquipmentChangeEvent.EquipMethod.PICKUP, EquipmentSlot.HAND).runTaskLater(ItemTag.get(), 1L);
+        new SlotCheck(event.getPlayer(), EquipmentChangeEvent.EquipMethod.PICKUP, EquipmentSlot.HAND).schedule();
     }
 
     private boolean isUbreakable(ItemMeta meta) {

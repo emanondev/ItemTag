@@ -1,6 +1,6 @@
 package emanondev.itemtag.command.itemtag;
 
-import org.bukkit.Bukkit;
+import emanondev.itemedit.utility.SchedulerUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,7 +21,7 @@ public class EffectsResurrectListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     private void event(EntityResurrectEvent event) {
         if (event.getEntity() instanceof Player)
-            Bukkit.getScheduler().runTaskLater(parent.getPlugin(),
+            SchedulerUtils.runLater(parent.getPlugin(), (Player) event.getEntity(), 1L,
                     () -> {
                         List<PotionEffect> l = new ArrayList<>(event.getEntity().getActivePotionEffects());
                         l.forEach((e) -> event.getEntity().removePotionEffect(e.getType()));
@@ -31,8 +31,7 @@ public class EffectsResurrectListener implements Listener {
                                     e.getAmplifier() > event.getEntity().getPotionEffect(e.getType()).getAmplifier())
                                 event.getEntity().addPotionEffect(e);
                         });
-                    }
-                    , 1L);
+                    });
     }
 
 }

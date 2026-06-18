@@ -1,12 +1,12 @@
 package emanondev.itemtag.activity.action;
 
+import emanondev.itemedit.utility.SchedulerUtils;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.activity.ActionManager;
 import emanondev.itemtag.activity.ActionType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 public class DelayedActionType extends ActionType {
@@ -37,12 +37,7 @@ public class DelayedActionType extends ActionType {
 
         @Override
         public boolean execute(@NotNull Player player, @NotNull ItemStack item, Event event) {
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    action.execute(player, item, event);
-                }
-            }.runTaskLater(ItemTag.get(), delay);
+            SchedulerUtils.runLater(ItemTag.get(), player, delay, () -> action.execute(player, item, event));
             return true;
         }
     }

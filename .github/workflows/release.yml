@@ -1,0 +1,78 @@
+name: Build & Release
+
+# Any code change pushed to master produces a plugin release.
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - 'src/**'
+      - 'pom.xml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Never run two releases at once; let the newest push win.
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Resolve versions
+        id: vars
+        run: |
+          PLUGIN_VERSION=$(mvn -q -N help:evaluate -Dexpression=project.version -DforceStdout)
+          # ItemEdit version is hard-coded in the dependency block.
+          IE_VERSION=$(sed -n '/<artifactId>ItemEdit<\/artifactId>/,/<\/dependency>/ s/.*<version>\(.*\)<\/version>.*/\1/p' pom.xml | head -1)
+          echo "plugin_version=$PLUGIN_VERSION" >> "$GITHUB_OUTPUT"
+          echo "ie_version=$IE_VERSION" >> "$GITHUB_OUTPUT"
+          echo "ItemTag $PLUGIN_VERSION / ItemEdit $IE_VERSION"
+
+      - name: Install ItemEdit dependency
+        # ItemEdit is not published to any public Maven repo, so fetch the matching
+        # release from Modrinth and install it into the local repo for compilation.
+        run: |
+          IE_VERSION='${{ steps.vars.outputs.ie_version }}'
+          URL=$(curl -sfL "https://api.modrinth.com/v2/project/itemedit/version" \
+                  -H "User-Agent: emanondev/ItemTag-CI (github actions)" \
+                | jq -r --arg v "$IE_VERSION" \
+                  'first(.[] | select(.version_number == $v)) | .files[]? | select(.primary) | .url')
+          if [ -z "$URL" ] || [ "$URL" = "null" ]; then
+            echo "::error::Could not find ItemEdit $IE_VERSION on Modrinth"
+            exit 1
+          fi
+          echo "Downloading ItemEdit $IE_VERSION from $URL"
+          curl -sfL "$URL" -o ItemEdit.jar
+          mvn -q install:install-file -Dfile=ItemEdit.jar \
+            -DgroupId=emanondev.itemedit -DartifactId=ItemEdit \
+            -Dversion="$IE_VERSION" -Dpackaging=jar
+
+      - name: Build
+        run: mvn -q -B -DskipTests clean package
+
+      - name: Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          PLUGIN_VERSION='${{ steps.vars.outputs.plugin_version }}'
+          TAG="v${PLUGIN_VERSION}-build.${{ github.run_number }}"
+          JAR=$(ls target/ItemTag-*.jar | head -1)
+          echo "Releasing $JAR as $TAG"
+          gh release create "$TAG" "$JAR" \
+            --target "${{ github.sha }}" \
+            --title "ItemTag $TAG" \
+            --generate-notes \
+            --latest

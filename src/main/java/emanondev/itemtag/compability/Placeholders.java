@@ -126,22 +126,17 @@ public class Placeholders extends PlaceholderExpansion {
                 default:
                     throw new IllegalStateException();
             }
-            switch (args[1].toLowerCase(Locale.ENGLISH)) {
-                case "h":
-                    return String.valueOf(ItemTag.get().getCooldownAPI()
-                            .getCooldown(player, id, TimeUnit.HOURS));
-                case "s":
-                    return String.valueOf(ItemTag.get().getCooldownAPI()
-                            .getCooldown(player, id, TimeUnit.SECONDS));
-                case "m":
-                    return String.valueOf(ItemTag.get().getCooldownAPI()
-                            .getCooldown(player, id, TimeUnit.MINUTES));
-                case "ms":
-                    return String.valueOf(ItemTag.get().getCooldownAPI()
-                            .getCooldown(player, id, TimeUnit.MILLISECONDS));
-                default:
-                    throw new IllegalStateException();
-            }
+            return switch (args[1].toLowerCase(Locale.ENGLISH)) {
+                case "h" -> String.valueOf(ItemTag.get().getCooldownAPI()
+                        .getCooldown(player, id, TimeUnit.HOURS));
+                case "s" -> String.valueOf(ItemTag.get().getCooldownAPI()
+                        .getCooldown(player, id, TimeUnit.SECONDS));
+                case "m" -> String.valueOf(ItemTag.get().getCooldownAPI()
+                        .getCooldown(player, id, TimeUnit.MINUTES));
+                case "ms" -> String.valueOf(ItemTag.get().getCooldownAPI()
+                        .getCooldown(player, id, TimeUnit.MILLISECONDS));
+                default -> throw new IllegalStateException();
+            };
         } catch (Exception e) {
             ItemTag.get().log("<red>! <white>Wrong PlaceHolderValue %" + getIdentifier() + "_" + ChatColor.YELLOW + value
                     + ChatColor.WHITE + "%");

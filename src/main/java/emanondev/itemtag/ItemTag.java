@@ -16,8 +16,6 @@ import emanondev.itemtag.command.itemtag.SecurityUtil;
 import emanondev.itemtag.compability.Placeholders;
 import emanondev.itemtag.equipmentchange.EquipmentChangeListener;
 import emanondev.itemtag.equipmentchange.EquipmentChangeListenerBase;
-import emanondev.itemtag.equipmentchange.EquipmentChangeListenerUpTo1_13;
-import emanondev.itemtag.equipmentchange.EquipmentChangeListenerUpTo1_8;
 import lombok.Getter;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
@@ -70,13 +68,8 @@ public class ItemTag extends APlugin {
 
         try {
             //register equipmentchange listener
-            if (VersionUtils.isUpTo(1, 8, 9)) {
-                equipChangeListener = new EquipmentChangeListenerUpTo1_8();
-            } else if (VersionUtils.isUpTo(1, 12, 2)) {
-                equipChangeListener = new EquipmentChangeListenerUpTo1_13();
-            } else {
-                equipChangeListener = new EquipmentChangeListener();
-            }
+            equipChangeListener = new EquipmentChangeListener();
+
             equipChangeListener.reload();
 
             //TODO new features

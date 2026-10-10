@@ -74,7 +74,6 @@ public class UsePermission extends ListenerSubCmd {
                     feedback = translate("setpermission.feedback-reset",  p);
                 }
                 Util.sendMessage(p, feedback);
-                return;
             }
             case "setmessage" -> {
                 if (args.length == 2) {
@@ -87,7 +86,6 @@ public class UsePermission extends ListenerSubCmd {
                 setUseMsgKey(tagItem, msg);
                 String feedback = translate("setmessage.feedback",  p, "%value%", msg);
                 Util.sendMessage(p, feedback);
-                return;
             }
         }
 

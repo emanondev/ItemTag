@@ -1,16 +1,10 @@
 buttons:
   previous-page:
     material: ARROW
-    durability: 0
-    glow: false
   next-page:
     material: ARROW
-    durability: 0
-    glow: false
   back:
     material: BARRIER
-    durability: 0
-    glow: false
 actions:
   buttons:
     consumeon0uses:

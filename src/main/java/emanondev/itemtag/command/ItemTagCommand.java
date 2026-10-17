@@ -12,7 +12,7 @@ public class ItemTagCommand extends AbstractCommand {
     public static ItemTagCommand instance;
 
     public ItemTagCommand() {
-        super("itemtag", ItemTag.get());
+        super("itemtag", ItemTag.get(), true);
         instance = this;
         this.registerSubCommand(new Effects(this));
         this.registerSubCommand(new Actions(this));

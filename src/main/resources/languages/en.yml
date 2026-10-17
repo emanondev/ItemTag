@@ -1,7 +1,10 @@
-player-only: '<dark_red>[<red>ItemTag<dark_red>] <red>Command for Players only'
-no-item-on-hand: '<dark_red>[<red>ItemTag<dark_red>] <red>You need to hold an item in hand'
-lack-permission: '<dark_red>[<red>ItemTag<dark_red>] <red>You lack of permission %permission%'
-lack-permission-generic: '<dark_red>[<red>ItemTag<dark_red>] <red>You don''t have permission to use this command'
+generic:
+  help:
+    player-only: '<dark_red>[<red>ItemTag<dark_red>] <red>Command for Players only'
+    no-item-on-hand: '<dark_red>[<red>ItemTag<dark_red>] <red>You need to hold an item in hand'
+    lack-permission: '<dark_red>[<red>ItemTag<dark_red>] <red>You lack of permission %permission%'
+    lack-permission-generic: '<dark_red>[<red>ItemTag<dark_red>] <red>You don''t have permission to use this command'
+    prefix: "<dark_gray>[<gradient:#54acff:#A78BFA><bold>ItemTag</bold></gradient><dark_gray>]</dark_gray>"
 itemtag:
   help-header: '<blue><bold>ItemTag - Help'
   flag:

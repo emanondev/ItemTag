@@ -177,28 +177,15 @@ public class EffectsGui implements PagedGui {
         private EquipData(EquipmentSlot slot/*, boolean enabled*/) {
             this.slot = slot;
             //this.enabled = enabled;
-            switch (slot) {
-                case CHEST:
-                    item = new ItemStack(Material.IRON_CHESTPLATE);
-                    break;
-                case FEET:
-                    item = new ItemStack(Material.IRON_BOOTS);
-                    break;
-                case HAND:
-                    item = new ItemStack(Material.IRON_SWORD);
-                    break;
-                case HEAD:
-                    item = new ItemStack(Material.IRON_HELMET);
-                    break;
-                case LEGS:
-                    item = new ItemStack(Material.IRON_LEGGINGS);
-                    break;
-                case OFF_HAND:
-                    item = new ItemStack(Material.SHIELD);
-                    break;
-                default:
-                    throw new IllegalArgumentException();
-            }
+            item = switch (slot) {
+                case CHEST -> getGuiItem("effects.buttons.slot-chest", Material.IRON_CHESTPLATE);
+                case FEET -> getGuiItem("effects.buttons.slot-feet", Material.IRON_BOOTS);
+                case HAND -> getGuiItem("effects.buttons.slot-hand", Material.IRON_SWORD);
+                case HEAD -> getGuiItem("effects.buttons.slot-head", Material.IRON_HELMET);
+                case LEGS -> getGuiItem("effects.buttons.slot-legs", Material.IRON_LEGGINGS);
+                case OFF_HAND -> getGuiItem("effects.buttons.slot-off-hand", Material.SHIELD);
+                default -> throw new IllegalArgumentException("Unsupported equipment slot: " + slot);
+            };
             ItemMeta meta = item.getItemMeta();
             meta.addItemFlags(ItemFlag.values());
             item.setItemMeta(meta);
@@ -234,7 +221,7 @@ public class EffectsGui implements PagedGui {
             this.ambient = ambient;
             this.particles = particles;
             this.icon = icon;
-            item = new ItemStack(Material.POTION);
+            item = getGuiItem("effects.buttons.potion", Material.POTION);
         }
 
         public ItemStack getItem() {

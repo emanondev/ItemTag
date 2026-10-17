@@ -210,34 +210,34 @@ public class ActionsGui implements Gui {
         ItemMeta meta;
         //add addline lime
         try {
-            item = this.loadLanguageDescription(this.getGuiItem("gui.actions.addline", Material.LIME_DYE),
+            item = this.loadLanguageDescription(this.getGuiItem("actions.buttons.addline", Material.LIME_DYE),
                     "gui.actions.addline");
         } catch (Throwable t) {
             item = Util.getDyeItemFromColor(DyeColor.LIME);
-            item = this.loadLanguageDescription(this.getGuiItem("gui.actions.addline", item.getType(),
+            item = this.loadLanguageDescription(this.getGuiItem("actions.buttons.addline", item.getType(),
                     item.getDurability()), "gui.actions.addline");
         }
         this.getInventory().setItem(0, item);
         //set blue
         try {
-            item = this.loadLanguageDescription(this.getGuiItem("gui.actions.set", Material.BLUE_DYE), "gui.actions.set");
+            item = this.loadLanguageDescription(this.getGuiItem("actions.buttons.set", Material.BLUE_DYE), "gui.actions.set");
         } catch (Throwable t) {
             item = Util.getDyeItemFromColor(DyeColor.BLUE);
-            item = this.loadLanguageDescription(this.getGuiItem("gui.actions.set", item.getType(), item.getDurability()), "gui.actions.set");
+            item = this.loadLanguageDescription(this.getGuiItem("actions.buttons.set", item.getType(), item.getDurability()), "gui.actions.set");
         }
         this.getInventory().setItem(9, item);
 
         //remove red
         try {
-            item = this.loadLanguageDescription(this.getGuiItem("gui.actions.remove", Material.RED_DYE), "gui.actions.remove");
+            item = this.loadLanguageDescription(this.getGuiItem("actions.buttons.remove", Material.RED_DYE), "gui.actions.remove");
         } catch (Throwable t) {
             item = Util.getDyeItemFromColor(DyeColor.RED);
-            item = this.loadLanguageDescription(this.getGuiItem("gui.actions.remove", item.getType(), item.getDurability()), "gui.actions.remove");
+            item = this.loadLanguageDescription(this.getGuiItem("actions.buttons.remove", item.getType(), item.getDurability()), "gui.actions.remove");
         }
         this.getInventory().setItem(1, item);
 
         //consume on last use
-        item = this.getGuiItem("gui.actions.consume", Material.APPLE);
+        item = this.getGuiItem("actions.buttons.consume", Material.APPLE);
         meta = this.loadLanguageDescription(ItemUtils.getMeta(item), "gui.actions.consume",
                 "%value%", Aliases.BOOLEAN.getName(ActionsUtility.getConsume(tagItem)));
         if (!ActionsUtility.getConsume(tagItem))
@@ -248,17 +248,17 @@ public class ActionsGui implements Gui {
         this.getInventory().setItem(7, item);
 
         // uses
-        this.getInventory().setItem(8, this.loadLanguageDescription(this.getGuiItem("gui.actions.uses", Material.IRON_PICKAXE), "gui.actions.uses",
+        this.getInventory().setItem(8, this.loadLanguageDescription(this.getGuiItem("actions.buttons.uses", Material.IRON_PICKAXE), "gui.actions.uses",
                 "%value%", ActionsUtility.getUses(tagItem) == -1 ? "-1 (Unlimited)" : String.valueOf(ActionsUtility.getUses(tagItem)), "%editor%", String.valueOf(editorValue)
                 , "%editor-prev%", String.valueOf(Math.max(1, editorValue / 10)), "%editor-next%", String.valueOf(Math.min(1000000, editorValue * 10))));
 
         //max uses
-        this.getInventory().setItem(17, this.loadLanguageDescription(this.getGuiItem("gui.actions.maxuses", Material.DIAMOND_PICKAXE), "gui.actions.maxuses",
+        this.getInventory().setItem(17, this.loadLanguageDescription(this.getGuiItem("actions.buttons.maxuses", Material.DIAMOND_PICKAXE), "gui.actions.maxuses",
                 "%value%", ActionsUtility.getMaxUses(tagItem) == -1 ? "-1 (Unlimited)" : String.valueOf(ActionsUtility.getMaxUses(tagItem)), "%editor%", String.valueOf(editorValue)
                 , "%editor-prev%", String.valueOf(Math.max(1, editorValue / 10)), "%editor-next%", String.valueOf(Math.min(1000000, editorValue * 10))));
 
 
-        item = this.getGuiItem("gui.actions.displayuses", Material.PAINTING);
+        item = this.getGuiItem("actions.buttons.displayuses", Material.PAINTING);
         meta = this.loadLanguageDescription(ItemUtils.getMeta(item), "gui.actions.displayuses", "%value%", Aliases.BOOLEAN.getName(ActionsUtility.getDisplayUses(tagItem)));
         if (ActionsUtility.getDisplayUses(tagItem))
             meta.addEnchant(Enchantment.LURE, 1, true);
@@ -269,24 +269,24 @@ public class ActionsGui implements Gui {
         this.getInventory().setItem(14, item);
         //permission
         try {
-            this.getInventory().setItem(5, this.loadLanguageDescription(this.getGuiItem("gui.actions.permission", Material.IRON_BARS), "gui.actions.permission",
+            this.getInventory().setItem(5, this.loadLanguageDescription(this.getGuiItem("actions.buttons.permission", Material.IRON_BARS), "gui.actions.permission",
                     "%value%", ActionsUtility.getPermission(tagItem) == null ? "<none>" : ActionsUtility.getPermission(tagItem)));
         } catch (Error e) {
-            this.getInventory().setItem(5, this.loadLanguageDescription(this.getGuiItem("gui.actions.permission", Material.valueOf("IRON_FENCE")), "gui.actions.permission",
+            this.getInventory().setItem(5, this.loadLanguageDescription(this.getGuiItem("actions.buttons.permission", Material.valueOf("IRON_FENCE")), "gui.actions.permission",
                     "%value%", ActionsUtility.getPermission(tagItem) == null ? "<none>" : ActionsUtility.getPermission(tagItem)));
         }
 
         // cooldown
-        this.getInventory().setItem(6, this.loadLanguageDescription(this.getGuiItem("gui.actions.cooldown", Material.COMPASS), "gui.actions.cooldown",
+        this.getInventory().setItem(6, this.loadLanguageDescription(this.getGuiItem("actions.buttons.cooldown", Material.COMPASS), "gui.actions.cooldown",
                 "%value_s%", String.valueOf(ActionsUtility.getCooldownMs(tagItem) / 1000), "%editor%", String.valueOf(editorCooldown)
                 , "%editor-prev%", String.valueOf(Math.max(1, editorCooldown / 10)), "%editor-next%", String.valueOf(Math.min(1000000, editorCooldown * 10))));
 
         //cooldownid
-        this.getInventory().setItem(16, this.loadLanguageDescription(this.getGuiItem("gui.actions.cooldownid", Material.NAME_TAG), "gui.actions.cooldownid",
+        this.getInventory().setItem(16, this.loadLanguageDescription(this.getGuiItem("actions.buttons.cooldownid", Material.NAME_TAG), "gui.actions.cooldownid",
                 "%value%", ActionsUtility.getCooldownId(tagItem)));
 
         //visualcooldown
-        item = this.getGuiItem("gui.actions.visualcooldown", Material.ENDER_PEARL);
+        item = this.getGuiItem("actions.buttons.visualcooldown", Material.ENDER_PEARL);
         meta = this.loadLanguageDescription(ItemUtils.getMeta(item), "gui.actions.visualcooldown", "%value%", Aliases.BOOLEAN.getName(ActionsUtility.getVisualCooldown(tagItem)));
         if (ActionsUtility.getVisualCooldown(tagItem)) {
             meta.addEnchant(Enchantment.LURE, 1, true);
@@ -297,7 +297,7 @@ public class ActionsGui implements Gui {
         this.getInventory().setItem(15, item);
 
         //info
-        item = this.getGuiItem("gui.actions.info", Material.PAPER);
+        item = this.getGuiItem("actions.buttons.info", Material.PAPER);
         meta = this.loadLanguageDescription(ItemUtils.getMeta(item), "gui.actions.info");
         List<String> lore = new ArrayList<>(meta.hasLore() ? meta.getLore() : List.of());
         List<String> list = ActionsUtility.getActions(tagItem);
@@ -477,12 +477,7 @@ public class ActionsGui implements Gui {
                         } catch (Exception ignored) {
                         }
                     }
-                    ItemStack item;
-                    try {
-                        item = this.getGuiItem("gui.actionslines.line", Material.COMMAND_BLOCK);
-                    } catch (Error e) {
-                        item = this.getGuiItem("gui.actionslines.line", Material.valueOf("COMMAND"));
-                    }
+                    ItemStack item = this.getGuiItem("actions.buttons.actionslines-line", Material.COMMAND_BLOCK);
                     ItemMeta meta = item.getItemMeta();
                     String action = MiniMessage.miniMessage().serialize(this.getPlugin().getTranslator()
                             .translateOrEmpty(target, "gui.actionslines.actionformat",
@@ -495,12 +490,7 @@ public class ActionsGui implements Gui {
             }
             //add action button
             if (actions == null || actions.size() < 45) {
-                ItemStack item;
-                try {
-                    item = this.getGuiItem("gui.actionslines.line", Material.COMMAND_BLOCK);
-                } catch (Error e) {
-                    item = this.getGuiItem("gui.actionslines.line", Material.valueOf("COMMAND"));
-                }
+                ItemStack item = this.getGuiItem("actions.buttons.actionslines-line", Material.COMMAND_BLOCK);
                 ItemMeta meta = item.getItemMeta();
                 this.loadLanguageDescription(meta, "gui.actionslines.add");
                 item.setItemMeta(meta);

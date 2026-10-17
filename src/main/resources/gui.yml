@@ -11,13 +11,13 @@ buttons:
     material: BARRIER
     durability: 0
     glow: false
-gui:
-  actions:
+actions:
+  buttons:
     consumeon0uses:
       material: APPLE
     uses:
       material: IRON_PICKAXE
-    mxuses:
+    maxuses:
       material: DIAMOND_PICKAXE
     permission:
       material: IRON_BARS
@@ -34,3 +34,19 @@ gui:
   actionslines:
     line:
       material: COMMAND_BLOCK
+effects:
+  buttons:
+    potion:
+      material: POTION
+    slot-chest:
+      material: IRON_CHESTPLATE
+    slot-feet:
+      material: IRON_BOOTS
+    slot-hand:
+      material: IRON_SWORD
+    slot-head:
+      material: IRON_HELMET
+    slot-legs:
+      material: IRON_LEGGINGS
+    slot-off-hand:
+      material: SHIELD

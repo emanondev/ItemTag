@@ -4,6 +4,7 @@ import emanondev.itemedit.utility.InventoryUtils;
 import emanondev.itemedit.utility.ItemUtils;
 import emanondev.itemedit.utility.VersionUtils;
 import emanondev.itemtag.ItemTag;
+import lombok.extern.slf4j.Slf4j;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -28,6 +29,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
+@Slf4j
 public abstract class EquipmentChangeListenerBase implements Listener {
 
     protected final HashMap<Player, EnumMap<EquipmentSlot, ItemStack>> equips = new HashMap<>();
@@ -454,7 +456,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
             this.p = p;
             this.method = method;
             if (trackPlayer(p))
-                new IllegalStateException().printStackTrace();
+                log.warn("Unexpected tracking state in EquipmentChangeListenerBase", new IllegalStateException());
             for (EquipmentSlot slot : slots) {
                 if (!isSimilarIgnoreDamage(equips.get(p).get(slot), getEquip(p, slot)))
                     onEquipChange(p, EquipmentChangeEvent.EquipMethod.UNKNOWN, slot, equips.get(p).get(slot), getEquip(p, slot));
@@ -468,7 +470,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
             this.p = p;
             this.method = method;
             if (trackPlayer(p))
-                new IllegalStateException().printStackTrace();
+                log.warn("Unexpected tracking state in EquipmentChangeListenerBase", new IllegalStateException());
             for (EquipmentSlot slot : slots) {
                 ItemStack equip = getEquip(p, slot);
                 if (ItemUtils.isAirOrNull(equip))
@@ -486,7 +488,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
             if (!p.isOnline())
                 return;
             if (trackPlayer(p))
-                new IllegalStateException().printStackTrace();
+                log.warn("Unexpected tracking state in EquipmentChangeListenerBase", new IllegalStateException());
             for (EquipmentSlot slot : slots) {
                 ItemStack item = getEquip(p, slot);
                 if (ItemUtils.isAirOrNull(item))

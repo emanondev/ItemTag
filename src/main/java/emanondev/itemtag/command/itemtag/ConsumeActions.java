@@ -7,6 +7,7 @@ import emanondev.itemtag.TagItem;
 import emanondev.itemtag.actions.ActionHandler;
 import emanondev.itemtag.command.ItemTagCommand;
 import emanondev.itemtag.command.ListenerSubCmd;
+import lombok.extern.slf4j.Slf4j;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -18,6 +19,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 public class ConsumeActions extends ListenerSubCmd {
 
     private final static String ACTIONS_KEY = ItemTag.get().getName().toLowerCase(Locale.ENGLISH) + ":consume_actions";
@@ -71,7 +73,7 @@ public class ConsumeActions extends ListenerSubCmd {
             }
             onFail(p, alias);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.warn("Error in ConsumeActions", e);
             onFail(p, alias);
         }
     }
@@ -271,7 +273,7 @@ public class ConsumeActions extends ListenerSubCmd {
             sendLanguageString("feedback.actions.add", p, "%action%",
                     action.replace(TYPE_SEPARATOR, " "));
         } catch (Exception e) {
-            e.printStackTrace();
+            log.warn("Error in ConsumeActions", e);
             Util.sendComponent(p, this.craftFailFeedback(label, translateOrEmptyRaw("add.params", p),
                     translateList("add.description", p)));
         }
@@ -389,7 +391,7 @@ public class ConsumeActions extends ListenerSubCmd {
                 ActionHandler.handleAction(event.getPlayer(), action.split(TYPE_SEPARATOR)[0],
                         action.split(TYPE_SEPARATOR)[1]);
             } catch (Exception e) {
-                e.printStackTrace();
+                log.warn("Error in ConsumeActions", e);
             }
         //know issue: if you have an item to execute /si give itself as action it'll get duped
         //any command altering current item will deny item consumption

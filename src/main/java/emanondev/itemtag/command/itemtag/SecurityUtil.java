@@ -2,6 +2,7 @@ package emanondev.itemtag.command.itemtag;
 
 import emanondev.itemedit.YMLConfig;
 import emanondev.itemtag.ItemTag;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.charset.StandardCharsets;
@@ -9,6 +10,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
+@Slf4j
 public class SecurityUtil {
 
     private static UUID uuid;
@@ -26,7 +28,7 @@ public class SecurityUtil {
                     config.save();
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                log.warn("Error in SecurityUtil", e);
                 uuid = UUID.randomUUID();
                 config.set("server_uuid", uuid.toString());
                 config.save();

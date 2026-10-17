@@ -11,6 +11,7 @@ import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.TagItem;
 import emanondev.itemtag.command.ItemTagCommand;
 import emanondev.itemtag.command.itemtag.customflags.*;
+import lombok.extern.slf4j.Slf4j;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -32,6 +33,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.TreeSet;
 
+@Slf4j
 public class Flag extends SubCmd {
 
     private final TreeSet<CustomFlag> flags = new TreeSet<>();
@@ -100,7 +102,7 @@ public class Flag extends SubCmd {
                             (value == flag.defaultValue() ? "standard" : "custom")
                     , p);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.warn("Error in Flag", e);
             onFail(p, alias);
         }
 

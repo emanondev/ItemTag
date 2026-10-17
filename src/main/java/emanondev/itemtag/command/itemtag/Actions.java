@@ -12,6 +12,7 @@ import emanondev.itemtag.actions.ActionsUtility;
 import emanondev.itemtag.command.ItemTagCommand;
 import emanondev.itemtag.command.ListenerSubCmd;
 import emanondev.itemtag.gui.ActionsGui;
+import lombok.extern.slf4j.Slf4j;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;
 import org.bukkit.command.CommandSender;
@@ -25,6 +26,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 public class Actions extends ListenerSubCmd {
 
     private static final String[] actionsSub = new String[]{"add", "addline", "set", "permission", "cooldown", "cooldownmsg", "cooldownmsgtype",
@@ -94,6 +96,33 @@ public class Actions extends ListenerSubCmd {
                 onFail(p, alias);
 
         }
+    }
+
+    @Override
+    public List<String> onComplete(@NotNull CommandSender sender, String[] args) {
+        return switch (args.length) {
+            case 2 -> CompleteUtility.complete(args[1], actionsSub);
+            case 3 -> switch (args[1].toLowerCase(Locale.ENGLISH)) {
+                case "add" -> CompleteUtility.complete(args[2], ActionHandler.getTypes());
+                case "uses", "maxuses" -> CompleteUtility.complete(args[2], Arrays.asList("-1", "1", "5", "10"));
+                case "visualcooldown", "consume", "displayuses" -> CompleteUtility.complete(args[2], Aliases.BOOLEAN);
+                case "cooldownmsgtype" -> CompleteUtility.complete(args[2], Arrays.asList("chat", "actionbar"));
+                default -> List.of();
+            };
+            case 4 -> switch (args[1].toLowerCase(Locale.ENGLISH)) {
+                case "add" ->
+                        ActionHandler.tabComplete(sender, args[2].toLowerCase(Locale.ENGLISH), new ArrayList<>(Arrays.asList(args).subList(3, args.length)));
+                case "set", "addline" -> CompleteUtility.complete(args[3], ActionHandler.getTypes());
+                default -> List.of();
+            };
+            default -> switch (args[1].toLowerCase(Locale.ENGLISH)) {
+                case "add" ->
+                        ActionHandler.tabComplete(sender, args[2].toLowerCase(Locale.ENGLISH), new ArrayList<>(Arrays.asList(args).subList(3, args.length)));
+                case "set", "addline" ->
+                        ActionHandler.tabComplete(sender, args[3].toLowerCase(Locale.ENGLISH), new ArrayList<>(Arrays.asList(args).subList(4, args.length)));
+                default -> List.of();
+            };
+        };
     }
 
     //it actions displayUses [boolean]
@@ -232,7 +261,6 @@ public class Actions extends ListenerSubCmd {
                     translateList("cooldown.description", p)));
         }
     }
-
 
     private void maxUses(Player p, String label, String[] args, ItemStack item) {
         try {
@@ -417,7 +445,7 @@ public class Actions extends ListenerSubCmd {
             sendFeedback(p, "add.feedback", "%action%",
                     originalAction);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.warn("Error in Actions", e);
             Util.sendComponent(p, this.craftFailFeedback(label, translateOrEmptyRaw("add.params", p),
                     translateList("add.description", p)));
         }
@@ -458,39 +486,6 @@ public class Actions extends ListenerSubCmd {
             Util.sendComponent(p, this.craftFailFeedback(label, translateOrEmptyRaw("addline.params", p),
                     translateList("addline.description", p)));
         }
-    }
-
-    @Override
-    public List<String> onComplete(@NotNull CommandSender sender, String[] args) {
-        switch (args.length) {
-            case 2:
-                return CompleteUtility.complete(args[1], actionsSub);
-            case 3:
-                return switch (args[1].toLowerCase(Locale.ENGLISH)) {
-                    case "add" -> CompleteUtility.complete(args[2], ActionHandler.getTypes());
-                    case "uses", "maxuses" -> CompleteUtility.complete(args[2], Arrays.asList("-1", "1", "5", "10"));
-                    case "visualcooldown", "consume", "displayuses" ->
-                            CompleteUtility.complete(args[2], Aliases.BOOLEAN);
-                    case "cooldownmsgtype" -> CompleteUtility.complete(args[2], Arrays.asList("chat", "actionbar"));
-                    default -> List.of();
-                };
-            case 4:
-                return switch (args[1].toLowerCase(Locale.ENGLISH)) {
-                    case "add" ->
-                            ActionHandler.tabComplete(sender, args[2].toLowerCase(Locale.ENGLISH), new ArrayList<>(Arrays.asList(args).subList(3, args.length)));
-                    case "set", "addline" -> CompleteUtility.complete(args[3], ActionHandler.getTypes());
-                    default -> List.of();
-                };
-            default:
-                switch (args[1].toLowerCase(Locale.ENGLISH)) {
-                    case "add":
-                        return ActionHandler.tabComplete(sender, args[2].toLowerCase(Locale.ENGLISH), new ArrayList<>(Arrays.asList(args).subList(3, args.length)));
-                    case "set":
-                    case "addline":
-                        return ActionHandler.tabComplete(sender, args[3].toLowerCase(Locale.ENGLISH), new ArrayList<>(Arrays.asList(args).subList(4, args.length)));
-                }
-        }
-        return List.of();
     }
 
     @SuppressWarnings("deprecation")
@@ -551,7 +546,7 @@ public class Actions extends ListenerSubCmd {
                         ActionHandler.handleAction(event.getPlayer(), action.split(ActionsUtility.TYPE_SEPARATOR)[0],
                                 action.split(ActionsUtility.TYPE_SEPARATOR)[1]);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        log.warn("Error in Actions", e);
                     }
                 event.setCancelled(true);
                 //event.setUseItemInHand(Event.Result.DENY);  TODO config

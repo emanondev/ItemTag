@@ -1,10 +1,12 @@
 package emanondev.itemtag.activity.arguments;
 
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumSet;
 import java.util.Locale;
 
+@Slf4j
 public class EnumSetArgument<E extends Enum<E>> extends Argument {
     private final EnumSet<E> values;
     private final String separator;
@@ -32,7 +34,7 @@ public class EnumSetArgument<E extends Enum<E>> extends Argument {
                 try {
                     values.add(Enum.valueOf(clazz, arg.toUpperCase(Locale.ENGLISH)));
                 } catch (Exception e2) {
-                    e2.printStackTrace();
+                    log.warn("Error in EnumSetArgument", e2);
                 }
             }
     }

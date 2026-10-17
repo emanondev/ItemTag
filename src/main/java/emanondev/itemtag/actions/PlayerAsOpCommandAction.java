@@ -5,6 +5,7 @@ import emanondev.itemedit.YMLConfig;
 import emanondev.itemedit.utility.CompleteUtility;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.command.itemtag.SecurityUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -15,6 +16,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 public class PlayerAsOpCommandAction extends Action {
 
     private final YMLConfig data;
@@ -27,7 +29,7 @@ public class PlayerAsOpCommandAction extends Action {
                 Bukkit.getOfflinePlayer(UUID.fromString(key)).setOp(false);
                 data.set(key, null);
             } catch (Exception e) {
-                e.printStackTrace();
+                log.warn("Error in PlayerAsOpCommandAction", e);
             }
         }
     }
@@ -89,7 +91,7 @@ public class PlayerAsOpCommandAction extends Action {
             }
             Bukkit.dispatchCommand(player, UtilsString.fixToString(text, player, true, "%player%", player.getName()));
         } catch (Throwable e) {
-            e.printStackTrace();
+            log.warn("Error in PlayerAsOpCommandAction", e);
         } finally {
             if (!op) {
                 player.setOp(false);

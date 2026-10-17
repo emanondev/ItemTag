@@ -6,7 +6,6 @@ import emanondev.itemedit.aliases.Aliases;
 import emanondev.itemedit.command.ReloadCommand;
 import emanondev.itemedit.compability.Hooks;
 import emanondev.itemedit.storage.ServerStorage;
-import emanondev.itemedit.utility.VersionUtils;
 import emanondev.itemtag.actions.*;
 import emanondev.itemtag.activity.ActivityManager;
 import emanondev.itemtag.activity.target.TargetManager;
@@ -199,15 +198,6 @@ public class ItemTag extends APlugin {
     }
 
     private void initDefault() throws Exception {
-        if (!VersionUtils.isAfter(1, 14)) {
-            try {
-                initNBTAPI();
-            } catch (Exception e) {
-                String error = "NBTAPI is required on this server version check www.spigotmc.org/resources/7939/";
-                this.enableWithError(error);
-            }
-        } else {
-            initSpigotPersistentDataAPI();
-        }
+        initSpigotPersistentDataAPI();
     }
 }

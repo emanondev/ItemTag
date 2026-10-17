@@ -4,7 +4,6 @@ import emanondev.itemedit.aliases.Aliases;
 import emanondev.itemedit.utility.CompleteUtility;
 import emanondev.itemedit.utility.InventoryUtils;
 import emanondev.itemedit.utility.ItemUtils;
-import emanondev.itemedit.utility.VersionUtils;
 import emanondev.itemtag.EffectsInfo;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.command.ItemTagCommand;
@@ -32,8 +31,7 @@ public class Effects extends ListenerSubCmd {
 
     public Effects(ItemTagCommand cmd) {
         super("effects", cmd, true, true);
-        if (VersionUtils.isAfter(1, 11))
-            getPlugin().registerListener(new EffectsResurrectListener(this));
+        getPlugin().registerListener(new EffectsResurrectListener(this));
     }
 
     public void reload() {
@@ -297,20 +295,9 @@ public class Effects extends ListenerSubCmd {
                             addEffect(event.getPlayer(), effect.getType(), effect);
 
                         else {
-                            PotionEffect currentEffect = null;
-                            if (VersionUtils.isAfter(1, 11))// safe
-                                currentEffect = event.getPlayer().getPotionEffect(effect.getType());
-                            else
-                                for (PotionEffect k : event.getPlayer().getActivePotionEffects())
-                                    if (k.getType().equals(effect.getType())) {
-                                        currentEffect = k;
-                                        break;
-                                    }
+                            PotionEffect currentEffect = event.getPlayer().getPotionEffect(effect.getType());
                             if (currentEffect.getDuration() < 3600 * 20 && currentEffect.getDuration() >= 0) //could be changed checking the whole equipment effects, but this way seems faster and still fair
-                                if (VersionUtils.isAfter(1, 16))
-                                    addEffect(event.getPlayer(), effect.getType(), effect);
-                                else if (currentEffect.getAmplifier() <= effect.getAmplifier())
-                                    addEffect(event.getPlayer(), effect.getType(), effect);
+                                addEffect(event.getPlayer(), effect.getType(), effect);
                         }
                     }
                 }
@@ -328,12 +315,9 @@ public class Effects extends ListenerSubCmd {
             target.addPotionEffect(effect);
             return;
         }
-        if (VersionUtils.isAfter(1, 16)) {
-            if (target.hasPotionEffect(effect.getType()))
-                target.removePotionEffect(effect.getType());
-            target.addPotionEffect(effect);
-        } else
-            target.addPotionEffect(effect, true);
+        if (target.hasPotionEffect(effect.getType()))
+            target.removePotionEffect(effect.getType());
+        target.addPotionEffect(effect);
     }
 
     @EventHandler(ignoreCancelled = true)

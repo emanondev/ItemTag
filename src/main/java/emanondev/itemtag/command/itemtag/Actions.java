@@ -5,7 +5,6 @@ import emanondev.itemedit.UtilsString;
 import emanondev.itemedit.aliases.Aliases;
 import emanondev.itemedit.utility.CompleteUtility;
 import emanondev.itemedit.utility.InventoryUtils;
-import emanondev.itemedit.utility.VersionUtils;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.TagItem;
 import emanondev.itemtag.actions.ActionHandler;
@@ -471,8 +470,7 @@ public class Actions extends ListenerSubCmd {
                     case "uses", "maxuses" -> CompleteUtility.complete(args[2], Arrays.asList("-1", "1", "5", "10"));
                     case "visualcooldown", "consume", "displayuses" ->
                             CompleteUtility.complete(args[2], Aliases.BOOLEAN);
-                    case "cooldownmsgtype" -> CompleteUtility.complete(args[2], VersionUtils.isAfter(1, 11) ?
-                            Arrays.asList("chat", "actionbar") : Collections.singletonList("chat"));
+                    case "cooldownmsgtype" -> CompleteUtility.complete(args[2], Arrays.asList("chat", "actionbar"));
                     default -> List.of();
                 };
             case 4:

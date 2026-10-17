@@ -5,7 +5,6 @@ import emanondev.itemedit.aliases.Aliases;
 import emanondev.itemedit.gui.Gui;
 import emanondev.itemedit.gui.PagedGui;
 import emanondev.itemedit.utility.ItemUtils;
-import emanondev.itemedit.utility.VersionUtils;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.TagItem;
 import emanondev.itemtag.actions.ActionsUtility;
@@ -253,23 +252,21 @@ public class ActionsGui implements Gui {
                 "%value%", ActionsUtility.getUses(tagItem) == -1 ? "-1 (Unlimited)" : String.valueOf(ActionsUtility.getUses(tagItem)), "%editor%", String.valueOf(editorValue)
                 , "%editor-prev%", String.valueOf(Math.max(1, editorValue / 10)), "%editor-next%", String.valueOf(Math.min(1000000, editorValue * 10))));
 
-        if (VersionUtils.isAfter(1, 9)) {
-            //max uses
-            this.getInventory().setItem(17, this.loadLanguageDescription(this.getGuiItem("gui.actions.maxuses", Material.DIAMOND_PICKAXE), "gui.actions.maxuses",
-                    "%value%", ActionsUtility.getMaxUses(tagItem) == -1 ? "-1 (Unlimited)" : String.valueOf(ActionsUtility.getMaxUses(tagItem)), "%editor%", String.valueOf(editorValue)
-                    , "%editor-prev%", String.valueOf(Math.max(1, editorValue / 10)), "%editor-next%", String.valueOf(Math.min(1000000, editorValue * 10))));
+        //max uses
+        this.getInventory().setItem(17, this.loadLanguageDescription(this.getGuiItem("gui.actions.maxuses", Material.DIAMOND_PICKAXE), "gui.actions.maxuses",
+                "%value%", ActionsUtility.getMaxUses(tagItem) == -1 ? "-1 (Unlimited)" : String.valueOf(ActionsUtility.getMaxUses(tagItem)), "%editor%", String.valueOf(editorValue)
+                , "%editor-prev%", String.valueOf(Math.max(1, editorValue / 10)), "%editor-next%", String.valueOf(Math.min(1000000, editorValue * 10))));
 
 
-            item = this.getGuiItem("gui.actions.displayuses", Material.PAINTING);
-            meta = this.loadLanguageDescription(ItemUtils.getMeta(item), "gui.actions.displayuses", "%value%", Aliases.BOOLEAN.getName(ActionsUtility.getDisplayUses(tagItem)));
-            if (ActionsUtility.getDisplayUses(tagItem))
-                meta.addEnchant(Enchantment.LURE, 1, true);
-            else
-                meta.removeEnchant(Enchantment.LURE);
-            item.setItemMeta(meta);
-            //max uses
-            this.getInventory().setItem(14, item);
-        }
+        item = this.getGuiItem("gui.actions.displayuses", Material.PAINTING);
+        meta = this.loadLanguageDescription(ItemUtils.getMeta(item), "gui.actions.displayuses", "%value%", Aliases.BOOLEAN.getName(ActionsUtility.getDisplayUses(tagItem)));
+        if (ActionsUtility.getDisplayUses(tagItem))
+            meta.addEnchant(Enchantment.LURE, 1, true);
+        else
+            meta.removeEnchant(Enchantment.LURE);
+        item.setItemMeta(meta);
+        //max uses
+        this.getInventory().setItem(14, item);
         //permission
         try {
             this.getInventory().setItem(5, this.loadLanguageDescription(this.getGuiItem("gui.actions.permission", Material.IRON_BARS), "gui.actions.permission",

@@ -1,7 +1,6 @@
 package emanondev.itemtag.command.itemtag.customflags;
 
 import emanondev.itemedit.utility.InventoryUtils;
-import emanondev.itemedit.utility.ItemUtils;
 import emanondev.itemedit.utility.VersionUtils;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.command.itemtag.Flag;
@@ -11,8 +10,6 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.Event.Result;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.PlayerBucketEmptyEvent;
-import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -33,8 +30,7 @@ public class Usable extends CustomFlag {
                 if (ItemTag.getTagItem(event.getItem()).hasBooleanTag(USABLE_KEY)) {
                     event.setUseItemInHand(Result.DENY);
                     Block b;
-                    if (event.getItem().getType() == Material.BUCKET &&
-                            VersionUtils.isAfter(1, 15)) {
+                    if (event.getItem().getType() == Material.BUCKET) {
                         b = event.getPlayer().getTargetBlockExact(7, FluidCollisionMode.SOURCE_ONLY);
                     } else
                         b = null;
@@ -51,35 +47,6 @@ public class Usable extends CustomFlag {
         }
     }
 
-    @EventHandler
-    private void event(PlayerBucketFillEvent event) { //obsolete and unrequired on 1.18
-        if (VersionUtils.isAfter(1, 18)) {
-            return;
-        }
-        ItemStack item = ItemUtils.getHandMainItem(event.getPlayer());
-        if (VersionUtils.isUpTo(1, 8, 9) && item.getType() != Material.BUCKET) {
-            item = event.getPlayer().getInventory().getItemInOffHand();
-        }
-        if (ItemTag.getTagItem(item).hasBooleanTag(USABLE_KEY)) {
-            event.setCancelled(true);
-        }
-    }
-
-
-    @EventHandler
-    private void event(PlayerBucketEmptyEvent event) { //obsolete and unrequired on 1.18
-        if (VersionUtils.isAfter(1, 18)) {
-            return;
-        }
-        ItemStack item = this.getItemInHand(event.getPlayer());
-        if (VersionUtils.isAfter(1, 9) && (item == null ||
-                (item.getType() != Material.LAVA_BUCKET && item.getType() != Material.WATER_BUCKET))) {
-            item = event.getPlayer().getInventory().getItemInOffHand();
-        }
-        if (ItemTag.getTagItem(item).hasBooleanTag(USABLE_KEY)) {
-            event.setCancelled(true);
-        }
-    }
 
     @Override
     public ItemStack getGuiItem() {

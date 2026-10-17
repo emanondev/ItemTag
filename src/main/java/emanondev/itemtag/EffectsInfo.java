@@ -41,10 +41,7 @@ public class EffectsInfo {
                                                  boolean icon) {
         int duration = type.isInstant() ? 1 : (VersionUtils.isUpTo(1, 19, 3) ?
                 (20 * 3600 * 12) : PotionEffect.INFINITE_DURATION);
-        if (VersionUtils.isAfter(1, 13)) {
-            return new PotionEffect(type, duration, amplifier, ambient, particles, icon);
-        }
-        return new PotionEffect(type, duration, amplifier, ambient, particles);
+        return new PotionEffect(type, duration, amplifier, ambient, particles, icon);
     }
 
     private String effectsToString() {
@@ -54,17 +51,11 @@ public class EffectsInfo {
         StringBuilder str = new StringBuilder().append(list.get(0).getType().getName())//TODO should use list.get(0).getType().getKey() for 1.20.6+
                 .append(",").append(list.get(0).getAmplifier())
                 .append(",").append(list.get(0).isAmbient()).append(",").append(list.get(0).hasParticles());
-        if (VersionUtils.isAfter(1, 13))
-            str.append(",").append(list.get(0).hasIcon());
-        else
-            str.append(",true");
+        str.append(",").append(list.get(0).hasIcon());
         for (int i = 1; i < list.size(); i++) {
             str.append(";").append(list.get(i).getType().getName()).append(",").append(list.get(i).getAmplifier()).append(",")
                     .append(list.get(i).isAmbient()).append(",").append(list.get(i).hasParticles());
-            if (VersionUtils.isAfter(1, 13))
-                str.append(",").append(list.get(i).hasIcon());
-            else
-                str.append(",true");
+            str.append(",").append(list.get(i).hasIcon());
         }
         return str.toString();
     }

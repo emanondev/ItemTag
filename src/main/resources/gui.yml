@@ -31,9 +31,14 @@ actions:
       material: PAINTING
     info:
       material: PAPER
-  actionslines:
-    line:
+    actionslines-line:
       material: COMMAND_BLOCK
+    actionslines-add:
+      material: LIME_DYE
+    actionslines-set:
+      material: BLUE_DYE
+    actionslines-remove:
+      material: RED_DYE
 effects:
   buttons:
     potion:

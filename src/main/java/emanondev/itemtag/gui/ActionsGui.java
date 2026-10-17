@@ -12,7 +12,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -209,31 +208,17 @@ public class ActionsGui implements Gui {
         ItemStack item;
         ItemMeta meta;
         //add addline lime
-        try {
-            item = this.loadLanguageDescription(this.getGuiItem("actions.buttons.addline", Material.LIME_DYE),
-                    "gui.actions.addline");
-        } catch (Throwable t) {
-            item = Util.getDyeItemFromColor(DyeColor.LIME);
-            item = this.loadLanguageDescription(this.getGuiItem("actions.buttons.addline", item.getType(),
-                    item.getDurability()), "gui.actions.addline");
-        }
+        item = this.loadLanguageDescription(this.getGuiItem("actions.buttons.actionlines-add", Material.LIME_DYE),
+                "gui.actions.addline");
         this.getInventory().setItem(0, item);
         //set blue
-        try {
-            item = this.loadLanguageDescription(this.getGuiItem("actions.buttons.set", Material.BLUE_DYE), "gui.actions.set");
-        } catch (Throwable t) {
-            item = Util.getDyeItemFromColor(DyeColor.BLUE);
-            item = this.loadLanguageDescription(this.getGuiItem("actions.buttons.set", item.getType(), item.getDurability()), "gui.actions.set");
-        }
+        item = this.loadLanguageDescription(this.getGuiItem("actions.buttons.actionlines-set", Material.BLUE_DYE),
+                "gui.actions.set");
         this.getInventory().setItem(9, item);
 
         //remove red
-        try {
-            item = this.loadLanguageDescription(this.getGuiItem("actions.buttons.remove", Material.RED_DYE), "gui.actions.remove");
-        } catch (Throwable t) {
-            item = Util.getDyeItemFromColor(DyeColor.RED);
-            item = this.loadLanguageDescription(this.getGuiItem("actions.buttons.remove", item.getType(), item.getDurability()), "gui.actions.remove");
-        }
+        item = this.loadLanguageDescription(this.getGuiItem("actions.buttons.actionlines-remove", Material.RED_DYE),
+                "gui.actions.remove");
         this.getInventory().setItem(1, item);
 
         //consume on last use

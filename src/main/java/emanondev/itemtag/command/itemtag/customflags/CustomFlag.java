@@ -6,8 +6,8 @@ import emanondev.itemedit.YMLConfig;
 import emanondev.itemedit.utility.ItemUtils;
 import emanondev.itemtag.TagItem;
 import emanondev.itemtag.command.itemtag.Flag;
-import org.bukkit.command.CommandSender;
 import net.kyori.adventure.text.Component;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
@@ -50,6 +50,7 @@ public abstract class CustomFlag implements Listener, Comparable<CustomFlag> {
     protected List<Component> getLanguageComponentList(String path, CommandSender sender, String... holders) {
         return getPlugin().getTranslator().translateList(sender, this.PATH + path, holders);
     }
+
     protected String getConfigString(String path, String... holders) {
         return config.loadMessage(this.PATH + path, "", null, true, holders);
     }

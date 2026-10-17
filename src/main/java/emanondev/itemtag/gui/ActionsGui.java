@@ -329,6 +329,7 @@ public class ActionsGui implements Gui {
                 "/" + commandAlias + " " + subCommandAlias + " " + postClickable + " ");
         Util.sendComponent(gui.getTargetPlayer(), message);
     }
+
     private class ActionTypeGui implements PagedGui {
 
         private static final int ROWS = 5;
@@ -442,6 +443,21 @@ public class ActionsGui implements Gui {
             updateInventory();
         }
 
+        @Override
+        public @NotNull Inventory getInventory() {
+            return inventory;
+        }
+
+        @Override
+        public Player getTargetPlayer() {
+            return target;
+        }
+
+        @Override
+        public @NotNull ItemTag getPlugin() {
+            return ItemTag.get();
+        }
+
         private void updateInventory() {
             final List<String> actions = ActionsUtility.getActions(tagItem);
             //add actions
@@ -468,8 +484,9 @@ public class ActionsGui implements Gui {
                         item = this.getGuiItem("gui.actionslines.line", Material.valueOf("COMMAND"));
                     }
                     ItemMeta meta = item.getItemMeta();
-                    String action = MiniMessage.miniMessage().serialize(this.getPlugin().getTranslator().translateOrEmpty(target,"gui.actionslines.actionformat",
-                            "%type%", actionPre, "%info%", actionPost));
+                    String action = MiniMessage.miniMessage().serialize(this.getPlugin().getTranslator()
+                            .translateOrEmpty(target, "gui.actionslines.actionformat",
+                                    "%type%", actionPre, "%info%", actionPost));
                     this.loadLanguageDescription(meta, "gui.actionslines.element", "%action%", action);
                     item.setAmount(Math.min(125, elementIndex + 1));
                     item.setItemMeta(meta);
@@ -503,21 +520,6 @@ public class ActionsGui implements Gui {
             } else {
                 this.inventory.setItem(ROWS * 9 + 1, null);
             }
-        }
-
-        @Override
-        public @NotNull Inventory getInventory() {
-            return inventory;
-        }
-
-        @Override
-        public Player getTargetPlayer() {
-            return target;
-        }
-
-        @Override
-        public @NotNull ItemTag getPlugin() {
-            return ItemTag.get();
         }
     }
 }

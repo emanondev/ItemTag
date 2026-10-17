@@ -70,22 +70,22 @@ public class UsePermission extends ListenerSubCmd {
                 setUseKey(tagItem, permission);
                 Component feedback;
                 if (permission != null) {
-                    feedback = translate("setpermission.feedback",  p, "%value%", permission);
+                    feedback = translate("setpermission.feedback", p, "%value%", permission);
                 } else {
-                    feedback = translate("setpermission.feedback-reset",  p);
+                    feedback = translate("setpermission.feedback-reset", p);
                 }
                 Util.sendComponent(p, feedback);
             }
             case "setmessage" -> {
                 if (args.length == 2) {
                     setUseMsgKey(tagItem, null);
-                    Component feedback = translate("setmessage.feedback-reset",  p);
+                    Component feedback = translate("setmessage.feedback-reset", p);
                     Util.sendComponent(p, feedback);
                     return;
                 }
                 String msg = UtilsString.fixToString(String.join(" ", Arrays.asList(args).subList(2, args.length)), null, true);
                 setUseMsgKey(tagItem, msg);
-                Component feedback = translate("setmessage.feedback",  p, "%value%", msg);
+                Component feedback = translate("setmessage.feedback", p, "%value%", msg);
                 Util.sendComponent(p, feedback);
             }
         }

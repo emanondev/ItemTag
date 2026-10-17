@@ -1,6 +1,5 @@
 package emanondev.itemtag.command.itemtag.customflags;
 
-import emanondev.itemedit.utility.InventoryUtils;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.command.itemtag.Flag;
 import org.bukkit.Material;

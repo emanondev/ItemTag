@@ -2,8 +2,8 @@ package emanondev.itemtag.actions;
 
 import emanondev.itemedit.Util;
 import emanondev.itemedit.UtilsString;
-import net.kyori.adventure.text.Component;
 import emanondev.itemedit.utility.CompleteUtility;
+import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

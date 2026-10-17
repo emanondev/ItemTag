@@ -10,8 +10,8 @@ import emanondev.itemedit.utility.ItemUtils;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.TagItem;
 import emanondev.itemtag.command.ListenerSubCmd;
-import net.kyori.adventure.text.Component;
 import emanondev.itemtag.equipmentchange.EquipmentChangeEvent;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
@@ -76,22 +76,22 @@ public class WearPermission extends ListenerSubCmd {
                 setUseKey(tagItem, permission);
                 Component feedback;
                 if (permission != null) {
-                    feedback = translate("setpermission.feedback",  p, "%value%", permission);
+                    feedback = translate("setpermission.feedback", p, "%value%", permission);
                 } else {
-                    feedback = translate("setpermission.feedback-reset",  p);
+                    feedback = translate("setpermission.feedback-reset", p);
                 }
                 Util.sendComponent(p, feedback);
             }
             case "setmessage" -> {
                 if (args.length == 2) {
                     setUseMsgKey(tagItem, null);
-                    Component feedback = translate("setmessage.feedback-reset",  p);
+                    Component feedback = translate("setmessage.feedback-reset", p);
                     Util.sendComponent(p, feedback);
                     return;
                 }
                 String msg = UtilsString.fixToString(String.join(" ", Arrays.asList(args).subList(2, args.length)), null, true);
                 setUseMsgKey(tagItem, msg);
-                Component feedback = translate("setmessage.feedback",  p, "%value%", msg);
+                Component feedback = translate("setmessage.feedback", p, "%value%", msg);
                 Util.sendComponent(p, feedback);
             }
         }
@@ -119,7 +119,7 @@ public class WearPermission extends ListenerSubCmd {
         Bukkit.getScheduler().runTaskLater(getPlugin(), () -> {
             if (!player.isOnline())
                 return;
-            ItemStack originalItem = player.getInventory().getItem( event.getSlotType());
+            ItemStack originalItem = player.getInventory().getItem(event.getSlotType());
             if (ItemUtils.isAirOrNull(originalItem)) {
                 return;
             }

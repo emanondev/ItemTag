@@ -313,6 +313,7 @@ public class Actions extends ListenerSubCmd {
                 UtilsString.fix(ActionHandler.getAction(actionType).getInfo(), p, true));
         Util.sendComponent(p, Util.asHover(message, hover));
     }
+
     private void set(Player p, String label, String[] args, ItemStack item) {
         try {
             if (args.length < 4) {

@@ -28,64 +28,54 @@ public class EquipmentChangeListener extends EquipmentChangeListenerBase {
             return;
         EquipmentSlot clickedSlot = getEquipmentSlotAtPosition(event.getRawSlot(), p, event.getView());
         switch (event.getAction()) {
-            case CLONE_STACK:
-            case NOTHING:
+            case CLONE_STACK, NOTHING -> {
                 return;
-            case DROP_ONE_CURSOR:
-            case DROP_ALL_CURSOR:
-                clickDrop.add(p);
-                return;
-            case DROP_ONE_SLOT:
+            }
+            case DROP_ONE_CURSOR, DROP_ALL_CURSOR -> clickDrop.add(p);
+            case DROP_ONE_SLOT -> {
                 if (!ItemUtils.isAirOrNull(event.getCursor()))
                     return;
                 if (clickedSlot != null && event.getCurrentItem().getAmount() == 1)
                     onEquipChange(p, EquipmentChangeEvent.EquipMethod.INVENTORY_DROP, clickedSlot, event.getCurrentItem(), null);
                 clickDrop.add(p);
-                return;
-            case DROP_ALL_SLOT:
+            }
+            case DROP_ALL_SLOT -> {
                 if (!ItemUtils.isAirOrNull(event.getCursor()))
                     return;
                 if (clickedSlot != null)
                     onEquipChange(p, EquipmentChangeEvent.EquipMethod.INVENTORY_DROP, clickedSlot, event.getCurrentItem(), null);
-
                 clickDrop.add(p);
-                return;
-            case PICKUP_ALL:
+            }
+            case PICKUP_ALL -> {
                 if (clickedSlot == null)
                     return;
                 onEquipChange(p, EquipmentChangeEvent.EquipMethod.INVENTORY_PICKUP, clickedSlot, event.getCurrentItem(), null);
-                return;
-            case PICKUP_HALF:
-                if (clickedSlot == null)
-                    return;
-                if (event.getCurrentItem().getAmount() > 1)
+            }
+            case PICKUP_HALF -> {
+                if (clickedSlot == null || event.getCurrentItem().getAmount() > 1)
                     return;
                 onEquipChange(p, EquipmentChangeEvent.EquipMethod.INVENTORY_PICKUP, clickedSlot, event.getCurrentItem(), null);
-                return;
-            case PICKUP_ONE:
-                if (clickedSlot == null)
-                    return;
-                if (event.getCurrentItem().getAmount() != 1)
+            }
+            case PICKUP_ONE -> {
+                if (clickedSlot == null || event.getCurrentItem().getAmount() != 1)
                     return;
                 onEquipChange(p, EquipmentChangeEvent.EquipMethod.INVENTORY_PICKUP, clickedSlot, event.getCurrentItem(), null);
-                return;
-            case PLACE_ALL:
-            case PLACE_ONE:
-            case PLACE_SOME:
+            }
+            case PLACE_ALL, PLACE_ONE, PLACE_SOME -> {
                 if (clickedSlot == null)
                     return;
                 if (ItemUtils.isAirOrNull(event.getCurrentItem()))
                     onEquipChange(p, EquipmentChangeEvent.EquipMethod.INVENTORY_PLACE, clickedSlot, null, event.getCursor());
-                return;
-            case SWAP_WITH_CURSOR:
+            }
+            case SWAP_WITH_CURSOR -> {
                 if (clickedSlot == null)
                     return;
                 if (isSimilarIgnoreDamage(event.getCurrentItem(), event.getCursor()))
                     return;
                 onEquipChange(p, EquipmentChangeEvent.EquipMethod.INVENTORY_SWAP_WITH_CURSOR, clickedSlot, event.getCurrentItem(),
                         event.getCursor());
-                return;
-            case HOTBAR_SWAP: {
+            }
+            case HOTBAR_SWAP -> {
                 ItemStack to = event.getHotbarButton() == -1 ? p.getInventory().getItemInOffHand() : p.getInventory().getItem(event.getHotbarButton());
                 if (isSimilarIgnoreDamage(event.getCurrentItem(), to))
                     return;
@@ -95,9 +85,8 @@ public class EquipmentChangeListener extends EquipmentChangeListenerBase {
                     onEquipChange(p, EquipmentChangeEvent.EquipMethod.INVENTORY_HOTBAR_SWAP, EquipmentSlot.OFF_HAND, to, event.getCurrentItem());
                 else if (event.getHotbarButton() == p.getInventory().getHeldItemSlot())
                     onEquipChange(p, EquipmentChangeEvent.EquipMethod.INVENTORY_HOTBAR_SWAP, EquipmentSlot.HAND, to, event.getCurrentItem());
-                return;
             }
-            case MOVE_TO_OTHER_INVENTORY: {
+            case MOVE_TO_OTHER_INVENTORY -> {
                 EquipmentSlot slot = event.getView().getTopInventory().getType() == InventoryType.CRAFTING
                         ? guessDispenserSlotType(event.getCurrentItem())
                         : null;
@@ -109,9 +98,8 @@ public class EquipmentChangeListener extends EquipmentChangeListenerBase {
                 else
                     new SlotCheck(p, EquipmentChangeEvent.EquipMethod.INVENTORY_MOVE_TO_OTHER_INVENTORY, clickedSlot).runTaskLater(ItemTag.get(),
                             1L);
-                return;
             }
-            case COLLECT_TO_CURSOR:
+            case COLLECT_TO_CURSOR -> {
                 ArrayList<EquipmentSlot> slots = new ArrayList<>();
                 if (event.getView().getTopInventory().getType() == InventoryType.CRAFTING)
                     for (EquipmentSlot slot : InventoryUtils.getPlayerEquipmentSlots()) {
@@ -122,10 +110,10 @@ public class EquipmentChangeListener extends EquipmentChangeListenerBase {
                     slots.add(EquipmentSlot.HAND);
                 if (!slots.isEmpty())
                     new SlotCheck(p, EquipmentChangeEvent.EquipMethod.INVENTORY_COLLECT_TO_CURSOR, slots).runTaskLater(ItemTag.get(), 1L);
-                return;
-            case PICKUP_SOME:
-            case UNKNOWN:
+            }
+            case PICKUP_SOME, UNKNOWN -> {
                 return; // ???
+            }
         }
     }
 

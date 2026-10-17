@@ -125,7 +125,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
         if (slots.isEmpty())
             throw new IllegalStateException();
         if (slots.size() == 1) {
-            onEquipChange(e.getPlayer(), EquipmentChangeEvent.EquipMethod.BROKE, slots.get(0), e.getBrokenItem(), null);
+            onEquipChange(e.getPlayer(), EquipmentChangeEvent.EquipMethod.BROKE, slots.getFirst(), e.getBrokenItem(), null);
             return;
         }
         new SlotCheck(e.getPlayer(), EquipmentChangeEvent.EquipMethod.BROKE, slots).runTaskLater(ItemTag.get(), 1L);
@@ -235,7 +235,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
         if (event.getItem().equals(getEquip(event.getPlayer(), EquipmentSlot.OFF_HAND)))
             slots.add(EquipmentSlot.OFF_HAND);
         if (slots.size() == 1)
-            onEquipChange(event.getPlayer(), EquipmentChangeEvent.EquipMethod.CONSUME, slots.get(0), event.getItem(),
+            onEquipChange(event.getPlayer(), EquipmentChangeEvent.EquipMethod.CONSUME, slots.getFirst(), event.getItem(),
                     event.getItem().getType() == Material.MILK_BUCKET ? new ItemStack(Material.BUCKET) : null);
         else if (slots.size() > 1)
             new SlotCheck(event.getPlayer(), EquipmentChangeEvent.EquipMethod.CONSUME, slots).runTaskLater(ItemTag.get(), 1L);

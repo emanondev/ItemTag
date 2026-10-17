@@ -43,21 +43,19 @@ public class PermissionAction extends Action {
 
     @Override
     public List<String> tabComplete(CommandSender sender, List<String> params) {
-        switch (params.size()) {
-            case 1:
-                return List.of();
-            case 2:
-                return CompleteUtility.complete(params.get(1), ActionHandler.getTypes());
-            default: {
+        return switch (params.size()) {
+            case 1 -> List.of();
+            case 2 -> CompleteUtility.complete(params.get(1), ActionHandler.getTypes());
+            default -> {
                 Action sub = ActionHandler.getAction(params.get(1));
                 if (sub == null) {
-                    return List.of();
+                    yield List.of();
                 }
-                params.remove(0);
-                params.remove(0);
-                return sub.tabComplete(sender, params);
+                params.removeFirst();
+                params.removeFirst();
+                yield sub.tabComplete(sender, params);
             }
-        }
+        };
     }
 
     @Override

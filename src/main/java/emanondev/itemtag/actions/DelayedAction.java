@@ -56,21 +56,19 @@ public class DelayedAction extends Action {
 
     @Override
     public List<String> tabComplete(CommandSender sender, List<String> params) {
-        switch (params.size()) {
-            case 1:
-                return CompleteUtility.complete(params.get(0), Arrays.asList("20", "100", "200"));
-            case 2:
-                return CompleteUtility.complete(params.get(1), ActionHandler.getTypes());
-            default: {
+        return switch (params.size()) {
+            case 1 -> CompleteUtility.complete(params.getFirst(), Arrays.asList("20", "100", "200"));
+            case 2 -> CompleteUtility.complete(params.get(1), ActionHandler.getTypes());
+            default -> {
                 Action sub = ActionHandler.getAction(params.get(1));
                 if (sub == null) {
-                    return List.of();
+                    yield List.of();
                 }
-                params.remove(0);
-                params.remove(0);
-                return sub.tabComplete(sender, params);
+                params.removeFirst();
+                params.removeFirst();
+                yield sub.tabComplete(sender, params);
             }
-        }
+        };
     }
 
     @Override

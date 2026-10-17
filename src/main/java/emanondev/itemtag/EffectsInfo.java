@@ -48,12 +48,12 @@ public class EffectsInfo {
         if (effects.isEmpty())
             return null;
         List<PotionEffect> list = new ArrayList<>(effects.values());
-        StringBuilder str = new StringBuilder().append(list.get(0).getType().getName())//TODO should use list.get(0).getType().getKey() for 1.20.6+
-                .append(",").append(list.get(0).getAmplifier())
-                .append(",").append(list.get(0).isAmbient()).append(",").append(list.get(0).hasParticles());
-        str.append(",").append(list.get(0).hasIcon());
+        StringBuilder str = new StringBuilder().append(list.getFirst().getType().getKey())
+                .append(",").append(list.getFirst().getAmplifier())
+                .append(",").append(list.getFirst().isAmbient()).append(",").append(list.getFirst().hasParticles());
+        str.append(",").append(list.getFirst().hasIcon());
         for (int i = 1; i < list.size(); i++) {
-            str.append(";").append(list.get(i).getType().getName()).append(",").append(list.get(i).getAmplifier()).append(",")
+            str.append(";").append(list.get(i).getType().getKey()).append(",").append(list.get(i).getAmplifier()).append(",")
                     .append(list.get(i).isAmbient()).append(",").append(list.get(i).hasParticles());
             str.append(",").append(list.get(i).hasIcon());
         }
@@ -86,7 +86,7 @@ public class EffectsInfo {
             return null;
         List<EquipmentSlot> list = new ArrayList<>(slots);
         StringBuilder str = new StringBuilder();
-        str.append(list.get(0).name());
+        str.append(list.getFirst().name());
         for (int i = 1; i < list.size(); i++)
             str.append(";").append(list.get(i).name());
         return str.toString();

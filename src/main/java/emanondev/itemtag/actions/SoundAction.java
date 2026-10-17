@@ -76,7 +76,7 @@ public class SoundAction extends Action {
         return switch (params.size()) {
             case 1 -> {
                 if (Aliases.SOUND != null) {
-                    yield CompleteUtility.complete(params.get(0), Aliases.SOUND);
+                    yield CompleteUtility.complete(params.getFirst(), Aliases.SOUND);
                 }
                 yield List.of();
             }

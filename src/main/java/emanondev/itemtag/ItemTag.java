@@ -170,7 +170,7 @@ public class ItemTag extends APlugin {
 
     private void initDataPersistance() throws Exception {
         switch (getConfig().getString("data.preference", "SPIGOT").toUpperCase(Locale.ENGLISH)) {
-            case "NBTAPI":
+            case "NBTAPI" -> {
                 try {
                     initNBTAPI();
                 } catch (Exception e) {
@@ -178,13 +178,12 @@ public class ItemTag extends APlugin {
                             "if you wish to use NBTAPI get the plugin at www.spigotmc.org/resources/7939/");
                     initDefault();
                 }
-                return;
-            case "SPIGOT":
-                initDefault();
-                return;
-            default:
+            }
+            case "SPIGOT" -> initDefault();
+            default -> {
                 Bukkit.getConsoleSender().sendMessage(ChatColor.RED + getConfig().getString("data.preference", "SPIGOT") + " is selected as data.preference but it's unknown");
                 initDefault();
+            }
         }
     }
 

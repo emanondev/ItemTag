@@ -1,7 +1,5 @@
 package emanondev.itemtag.command.itemtag.customflags;
 
-import emanondev.itemedit.utility.InventoryUtils;
-import emanondev.itemedit.utility.VersionUtils;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.command.itemtag.Flag;
 import org.bukkit.Bukkit;
@@ -35,9 +33,6 @@ public class Usable extends CustomFlag {
                     } else
                         b = null;
                     Bukkit.getScheduler().runTaskLater(ItemTag.get(), () -> { //TODO folia fix
-                        if (!VersionUtils.isAfter(1, 20)) {
-                            InventoryUtils.updateView(event.getPlayer());
-                        }
                         if (b != null) {//reduce clientside visual glich on liquids only for 1.14+
                             event.getPlayer().sendBlockChange(b.getLocation(), b.getBlockData());
                         }

@@ -3,6 +3,7 @@ package emanondev.itemtag.gui;
 import emanondev.itemedit.gui.Gui;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.activity.Activity;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -20,12 +21,12 @@ public class ActivityGui implements Gui {
     private final TriggerGui parent;
 
     public ActivityGui(@NotNull Activity activity, @NotNull Player target, @Nullable TriggerGui parent) {
-        String title = this.getLanguageMessage("gui.activity.title_main",
-                "%player_name%", target.getName(), "%activity_id%", activity.getId());
-        this.inventory = Bukkit.createInventory(this, 6 * 9, title);
         this.target = target;
         this.activity = activity;
         this.parent = parent;
+        Component title = this.getLanguageComponent("gui.activity.title_main",
+                "%player_name%", target.getName(), "%activity_id%", activity.getId());
+        this.inventory = Bukkit.createInventory(this, 6 * 9, title);
     }
 
     @Override

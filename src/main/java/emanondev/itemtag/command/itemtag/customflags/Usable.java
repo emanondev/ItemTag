@@ -1,6 +1,7 @@
 package emanondev.itemtag.command.itemtag.customflags;
 
 import emanondev.itemedit.utility.InventoryUtils;
+import emanondev.itemedit.utility.ItemUtils;
 import emanondev.itemedit.utility.VersionUtils;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.command.itemtag.Flag;
@@ -55,8 +56,8 @@ public class Usable extends CustomFlag {
         if (VersionUtils.isAfter(1, 18)) {
             return;
         }
-        ItemStack item = this.getItemInHand(event.getPlayer());
-        if (VersionUtils.isUpTo(1, 8, 9) && (item == null || item.getType() != Material.BUCKET)) {
+        ItemStack item = ItemUtils.getHandMainItem(event.getPlayer());
+        if (VersionUtils.isUpTo(1, 8, 9) && item.getType() != Material.BUCKET) {
             item = event.getPlayer().getInventory().getItemInOffHand();
         }
         if (ItemTag.getTagItem(item).hasBooleanTag(USABLE_KEY)) {

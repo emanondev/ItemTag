@@ -26,7 +26,7 @@ public class ServerCommandActionType extends ActionType {
 
         @Override
         public boolean execute(@NotNull Player player, @NotNull ItemStack item, Event event) {
-            return Bukkit.dispatchCommand(Bukkit.getConsoleSender(), UtilsString.fix(getInfo(), player, true));
+            return Bukkit.dispatchCommand(Bukkit.getConsoleSender(), UtilsString.fixToString(getInfo(), player, true));
         }
     }
 }

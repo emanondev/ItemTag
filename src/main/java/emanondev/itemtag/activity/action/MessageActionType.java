@@ -1,5 +1,6 @@
 package emanondev.itemtag.activity.action;
 
+import emanondev.itemedit.Util;
 import emanondev.itemedit.UtilsString;
 import emanondev.itemtag.activity.ActionType;
 import org.bukkit.entity.Player;
@@ -25,7 +26,7 @@ public class MessageActionType extends ActionType {
 
         @Override
         public boolean execute(@NotNull Player player, @NotNull ItemStack item, Event event) {
-            player.sendMessage(UtilsString.fix(getInfo(), player, true));
+            Util.sendComponent(player, UtilsString.fix(getInfo(), player, true));
             return true;
         }
     }

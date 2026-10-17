@@ -8,6 +8,7 @@ import emanondev.itemedit.utility.CompleteUtility;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.TagItem;
 import emanondev.itemtag.command.ListenerSubCmd;
+import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -57,7 +58,7 @@ public class UsePermission extends ListenerSubCmd {
             onFail(p, alias);
             return;
         }
-        ItemStack item = this.getItemInHand(p);
+        ItemStack item = this.getItemInMainHand(p);
         TagItem tagItem = ItemTag.getTagItem(item);
         switch (args[1].toLowerCase(Locale.ENGLISH)) {
             case "setpermission" -> {
@@ -67,25 +68,25 @@ public class UsePermission extends ListenerSubCmd {
                 }
                 String permission = args.length == 2 ? null : args[2].toLowerCase(Locale.ENGLISH);
                 setUseKey(tagItem, permission);
-                String feedback;
+                Component feedback;
                 if (permission != null) {
                     feedback = translate("setpermission.feedback",  p, "%value%", permission);
                 } else {
                     feedback = translate("setpermission.feedback-reset",  p);
                 }
-                Util.sendMessage(p, feedback);
+                Util.sendComponent(p, feedback);
             }
             case "setmessage" -> {
                 if (args.length == 2) {
                     setUseMsgKey(tagItem, null);
-                    String feedback = translate("setmessage.feedback-reset",  p);
-                    Util.sendMessage(p, feedback);
+                    Component feedback = translate("setmessage.feedback-reset",  p);
+                    Util.sendComponent(p, feedback);
                     return;
                 }
-                String msg = UtilsString.fix(String.join(" ", Arrays.asList(args).subList(2, args.length)), null, true);
+                String msg = UtilsString.fixToString(String.join(" ", Arrays.asList(args).subList(2, args.length)), null, true);
                 setUseMsgKey(tagItem, msg);
-                String feedback = translate("setmessage.feedback",  p, "%value%", msg);
-                Util.sendMessage(p, feedback);
+                Component feedback = translate("setmessage.feedback",  p, "%value%", msg);
+                Util.sendComponent(p, feedback);
             }
         }
 
@@ -122,7 +123,7 @@ public class UsePermission extends ListenerSubCmd {
         cooldownAPI.setCooldown(event.getPlayer(), cooldownKey, 1, TimeUnit.SECONDS);
 
         if (tagItem.hasStringTag(USEMSG_KEY)) {
-            Util.sendMessage(event.getPlayer(), UtilsString.fix(tagItem.getString(USEMSG_KEY), event.getPlayer(), true, "%permission%", perm));
+            Util.sendComponent(event.getPlayer(), UtilsString.fix(tagItem.getString(USEMSG_KEY), event.getPlayer(), true, "%permission%", perm));
             return;
         }
         this.getCommand().sendPermissionLackMessage(perm, event.getPlayer());

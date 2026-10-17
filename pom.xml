@@ -41,8 +41,8 @@
 
     <repositories>
         <repository>
-            <id>spigot-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/repositories/public/</url>
+            <id>papermc-repo</id>
+            <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
         <repository>
             <id>jitpack.io</id>
@@ -68,12 +68,11 @@
             <version>6.2.6-2</version>
             <scope>provided</scope>
         </dependency>
-        <!-- Spigot -->
+        <!-- Paper -->
         <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
+            <groupId>io.papermc.paper</groupId>
+            <artifactId>paper-api</artifactId>
             <version>1.21.11-R0.1-SNAPSHOT</version>
-            <type>jar</type>
             <scope>provided</scope>
         </dependency>
         <!-- JetBrains Annotations -->
@@ -113,7 +112,7 @@
         <dependency>
             <groupId>emanondev.itemedit</groupId>
             <artifactId>ItemEdit</artifactId>
-            <version>4.0.0-preview2</version>
+            <version>4.0.0</version>
             <scope>compile</scope>
             <exclusions>
                 <exclusion>

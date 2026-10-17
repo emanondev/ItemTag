@@ -2,10 +2,13 @@ package emanondev.itemtag.activity.action;
 
 import emanondev.itemedit.UtilsString;
 import emanondev.itemtag.activity.ActionType;
+import net.kyori.adventure.title.Title;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+
+import java.time.Duration;
 
 public class TitleActionType extends ActionType {
     public TitleActionType() {
@@ -39,9 +42,10 @@ public class TitleActionType extends ActionType {
 
         @Override
         public boolean execute(@NotNull Player player, @NotNull ItemStack item, Event event) {
-            player.sendTitle(UtilsString.fix(message, player, true),
+            player.showTitle(Title.title(UtilsString.fix(message, player, true),
                     UtilsString.fix(sub, player, true),
-                    fadeIn, stay, fadeOut);
+                    Title.Times.times(Duration.ofMillis(fadeIn * 50L),
+                            Duration.ofMillis(stay * 50L), Duration.ofMillis(fadeOut * 50L))));
             return true;
         }
     }

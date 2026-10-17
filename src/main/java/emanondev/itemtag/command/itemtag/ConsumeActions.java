@@ -41,7 +41,7 @@ public class ConsumeActions extends ListenerSubCmd {
             onFail(p, alias);
             return;
         }
-        ItemStack item = this.getItemInHand(p);
+        ItemStack item = this.getItemInMainHand(p);
         try {
             switch (args[1].toLowerCase(Locale.ENGLISH)) {
                 case "add":
@@ -121,7 +121,7 @@ public class ConsumeActions extends ListenerSubCmd {
                 sendLanguageString("feedback.actions.permission.removed",  p);
             }
         } catch (Exception e) {
-            Util.sendMessage(p, this.craftFailFeedback(label, translate("permission.params",  p),
+            Util.sendComponent(p, this.craftFailFeedback(label, translateOrEmptyRaw("permission.params", p),
                     translateList("permission.description",  p)));
         }
     }
@@ -140,7 +140,7 @@ public class ConsumeActions extends ListenerSubCmd {
                 sendLanguageString("feedback.actions.cooldownid.removed",  p);
             }
         } catch (Exception e) {
-            Util.sendMessage(p, this.craftFailFeedback(label, translate("cooldownid.params",  p),
+            Util.sendComponent(p, this.craftFailFeedback(label, translateOrEmptyRaw("cooldownid.params", p),
                     translateList("cooldownid.description",  p)));
         }
     }
@@ -159,7 +159,7 @@ public class ConsumeActions extends ListenerSubCmd {
                 sendLanguageString("feedback.actions.cooldown.removed",  p);
             }
         } catch (Exception e) {
-            Util.sendMessage(p, this.craftFailFeedback(label, translate("cooldown.params",  p),
+            Util.sendComponent(p, this.craftFailFeedback(label, translateOrEmptyRaw("cooldown.params", p),
                     translateList("cooldown.description",  p)));
         }
     }
@@ -204,7 +204,7 @@ public class ConsumeActions extends ListenerSubCmd {
             sendLanguageString("feedback.actions.set",  p, "%line%",
                     String.valueOf(line + 1), "%action%", action.replace(TYPE_SEPARATOR, " "));
         } catch (Exception e) {
-            Util.sendMessage(p, this.craftFailFeedback(label, translate("set.params",  p),
+            Util.sendComponent(p, this.craftFailFeedback(label, translateOrEmptyRaw("set.params", p),
                     translateList("set.description",  p)));
         }
     }
@@ -228,7 +228,7 @@ public class ConsumeActions extends ListenerSubCmd {
             sendLanguageString("feedback.actions.remove",  p, "%line%",
                     String.valueOf(line + 1), "%action%", action.replace(TYPE_SEPARATOR, " "));
         } catch (Exception e) {
-            Util.sendMessage(p, this.craftFailFeedback(label, translate("remove.params",  p),
+            Util.sendComponent(p, this.craftFailFeedback(label, translateOrEmptyRaw("remove.params", p),
                     translateList("remove.description",  p)));
         }
     }
@@ -272,7 +272,7 @@ public class ConsumeActions extends ListenerSubCmd {
                     action.replace(TYPE_SEPARATOR, " "));
         } catch (Exception e) {
             e.printStackTrace();
-            Util.sendMessage(p, this.craftFailFeedback(label, translate("add.params",  p),
+            Util.sendComponent(p, this.craftFailFeedback(label, translateOrEmptyRaw("add.params", p),
                     translateList("add.description",  p)));
         }
     }
@@ -316,7 +316,7 @@ public class ConsumeActions extends ListenerSubCmd {
             sendLanguageString("feedback.actions.add",  p, "%action%",
                     action.replace(TYPE_SEPARATOR, " "));
         } catch (Exception e) {
-            Util.sendMessage(p, this.craftFailFeedback(label, translate("addline.params",  p),
+            Util.sendComponent(p, this.craftFailFeedback(label, translateOrEmptyRaw("addline.params", p),
                     translateList("addline.description",  p)));
         }
     }

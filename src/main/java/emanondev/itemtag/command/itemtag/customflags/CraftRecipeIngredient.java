@@ -33,7 +33,7 @@ public class CraftRecipeIngredient extends CustomFlag {
 
     @EventHandler(ignoreCancelled = true)
     public void event(InventoryClickEvent event) {
-        Inventory inv = InventoryUtils.getTopInventory(event);
+        Inventory inv = event.getView().getTopInventory();
         if (inv == null || !inv.getType().name().equals("CARTOGRAPHY")) {
             return;
         }

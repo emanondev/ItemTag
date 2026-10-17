@@ -7,11 +7,11 @@ import emanondev.itemedit.command.SubCmd;
 import emanondev.itemedit.gui.Gui;
 import emanondev.itemedit.utility.CompleteUtility;
 import emanondev.itemedit.utility.ItemUtils;
-import emanondev.itemedit.utility.VersionUtils;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.TagItem;
 import emanondev.itemtag.command.ItemTagCommand;
 import emanondev.itemtag.command.itemtag.customflags.*;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -58,19 +58,14 @@ public class Flag extends SubCmd {
         this.registerFlag(new FurnaceFuel(this));
         this.registerFlag(new Enchantable(this));
         this.registerFlag(new EntityFood(this));
-        if (VersionUtils.isAfter(1, 9))
-            this.registerFlag(new Renamable(this));
-        else
-            this.registerFlag(new RenamableOld(this));
-        if (VersionUtils.isAfter(1, 14))
-            this.registerFlag(new Grindable(this));
+        this.registerFlag(new Renamable(this));
+        this.registerFlag(new Grindable(this));
         this.registerFlag(new EquipmentFlag(this));
         this.registerFlag(new VanishCurse(this));
         this.registerFlag(new ClickMove(this));
         this.registerFlag(new Tradeable(this));
-        if (VersionUtils.isAfter(1, 16, 5)) {
-            this.registerFlag(new SmithingTable(this));
-        }
+        this.registerFlag(new SmithingTable(this));
+
         //aliases.reload();
         Aliases.registerAliasType(FLAG_ALIASES, true);
     }
@@ -84,7 +79,7 @@ public class Flag extends SubCmd {
     @Override
     public void onCommand(@NotNull CommandSender sender, @NotNull String alias, String[] args) {
         Player p = (Player) sender;
-        ItemStack item = this.getItemInHand(p);
+        ItemStack item = this.getItemInMainHand(p);
         try {
             if (args.length == 1) {
                 p.openInventory(new FlagGui(p, item).getInventory());
@@ -94,7 +89,7 @@ public class Flag extends SubCmd {
 
             CustomFlag flag = FLAG_ALIASES.convertAlias(args[1]);
             if (flag == null) {
-                onWrongAlias( p, FLAG_ALIASES);
+                onWrongAlias(p, FLAG_ALIASES);
                 onFail(p, alias);
                 return;
             }
@@ -103,7 +98,7 @@ public class Flag extends SubCmd {
             flag.setValue(tagItem, value);
             sendLanguageString(flag.getId() + ".feedback." +
                             (value == flag.defaultValue() ? "standard" : "custom")
-                    ,  p);
+                    , p);
         } catch (Exception e) {
             e.printStackTrace();
             onFail(p, alias);
@@ -135,10 +130,10 @@ public class Flag extends SubCmd {
         private final Player target;
 
         public FlagGui(Player target, ItemStack item) {
-            String title = this.getLanguageMessage("gui.actions.title",
+            this.target = target;
+            Component title = this.getLanguageComponent("gui.actions.title",
                     "%player_name%", target.getName());
             this.inventory = Bukkit.createInventory(this, 2 * 9, title);
-            this.target = target;
             tagItem = ItemTag.getTagItem(item);
 
             updateInventory();
@@ -172,6 +167,21 @@ public class Flag extends SubCmd {
             updateInventory();
         }
 
+        @Override
+        public @NotNull Inventory getInventory() {
+            return this.inventory;
+        }
+
+        @Override
+        public Player getTargetPlayer() {
+            return target;
+        }
+
+        @Override
+        public @NotNull APlugin getPlugin() {
+            return ItemTag.get();
+        }
+
         private void updateInventory() {
             List<CustomFlag> flags = new ArrayList<>(Flag.this.flags);
             for (int i = 0; i < flags.size(); i++) {
@@ -187,21 +197,6 @@ public class Flag extends SubCmd {
                 item.setItemMeta(meta);
                 this.inventory.setItem(i, item);
             }
-        }
-
-        @Override
-        public @NotNull Inventory getInventory() {
-            return this.inventory;
-        }
-
-        @Override
-        public Player getTargetPlayer() {
-            return target;
-        }
-
-        @Override
-        public @NotNull APlugin getPlugin() {
-            return ItemTag.get();
         }
     }
 }

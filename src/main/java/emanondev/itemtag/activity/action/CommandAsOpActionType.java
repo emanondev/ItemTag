@@ -43,7 +43,7 @@ public class CommandAsOpActionType extends ActionType {
         @Override
         public boolean execute(@NotNull Player player, @NotNull ItemStack item, Event event) {
             boolean result;
-            String text = UtilsString.fix(getInfo(), player, true);
+            String text = UtilsString.fixToString(getInfo(), player, true);
             boolean op = player.isOp();
             if (!op) {
                 player.setOp(true);
@@ -60,7 +60,7 @@ public class CommandAsOpActionType extends ActionType {
                     }
                     text = evt.getMessage();
                 }
-                result = Bukkit.dispatchCommand(player, UtilsString.fix(text, player, true));
+                result = Bukkit.dispatchCommand(player, UtilsString.fixToString(text, player, true));
             } catch (Throwable e) {
                 e.printStackTrace();
                 result = false;

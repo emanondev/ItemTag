@@ -29,7 +29,7 @@ public class CommandActionType extends ActionType {
 
         @Override
         public boolean execute(@NotNull Player player, @NotNull ItemStack item, Event event) {
-            String text = UtilsString.fix(getInfo(), player, true);
+            String text = UtilsString.fixToString(getInfo(), player, true);
             if (ItemTag.get().getConfig().loadBoolean("actions.player_command.fires_playercommandpreprocessevent", true)) {
                 PlayerCommandPreprocessEvent evt = new PlayerCommandPreprocessEvent(player, text);
                 Bukkit.getPluginManager().callEvent(evt);
@@ -38,7 +38,7 @@ public class CommandActionType extends ActionType {
                 }
                 text = evt.getMessage();
             }
-            return Bukkit.dispatchCommand(player, UtilsString.fix(text, player, true));
+            return Bukkit.dispatchCommand(player, UtilsString.fixToString(text, player, true));
         }
     }
 }

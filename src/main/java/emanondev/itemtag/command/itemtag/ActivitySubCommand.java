@@ -102,7 +102,7 @@ public class ActivitySubCommand extends SubCmd {
 
     private void create(Player player, String label, String[] args) {
         if (args.length != 3) {
-            Util.sendMessage(player, this.craftFailFeedback(label, translate("create.params",  player),
+            Util.sendComponent(player, this.craftFailFeedback(label, translateOrEmptyRaw("create.params", player),
                     translateList("create.description",  player)));
             return;
         }
@@ -120,7 +120,7 @@ public class ActivitySubCommand extends SubCmd {
     //activity rename <id> <newId>
     private void rename(Player player, String label, String[] args) {
         if (args.length != 4) {
-            Util.sendMessage(player, this.craftFailFeedback(label, translate("rename.params",  player),
+            Util.sendComponent(player, this.craftFailFeedback(label, translateOrEmptyRaw("rename.params", player),
                     translateList("rename.description",  player)));
             return;
         }
@@ -141,7 +141,7 @@ public class ActivitySubCommand extends SubCmd {
     //open <action id>
     private void open(Player player, String label, String[] args) {
         if (args.length != 3) {
-            Util.sendMessage(player, this.craftFailFeedback(label, translate("open.params",  player),
+            Util.sendComponent(player, this.craftFailFeedback(label, translateOrEmptyRaw("open.params", player),
                     translateList("open.description",  player)));
             return;
         }
@@ -155,7 +155,7 @@ public class ActivitySubCommand extends SubCmd {
 
     private void delete(Player player, String label, String[] args) {
         if (args.length != 3) {
-            Util.sendMessage(player, this.craftFailFeedback(label, translate("delete.params",  player),
+            Util.sendComponent(player, this.craftFailFeedback(label, translateOrEmptyRaw("delete.params", player),
                     translateList("delete.description",  player)));
             return;
         }
@@ -170,7 +170,7 @@ public class ActivitySubCommand extends SubCmd {
 
     private void clone(Player player, String label, String[] args) {
         if (args.length != 4) {
-            Util.sendMessage(player, this.craftFailFeedback(label, translate("clone.params",  player),
+            Util.sendComponent(player, this.craftFailFeedback(label, translateOrEmptyRaw("clone.params", player),
                     translateList("clone.description",  player)));
             return;
         }
@@ -192,7 +192,7 @@ public class ActivitySubCommand extends SubCmd {
     //setconsumes <activity> <amount>
     private void setconsumes(Player player, String label, String[] args) {
         if (args.length != 4) {
-            Util.sendMessage(player, this.craftFailFeedback(label, translate("setconsumes.params",  player),
+            Util.sendComponent(player, this.craftFailFeedback(label, translateOrEmptyRaw("setconsumes.params", player),
                     translateList("setconsumes.description",  player)));
             return;
         }
@@ -205,7 +205,7 @@ public class ActivitySubCommand extends SubCmd {
         try {
             amount = Integer.parseInt(args[3]);
         } catch (Exception e) {
-            Util.sendMessage(player, this.craftFailFeedback(label, translate("setconsumes.params",  player),
+            Util.sendComponent(player, this.craftFailFeedback(label, translateOrEmptyRaw("setconsumes.params", player),
                     translateList("setconsumes.description",  player)));
             //TODO NaN
             return;
@@ -221,7 +221,7 @@ public class ActivitySubCommand extends SubCmd {
     //addcondition <activity> <conditiontype> <condition arguments>
     private void addcondition(Player player, String label, String[] args) {
         if (args.length < 4) {
-            Util.sendMessage(player, this.craftFailFeedback(label, translate("addcondition.params",  player),
+            Util.sendComponent(player, this.craftFailFeedback(label, translateOrEmptyRaw("addcondition.params", player),
                     translateList("addcondition.description",  player)));
             return;
         }
@@ -232,7 +232,7 @@ public class ActivitySubCommand extends SubCmd {
         }
         ConditionType type = ConditionManager.getConditionType(args[3]);
         if (type == null) {
-            Util.sendMessage(player, this.craftFailFeedback(label, translate("addcondition.params",  player),
+            Util.sendComponent(player, this.craftFailFeedback(label, translateOrEmptyRaw("addcondition.params", player),
                     translateList("addcondition.description",  player)));
             //TODO
             return;
@@ -244,13 +244,13 @@ public class ActivitySubCommand extends SubCmd {
         try {
             condition = ConditionManager.read(b.toString());
         } catch (Exception e) {
-            Util.sendMessage(player, this.craftFailFeedback(label, translate("addcondition.params",  player),
+            Util.sendComponent(player, this.craftFailFeedback(label, translateOrEmptyRaw("addcondition.params", player),
                     translateList("addcondition.description",  player)));
             //TODO bad format
             return;
         }
         if (condition == null) {
-            Util.sendMessage(player, this.craftFailFeedback(label, translate("addcondition.params",  player),
+            Util.sendComponent(player, this.craftFailFeedback(label, translateOrEmptyRaw("addcondition.params", player),
                     translateList("addcondition.description",  player)));
             //TODO invalid condition type
             return;

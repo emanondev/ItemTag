@@ -80,7 +80,7 @@ public class TriggerAction extends SubCmd {
             return;
         }
         amount = Math.max(0, amount * (seconds ? 1000 : 1));
-        TriggerHandler.setCooldownAmountMs(type, ItemTag.getTagItem(getItemInHand(player)), amount);
+        TriggerHandler.setCooldownAmountMs(type, ItemTag.getTagItem(getItemInMainHand(player)), amount);
         //TODO feedback
     }
 /*
@@ -99,7 +99,7 @@ public class TriggerAction extends SubCmd {
             //TODO
             return;
         }
-        TriggerHandler.setVisualCooldown(ItemTag.getTagItem(getItemInHand(player)), value);
+        TriggerHandler.setVisualCooldown(ItemTag.getTagItem(getItemInMainHand(player)), value);
         //TODO feedback
     }
 
@@ -116,7 +116,7 @@ public class TriggerAction extends SubCmd {
             //TODO invalid number
             return;
         }
-        TriggerHandler.setMaxUses(ItemTag.getTagItem(getItemInHand(player)), amount);
+        TriggerHandler.setMaxUses(ItemTag.getTagItem(getItemInMainHand(player)), amount);
         //TODO feedback
     }
 
@@ -130,7 +130,7 @@ public class TriggerAction extends SubCmd {
             //TODO
             return;
         }
-        TriggerHandler.setConsumeAtUsesEnd(ItemTag.getTagItem(getItemInHand(player)), value);
+        TriggerHandler.setConsumeAtUsesEnd(ItemTag.getTagItem(getItemInMainHand(player)), value);
         //TODO feedback
     }
 
@@ -151,7 +151,7 @@ public class TriggerAction extends SubCmd {
             }
             set.add(value);
         }
-        TriggerHandler.setAllowedSlot(type, ItemTag.getTagItem(getItemInHand(player)), set);
+        TriggerHandler.setAllowedSlot(type, ItemTag.getTagItem(getItemInMainHand(player)), set);
     }
 
     private void setuses(Player player, String label, String[] args) {
@@ -166,7 +166,7 @@ public class TriggerAction extends SubCmd {
             //TODO invalid number
             return;
         }
-        TriggerHandler.setMaxUses(ItemTag.getTagItem(getItemInHand(player)), amount);
+        TriggerHandler.setMaxUses(ItemTag.getTagItem(getItemInMainHand(player)), amount);
         //TODO feedback
     }
 
@@ -186,7 +186,7 @@ public class TriggerAction extends SubCmd {
             //TODO
             return;
         }
-        TriggerHandler.setTriggerActivity(type, ItemTag.getTagItem(getItemInHand(player)), activity);
+        TriggerHandler.setTriggerActivity(type, ItemTag.getTagItem(getItemInMainHand(player)), activity);
         //TODO feedback also notify incompability if any
     }
 
@@ -201,7 +201,7 @@ public class TriggerAction extends SubCmd {
             //TODO
             return;
         }
-        TagItem tag = ItemTag.getTagItem(getItemInHand(player));
+        TagItem tag = ItemTag.getTagItem(getItemInMainHand(player));
         if (!TriggerHandler.hasTrigger(type, tag)) {
             //TODO
             return;

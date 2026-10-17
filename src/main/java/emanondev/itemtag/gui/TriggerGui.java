@@ -6,6 +6,7 @@ import emanondev.itemtag.TagItem;
 import emanondev.itemtag.activity.Activity;
 import emanondev.itemtag.activity.TriggerHandler;
 import emanondev.itemtag.activity.TriggerType;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -32,11 +33,11 @@ public class TriggerGui implements PagedGui {
 
 
     public TriggerGui(Player target, ItemStack item) {
-        String title = this.getLanguageMessage("gui.triggers.title_main",
+        this.target = target;
+        Component title = this.getLanguageComponent("gui.triggers.title_main",
                 "%player_name%", target.getName());
         this.item = item;
         this.inventory = Bukkit.createInventory(this, TRIGGER_SLOTS + 9, title);
-        this.target = target;
         this.triggers.addAll(TriggerHandler.getTriggers());
         this.triggers.sort(Comparator.comparing(TriggerType::getId));
     }

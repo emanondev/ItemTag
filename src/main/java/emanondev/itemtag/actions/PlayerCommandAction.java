@@ -27,7 +27,7 @@ public class PlayerCommandAction extends Action {
 
     @Override
     public void execute(Player player, String text) {
-        text = UtilsString.fix(text, player, true, "%player%", player.getName());
+        text = UtilsString.fixToString(text, player, true, "%player%", player.getName());
         if (ItemTag.get().getConfig().loadBoolean("actions.player_command.fires_playercommandpreprocessevent", true)) {
             PlayerCommandPreprocessEvent evt = new PlayerCommandPreprocessEvent(player, text);
             Bukkit.getPluginManager().callEvent(evt);
@@ -36,7 +36,7 @@ public class PlayerCommandAction extends Action {
             }
             text = evt.getMessage();
         }
-        Bukkit.dispatchCommand(player, UtilsString.fix(text, player, true, "%player%", player.getName()));
+        Bukkit.dispatchCommand(player, UtilsString.fixToString(text, player, true, "%player%", player.getName()));
     }
 
     @Override

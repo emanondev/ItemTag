@@ -1,6 +1,8 @@
 package emanondev.itemtag.actions;
 
+import emanondev.itemedit.Util;
 import emanondev.itemedit.UtilsString;
+import net.kyori.adventure.text.Component;
 import emanondev.itemedit.utility.CompleteUtility;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -24,8 +26,8 @@ public class MessageAction extends Action {
 
     @Override
     public void execute(Player player, String text) {
-        text = UtilsString.fix(text, player, true, "%player%", player.getName());
-        player.sendMessage(text);
+        Component message = UtilsString.fix(text, player, true, "%player%", player.getName());
+        Util.sendComponent(player, message);
     }
 
     @Override

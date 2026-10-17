@@ -38,11 +38,7 @@ public class ItemTagUpdateOldItem implements TabExecutor {
 
     public void sendPermissionLackMessage(@NotNull String permission,
                                           CommandSender sender) {
-        Util.sendMessage(sender, plugin.getLanguageConfig(sender)
-                .loadMessage("lack-permission", "<red>You lack of permission %permission%",
-                        sender instanceof Player ? (Player) sender : null, true
-                        , "%permission%",
-                        permission));
+        plugin.getTranslator().send(sender, "lack-permission", "%permission%", permission);
     }
 
     @Override
@@ -58,7 +54,7 @@ public class ItemTagUpdateOldItem implements TabExecutor {
             sendPlayerOnly(sender);
             return false;
         }
-        ItemStack item = ItemUtils.getHandItem(player);
+        ItemStack item = ItemUtils.getHandMainItem(player);
         if (ItemUtils.isAirOrNull(item)) {
             sendNoItemInHand(sender);
             return false;
@@ -88,7 +84,7 @@ public class ItemTagUpdateOldItem implements TabExecutor {
         }
         if (updating) {
             ActionsUtility.setActions(tagItem, actions);
-            ItemUtils.setHandItem(player, tagItem.getItem());
+            ItemUtils.setHandMainItem(player, tagItem.getItem());
             Util.sendMessage(sender, ChatColor.GREEN + "[ItemTag] Item was updated");
             return true;
         }
@@ -98,15 +94,11 @@ public class ItemTagUpdateOldItem implements TabExecutor {
 
 
     public void sendPlayerOnly(CommandSender sender) {
-        Util.sendMessage(sender, plugin.getLanguageConfig(sender)
-                .loadMessage("player-only", "<red>Command for Players only",
-                        sender instanceof Player ? (Player) sender : null, true));
+        plugin.getTranslator().send(sender, "player-only");
     }
 
     public void sendNoItemInHand(CommandSender sender) {
-        Util.sendMessage(sender, plugin.getLanguageConfig(sender)
-                .loadMessage("no-item-on-hand", "<red>You need to hold an item in hand",
-                        sender instanceof Player ? (Player) sender : null, true));
+        plugin.getTranslator().send(sender, "no-item-on-hand");
     }
 
 }

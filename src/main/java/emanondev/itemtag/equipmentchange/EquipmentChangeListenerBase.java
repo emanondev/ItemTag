@@ -64,7 +64,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
 
     @EventHandler
     private void event(PlayerDeathEvent event) {
-        if (event.getEntity().hasMetadata("NPC") || event.getEntity().hasMetadata("BOT"))
+        if (event.getEntity().hasMetadata("NPC"))
             return;
         for (EquipmentSlot type : InventoryUtils.getPlayerEquipmentSlots()) {
             ItemStack item = getEquip(event.getEntity(), type);
@@ -75,7 +75,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     private void event(PlayerTeleportEvent event) {
-        if (event.getPlayer().hasMetadata("NPC") || event.getPlayer().hasMetadata("BOT"))
+        if (event.getPlayer().hasMetadata("NPC"))
             return;
         if (!equips.containsKey(event.getPlayer()))
             return; // some plugins teleport players just after login, before join this listener
@@ -85,7 +85,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
 
     @EventHandler
     private void event(PlayerRespawnEvent event) {
-        if (event.getPlayer().hasMetadata("NPC") || event.getPlayer().hasMetadata("BOT"))
+        if (event.getPlayer().hasMetadata("NPC"))
             return;
         for (EquipmentSlot type : InventoryUtils.getPlayerEquipmentSlots()) {
             ItemStack item = getEquip(event.getPlayer(), type);
@@ -131,7 +131,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     private void event(PlayerArmorStandManipulateEvent event) {
-        if (event.getPlayer().hasMetadata("NPC") || event.getPlayer().hasMetadata("BOT"))
+        if (event.getPlayer().hasMetadata("NPC"))
             return;
         if (isSimilarIgnoreDamage(event.getArmorStandItem(), event.getPlayerItem()))
             return;
@@ -141,7 +141,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     private void event(PlayerDropItemEvent event) {
-        if (event.getPlayer().hasMetadata("NPC") || event.getPlayer().hasMetadata("BOT"))
+        if (event.getPlayer().hasMetadata("NPC"))
             return;
         if (clickDrop.remove(event.getPlayer()))
             return;
@@ -154,7 +154,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     private void event(PlayerInteractEntityEvent event) {
-        if (event.getPlayer().hasMetadata("NPC") || event.getPlayer().hasMetadata("BOT"))
+        if (event.getPlayer().hasMetadata("NPC"))
             return;
         EquipmentSlot slot;
         if (VersionUtils.isAfter(1, 9))// safe
@@ -230,7 +230,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     private void event(PlayerItemConsumeEvent event) {
-        if (event.getPlayer().hasMetadata("NPC") || event.getPlayer().hasMetadata("BOT"))
+        if (event.getPlayer().hasMetadata("NPC"))
             return;
         if (event.getItem().getAmount() != 1)
             return;
@@ -253,7 +253,7 @@ public abstract class EquipmentChangeListenerBase implements Listener {
 
     @EventHandler
     private void event(PlayerItemHeldEvent event) {
-        if (event.getPlayer().hasMetadata("NPC") || event.getPlayer().hasMetadata("BOT"))
+        if (event.getPlayer().hasMetadata("NPC"))
             return;
         ItemStack i1 = event.getPlayer().getInventory().getItem(event.getPreviousSlot());
         ItemStack i2 = event.getPlayer().getInventory().getItem(event.getNewSlot());

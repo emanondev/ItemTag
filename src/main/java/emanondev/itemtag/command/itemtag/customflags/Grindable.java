@@ -23,7 +23,7 @@ public class Grindable extends CustomFlag {
 
     @EventHandler
     public void event(InventoryClickEvent event) {
-        Inventory inv = InventoryUtils.getTopInventory(event);
+        Inventory inv = event.getView().getTopInventory();
         if (!(inv instanceof GrindstoneInventory)) {
             return;
         }

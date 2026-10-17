@@ -9,9 +9,8 @@ import emanondev.itemedit.utility.VersionUtils;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.TagItem;
 import emanondev.itemtag.actions.ActionsUtility;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.chat.HoverEvent;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
@@ -37,10 +36,10 @@ public class ActionsGui implements Gui {
     private int editorValue = 1;
 
     public ActionsGui(Player target, ItemStack item, String commandAlias, String subCommandAlias) {
-        String title = this.getLanguageMessage("gui.actions.title",
+        this.target = target;
+        Component title = this.getLanguageComponent("gui.actions.title",
                 "%player_name%", target.getName());
         this.inventory = Bukkit.createInventory(this, 2 * 9, title);
-        this.target = target;
         tagItem = ItemTag.getTagItem(item);
         this.commandAlias = commandAlias;
         this.subCommandAlias = subCommandAlias;
@@ -327,13 +326,12 @@ public class ActionsGui implements Gui {
     }
 
     private void sendClickableText(Gui gui, String postClickable) {
-        Util.sendMessage(gui.getTargetPlayer(), new ComponentBuilder(gui.getLanguageMessage("gui.actions.click-interact"))
-                .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                        new ComponentBuilder(gui.getLanguageMessage("gui.actions.click-hover")).create()))
-                .event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
-                        "/" + commandAlias + " " + subCommandAlias + " " + postClickable + " ")).create());
+        Component message = Util.asSuggestCommand(
+                Util.asHover(gui.getLanguageComponent("gui.actions.click-interact"),
+                        gui.getLanguageComponent("gui.actions.click-hover")),
+                "/" + commandAlias + " " + subCommandAlias + " " + postClickable + " ");
+        Util.sendComponent(gui.getTargetPlayer(), message);
     }
-
     private class ActionTypeGui implements PagedGui {
 
         private static final int ROWS = 5;
@@ -348,7 +346,7 @@ public class ActionsGui implements Gui {
         public ActionTypeGui(int page) {
             if (page < 1)
                 throw new NullPointerException();
-            String title = this.getLanguageMessage("gui.actions.title",
+            Component title = this.getLanguageComponent("gui.actions.title",
                     "%player_name%", target.getName());
             this.inventory = Bukkit.createInventory(this, (ROWS + 1) * 9, title);
             List<String> actionsList = ActionsUtility.getActions(tagItem);
@@ -473,8 +471,8 @@ public class ActionsGui implements Gui {
                         item = this.getGuiItem("gui.actionslines.line", Material.valueOf("COMMAND"));
                     }
                     ItemMeta meta = item.getItemMeta();
-                    String action = this.getPlugin().getTranslator().translate(target,"gui.actionslines.actionformat",
-                            "%type%", actionPre, "%info%", actionPost);
+                    String action = MiniMessage.miniMessage().serialize(this.getPlugin().getTranslator().translateOrEmpty(target,"gui.actionslines.actionformat",
+                            "%type%", actionPre, "%info%", actionPost));
                     this.loadLanguageDescription(meta, "gui.actionslines.element", "%action%", action);
                     item.setAmount(Math.min(125, elementIndex + 1));
                     item.setItemMeta(meta);

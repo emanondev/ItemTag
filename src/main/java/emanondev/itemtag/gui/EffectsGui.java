@@ -7,6 +7,8 @@ import emanondev.itemedit.utility.ItemUtils;
 import emanondev.itemedit.utility.VersionUtils;
 import emanondev.itemtag.EffectsInfo;
 import emanondev.itemtag.ItemTag;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -37,10 +39,10 @@ public class EffectsGui implements PagedGui {
     private int page = 1;
 
     public EffectsGui(Player target, ItemStack item) {
-        String title = this.getLanguageMessage("gui.effects.title",
+        this.target = target;
+        Component title = this.getLanguageComponent("gui.effects.title",
                 "%player_name%", target.getName());
         this.inventory = Bukkit.createInventory(this, 6 * 9, title);
-        this.target = target;
         this.info = new EffectsInfo(item);
 
         for (PotionEffectType type : PotionEffectType.values())
@@ -248,9 +250,9 @@ public class EffectsGui implements PagedGui {
             loadLanguageDescription(meta, "gui.effects.potion", "%effect%", Aliases.POTION_EFFECT.getName(type)
                             .replace("_", " "), "%level%", String.valueOf(amplifier + 1), "%particles%", Aliases.BOOLEAN.getName(particles),
                     "%ambient%", Aliases.BOOLEAN.getName(ambient), "%icon%",
-                    VersionUtils.isAfter(1, 13) ? Aliases.BOOLEAN.getName(icon) : getLanguageMessage("gui.effects.icon-unsupported"), "%duration%",
-                    getLanguageMessage(type.isInstant() ? "gui.effects.potion-instant" : "gui.effects.potion-unlimited"),
-                    "%middle_click%", getLanguageMessage("gui.middleclick." + (getTargetPlayer().getGameMode() == GameMode.CREATIVE ? "creative" : "other")));
+                    VersionUtils.isAfter(1, 13) ? Aliases.BOOLEAN.getName(icon) : MiniMessage.miniMessage().serialize(getLanguageComponent("gui.effects.icon-unsupported")), "%duration%",
+                    MiniMessage.miniMessage().serialize(getLanguageComponent(type.isInstant() ? "gui.effects.potion-instant" : "gui.effects.potion-unlimited")),
+                    "%middle_click%", MiniMessage.miniMessage().serialize(getLanguageComponent("gui.middleclick." + (getTargetPlayer().getGameMode() == GameMode.CREATIVE ? "creative" : "other"))));
             item.setAmount(Math.max(1, amplifier + 1));
             meta.clearCustomEffects();
             if (amplifier >= 0)

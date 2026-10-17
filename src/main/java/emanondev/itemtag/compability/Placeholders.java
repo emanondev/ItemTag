@@ -111,14 +111,14 @@ public class Placeholders extends PlaceholderExpansion {
                     break;
                 }
                 case "handcooldown": {
-                    ItemStack item = ItemUtils.getHandItem(player);
+                    ItemStack item = ItemUtils.getHandMainItem(player);
                     if (ItemUtils.isAirOrNull(item))
                         return "0";
                     id = ActionsUtility.getCooldownId(ItemTag.getTagItem(item));
                     break;
                 }
                 case "usesleft": {
-                    ItemStack item = ItemUtils.getHandItem(player);
+                    ItemStack item = ItemUtils.getHandMainItem(player);
                     if (ItemUtils.isAirOrNull(item))
                         return "0";
                     return String.valueOf(ActionsUtility.getUses(ItemTag.getTagItem(item)));

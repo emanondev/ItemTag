@@ -23,7 +23,7 @@ public class EntityFood extends CustomFlag {
         if (!(event.getRightClicked() instanceof Animals)) {
             return;
         }
-        ItemStack item = ItemUtils.getHandItem(event.getPlayer());
+        ItemStack item = ItemUtils.getHandMainItem(event.getPlayer());
         if (!ItemTag.getTagItem(item).hasBooleanTag(ENTITYFOOD_KEY)) {
             return;
         }

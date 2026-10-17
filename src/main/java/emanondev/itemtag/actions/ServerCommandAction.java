@@ -55,7 +55,7 @@ public class ServerCommandAction extends Action {
                 return;
             }
         }
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), UtilsString.fix(text, player, true, "%player%", player.getName()));
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), UtilsString.fixToString(text, player, true, "%player%", player.getName()));
     }
 
     @Override

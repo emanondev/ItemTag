@@ -13,10 +13,8 @@ import emanondev.itemtag.actions.ActionsUtility;
 import emanondev.itemtag.command.ItemTagCommand;
 import emanondev.itemtag.command.ListenerSubCmd;
 import emanondev.itemtag.gui.ActionsGui;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.JoinConfiguration;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -40,7 +38,7 @@ public class Actions extends ListenerSubCmd {
     @Override
     public void onCommand(@NotNull CommandSender sender, @NotNull String alias, String[] args) {
         Player p = (Player) sender;
-        ItemStack item = this.getItemInHand(p);
+        ItemStack item = this.getItemInMainHand(p);
         if (args.length == 1) {
             p.openInventory(new ActionsGui(p, item, alias, this.getName()).getInventory());
             //onFail(p, alias);
@@ -153,7 +151,7 @@ public class Actions extends ListenerSubCmd {
                 sendLanguageString("permission.feedback.removed", p);
             }
         } catch (Exception e) {
-            Util.sendMessage(p, this.craftFailFeedback(label, translate("permission.params", p),
+            Util.sendComponent(p, this.craftFailFeedback(label, translateOrEmptyRaw("permission.params", p),
                     translateList("permission.description", p)));
         }
     }
@@ -172,7 +170,7 @@ public class Actions extends ListenerSubCmd {
                 sendLanguageString("cooldownid.feedback.removed", p);
             }
         } catch (Exception e) {
-            Util.sendMessage(p, this.craftFailFeedback(label, translate("cooldownid.params", p),
+            Util.sendComponent(p, this.craftFailFeedback(label, translateOrEmptyRaw("cooldownid.params", p),
                     translateList("cooldownid.description", p)));
         }
     }
@@ -189,7 +187,7 @@ public class Actions extends ListenerSubCmd {
                 sendLanguageString("cooldownmsg.feedback.removed", p);
             }
         } catch (Exception e) {
-            Util.sendMessage(p, this.craftFailFeedback(label, translate("cooldownmsg.params", p),
+            Util.sendComponent(p, this.craftFailFeedback(label, translateOrEmptyRaw("cooldownmsg.params", p),
                     translateList("cooldownmsg.description", p)));
         }
     }
@@ -211,7 +209,7 @@ public class Actions extends ListenerSubCmd {
             ActionsUtility.setCooldownMsgType(tagItem, type);
             sendLanguageString("cooldownmsgtype.feedback.set", p, "%type%", type);
         } catch (Exception e) {
-            Util.sendMessage(p, this.craftFailFeedback(label, translate("cooldownmsgtype.params", p),
+            Util.sendComponent(p, this.craftFailFeedback(label, translateOrEmptyRaw("cooldownmsgtype.params", p),
                     translateList("cooldownmsgtype.description", p)));
         }
     }
@@ -231,7 +229,7 @@ public class Actions extends ListenerSubCmd {
                 sendLanguageString("cooldown.feedback.removed", p);
             }
         } catch (Exception e) {
-            Util.sendMessage(p, this.craftFailFeedback(label, translate("cooldown.params", p),
+            Util.sendComponent(p, this.craftFailFeedback(label, translateOrEmptyRaw("cooldown.params", p),
                     translateList("cooldown.description", p)));
         }
     }
@@ -257,7 +255,7 @@ public class Actions extends ListenerSubCmd {
                 sendLanguageString("maxuses.feedback.set", p, "%uses%", String.valueOf(uses));
             }
         } catch (Exception e) {
-            Util.sendMessage(p, this.craftFailFeedback(label, translate("maxuses.params", p),
+            Util.sendComponent(p, this.craftFailFeedback(label, translateOrEmptyRaw("maxuses.params", p),
                     translateList("maxuses.description", p)));
         }
     }
@@ -283,44 +281,39 @@ public class Actions extends ListenerSubCmd {
                         "%uses%", String.valueOf(uses));
             }
         } catch (Exception e) {
-            Util.sendMessage(p, this.craftFailFeedback(label, translate("uses.params", p),
+            Util.sendComponent(p, this.craftFailFeedback(label, translateOrEmptyRaw("uses.params", p),
                     translateList("uses.description", p)));
         }
     }
 
     private void invalidAction(Player p, String actionError) {
-        String msg = translate("invalid-action.message", p, "%error%", actionError);
-        if (msg == null || msg.isEmpty()) {
-            return;
-        }
-        StringBuilder hover = new StringBuilder(translate("invalid-action.hover-pre", p)).append("\n");
-        String color1 = translate("invalid-action.first_color", p);
-        String color2 = translate("invalid-action.second_color", p);
+        Component message = translateOrEmpty("invalid-action.message", p, "%error%", actionError);
+        Component hover = translateOrEmpty("invalid-action.hover-pre", p).append(Component.newline());
+        Component color1 = translateOrEmpty("invalid-action.first_color", p);
+        Component color2 = translateOrEmpty("invalid-action.second_color", p);
         boolean color = true;
         int counter = 0;
         for (String actionType : ActionHandler.getTypes()) {
             counter += actionType.length() + 1;
-            hover.append(color ? color1 : color2).append(actionType);
+            hover = hover.append(color ? color1 : color2).append(Component.text(actionType));
             color = !color;
             if (counter > 30) {
                 counter = 0;
-                hover.append("\n");
+                hover = hover.append(Component.newline());
             } else {
-                hover.append(" ");
+                hover = hover.append(Component.space());
             }
         }
-        Util.sendMessage(p, new ComponentBuilder(msg).event(new HoverEvent(net.md_5.bungee.api.chat.HoverEvent.Action.SHOW_TEXT, (new ComponentBuilder(hover.toString())).create())).create());
+        Util.sendComponent(p, Util.asHover(message, hover));
     }
 
     private void invalidActionInfo(Player p, String actionType, String actionInfo) {
-        String msg = translate("invalid-actioninfo.message", p, "%error%", actionInfo, "%action%", actionType);
-        if (msg == null || msg.isEmpty()) {
-            return;
-        }
-        Util.sendMessage(p, new ComponentBuilder(msg).event(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                new ComponentBuilder(String.join("\n", UtilsString.fix(ActionHandler.getAction(actionType).getInfo(), p, true))).create())).create());
+        Component message = translateOrEmpty("invalid-actioninfo.message", p,
+                "%error%", actionInfo, "%action%", actionType);
+        Component hover = Component.join(JoinConfiguration.separator(Component.newline()),
+                UtilsString.fix(ActionHandler.getAction(actionType).getInfo(), p, true));
+        Util.sendComponent(p, Util.asHover(message, hover));
     }
-
     private void set(Player p, String label, String[] args, ItemStack item) {
         try {
             if (args.length < 4) {
@@ -359,7 +352,7 @@ public class Actions extends ListenerSubCmd {
             sendLanguageString("set.feedback", p, "%line%",
                     String.valueOf(line + 1), "%action%", originalAction);
         } catch (Exception e) {
-            Util.sendMessage(p, this.craftFailFeedback(label, translate("set.params", p),
+            Util.sendComponent(p, this.craftFailFeedback(label, translateOrEmptyRaw("set.params", p),
                     translateList("set.description", p)));
         }
     }
@@ -385,7 +378,7 @@ public class Actions extends ListenerSubCmd {
             sendLanguageString("remove.feedback", p, "%line%",
                     String.valueOf(line + 1), "%action%", action.split(ActionsUtility.TYPE_SEPARATOR)[0]);
         } catch (Exception e) {
-            Util.sendMessage(p, this.craftFailFeedback(label, translate("remove.params", p),
+            Util.sendComponent(p, this.craftFailFeedback(label, translateOrEmptyRaw("remove.params", p),
                     translateList("remove.description", p)));
         }
     }
@@ -425,7 +418,7 @@ public class Actions extends ListenerSubCmd {
                     originalAction);
         } catch (Exception e) {
             e.printStackTrace();
-            Util.sendMessage(p, this.craftFailFeedback(label, translate("add.params", p),
+            Util.sendComponent(p, this.craftFailFeedback(label, translateOrEmptyRaw("add.params", p),
                     translateList("add.description", p)));
         }
     }
@@ -462,7 +455,7 @@ public class Actions extends ListenerSubCmd {
             sendLanguageString("addline.feedback", p, "%action%",
                     originalAction, "%line%", String.valueOf(line + 1));
         } catch (Exception e) {
-            Util.sendMessage(p, this.craftFailFeedback(label, translate("addline.params", p),
+            Util.sendComponent(p, this.craftFailFeedback(label, translateOrEmptyRaw("addline.params", p),
                     translateList("addline.description", p)));
         }
     }
@@ -521,22 +514,18 @@ public class Actions extends ListenerSubCmd {
                 if (cooldown > 0) {
                     String cooldownId = ActionsUtility.getCooldownId(tagItem);
                     if (ItemTag.get().getCooldownAPI().hasCooldown(event.getPlayer(), cooldownId)) {
-                        String msg = ActionsUtility.getCooldownMsg(tagItem);
-                        if (msg == null) {
+                        String rawMsg = ActionsUtility.getCooldownMsg(tagItem);
+                        if (rawMsg == null) {
                             return;
                         }
                         String type = ActionsUtility.getCooldownMsgType(tagItem);
-                        msg = UtilsString.fix(msg, event.getPlayer(), true);
+                        Component msg = UtilsString.fix(rawMsg, event.getPlayer(), true);
                         switch (type) {
                             case "chat":
-                                Util.sendMessage(event.getPlayer(), msg);
+                                Util.sendComponent(event.getPlayer(), msg);
                                 break;
                             case "actionbar":
-                                if (VersionUtils.isAfter(1, 11, 2)) {
-                                    event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(msg));
-                                    break;
-                                }
-                                ItemTag.get().log("Invalid action cooldown message type <yellow>" + type + "<white> not available on this server version");
+                                event.getPlayer().sendActionBar(msg);
                                 break;
                             default:
                                 ItemTag.get().log("Invalid action cooldown message type <yellow>" + type);

@@ -65,7 +65,7 @@ public class Effects extends ListenerSubCmd {
             onFail(p, alias);
             return;
         }
-        p.openInventory(new EffectsGui(p, getItemInHand(p)).getInventory());
+        p.openInventory(new EffectsGui(p, getItemInMainHand(p)).getInventory());
     }
 
     @Override
@@ -186,13 +186,13 @@ public class Effects extends ListenerSubCmd {
             if (type == null || particles == null || ambient == null || icon == null)
                 throw new IllegalArgumentException();
 
-            EffectsInfo info = new EffectsInfo(getItemInHand(p));
+            EffectsInfo info = new EffectsInfo(getItemInMainHand(p));
             if (amplifier < 0)
                 info.removeEffect(type);
             else
                 info.addEffect(EffectsInfo.craftPotionEffect(type, amplifier, ambient, particles, icon));
             info.update();
-            ItemUtils.setHandItem(p, info.getItem());
+            ItemUtils.setHandMainItem(p, info.getItem());
         } catch (Exception e) {
             //TODO
             onFail(p, alias);
@@ -202,7 +202,7 @@ public class Effects extends ListenerSubCmd {
     private void modify(Player p, String alias, String[] args) {
         try {
             PotionEffectType type = Aliases.POTION_EFFECT.convertAlias(args[2]);
-            EffectsInfo info = new EffectsInfo(getItemInHand(p));
+            EffectsInfo info = new EffectsInfo(getItemInMainHand(p));
             PotionEffect effect = info.getEffect(type);
             int amplifier = Integer.parseInt(args[3]) - 1;
             Boolean particles = args.length >= 5 ? Aliases.BOOLEAN.convertAlias(args[4]) : effect == null ? Boolean.TRUE : (Boolean) effect.hasParticles();
@@ -217,7 +217,7 @@ public class Effects extends ListenerSubCmd {
             else
                 info.addEffect(EffectsInfo.craftPotionEffect(type, amplifier, ambient, particles, icon));
             info.update();
-            ItemUtils.setHandItem(p, info.getItem());
+            ItemUtils.setHandMainItem(p, info.getItem());
         } catch (Exception e) {
             //TODO
             onFail(p, alias);
@@ -230,12 +230,12 @@ public class Effects extends ListenerSubCmd {
             if (type == null)
                 throw new IllegalArgumentException();
 
-            EffectsInfo info = new EffectsInfo(getItemInHand(p));
+            EffectsInfo info = new EffectsInfo(getItemInMainHand(p));
             if (!info.hasEffect(type))
                 return;
             info.removeEffect(type);
             info.update();
-            ItemUtils.setHandItem(p, info.getItem());
+            ItemUtils.setHandMainItem(p, info.getItem());
         } catch (Exception e) {
             //TODO
             onFail(p, alias);
@@ -248,12 +248,12 @@ public class Effects extends ListenerSubCmd {
             for (int i = 2; i < args.length; i++)
                 slots.add(Aliases.EQUIPMENT_SLOTS.convertAlias(args[i]));
 
-            EffectsInfo info = new EffectsInfo(getItemInHand(p));
+            EffectsInfo info = new EffectsInfo(getItemInMainHand(p));
             for (EquipmentSlot slot : InventoryUtils.getPlayerEquipmentSlots())
                 if (slots.contains(slot) != info.isValidSlot(slot))
                     info.toggleSlot(slot);
             info.update();
-            ItemUtils.setHandItem(p, info.getItem());
+            ItemUtils.setHandMainItem(p, info.getItem());
         } catch (Exception e) {
             //TODO
             onFail(p, alias);

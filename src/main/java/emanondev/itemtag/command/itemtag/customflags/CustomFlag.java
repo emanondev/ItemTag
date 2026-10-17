@@ -7,6 +7,7 @@ import emanondev.itemedit.utility.ItemUtils;
 import emanondev.itemtag.TagItem;
 import emanondev.itemtag.command.itemtag.Flag;
 import org.bukkit.command.CommandSender;
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
@@ -42,20 +43,13 @@ public abstract class CustomFlag implements Listener, Comparable<CustomFlag> {
         return subCommand.getPlugin();
     }
 
-    protected String getLanguageString(String path, String def, CommandSender sender, String... holders) {
-        return getPlugin().getLanguageConfig(sender).loadMessage(this.PATH + path, def == null ? "" : def,
-                sender instanceof Player ? (Player) sender : null, true, holders);
+    protected void sendLanguageString(String path, CommandSender sender, String... holders) {
+        Util.sendComponent(sender, getPlugin().getTranslator().translateOrEmpty(sender, this.PATH + path, holders));
     }
 
-    protected void sendLanguageString(String path, String def, CommandSender sender, String... holders) {
-        Util.sendMessage(sender, getLanguageString(path, def, sender, holders));
+    protected List<Component> getLanguageComponentList(String path, CommandSender sender, String... holders) {
+        return getPlugin().getTranslator().translateList(sender, this.PATH + path, holders);
     }
-
-    protected List<String> getLanguageStringList(String path, List<String> def, CommandSender sender, String... holders) {
-        return getPlugin().getLanguageConfig(sender).loadMultiMessage(this.PATH + path,
-                def == null ? new ArrayList<>() : def, sender instanceof Player ? (Player) sender : null, true, holders);
-    }
-
     protected String getConfigString(String path, String... holders) {
         return config.loadMessage(this.PATH + path, "", null, true, holders);
     }
@@ -107,7 +101,7 @@ public abstract class CustomFlag implements Listener, Comparable<CustomFlag> {
     }
 
     protected ItemStack getItemInHand(Player p) {
-        return ItemUtils.getHandItem(p);
+        return ItemUtils.getHandMainItem(p);
     }
 
 }

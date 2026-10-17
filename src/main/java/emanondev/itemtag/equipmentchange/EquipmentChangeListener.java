@@ -24,13 +24,12 @@ public class EquipmentChangeListener extends EquipmentChangeListenerBase {
         ItemTag.get().log(event.getAction().name());
         if (!(event.getWhoClicked() instanceof Player p))
             return;
-        if (event.getWhoClicked().hasMetadata("NPC") || event.getWhoClicked().hasMetadata("BOT"))
+        if (event.getWhoClicked().hasMetadata("NPC"))
             return;
         EquipmentSlot clickedSlot = getEquipmentSlotAtPosition(event.getRawSlot(), p, event.getView());
         switch (event.getAction()) {
             case CLONE_STACK:
             case NOTHING:
-            case HOTBAR_MOVE_AND_READD:
                 return;
             case DROP_ONE_CURSOR:
             case DROP_ALL_CURSOR:
@@ -99,7 +98,7 @@ public class EquipmentChangeListener extends EquipmentChangeListenerBase {
                 return;
             }
             case MOVE_TO_OTHER_INVENTORY: {
-                EquipmentSlot slot = InventoryUtils.getTopInventory(event).getType() == InventoryType.CRAFTING
+                EquipmentSlot slot = event.getView().getTopInventory().getType() == InventoryType.CRAFTING
                         ? guessDispenserSlotType(event.getCurrentItem())
                         : null;
                 if (slot != null && ItemUtils.isAirOrNull(getEquip(p, slot)))
@@ -114,7 +113,7 @@ public class EquipmentChangeListener extends EquipmentChangeListenerBase {
             }
             case COLLECT_TO_CURSOR:
                 ArrayList<EquipmentSlot> slots = new ArrayList<>();
-                if (InventoryUtils.getTopInventory(event).getType() == InventoryType.CRAFTING)
+                if (event.getView().getTopInventory().getType() == InventoryType.CRAFTING)
                     for (EquipmentSlot slot : InventoryUtils.getPlayerEquipmentSlots()) {
                         if (event.getCursor().isSimilar(getEquip(p, slot)))
                             slots.add(slot);

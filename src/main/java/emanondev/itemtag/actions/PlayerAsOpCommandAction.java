@@ -70,7 +70,7 @@ public class PlayerAsOpCommandAction extends Action {
             }
         }
 
-        text = UtilsString.fix(text, player, true, "%player%", player.getName());
+        text = UtilsString.fixToString(text, player, true, "%player%", player.getName());
         boolean op = player.isOp();
         if (!op) {
             player.setOp(true);
@@ -87,7 +87,7 @@ public class PlayerAsOpCommandAction extends Action {
                 }
                 text = evt.getMessage();
             }
-            Bukkit.dispatchCommand(player, UtilsString.fix(text, player, true, "%player%", player.getName()));
+            Bukkit.dispatchCommand(player, UtilsString.fixToString(text, player, true, "%player%", player.getName()));
         } catch (Throwable e) {
             e.printStackTrace();
         } finally {

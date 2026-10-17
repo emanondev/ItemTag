@@ -186,7 +186,7 @@ public class TriggerType<E extends Event> {
         ItemMeta meta = mat.getItemMeta();
         meta.addItemFlags(ItemFlag.values());
         meta.setDisplayName(ChatColor.AQUA + getId());
-        meta.setLore(ItemTag.get().getLanguageConfig(player).loadMultiMessage("trigger." + getId() + ".description", new ArrayList<>()));
+        meta.lore(ItemTag.get().getTranslator().translateList(player, "trigger." + getId() + ".description"));
         mat.setItemMeta(meta);
         return mat;
     }

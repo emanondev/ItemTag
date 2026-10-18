@@ -91,6 +91,9 @@ public class ItemTag extends APlugin {
             ActionHandler.registerAction(new SoundAction());
             ActionHandler.registerAction(new MessageAction());
             ActionHandler.registerAction(new PotionEffectAction());
+            ActionHandler.registerAction(new SummonAction());
+            ActionHandler.registerAction(new ProjectileAction());
+            ActionHandler.registerAction(new ThrowTntAction());
             Aliases.registerAliasType(() -> new AliasSet<Action>("itemtag_actions", this) {
                 @Override
                 public String getName(Action value) {

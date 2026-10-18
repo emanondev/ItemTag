@@ -337,8 +337,7 @@ public class Actions extends ListenerSubCmd {
     private void invalidActionInfo(Player p, String actionType, String actionInfo) {
         Component message = translateOrEmpty("invalid-actioninfo.message", p,
                 "%error%", actionInfo, "%action%", actionType);
-        Component hover = Component.join(JoinConfiguration.separator(Component.newline()),
-                UtilsString.fix(ActionHandler.getAction(actionType).getInfo(), p, true));
+        Component hover = ActionHandler.getAction(actionType).getInfo(p);
         Util.sendComponent(p, Util.asHover(message, hover));
     }
 

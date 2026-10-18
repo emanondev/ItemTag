@@ -1,6 +1,8 @@
 package emanondev.itemtag.actions;
 
 import emanondev.itemedit.APlugin;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.JoinConfiguration;
 import lombok.Getter;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -35,7 +37,13 @@ public abstract class Action {
      */
     public abstract List<String> tabComplete(CommandSender sender, List<String> params);
 
-    public abstract List<String> getInfo();//TODO move on configuration
+    public Component getInfo(CommandSender sender) {
+        List<Component> info = plugin.getTranslator().translateList(sender, "actions." + id + ".info", false);
+        if (info == null || info.isEmpty()) {
+            return Component.empty();
+        }
+        return Component.join(JoinConfiguration.separator(Component.newline()), info);
+    }
 
     public String fixActionInfo(String actionInfo) {
         return actionInfo;

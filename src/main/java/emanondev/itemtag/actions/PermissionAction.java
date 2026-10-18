@@ -68,12 +68,4 @@ public class PermissionAction extends Action {
     }
 
 
-    @Override
-    public List<String> getInfo() {
-        ArrayList<String> list = new ArrayList<>();
-        list.add("<aqua>" + getId() + " <yellow><permission> <action>");
-        list.add("<yellow><permission> <aqua>permission required or <yellow>-permission <aqua>for reversed check");
-        list.add("<yellow><action> <aqua>action to execute, example: '<yellow>sound entity_bat_hurt 1 1<aqua>'");
-        return list;
-    }
 }

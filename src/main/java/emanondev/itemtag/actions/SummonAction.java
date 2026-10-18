@@ -91,16 +91,6 @@ public class SummonAction extends Action {
         };
     }
 
-    @Override
-    public List<String> getInfo() {
-        List<String> info = new ArrayList<>();
-        info.add("<aqua>" + getId() + " <yellow><entity> [quantity] [spread]");
-        info.add("<yellow><entity> <aqua>spawnable entity type");
-        info.add("<yellow>[quantity] <aqua>number of entities to summon; defaults to 1");
-        info.add("<yellow>[spread] <aqua>distance from the player; defaults to 1.5");
-        info.add("<aqua>One entity spawns in front; two spawn at ±60°; three or more are evenly spaced around the player");
-        return info;
-    }
 
     private static String[] arguments(String text) {
         if (text == null || text.isBlank()) {

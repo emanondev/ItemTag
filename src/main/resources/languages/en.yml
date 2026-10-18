@@ -704,3 +704,75 @@ trigger:
   left_interact:
     gui_material:
       - "<gold>activated when a player left click"
+actions:
+  delay:
+    info:
+      - '<aqua>delay <yellow><delay ticks> <action>'
+      - '<yellow><delay ticks> <aqua>how much you want to delay the action, 20 ticks = 1 second'
+      - '<yellow><action> <aqua>action to execute, example: <yellow>sound entity_bat_hurt 1 1'
+  message:
+    info:
+      - '<aqua>message <yellow><message>'
+      - '<yellow><message> <aqua>message sent to player'
+      - '<aqua>%player% may be used as placeholder for player name'
+  permission:
+    info:
+      - '<aqua>permission <yellow><permission> <action>'
+      - '<yellow><permission> <aqua>permission required or <yellow>-permission <aqua>for reversed check'
+      - '<yellow><action> <aqua>action to execute, example: <yellow>sound entity_bat_hurt 1 1'
+  commandasop:
+    info:
+      - '<aqua>commandasop <yellow><command>'
+      - '<yellow><command> <aqua>command executed by player as Op'
+      - '<aqua>%player% may be used as placeholder for player name'
+      - '<aqua>N.B. no <yellow>/<aqua> is required, example: <yellow>home'
+  command:
+    info:
+      - '<aqua>command <yellow><command>'
+      - '<yellow><command> <aqua>command executed by player'
+      - '<aqua>%player% may be used as placeholder for player name'
+      - '<aqua>N.B. no <yellow>/<aqua> is required, example: <yellow>home'
+  potion:
+    info:
+      - '<aqua>potion <yellow><type> <duration_ticks|infinite> <level> [ambient] [particles] [icon]'
+      - '<yellow><type> <aqua>the potion effect to apply'
+      - '<yellow><duration_ticks|infinite> <aqua>effect duration in ticks, or infinite'
+      - '<yellow><level> <aqua>effect level from 1 to 256'
+      - '<yellow>[ambient] [particles] [icon] <aqua>booleans; defaults are false, true, true'
+  projectile:
+    info:
+      - '<aqua>projectile <yellow><projectile> [speed] [imprecision] [repeat] [repeatdelay]'
+      - '<yellow><projectile> <aqua>spawnable entity type that extends Projectile'
+      - '<yellow>[speed] <aqua>initial velocity; defaults to 1'
+      - '<yellow>[imprecision] <aqua>random direction offset on X, Y and Z; defaults to 0'
+      - '<yellow>[repeat] <aqua>additional shots after the first; defaults to 0'
+      - '<yellow>[repeatdelay] <aqua>ticks between shots; defaults to 5 and must be at least 1'
+  servercommand:
+    info:
+      - '<aqua>servercommand <yellow><command>'
+      - '<yellow><command> <aqua>command executed by server'
+      - '<aqua>%player% may be used as placeholder for player name'
+      - '<aqua>N.B. no <yellow>/<aqua> is required, example: <yellow>heal %player%'
+  sound:
+    info:
+      - '<aqua>sound <yellow><sound> [volume] [pitch] [self]'
+      - '<yellow><sound> <aqua>the sound to play'
+      - '<yellow>[volume] <aqua>the volume of the sound, default 1'
+      - '<yellow>[pitch] <aqua>the pitch of the sound, default 1'
+      - '<yellow>[self] <aqua>only player should hear it? Defaults to false'
+  summon:
+    info:
+      - '<aqua>summon <yellow><entity> [quantity] [spread]'
+      - '<yellow><entity> <aqua>spawnable entity type'
+      - '<yellow>[quantity] <aqua>number of entities to summon; defaults to 1'
+      - '<yellow>[spread] <aqua>distance from the player; defaults to 1.5'
+      - '<aqua>One entity spawns in front; two spawn at ±60°; three or more are evenly spaced around the player'
+  throwtnt:
+    info:
+      - '<aqua>throwtnt [speed] [imprecision] [fuseTicks] [repeat] [repeatdelay]'
+      - '<aqua>Throws a primed TNT in the direction the player is looking'
+      - '<yellow>[speed] <aqua>initial velocity; defaults to 2'
+      - '<yellow>[imprecision] <aqua>random yaw and pitch offset in degrees; defaults to 0'
+      - '<yellow>[fuseTicks] <aqua>TNT fuse duration in ticks; defaults to 60'
+      - '<yellow>[repeat] <aqua>additional throws after the first; defaults to 0'
+      - '<yellow>[repeatdelay] <aqua>ticks between throws; defaults to 5 and must be at least 1'

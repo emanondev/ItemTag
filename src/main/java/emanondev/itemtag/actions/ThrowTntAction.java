@@ -96,18 +96,6 @@ public class ThrowTntAction extends Action {
         };
     }
 
-    @Override
-    public List<String> getInfo() {
-        List<String> info = new ArrayList<>();
-        info.add("<aqua>" + getId() + " [speed] [imprecision] [fuseTicks] [repeat] [repeatdelay]");
-        info.add("<aqua>Throws a primed TNT in the direction the player is looking");
-        info.add("<yellow>[speed] <aqua>initial velocity; defaults to 2");
-        info.add("<yellow>[imprecision] <aqua>random yaw and pitch offset in degrees; defaults to 0");
-        info.add("<yellow>[fuseTicks] <aqua>TNT fuse duration in ticks; defaults to 60");
-        info.add("<yellow>[repeat] <aqua>additional throws after the first; defaults to 0");
-        info.add("<yellow>[repeatdelay] <aqua>ticks between throws; defaults to 5 and must be at least 1");
-        return info;
-    }
 
     private static void throwTnt(Player player, double speed, float imprecision, int fuseTicks) {
         Location launchLocation = player.getEyeLocation();

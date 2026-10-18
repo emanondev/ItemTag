@@ -39,15 +39,4 @@ public class MessageAction extends Action {
         return List.of();
     }
 
-
-    @Override
-    public List<String> getInfo() {
-        ArrayList<String> list = new ArrayList<>();
-        list.add("<aqua>" + getId() + " <yellow><message>");
-        list.add("<yellow><message><aqua> message sent to player");
-        list.add("<aqua>%player% may be used as placeholder for player name");
-        return list;
-    }
-
-
 }

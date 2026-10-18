@@ -82,16 +82,6 @@ public class PotionEffectAction extends Action {
         };
     }
 
-    @Override
-    public List<String> getInfo() {
-        List<String> info = new ArrayList<>();
-        info.add("<aqua>" + getId() + " <yellow><type> <duration_ticks|infinite> <level> [ambient] [particles] [icon]");
-        info.add("<yellow><type> <aqua>the potion effect to apply");
-        info.add("<yellow><duration_ticks|infinite> <aqua>effect duration in ticks, or infinite");
-        info.add("<yellow><level> <aqua>effect level from 1 to 256");
-        info.add("<yellow>[ambient] [particles] [icon] <aqua>booleans; defaults are false, true, true");
-        return info;
-    }
 
     private static String[] arguments(String text) {
         if (text == null || text.isBlank()) {

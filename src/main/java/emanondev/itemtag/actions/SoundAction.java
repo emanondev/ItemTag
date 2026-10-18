@@ -97,16 +97,6 @@ public class SoundAction extends Action {
         };
     }
 
-    @Override
-    public List<String> getInfo() {
-        ArrayList<String> list = new ArrayList<>();
-        list.add("<aqua>" + getId() + " <yellow><sound> [volume] [pitch] [self]");
-        list.add("<yellow><sound> <aqua>the sound to play");
-        list.add("<yellow>[volume] <aqua>the volume of the sound, default 1");
-        list.add("<yellow>[pitch] <aqua>the pitch of the sound, default 1");
-        list.add("<yellow>[self] <aqua>only player sould heard?, by default false");
-        return list;
-    }
 
     private static Sound resolveSound(String input) {
         Sound sound = Aliases.SOUND.convertAlias(input);

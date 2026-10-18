@@ -8,6 +8,7 @@ import emanondev.itemtag.actions.ActionHandler;
 import emanondev.itemtag.command.ItemTagCommand;
 import emanondev.itemtag.command.ListenerSubCmd;
 import lombok.extern.slf4j.Slf4j;
+import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -30,6 +31,13 @@ public class ConsumeActions extends ListenerSubCmd {
 
     private static final String[] actionsSub = new String[]{"add", "addline", "set", "permission", "cooldown",
             "cooldownid", "remove", "info"};
+
+    private void sendInvalidActionInfo(Player player, String actionType, String actionInfo) {
+        Component message = ItemTag.get().getTranslator().translateOrEmpty(player, "itemtag.actions.invalid-actioninfo.message",
+                "%error%", actionInfo, "%action%", actionType);
+        Component info = ActionHandler.getAction(actionType).getInfo(player);
+        Util.sendComponent(player, message.append(Component.newline()).append(info));
+    }
 
     public ConsumeActions(ItemTagCommand cmd) {
         super("consumeactions", cmd, true, true);
@@ -189,10 +197,7 @@ public class ConsumeActions extends ListenerSubCmd {
             try {
                 ActionHandler.validateActionInfo(actionType, actionInfo);
             } catch (Exception e) {
-                Util.sendMessage(p,
-                        ChatColor.translateAlternateColorCodes('&',
-                                "<red>'<gold>" + actionInfo + "<red>' is not a valid info for <gold>" + actionType + "\n"
-                                        + String.join("\n", ActionHandler.getAction(actionType).getInfo())));
+                sendInvalidActionInfo(p, actionType, actionInfo);
                 return;
             }
             String action = actionType + TYPE_SEPARATOR + actionInfo;
@@ -255,10 +260,7 @@ public class ConsumeActions extends ListenerSubCmd {
             try {
                 ActionHandler.validateActionInfo(actionType, actionInfo);
             } catch (Exception e) {
-                Util.sendMessage(p,
-                        ChatColor.translateAlternateColorCodes('&',
-                                "<red>'<gold>" + actionInfo + "<red>' is not a valid info for <gold>" + actionType + "\n"
-                                        + String.join("\n", ActionHandler.getAction(actionType).getInfo())));
+                sendInvalidActionInfo(p, actionType, actionInfo);
                 return;
             }
             String action = actionType + TYPE_SEPARATOR + actionInfo;
@@ -300,10 +302,7 @@ public class ConsumeActions extends ListenerSubCmd {
             try {
                 ActionHandler.validateActionInfo(actionType, actionInfo);
             } catch (Exception e) {
-                Util.sendMessage(p,
-                        ChatColor.translateAlternateColorCodes('&',
-                                "<red>'<gold>" + actionInfo + "<red>' is not a valid info for <gold>" + actionType + "\n"
-                                        + String.join("\n", ActionHandler.getAction(actionType).getInfo())));
+                sendInvalidActionInfo(p, actionType, actionInfo);
                 return;
             }
             String action = actionType + TYPE_SEPARATOR + actionInfo;

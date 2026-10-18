@@ -71,12 +71,4 @@ public class DelayedAction extends Action {
         };
     }
 
-    @Override
-    public List<String> getInfo() {
-        ArrayList<String> list = new ArrayList<>();
-        list.add("<aqua>" + getId() + " <yellow><delay ticks> <action>");
-        list.add("<yellow><delay ticks> <aqua>how much you want to delay the action, 20ticks = 1s");
-        list.add("<yellow><action> <aqua>action to execute, example: '<yellow>sound entity_bat_hurt 1 1<aqua>'");
-        return list;
-    }
 }

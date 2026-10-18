@@ -107,17 +107,6 @@ public class ProjectileAction extends Action {
         };
     }
 
-    @Override
-    public List<String> getInfo() {
-        List<String> info = new ArrayList<>();
-        info.add("<aqua>" + getId() + " <yellow><projectile> [speed] [imprecision] [repeat] [repeatdelay]");
-        info.add("<yellow><projectile> <aqua>spawnable entity type that extends Projectile");
-        info.add("<yellow>[speed] <aqua>initial velocity; defaults to 1");
-        info.add("<yellow>[imprecision] <aqua>random direction offset on X, Y and Z; defaults to 0");
-        info.add("<yellow>[repeat] <aqua>additional shots after the first; defaults to 0");
-        info.add("<yellow>[repeatdelay] <aqua>ticks between shots; defaults to 5 and must be at least 1");
-        return info;
-    }
 
     private static void fire(Player player, EntityType type, double speed, float imprecision) {
         Location launchLocation = player.getEyeLocation();

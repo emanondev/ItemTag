@@ -9,3 +9,7 @@ custom_flags:
   grindable: grindable
   equipment: equipment
   entityfood: entityfood
+  vanishcurse: vanishcurse
+  clickmove: clickmove
+  tradeable: tradeable
+  smithing_table: smithing_table

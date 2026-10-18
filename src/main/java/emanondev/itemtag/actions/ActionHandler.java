@@ -51,6 +51,10 @@ public class ActionHandler {
         return new ArrayList<>(actions.keySet());
     }
 
+    public static Collection<Action> getActions() {
+        return new ArrayList<>(actions.values());
+    }
+
     public static Action getAction(String type) {
         return actions.get(type.toLowerCase(Locale.ENGLISH));
     }

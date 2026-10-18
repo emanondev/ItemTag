@@ -2,6 +2,7 @@ package emanondev.itemtag;
 
 import emanondev.itemedit.APlugin;
 import emanondev.itemedit.ItemEdit;
+import emanondev.itemedit.aliases.AliasSet;
 import emanondev.itemedit.aliases.Aliases;
 import emanondev.itemedit.command.ReloadCommand;
 import emanondev.itemedit.compability.Hooks;
@@ -23,10 +24,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 @Slf4j
 public class ItemTag extends APlugin {
@@ -84,8 +82,6 @@ public class ItemTag extends APlugin {
             this.registerCommand(new ItemTagCommand(), Collections.singletonList("it"));
             new ReloadCommand(this).register();
             this.registerCommand("itemtagupdateolditem", new ItemTagUpdateOldItem(), null);
-
-
             ActionHandler.clearActions(); //required for plugman reload
             ActionHandler.registerAction(new DelayedAction());
             ActionHandler.registerAction(new PermissionAction());
@@ -94,6 +90,18 @@ public class ItemTag extends APlugin {
             ActionHandler.registerAction(new ServerCommandAction());
             ActionHandler.registerAction(new SoundAction());
             ActionHandler.registerAction(new MessageAction());
+            ActionHandler.registerAction(new PotionEffectAction());
+            Aliases.registerAliasType(() -> new AliasSet<Action>("itemtag_actions", this) {
+                @Override
+                public String getName(Action value) {
+                    return value.getID();
+                }
+
+                @Override
+                public Collection<Action> getValues() {
+                    return ActionHandler.getActions();
+                }
+            });
             if (Hooks.isPAPIEnabled()) {
                 try {
                     this.log("Hooking into PlaceholderApi");

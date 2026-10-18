@@ -26,7 +26,7 @@ public class SoundAction extends Action {
         if (args.length > 4) {
             throw new IllegalStateException();
         }
-        Sound.valueOf(args[0].toUpperCase());
+        resolveSound(args[0]);
         if (args.length >= 2) {
             if (Float.parseFloat(args[1]) <= 0) {
                 throw new IllegalStateException();
@@ -54,7 +54,8 @@ public class SoundAction extends Action {
         boolean self = false;
         float volume = 1;
         float pitch = 1;
-        Sound sound = Sound.valueOf(args[0].toUpperCase());
+        // Actions are stored with the canonical enum name; do not resolve aliases at execution time.
+        Sound sound = Sound.valueOf(args[0].toUpperCase(Locale.ENGLISH));
         if (args.length >= 2) {
             volume = Float.parseFloat(args[1]);
         }
@@ -69,6 +70,14 @@ public class SoundAction extends Action {
         } else {
             player.getLocation().getWorld().playSound(player.getLocation(), sound, volume, pitch);
         }
+    }
+
+    @Override
+    public String fixActionInfo(String actionInfo) {
+        validateInfo(actionInfo);
+        String[] args = actionInfo.split(" ");
+        args[0] = resolveSound(args[0]).name();
+        return String.join(" ", args);
     }
 
     @Override
@@ -96,5 +105,14 @@ public class SoundAction extends Action {
         list.add("<yellow>[pitch] <aqua>the pitch of the sound, default 1");
         list.add("<yellow>[self] <aqua>only player sould heard?, by default false");
         return list;
+    }
+
+    private static Sound resolveSound(String input) {
+        Sound sound = Aliases.SOUND.convertAlias(input);
+        if (sound != null) {
+            return sound;
+        }
+
+        return Sound.valueOf(input.toUpperCase(Locale.ENGLISH));
     }
 }

@@ -367,6 +367,7 @@ public class Actions extends ListenerSubCmd {
                 invalidActionInfo(p, actionType, actionInfo);
                 return;
             }
+            actionInfo = ActionHandler.fixActionInfo(actionType, actionInfo);
             String action = actionType + ActionsUtility.TYPE_SEPARATOR + actionInfo;
             TagItem tagItem = ItemTag.getTagItem(item);
 
@@ -471,6 +472,7 @@ public class Actions extends ListenerSubCmd {
                 invalidActionInfo(p, actionType, actionInfo);
                 return;
             }
+            actionInfo = ActionHandler.fixActionInfo(actionType, actionInfo);
             String action = actionType + ActionsUtility.TYPE_SEPARATOR + actionInfo;
             TagItem tagItem = ItemTag.getTagItem(item);
             if (!ActionsUtility.hasActions(tagItem)) {

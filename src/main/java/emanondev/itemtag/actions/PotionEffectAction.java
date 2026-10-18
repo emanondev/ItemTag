@@ -13,7 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** Gives the player a potion effect when the action is triggered. */
+/**
+ * Gives the player a potion effect when the action is triggered.
+ */
 public class PotionEffectAction extends Action {
 
     public PotionEffectAction() {

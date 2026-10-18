@@ -22,7 +22,7 @@ public class PlayerAsOpCommandAction extends Action {
     private final YMLConfig data;
 
     public PlayerAsOpCommandAction() {
-        super("commandasop");
+        super("commandasop", ItemTag.get());
         data = ItemTag.get().getConfig("crash-safe-data");
         for (String key : data.getKeys(false)) {
             try {
@@ -111,7 +111,7 @@ public class PlayerAsOpCommandAction extends Action {
     @Override
     public List<String> getInfo() {
         ArrayList<String> list = new ArrayList<>();
-        list.add("<aqua>" + getID() + " <yellow><command>");
+        list.add("<aqua>" + getId() + " <yellow><command>");
         list.add("<yellow><command> <aqua>command executed by player as Op");
         list.add("<aqua>%player% may be used as placeholder for player name");
         list.add("<aqua>N.B. no <yellow>/<aqua> is required, example: '<yellow>home<aqua>'");

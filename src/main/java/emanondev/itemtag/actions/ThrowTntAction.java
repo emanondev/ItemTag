@@ -25,7 +25,7 @@ public class ThrowTntAction extends Action {
     private static final int DEFAULT_REPEAT_DELAY = 5;
 
     public ThrowTntAction() {
-        super("throwtnt");
+        super("throwtnt", ItemTag.get());
     }
 
     @Override
@@ -99,7 +99,7 @@ public class ThrowTntAction extends Action {
     @Override
     public List<String> getInfo() {
         List<String> info = new ArrayList<>();
-        info.add("<aqua>" + getID() + " [speed] [imprecision] [fuseTicks] [repeat] [repeatdelay]");
+        info.add("<aqua>" + getId() + " [speed] [imprecision] [fuseTicks] [repeat] [repeatdelay]");
         info.add("<aqua>Throws a primed TNT in the direction the player is looking");
         info.add("<yellow>[speed] <aqua>initial velocity; defaults to 2");
         info.add("<yellow>[imprecision] <aqua>random yaw and pitch offset in degrees; defaults to 0");

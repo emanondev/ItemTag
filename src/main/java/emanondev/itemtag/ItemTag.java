@@ -97,7 +97,7 @@ public class ItemTag extends APlugin {
             Aliases.registerAliasType(() -> new AliasSet<Action>("itemtag_actions", this) {
                 @Override
                 public String getName(Action value) {
-                    return value.getID();
+                    return value.getId();
                 }
 
                 @Override

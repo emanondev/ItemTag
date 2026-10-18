@@ -1,6 +1,7 @@
 package emanondev.itemtag.actions;
 
 import emanondev.itemedit.utility.CompleteUtility;
+import emanondev.itemtag.ItemTag;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -10,7 +11,7 @@ import java.util.List;
 public class PermissionAction extends Action {
 
     public PermissionAction() {
-        super("permission");
+        super("permission", ItemTag.get());
     }
 
     @Override
@@ -70,7 +71,7 @@ public class PermissionAction extends Action {
     @Override
     public List<String> getInfo() {
         ArrayList<String> list = new ArrayList<>();
-        list.add("<aqua>" + getID() + " <yellow><permission> <action>");
+        list.add("<aqua>" + getId() + " <yellow><permission> <action>");
         list.add("<yellow><permission> <aqua>permission required or <yellow>-permission <aqua>for reversed check");
         list.add("<yellow><action> <aqua>action to execute, example: '<yellow>sound entity_bat_hurt 1 1<aqua>'");
         return list;

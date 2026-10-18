@@ -2,6 +2,7 @@ package emanondev.itemtag.actions;
 
 import emanondev.itemedit.aliases.Aliases;
 import emanondev.itemedit.utility.CompleteUtility;
+import emanondev.itemtag.ItemTag;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
 import org.bukkit.command.CommandSender;
@@ -19,7 +20,7 @@ import java.util.Objects;
 public class PotionEffectAction extends Action {
 
     public PotionEffectAction() {
-        super("potion");
+        super("potion", ItemTag.get());
     }
 
     @Override
@@ -84,7 +85,7 @@ public class PotionEffectAction extends Action {
     @Override
     public List<String> getInfo() {
         List<String> info = new ArrayList<>();
-        info.add("<aqua>" + getID() + " <yellow><type> <duration_ticks|infinite> <level> [ambient] [particles] [icon]");
+        info.add("<aqua>" + getId() + " <yellow><type> <duration_ticks|infinite> <level> [ambient] [particles] [icon]");
         info.add("<yellow><type> <aqua>the potion effect to apply");
         info.add("<yellow><duration_ticks|infinite> <aqua>effect duration in ticks, or infinite");
         info.add("<yellow><level> <aqua>effect level from 1 to 256");

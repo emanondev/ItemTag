@@ -3,6 +3,7 @@ package emanondev.itemtag.actions;
 import emanondev.itemedit.Util;
 import emanondev.itemedit.UtilsString;
 import emanondev.itemedit.utility.CompleteUtility;
+import emanondev.itemtag.ItemTag;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -14,7 +15,7 @@ import java.util.List;
 public class MessageAction extends Action {
 
     public MessageAction() {
-        super("message");
+        super("message", ItemTag.get());
     }
 
     @Override
@@ -42,7 +43,7 @@ public class MessageAction extends Action {
     @Override
     public List<String> getInfo() {
         ArrayList<String> list = new ArrayList<>();
-        list.add("<aqua>" + getID() + " <yellow><message>");
+        list.add("<aqua>" + getId() + " <yellow><message>");
         list.add("<yellow><message><aqua> message sent to player");
         list.add("<aqua>%player% may be used as placeholder for player name");
         return list;

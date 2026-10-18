@@ -2,6 +2,7 @@ package emanondev.itemtag.actions;
 
 import emanondev.itemedit.aliases.Aliases;
 import emanondev.itemedit.utility.CompleteUtility;
+import emanondev.itemtag.ItemTag;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -18,7 +19,7 @@ public class SummonAction extends Action {
     private static final double DEFAULT_SPREAD = 1.5;
 
     public SummonAction() {
-        super("summon");
+        super("summon", ItemTag.get());
     }
 
     @Override
@@ -93,7 +94,7 @@ public class SummonAction extends Action {
     @Override
     public List<String> getInfo() {
         List<String> info = new ArrayList<>();
-        info.add("<aqua>" + getID() + " <yellow><entity> [quantity] [spread]");
+        info.add("<aqua>" + getId() + " <yellow><entity> [quantity] [spread]");
         info.add("<yellow><entity> <aqua>spawnable entity type");
         info.add("<yellow>[quantity] <aqua>number of entities to summon; defaults to 1");
         info.add("<yellow>[spread] <aqua>distance from the player; defaults to 1.5");

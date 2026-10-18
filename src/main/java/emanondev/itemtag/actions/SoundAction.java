@@ -2,6 +2,7 @@ package emanondev.itemtag.actions;
 
 import emanondev.itemedit.aliases.Aliases;
 import emanondev.itemedit.utility.CompleteUtility;
+import emanondev.itemtag.ItemTag;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -14,7 +15,7 @@ import java.util.Locale;
 public class SoundAction extends Action {
 
     public SoundAction() {
-        super("sound");
+        super("sound", ItemTag.get());
     }
 
     @Override
@@ -99,7 +100,7 @@ public class SoundAction extends Action {
     @Override
     public List<String> getInfo() {
         ArrayList<String> list = new ArrayList<>();
-        list.add("<aqua>" + getID() + " <yellow><sound> [volume] [pitch] [self]");
+        list.add("<aqua>" + getId() + " <yellow><sound> [volume] [pitch] [self]");
         list.add("<yellow><sound> <aqua>the sound to play");
         list.add("<yellow>[volume] <aqua>the volume of the sound, default 1");
         list.add("<yellow>[pitch] <aqua>the pitch of the sound, default 1");

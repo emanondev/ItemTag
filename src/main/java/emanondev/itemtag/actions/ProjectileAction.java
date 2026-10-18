@@ -27,7 +27,7 @@ public class ProjectileAction extends Action {
     private static final int DEFAULT_REPEAT_DELAY = 5;
 
     public ProjectileAction() {
-        super("projectile");
+        super("projectile", ItemTag.get());
     }
 
     @Override
@@ -110,7 +110,7 @@ public class ProjectileAction extends Action {
     @Override
     public List<String> getInfo() {
         List<String> info = new ArrayList<>();
-        info.add("<aqua>" + getID() + " <yellow><projectile> [speed] [imprecision] [repeat] [repeatdelay]");
+        info.add("<aqua>" + getId() + " <yellow><projectile> [speed] [imprecision] [repeat] [repeatdelay]");
         info.add("<yellow><projectile> <aqua>spawnable entity type that extends Projectile");
         info.add("<yellow>[speed] <aqua>initial velocity; defaults to 1");
         info.add("<yellow>[imprecision] <aqua>random direction offset on X, Y and Z; defaults to 0");

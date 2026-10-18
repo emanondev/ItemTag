@@ -1,5 +1,7 @@
 package emanondev.itemtag.actions;
 
+import emanondev.itemedit.APlugin;
+import lombok.Getter;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -8,14 +10,14 @@ import java.util.Locale;
 
 public abstract class Action {
 
+    @Getter
     private final String id;
+    @Getter
+    private final APlugin plugin;
 
-    public Action(String id) {
+    public Action(String id, APlugin plugin) {
         this.id = id.toLowerCase(Locale.ENGLISH);
-    }
-
-    public String getID() {
-        return id;
+        this.plugin = plugin;
     }
 
     /**

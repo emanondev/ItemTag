@@ -20,10 +20,10 @@ public class ActionHandler {
         if (action == null) {
             throw new NullPointerException();
         }
-        if (actions.containsKey(action.getID())) {
+        if (actions.containsKey(action.getId())) {
             throw new IllegalArgumentException();
         }
-        actions.put(action.getID().toLowerCase(Locale.ENGLISH), action);
+        actions.put(action.getId().toLowerCase(Locale.ENGLISH), action);
     }
 
     public static void clearActions() {

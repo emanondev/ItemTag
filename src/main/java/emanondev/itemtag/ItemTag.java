@@ -15,7 +15,6 @@ import emanondev.itemtag.command.ItemTagUpdateOldItem;
 import emanondev.itemtag.command.itemtag.SecurityUtil;
 import emanondev.itemtag.compability.Placeholders;
 import emanondev.itemtag.equipmentchange.EquipmentChangeListener;
-import emanondev.itemtag.equipmentchange.EquipmentChangeListenerBase;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.md_5.bungee.api.ChatColor;
@@ -32,7 +31,7 @@ public class ItemTag extends APlugin {
     private static ItemTag plugin = null;
     private static boolean USE_NBTAPI;
     @Getter
-    private EquipmentChangeListenerBase equipChangeListener;
+    private EquipmentChangeListener equipChangeListener;
     @Getter
     private TargetManager targetManager;
 

@@ -32,12 +32,13 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 public class EquipmentChangeListener implements Listener {
 
-    protected final HashMap<Player, EnumMap<EquipmentSlot, ItemStack>> equips = new HashMap<>();
-    protected final HashSet<Player> clickDrop = new HashSet<>();
+    protected final Map<Player, EnumMap<EquipmentSlot, ItemStack>> equips = new ConcurrentHashMap<>();
+    protected final Set<Player> clickDrop = ConcurrentHashMap.newKeySet();
     private int maxCheckedPlayerPerTick = 5;
     private TimerCheckTask timerTask = null;
 
@@ -63,7 +64,7 @@ public class EquipmentChangeListener implements Listener {
                               @NotNull EquipmentSlot type,
                               ItemStack oldItem,
                               ItemStack newItem) {
-        equips.get(p).put(type, ItemUtils.isAirOrNull(newItem) ? null : new ItemStack(newItem));
+        equips.get(p).put(type, ItemUtils.isAirOrNull(newItem) ? null : newItem.clone());
         Bukkit.getPluginManager().callEvent(new EquipmentChangeEvent(p, reason, type, oldItem, newItem));
     }
 
@@ -83,8 +84,9 @@ public class EquipmentChangeListener implements Listener {
         if (!equips.containsKey(p))
             return false;
         EnumMap<EquipmentSlot, ItemStack> map = equips.get(p);
-        for (EquipmentSlot slot : map.keySet())
+        for (EquipmentSlot slot : map.keySet()) {
             onEquipChange(p, EquipmentChangeEvent.EquipMethod.QUIT, slot, map.get(slot), null);
+        }
         equips.remove(p);
         return true;
     }
@@ -206,21 +208,8 @@ public class EquipmentChangeListener implements Listener {
         return meta1.equals(meta2);
     }
 
-    @SuppressWarnings({"incomplete-switch"})
     protected ItemStack getEquip(Player p, EquipmentSlot slot) {
-        //if (Util.isVersionAfter(1, 16))
-        //    return p.getEquipment().getItem(slot);
-
-        //old versions
-        return switch (slot) {
-            case CHEST -> p.getEquipment().getChestplate();
-            case FEET -> p.getEquipment().getBoots();
-            case HAND -> p.getInventory().getItemInMainHand();
-            case HEAD -> p.getEquipment().getHelmet();
-            case LEGS -> p.getEquipment().getLeggings();
-            case OFF_HAND -> p.getInventory().getItemInOffHand();
-            default -> null;
-        };
+        return p.getEquipment().getItem(slot);
     }
 
     protected EquipmentSlot guessRightClickSlotType(ItemStack item) {
@@ -236,14 +225,13 @@ public class EquipmentChangeListener implements Listener {
         String type = item.getType().name();
         if (type.endsWith("_HELMET") || type.endsWith("_SKULL") || type.endsWith("_HEAD"))
             return EquipmentSlot.HEAD;
-        else if (type.endsWith("_CHESTPLATE") || type.equals("ELYTRA"))
+        if (type.endsWith("_CHESTPLATE") || type.equals("ELYTRA"))
             return EquipmentSlot.CHEST;
-        else if (type.endsWith("_LEGGINGS"))
+        if (type.endsWith("_LEGGINGS"))
             return EquipmentSlot.LEGS;
-        else if (type.endsWith("_BOOTS"))
+        if (type.endsWith("_BOOTS"))
             return EquipmentSlot.FEET;
-        else
-            return null;
+        return null;
     }
 
     protected EquipmentSlot guessDispenserSlotType(ItemStack item) {
@@ -259,13 +247,12 @@ public class EquipmentChangeListener implements Listener {
         if (slot == null && item != null) {
             if (item.getType().name().endsWith("PUMPKIN"))
                 return EquipmentSlot.HEAD;
-            else if (item.getType() == Material.SHIELD)// safe
+            if (item.getType() == Material.SHIELD)// safe
                 return EquipmentSlot.OFF_HAND;
         }
         return slot;
     }
 
-    @SuppressWarnings("incomplete-switch")
     protected int getSlotPosition(EquipmentSlot slot, Player p, InventoryView view) {
         if (view.getTopInventory().getType() == InventoryType.CRAFTING) {
             return switch (slot) {
@@ -344,7 +331,7 @@ public class EquipmentChangeListener implements Listener {
     private void event(InventoryDragEvent event) {
         if (!(event.getWhoClicked() instanceof Player p))
             return;
-        if (event.getWhoClicked().hasMetadata("NPC") || event.getWhoClicked().hasMetadata("BOT"))
+        if (event.getWhoClicked().hasMetadata("NPC"))
             return;
         for (EquipmentSlot type : InventoryUtils.getPlayerEquipmentSlots()) {
             int pos = getSlotPosition(type, p, event.getView());
@@ -359,7 +346,7 @@ public class EquipmentChangeListener implements Listener {
 
     @EventHandler
     private void event(PlayerItemBreakEvent e) {
-        if (e.getPlayer().hasMetadata("NPC") || e.getPlayer().hasMetadata("BOT"))
+        if (e.getPlayer().hasMetadata("NPC"))
             return;
         ArrayList<EquipmentSlot> slots = new ArrayList<>();
         for (EquipmentSlot slot : InventoryUtils.getPlayerEquipmentSlots()) {
@@ -439,7 +426,7 @@ public class EquipmentChangeListener implements Listener {
             return;
         if (e.useItemInHand() == Event.Result.DENY)
             return;
-        if (e.getPlayer().hasMetadata("NPC") || e.getPlayer().hasMetadata("BOT"))
+        if (e.getPlayer().hasMetadata("NPC"))
             return;
         EquipmentSlot slot = e.getHand();
         EquipmentSlot type = guessRightClickSlotType(e.getItem());
@@ -583,7 +570,7 @@ public class EquipmentChangeListener implements Listener {
                     index++;
                     if (!p.isOnline())
                         continue;
-                    if (p.hasMetadata("BOT"))
+                    if (p.hasMetadata("NPC"))
                         continue;
                     trackPlayer(p);
                     counter++;

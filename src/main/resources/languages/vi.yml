@@ -1,0 +1,778 @@
+generic:
+  help:
+    player-only: '<dark_red>[<red>ItemTag<dark_red>] <red>Lệnh chỉ dành cho người chơi'
+    no-item-on-hand: '<dark_red>[<red>ItemTag<dark_red>] <red>Bạn cần cầm đồ trên tay'
+    lack-permission: '<dark_red>[<red>ItemTag<dark_red>] <red>Bạn không có quyền %permission%'
+    lack-permission-generic: '<dark_red>[<red>ItemTag<dark_red>] <red>Bạn không có quyền sử dụng lệnh này'
+    prefix: '<dark_gray>[<gradient:#54acff:#A78BFA><bold>ItemTag</bold></gradient><dark_gray>]</dark_gray>'
+    header-format: '<gradient:#54acff:#A78BFA><bold>%header%</bold></gradient> <dark_gray>»</dark_gray> <#A78BFA><bold>Trợ giúp</bold></#A78BFA>'
+    header-sub-format: '<gradient:#54acff:#A78BFA><bold>%header%</bold></gradient> <dark_gray>»</dark_gray> <gradient:#A78BFA:#54acff><bold>%sub%</bold></gradient> <dark_gray>»</dark_gray> <#55d6ff><bold>Trợ giúp</#55d6ff>'
+    command-format: '<gray>/%command%</gray> <#bad1ff>%sub%</#bad1ff> <#d7bbff>%params%</#d7bbff>'
+    footer-format: '%prev_clickable% <#7E9CFD><b>Trợ giúp</b> [%page%/%max_page%]</#7E9CFD> %next_clickable%'
+    next_text: ' <light_purple><b>><st>> ></st> '
+    prev_text: ' <light_purple><b><st>< <</st>< '
+    next_void: ' <dark_gray><b>><st>> ></st> '
+    prev_void: ' <dark_gray><b><st>< <</st>< '
+    next_hover: '<gold><b>Chuyển đến trang %target%'
+    prev_hover: '<gold><b>Chuyển đến trang %target%'
+  wrong-alias:
+    wrong-flag: '%prefix% <red>Giá trị cờ sai! <dark_red>[<gold>di chuột vào đây<dark_red>]'
+    wrong-action: '%prefix% <red>Loại hành động sai! <dark_red>[<gold>di chuột vào đây<dark_red>]'
+    error-pre-hover: '<gradient:#A78BFA:gold><b>Bí danh:</b></gradient>'
+    first_color: '<aqua>'
+    second_color: '<yellow>'
+itemtag:
+  flag:
+    description:
+      - '<gradient:#A78BFA:gold><b>Chuyển đổi cờ tùy chỉnh trên mục'
+      - ''
+      - '<yellow><flag> <gray>tên cờ'
+      - '<yellow>[true/false] <gray>giá trị cờ; nếu bỏ qua, đảo ngược giá trị hiện tại'
+    params: '<flag> [true/false]'
+    placeable:
+      feedback:
+        standard: '%prefix% <green>Có thể đặt vật phẩm.'
+        custom: '%prefix% <green>Không thể đặt vật phẩm.'
+        failed-place-attempt: '<dark_red>[<red>ItemTag<dark_red>] <red>Bạn không thể đặt mục này'
+    usable:
+      feedback:
+        standard: '%prefix% <green>Sản phẩm có thể sử dụng được.'
+        custom: '%prefix% <green>Không thể sử dụng vật phẩm này (Click chuột phải).'
+    smelt:
+      feedback:
+        standard: '%prefix% <green>Sản phẩm có thể được nấu hoặc nấu chảy trong lò.'
+        custom: '%prefix% <green>Sản phẩm không thể nấu hoặc nấu chảy trong lò.'
+    furnacefuel:
+      feedback:
+        standard: '%prefix% <green>Vật phẩm có thể dùng làm nhiên liệu đốt lò.'
+        custom: '%prefix% <green>Vật phẩm này không thể dùng làm nhiên liệu đốt lò.'
+    recipeingredient:
+      feedback:
+        standard: '%prefix% <green>Sản phẩm có thể được sử dụng làm nguyên liệu cho công thức nấu ăn.'
+        custom: '%prefix% <green>Không thể sử dụng vật phẩm này làm thành phần công thức.'
+    enchantable:
+      feedback:
+        standard: '%prefix% <green>Vật phẩm có thể được phù phép.'
+        custom: '%prefix% <green>Không thể phù phép vật phẩm.'
+    renamable:
+      feedback:
+        standard: '%prefix% <green>Sản phẩm có thể được sử dụng trên đe.'
+        custom: '%prefix% <green>Không thể sử dụng vật phẩm này trên đe.'
+    grindable:
+      feedback:
+        standard: '%prefix% <green>Vật phẩm có thể được giải bùa bằng đá mài.'
+        custom: '%prefix% <green>Vật phẩm không thể được giải mã bằng đá mài.'
+    equipment:
+      feedback:
+        standard: '%prefix% <green>Vật phẩm có thể được trang bị.'
+        custom: '%prefix% <green>Không thể trang bị vật phẩm này.'
+    entityfood:
+      feedback:
+        standard: '%prefix% <green>Sản phẩm có thể dùng làm thức ăn cho động vật.'
+        custom: '%prefix% <green>Sản phẩm không được dùng làm thức ăn cho động vật.'
+    clickmove:
+      feedback:
+        standard: '%prefix% <green>Vật phẩm có thể được di chuyển trong kho.'
+        custom: '%prefix% <green>Không thể di chuyển vật phẩm trong kho.'
+    tradeable:
+      feedback:
+        standard: '%prefix% <green>Vật phẩm có thể được trao đổi với dân làng.'
+        custom: '%prefix% <green>Vật phẩm này không thể trao đổi với dân làng.'
+    smithing_table:
+      feedback:
+        standard: '%prefix% <green>Vật phẩm này có thể được sử dụng làm nguyên liệu cho bàn rèn.'
+        custom: '%prefix% <green>Vật phẩm này không thể được sử dụng làm nguyên liệu cho bàn rèn.'
+  actions:
+    invalid-action:
+      message: '<dark_red>[<red>ItemTag<dark_red>] <red>''<gold>%error%<red>'' không phải là loại hợp lệ <dark_red>[<gold>di chuột vào đây<dark_red>]'
+    invalid-actioninfo:
+      message: '<dark_red>[<red>ItemTag<dark_red>] <red>''<gold>%error%<red>'' không phải là thông tin hợp lệ cho <gold>%action% <dark_red>[<gold>di chuột vào đây<dark_red>]'
+    description:
+      - '<gradient:#A78BFA:gold><b>Thiết lập các hành động được thực hiện khi sử dụng vật phẩm'
+      - ''
+      - '<yellow>Add <type> <action> <gray>- thêm hành động đã chọn'
+      - '<yellow>Set <line> <type> <action> <gray>- thay thế hành động trên dòng đã chọn'
+      - '<yellow>Remove <line> <gray>- xóa hành động trên dòng đã chọn'
+      - '<yellow>Clear <gray>- xóa tất cả hành động'
+      - '<yellow>Permission [permission] <gray>- đặt quyền cần thiết để sử dụng mục này'
+      - '<yellow>Cooldown <ms> <gray>- đặt thời gian hồi chiêu để sử dụng lại vật phẩm này'
+      - '<yellow>Cooldownid [id] <gray>- đặt id thời gian hồi chiêu đã sử dụng cho việc này'
+      - '<yellow>Cooldownmsg [msg] <gray>- đặt phản hồi về thời gian hồi chiêu'
+      - '<yellow>Cooldownmsgtype [type] <gray>- đặt loại phản hồi thời gian hồi chiêu (chat hoặc actionbar)'
+      - '<yellow>Uses [amount] <gray>- đặt số lần vật phẩm này có thể được sử dụng'
+      - '<yellow>Info <gray>- hiển thị thông tin về các hành động trên mục hiện tại'
+    params: '[...]'
+    add:
+      params: 'add <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Thêm hành động đã chọn'
+        - ''
+        - '<yellow><type> <gray>loại hành động'
+        - '<yellow><action> <gray>thông tin bổ sung cho hành động'
+      feedback: '%prefix% <green>Đã thêm <yellow>%action%'
+    addline:
+      params: 'addline <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Thêm hành động đã chọn trên dòng đã chọn'
+        - ''
+        - '<yellow><line> <gray>dòng để thêm'
+        - '<yellow><type> <gray>loại hành động'
+        - '<yellow><action> <gray>thông tin bổ sung cho hành động'
+      feedback: '%prefix% <green>Dòng <yellow>%line% <green>được thêm vào dưới dạng <yellow>%action%'
+    set:
+      params: 'set <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Thay thế hành động trên dòng đã chọn'
+        - ''
+        - '<yellow><line> <gray>dòng cần thay thế'
+        - '<yellow><type> <gray>loại hành động'
+        - '<yellow><action> <gray>thông tin bổ sung cho hành động'
+      feedback: '%prefix% <green>Dòng <yellow>%line% <green>đặt là <yellow>%action%'
+    remove:
+      params: 'remove <line>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Xóa hành động trên dòng đã chọn'
+        - ''
+        - '<yellow><line> <gray>dòng cần xóa'
+      feedback: '%prefix% <green>Đã xóa dòng <yellow>%line% <green>(<yellow>%action%<green>)'
+    permission:
+      params: 'permission [permission]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Đặt quyền sử dụng mục này'
+        - ''
+        - '<yellow>[permission] <gray>quyền được đặt, theo mặc định là không có'
+      feedback:
+        set: '%prefix% <green>Quyền <yellow>%permission% <green>hiện được yêu cầu để sử dụng mục này'
+        removed: '%prefix% <green>Bây giờ không cần xin phép để sử dụng mục này'
+    cooldown:
+      params: 'cooldown [ms]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Đặt thời gian hồi chiêu để sử dụng lại vật phẩm'
+        - ''
+        - '<yellow>[ms] <gray>bao lâu mới có thể sử dụng được'
+        - '<gray>mục đó lại, theo mặc định 0'
+        - '<gray>Lưu ý: thời gian hồi chiêu được đặt dựa trên cooldownid, khác nhau'
+        - '<gray> vật phẩm có cùng cooldownid có cùng thời gian hồi chiêu'
+        - '<gray>Lưu ý: thời gian hồi chiêu được giữ nguyên khi người chơi đăng xuất và khởi động lại máy chủ'
+      feedback:
+        set: '%prefix% <green>Vật phẩm này có thời gian hồi chiêu là <yellow>%cooldown_seconds% <green>giây'
+        removed: '%prefix% <green>Trang bị này không có thời gian hồi chiêu'
+    cooldownid:
+      params: 'cooldownid [id]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Đặt id thời gian hồi chiêu cho một vật phẩm'
+        - ''
+        - '<yellow>[id] <gray>số nhận dạng thời gian hồi chiêu được chia sẻ'
+        - '<gray>Lưu ý: thời gian hồi chiêu được đặt dựa trên cooldownid, khác nhau'
+        - '<gray> vật phẩm có cùng cooldownid có cùng thời gian hồi chiêu'
+      feedback:
+        set: '%prefix% <green>Vật phẩm này sử dụng ID <yellow>%id% <green>để hồi chiêu'
+        removed: '%prefix% <green>Mục này sử dụng <yellow>mặc định <green>id cho thời gian hồi chiêu'
+    cooldownmsg:
+      description:
+        - '<gradient:#A78BFA:gold><b>Đặt tin nhắn hồi chiêu'
+        - ''
+        - '<yellow>[message] <gray>thông báo hiển thị khi không thể sử dụng vật phẩm'
+        - '<gray>trong khi thời gian hồi chiêu đang được kích hoạt'
+      params: 'cooldownmsg [message]'
+      feedback:
+        set: '%prefix% <green>Thông báo phản hồi về thời gian hồi chiêu được đặt là ''<white>%msg%<green>'' khi thời gian hồi chiêu được kích hoạt'
+        removed: '%prefix% <green>Thông báo phản hồi về thời gian hồi chiêu đã bị xóa'
+    cooldownmsgtype:
+      description:
+        - '<gradient:#A78BFA:gold><b>Đặt loại tin nhắn thời gian hồi chiêu'
+        - ''
+        - '<yellow>[type] <gray>chat hoặc actionbar'
+      params: 'cooldownmsgtype [type]'
+      feedback:
+        set: '%prefix% <green>Thông báo phản hồi về thời gian hồi chiêu được đặt ở loại ''<yellow>%type%<green>'''
+    uses:
+      params: 'uses [amount]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Đặt số lần vật phẩm có thể được sử dụng'
+        - ''
+        - '<gray>Lưu ý: sử dụng <yellow>-1 <gray>không giới hạn số lần sử dụng'
+      feedback:
+        set: '%prefix% <green>Sản phẩm này có <yellow>%uses% <green>sử dụng trước khi tiêu thụ'
+        unlimited: '%prefix% <green>Mục này có <yellow>không giới hạn <green>công dụng'
+    maxuses:
+      params: 'maxuses [amount]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Đặt số lần sử dụng tối đa cho vật phẩm'
+        - ''
+        - '<gray>Sử dụng chủ yếu cho mục đích thẩm mỹ với'
+        - '<gray>Sử dụng hiển thị được đặt thành true'
+        - ''
+        - '<gray>Lưu ý: sử dụng <yellow>-1 <gray>không giới hạn số lần sử dụng'
+      feedback:
+        set: '%prefix% <green>Sản phẩm này có <yellow>%uses% <green>công dụng tối đa'
+        unlimited: '%prefix% <green>Mục này có <yellow>không giới hạn <green>số lần sử dụng tối đa'
+    consume:
+      params: 'consume [true/false]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Tiêu thụ vật phẩm trong lần sử dụng cuối cùng'
+        - ''
+        - '<gray>Lưu ý: khi true và vật phẩm tiêu thụ'
+        - '<gray> lần sử dụng cuối cùng, vật phẩm sẽ bị phá hủy'
+      feedback:
+        set: '%prefix% <green>Vật phẩm sẽ bị phá hủy khi sử dụng lần cuối'
+        unset: '%prefix% <green>Vật phẩm không bị phá hủy khi sử dụng lần cuối'
+    visualcooldown:
+      params: 'visualcooldown [true/false]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Hiển thị thời gian hồi chiêu còn lại một cách trực quan'
+        - ''
+        - '<gray>Khi true mục hiển thị hoạt ảnh tương tự như'
+        - '<gray>hiệu ứng hồi chiêu của ngọc Ender'
+        - ''
+        - '<gray>Lưu ý: Thật không may, hiệu ứng hình ảnh này cũng'
+        - '<gray> áp dụng cho mọi mặt hàng cùng loại'
+      feedback:
+        set: '%prefix% <green>Bây giờ vật phẩm hiển thị thời gian hồi chiêu trực quan'
+        unset: '%prefix% <green>Trang bị hiện tại sẽ không hiển thị thời gian hồi chiêu hình ảnh'
+    displayuses:
+      params: 'displayuses [true/false]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Hiển thị số lần sử dụng còn lại'
+        - ''
+        - '<gray>Khi true thêm một dòng để mô tả'
+        - '<gray>còn bao nhiêu công dụng'
+        - ''
+        - '<gray>Lưu ý: Thật không may, hiệu ứng hình ảnh này cũng'
+        - '<gray> áp dụng cho mọi mặt hàng cùng loại'
+      feedback:
+        set: '%prefix% <green>Vật phẩm hiện hiển thị số lần sử dụng còn lại và tối đa'
+        unset: '%prefix% <green>Vật phẩm không còn hiển thị số lần sử dụng còn lại và tối đa'
+  activity:
+    description:
+      - '<gradient:#A78BFA:gold><b>Thiết lập một hoạt động (một số hành động)'
+      - '<gray>một hoạt động có thể được kích hoạt bởi trình kích hoạt'
+      - '<gray>trình kích hoạt có thể được liên kết với các mục (/it trigger)'
+      - ''
+      - '<yellow>Create <id> <gray>- tạo một hoạt động mới'
+      - '<yellow>Open <id> <gray>- mở gui cho hoạt động đã chọn'
+      - '<yellow>Delete <id> <gray>- xóa hoạt động đã chọn'
+      - '<yellow>Clone <id> <new id><gray>- sao chép hoạt động đã chọn'
+      - '<yellow>Rename <id> <new id><gray>- đổi tên hoạt động đã chọn'
+    params: '[...]'
+    feedback:
+      invalid_activity_id: '<dark_red>[<red>ItemTag<dark_red>] <red>Hoạt động <gold>%id% <red>không tồn tại'
+      already_used_activity_id: '<dark_red>[<red>ItemTag<dark_red>] <red>Hoạt động <gold>%id% <red>đã được sử dụng'
+    create:
+      params: 'create <new id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Tạo hoạt động mới'
+        - ''
+        - '<yellow><new id> <gray>là id của hoạt động'
+        - '<gray>id phải bắt đầu bằng một chữ cái và có thể là chữ và số'
+        - '<gray>cũng có thể chứa ký hiệu _'
+      feedback: '%prefix% <green>Hoạt động <yellow>%id% <green>đã tạo'
+    rename:
+      params: 'rename <id> <new id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Đổi tên id hoạt động'
+        - ''
+        - '<yellow><id> <gray>là id hiện tại của hoạt động'
+        - '<yellow><new id> <gray>là id mới của hoạt động'
+        - '<gray>id phải bắt đầu bằng một chữ cái và có thể là chữ và số'
+        - '<gray>cũng có thể chứa ký hiệu _'
+      feedback: '%prefix% <green>Hoạt động <yellow>%id% <green>đã đổi tên <yellow>%new_id%'
+    open:
+      params: 'open <id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Mở gui để chỉnh sửa hoạt động'
+        - ''
+        - '<yellow><id> <gray>là id của hoạt động'
+    delete:
+      params: 'delete <id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Xóa hoạt động đã chọn'
+        - ''
+        - '<yellow><id> <gray>là id của hoạt động'
+      feedback: '%prefix% <green>Hoạt động <yellow>%id% <green>đã xóa'
+    clone:
+      params: 'clone <id> <clone id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Sao chép hoạt động đã chọn'
+        - ''
+        - '<yellow><id> <gray>là ID của hoạt động đã chọn'
+        - '<yellow><clone id> <gray>là id của bản sao'
+        - '<gray>id phải bắt đầu bằng một chữ cái và có thể là chữ và số'
+        - '<gray>cũng có thể chứa ký hiệu _'
+      feedback: '%prefix% <green>Hoạt động <yellow>%id% <green>được sao chép thành <yellow>%clone_id%'
+    setconsumes:
+      params: 'setconsumes <id> <amount>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Đặt mục đích sử dụng cần thiết cho hoạt động đã chọn'
+        - ''
+        - '<yellow><id> <gray>là ID của hoạt động đã chọn'
+        - '<yellow><amount> <gray>số lượng sử dụng được sử dụng khi kích hoạt hoạt động'
+      feedback: '%prefix% <green>Hoạt động <yellow>%id% <green>sử dụng mức tiêu thụ là <yellow>%amount%'
+    addcondition:
+      params: 'addcondition <id> [!]<conditiontype> [condition info]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Thêm điều kiện để kích hoạt hoạt động'
+        - ''
+        - '<yellow><id> <gray>là id của hoạt động'
+        - '<yellow>[!] <gray>là ''!'' nếu bạn muốn điều kiện được đảo ngược'
+        - '<yellow><conditiontype> <gray>là loại tình trạng'
+        - '<yellow>[condition info] <gray>là thông tin bổ sung mà loại điều kiện có thể cần'
+      feedback: '%prefix% <green>Hoạt động <yellow>%id% <green>điều kiện bổ sung <yellow>%condition%'
+  consumeactions:
+    description:
+      - '<gradient:#A78BFA:gold><b>Thiết lập các hành động được thực hiện khi vật phẩm được tiêu thụ như đồ ăn và đồ uống'
+      - ''
+      - '<yellow>Add <type> <action> <gray>- thêm hành động đã chọn'
+      - '<yellow>Set <line> <type> <action> <gray>- thay thế hành động trên dòng đã chọn'
+      - '<yellow>Remove <line> <gray>- xóa hành động trên dòng đã chọn'
+      - '<yellow>Clear <gray>- xóa tất cả hành động'
+      - '<yellow>Permission [permission] <gray>- đặt quyền cần thiết để tiêu thụ mặt hàng này'
+      - '<yellow>Cooldown <ms> <gray>- đặt thời gian hồi chiêu để sử dụng lại vật phẩm này'
+      - '<yellow>Cooldownid [id] <gray>- đặt id thời gian hồi chiêu đã sử dụng cho việc này'
+      - '<yellow>Info <gray>- hiển thị thông tin về các hành động trên mục hiện tại'
+    params: '[...]'
+    add:
+      params: 'add <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Thêm hành động đã chọn'
+        - ''
+        - '<yellow><type> <gray>loại hành động'
+        - '<yellow><action> <gray>thông tin bổ sung cho hành động'
+    addline:
+      params: 'addline <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Thêm hành động đã chọn trên dòng đã chọn'
+        - ''
+        - '<yellow><line> <gray>dòng để thêm'
+        - '<yellow><type> <gray>loại hành động'
+        - '<yellow><action> <gray>thông tin bổ sung cho hành động'
+    set:
+      params: 'set <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Thay thế hành động trên dòng đã chọn'
+        - ''
+        - '<yellow><line> <gray>dòng cần thay thế'
+        - '<yellow><type> <gray>loại hành động'
+        - '<yellow><action> <gray>thông tin bổ sung cho hành động'
+    remove:
+      params: 'remove <line>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Xóa hành động trên dòng đã chọn'
+        - ''
+        - '<yellow><line> <gray>dòng cần xóa'
+    permission:
+      params: 'permission [permission]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Đặt quyền sử dụng vật phẩm này'
+        - ''
+        - '<yellow>[permission] <gray>quyền được đặt, theo mặc định là không có'
+    cooldown:
+      params: 'cooldown [ms]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Đặt thời gian hồi chiêu để tiêu thụ lại một vật phẩm'
+        - ''
+        - '<yellow>[ms] <gray>bao lâu mới có thể tiêu thụ được'
+        - '<gray>mục đó lại, theo mặc định 0'
+        - '<gray>Lưu ý: thời gian hồi chiêu được đặt dựa trên cooldownid, khác nhau'
+        - '<gray> vật phẩm có cùng cooldownid có cùng thời gian hồi chiêu'
+        - '<gray>Lưu ý: thời gian hồi chiêu được giữ nguyên khi người chơi đăng xuất và khởi động lại máy chủ'
+    cooldownid:
+      params: 'cooldownid [id]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Đặt id thời gian hồi chiêu cho một vật phẩm'
+        - ''
+        - '<yellow>[id] <gray>số nhận dạng thời gian hồi chiêu được chia sẻ'
+        - '<gray>Lưu ý: thời gian hồi chiêu được đặt dựa trên cooldownid, khác nhau'
+        - '<gray> vật phẩm có cùng cooldownid có cùng thời gian hồi chiêu'
+    feedback:
+      actions:
+        set: '<green>Dòng <yellow>%line% <green>đặt là <yellow>%action%'
+        remove: '<green>Đã xóa dòng <yellow>%line% <green>(<yellow>%action%<green>)'
+        clear: '<green>Đã xóa hành động tiêu thụ đối với mặt hàng này'
+        permission:
+          set: '<green>Quyền <yellow>%permission% <green> hiện được yêu cầu để tiêu thụ vật phẩm này'
+          removed: '<green>Bây giờ không cần xin phép để tiêu thụ mặt hàng này'
+        cooldownid:
+          set: '<green>Vật phẩm này sử dụng ID <yellow>%id% <green>để hồi chiêu'
+          removed: '<green>Mục này sử dụng <yellow>mặc định <green>id cho thời gian hồi chiêu'
+        cooldown:
+          set: '<green>Vật phẩm này có thời gian hồi chiêu là <yellow>%cooldown_seconds% <green>giây'
+          removed: '<green>Trang bị này không có thời gian hồi chiêu'
+  effects:
+    description:
+      - '<gradient:#A78BFA:gold><b>Thêm hiệu ứng thuốc vĩnh viễn'
+      - '<gray>Mở gui'
+      - '<gray>Nhớ chọn trang bị nào'
+      - '<gray> áp dụng hiệu ứng'
+    params: ''
+  usepermission:
+    description:
+      - '<gradient:#A78BFA:gold><b>Đặt quyền sử dụng mục này (nhấp chuột phải vào hành vi vanilla)'
+      - ''
+      - '<yellow>setpermission <permission> <gray>đặt quyền cần thiết'
+      - '<yellow>setmessage <message> <gray>đặt thông báo thiếu quyền'
+    params: '[...]'
+    setpermission:
+      feedback: '<green>Quyền sử dụng hiện được đặt là <yellow>%value%'
+      feedback-reset: '<green>Quyền sử dụng cần thiết đã bị xóa'
+    setmessage:
+      feedback: '<green>Thông báo từ chối quyền sử dụng hiện được đặt là <yellow>%value%'
+      feedback-reset: '<green>Thông báo từ chối quyền sử dụng đã bị xóa'
+  wearpermission:
+    description:
+      - '<gradient:#A78BFA:gold><b>Đặt quyền cần thiết để trang bị vật phẩm này'
+      - ''
+      - '<gray>Nếu không được phép, cố gắng trang bị vật phẩm này sẽ trả lại nó'
+      - '<gray>vào kho hoặc xuống đất nếu kho đã đầy'
+      - '<gray>'
+      - '<yellow>setpermission <permission> <gray>đặt quyền cần thiết'
+      - '<yellow>setmessage <message> <gray>đặt thông báo thiếu quyền'
+    params: '[...]'
+    setpermission:
+      feedback: '<green>Quyền trang bị vật phẩm được đặt thành <yellow>%value%'
+      feedback-reset: '<green>Đã xóa quyền cần thiết để trang bị vật phẩm'
+    setmessage:
+      feedback: '<green>Thông báo từ chối trang bị được đặt thành <yellow>%value%'
+      feedback-reset: '<green>Thông báo từ chối quyền sử dụng đã bị xóa'
+  help:
+    header-name: 'ItemTag'
+    description:
+      - '<gradient:#A78BFA:gold><b>Hiển thị ItemTag trợ giúp</b></gradient>'
+      - ''
+      - '<gray><yellow>[page] </yellow>Trang trợ giúp'
+      - '<gray><yellow>[subcommand] </yellow>Trợ giúp về lệnh phụ'
+    params: '[page/subcommand]'
+itemtagreload:
+  success: '<blue>[<white>ItemTag<blue>] <green>Đã tải lại'
+gui:
+  middleclick: #middle click can't be used unless on creative mode, an alternative to middle click is pressing hotbar button 1
+    creative: 'Nhấp chuột giữa'
+    other: 'Nhấn phím 1'
+  previous-page:
+    #Holders: %player_name% %page% %target_page%
+    description:
+      - '<gold><bold>Trang trước'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> Chuyển đến trang <yellow>%target_page%'
+  next-page:
+    #Holders: %player_name% %page% %target_page%
+    description:
+      - '<gold><bold>Trang tiếp theo'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> Chuyển đến trang <yellow>%target_page%'
+  back:
+    #Holders: %player_name%
+    description:
+      - '<gold><bold>Quay lại'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> Đi tới gui trước'
+  actions:
+    title: '<blue>Hành động'
+    click-interact: '<blue>[<white>ItemTag<blue>] <gray>[Nhấp vào đây]'
+    click-hover: '<gold>Click để gợi ý lệnh'
+    addline:
+      - '<gold><bold>Thêm hành động'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> Thay đổi giá trị'
+      - '<blue>/it actions add <action type> <action info>'
+      - '<blue>/it actions addline <line> <action type> <action info>'
+    set:
+      - '<gold><bold>Đặt hành động'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> Thay đổi giá trị'
+      - '<blue>/it actions set <line> <action type> <action info>'
+    remove:
+      - '<gold><bold>Xóa hành động'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> Thay đổi giá trị'
+      - '<blue>/it actions remove <line>'
+    consume:
+      - '<gold><bold>Tiêu thụ trên <yellow><bold>0<gold><bold> lần sử dụng còn lại'
+      - '<gray>Đã bật: <yellow>%value%'
+      - '<gray>Lưu ý: khi true và vật phẩm tiêu thụ'
+      - '<gray> lần sử dụng cuối cùng, vật phẩm sẽ bị phá hủy'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> Chuyển đổi'
+      - '<blue>/it actions consume [true/false]'
+    uses:
+      - '<gold><bold>Số lần dùng còn lại: <yellow><bold>%value%'
+      - '<gray>(-1 không giới hạn)'
+      - ''
+      - '<gray>[<white>Nhấp chuột phải<gray>]<gray> Thêm <yellow>%editor%'
+      - '<gray>[<white>Nhấp chuột trái<gray>]<gray> Xóa <yellow>%editor%'
+      - '<gray>[<white>Shift + Nhấp chuột trái/phải<gray>]<gray> %editor-prev% << <yellow>%editor% <gray>>> %editor-next%'
+      - '<blue>/it actions uses <amount>'
+    maxuses:
+      - '<gold><bold>Số lần dùng tối đa: <yellow><bold>%value%'
+      - '<gray>(-1 không giới hạn)'
+      - '<gray>Chủ yếu dùng để định dạng màn hình sử dụng còn lại'
+      - ''
+      - '<gray>[<white>Nhấp chuột phải<gray>]<gray> Thêm <yellow>%editor%'
+      - '<gray>[<white>Nhấp chuột trái<gray>]<gray> Xóa <yellow>%editor%'
+      - '<gray>[<white>Shift + Nhấp chuột trái/phải<gray>]<gray> %editor-prev% << <yellow>%editor% <gray>>> %editor-next%'
+      - '<blue>/it actions maxuses <amount>'
+    permission:
+      - '<gold><bold>Quyền sử dụng: <yellow><bold>%value%'
+      - '<gray>Lưu ý: nếu bạn không có quyền này'
+      - '<gray> bạn sẽ không thể sử dụng vật phẩm hoặc'
+      - '<gray> giảm số lần sử dụng còn lại'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> Chỉnh sửa'
+      - '<blue>/it actions permission [permission]'
+    cooldown:
+      - '<gold><bold>Thời gian hồi chiêu: <yellow><bold>%value_s% <blue>s'
+      - '<gray>Lưu ý: áp dụng thời gian hồi chiêu khi sử dụng nhấp chuột phải'
+      - ''
+      - '<gray>[<white>Nhấp chuột phải<gray>]<gray> Thêm <yellow>%editor%'
+      - '<gray>[<white>Nhấp chuột trái<gray>]<gray> Xóa <yellow>%editor%'
+      - '<gray>[<white>Shift + Nhấp chuột trái/phải<gray>]<gray> %editor-prev% << <yellow>%editor% <gray>>> %editor-next%'
+      - '<blue>/it actions cooldown <cooldown <u>ms</u>>'
+    cooldownid:
+      - '<gold><bold>Id thời gian hồi chiêu: <yellow><bold>%value%'
+      - '<gray>Lưu ý: tất cả các mục có cùng cooldownid'
+      - '<gray> chia sẻ thời gian hồi chiêu'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> Chỉnh sửa'
+      - '<blue>/it actions cooldownid [cooldown id]'
+    info:
+      - '<gold><bold>Danh sách hành động:'
+    visualcooldown:
+      - '<gold><bold>Hiển thị thời gian hồi chiêu trực quan'
+      - '<gray>Đã bật: <yellow>%value%'
+      - '<gray>Lưu ý: Thật không may, hiệu ứng hình ảnh này cũng'
+      - '<gray> áp dụng cho mọi mặt hàng cùng loại'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> Chuyển đổi'
+      - '<blue>/it actions visualdisplay [true/false]'
+    displayuses:
+      - '<gold><bold>Hiển thị số lần sử dụng còn lại'
+      - '<gray>Đã bật: <yellow>%value%'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> Chuyển đổi'
+      - '<blue>/it actions displayuses [true/false]'
+  actionslines:
+    actionformat: '<yellow>%type% <white>%info%'
+    element:
+      - '%action%'
+      - '<gray>[<white>Nhấp chuột phải<gray>]<gray> Thay thế hành động này'
+      - '<gray>[<white>Nhấp chuột trái<gray>]<gray> Thêm hành động mới trước hành động này'
+      - '<gray>[<white>Shift + Nhấp chuột phải<gray>]<gray> Xóa hành động này'
+    add:
+      - ' '
+      - '<gray>[<white>Nhấp chuột trái<gray>]<gray> Thêm hành động mới'
+  flags:
+    placeable:
+      - '<gold>Đặt xem có thể đặt vật phẩm hay không'
+      - '<gray>Giá trị: <yellow>%value%'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> Chuyển đổi'
+    usable:
+      - '<gold>Đặt xem vật phẩm có thể được sử dụng hay không'
+      - '<gray>Giá trị: <yellow>%value%'
+      - ''
+      - '<gray>Nếu được đặt thành false hãy tắt hoạt động bình thường của'
+      - '<gray> nhấp chuột phải vào mục'
+      - '<gray>Hành vi sử dụng bình thường tùy thuộc vào loại vật phẩm'
+      - '<gray>Thức ăn không ăn được, cần câu không câu được,'
+      - '<gray> trứng không thể ném và trứng sinh sản không thể triệu hồi sinh vật...'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> Chuyển đổi'
+    smelt:
+      - '<gold>Đặt xem món ăn có thể được nấu hay không'
+      - '<gray>Giá trị: <yellow>%value%'
+      - ''
+      - '<gray>Nếu được đặt thành false tắt hoạt động bình thường'
+      - '<gray> nấu bằng lò'
+      - '<gray>Hoạt động cho cả thực phẩm và quặng'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> Chuyển đổi'
+    furnacefuel:
+      - '<gold>Đặt xem vật phẩm có thể được sử dụng làm nhiên liệu lò hay không'
+      - '<gray>Giá trị: <yellow>%value%'
+      - ''
+      - '<gray>Nếu được đặt thành false hãy tắt hoạt động bình thường của'
+      - '<gray> lò tiêu thụ mặt hàng này làm nhiên liệu'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> Chuyển đổi'
+    recipeingredient:
+      - '<gold>Đặt xem vật phẩm có thể được sử dụng trong các công thức chế tạo hay không'
+      - '<gray>Giá trị: <yellow>%value%'
+      - ''
+      - '<gray>Nếu được đặt thành false tắt chế độ chế tạo thông thường'
+      - '<gray> khi mặt hàng này là một trong những nguyên liệu'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> Chuyển đổi'
+    enchantable:
+      - '<gold>Đặt xem vật phẩm có thể được phù phép hay không'
+      - '<gray>Giá trị: <yellow>%value%'
+      - ''
+      - '<gray>Nếu được đặt thành false ngăn việc sử dụng bảng bùa mê bình thường'
+      - '<gray> với sản phẩm này'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> Chuyển đổi'
+    renamable:
+      - '<gold>Đặt xem vật phẩm có thể được sử dụng trên đe hay không'
+      - '<gray>Giá trị: <yellow>%value%'
+      - ''
+      - '<gray>Nếu được đặt thành false tắt các tương tác đe thông thường'
+      - '<gray> về mặt hàng này'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> Chuyển đổi'
+    grindable:
+      - '<gold>Đặt xem vật phẩm có thể được giải bùa trên đá mài hay không'
+      - '<gray>Giá trị: <yellow>%value%'
+      - ''
+      - '<gray>Nếu được đặt thành false sẽ ngăn việc sử dụng đá mài bình thường'
+      - '<gray> với sản phẩm này'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> Chuyển đổi'
+    equipment:
+      - '<gold>Đặt xem vật phẩm có thể được sử dụng làm trang bị hay không'
+      - '<gray>Giá trị: <yellow>%value%'
+      - ''
+      - '<gray>Nếu được đặt thành false và vật phẩm được trang bị, nó sẽ bị rơi'
+      - '<gray> quay lại kho đồ của người chơi'
+      - '<gray>NB: tay và tay không được coi là một phần của ô trang bị'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> Chuyển đổi'
+    entityfood:
+      - '<gold>Đặt xem vật phẩm có thể được sử dụng làm thức ăn cho động vật hay không'
+      - '<gray>Giá trị: <yellow>%value%'
+      - ''
+      - '<gray>Nếu đặt thành false ngăn động vật sinh sản'
+      - '<gray> và ngăn chặn sự phát triển nhanh hơn của động vật con'
+      - '<gray> về mặt hàng này'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> Chuyển đổi'
+    vanishcurse:
+      - '<gold>Đặt xem vật phẩm có biến mất khi chết hay không'
+      - '<gray>Giá trị: <yellow>%value%'
+      - ''
+      - '<gray>Hoạt động chính xác như bùa mê Lời nguyền biến mất'
+      - '<gray>Nhưng đó không phải là bùa mê'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> Chuyển đổi'
+    clickmove:
+      - '<gold>Đặt xem vật phẩm có thể được di chuyển trong kho hay không'
+      - '<gray>Giá trị: <yellow>%value%'
+      - ''
+      - '<gray>Op người chơi có quyền vượt qua giới hạn đó'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> Chuyển đổi'
+    tradeable:
+      - '<gold>Đặt xem vật phẩm có thể được trao đổi lấy vật phẩm khác với dân làng hay không'
+      - '<gray>Giá trị: <yellow>%value%'
+      - ''
+      - '<gray>Nếu được đặt thành false vô hiệu hóa giao dịch dân làng bình thường'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> Chuyển đổi'
+    smithing_table:
+      - '<gold>Đặt xem vật phẩm có thể được sử dụng trên bàn rèn hay không'
+      - '<gray>Giá trị: <yellow>%value%'
+      - ''
+      - '<gray>Nếu được đặt thành false tắt các tương tác đe thông thường'
+      - '<gray> về mặt hàng này'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> Chuyển đổi'
+  effects:
+    title: '<blue>Hiệu ứng'
+    slot:
+      - '<gold><bold>%slot%'
+      - '<gray>Đã bật: <yellow>%value%'
+    potion:
+      - '<gold><bold>%effect%'
+      - ''
+      - '<gray>Cấp độ: <yellow>%level% <gray>[Thay đổi nhấp chuột trái/phải]'
+      - '<gray>Các hạt: <yellow>%particles% <gray>[Shift + Nhấp chuột trái Chuyển đổi]'
+      - '<gray>Môi trường xung quanh: <yellow>%ambient% <gray>[Shift + Nhấp chuột phải Chuyển đổi]'
+      - '<gray>Biểu tượng: <yellow>%icon% <gray>[%middle_click% Chuyển đổi]'
+      - '<gray>Thời lượng: <yellow>%duration%'
+    potion-instant: 'ngay lập tức'
+    potion-unlimited: 'không giới hạn'
+  activity:
+    title_main: '<blue>Hoạt động <yellow>%activity_id%'
+  triggers:
+    title_main: '<blue>Kích hoạt'
+trigger:
+  consume_item:
+    description:
+      - '<gold>được kích hoạt khi người chơi tiêu thụ vật phẩm'
+      - '<gold>(uống hoặc ăn)'
+  right_interact:
+    gui_material:
+      - '<gold>được kích hoạt khi người chơi nhấp chuột phải'
+  left_interact:
+    gui_material:
+      - '<gold>được kích hoạt khi người chơi nhấp chuột trái'
+actions:
+  delay:
+    info:
+      - '<aqua>delay <yellow><delay ticks> <action>'
+      - '<yellow><delay ticks> <aqua>bạn muốn trì hoãn hành động đến mức nào, 20 tích tắc = 1 giây'
+      - '<yellow><action> <aqua>hành động cần thực hiện, ví dụ: <yellow>sound entity_bat_hurt 1 1'
+  message:
+    info:
+      - '<aqua>message <yellow><message>'
+      - '<yellow><message> <aqua>tin nhắn được gửi tới người chơi'
+      - '<aqua>%player% có thể được sử dụng làm phần giữ chỗ cho tên người chơi'
+  permission:
+    info:
+      - '<aqua>permission <yellow><permission> <action>'
+      - '<yellow><permission> <aqua>yêu cầu quyền hoặc <yellow>-permission <aqua>yêu cầu người chơi KHÔNG có quyền'
+      - '<yellow><action> <aqua>hành động cần thực hiện, ví dụ: <yellow>sound entity_bat_hurt 1 1'
+  commandasop:
+    info:
+      - '<aqua>commandasop <yellow><command>'
+      - '<yellow><command> <aqua>lệnh được người chơi thực hiện dưới dạng Op'
+      - '<aqua>%player% có thể được sử dụng làm phần giữ chỗ cho tên người chơi'
+      - '<aqua>N.B. không bắt buộc phải có <yellow>/<aqua>, ví dụ: <yellow>home'
+  command:
+    info:
+      - '<aqua>command <yellow><command>'
+      - '<yellow><command> <aqua>lệnh được người chơi thực hiện'
+      - '<aqua>%player% có thể được sử dụng làm phần giữ chỗ cho tên người chơi'
+      - '<aqua>N.B. không bắt buộc phải có <yellow>/<aqua>, ví dụ: <yellow>home'
+  potion:
+    info:
+      - '<aqua>potion <yellow><type> <duration_ticks|infinite> <level> [ambient] [particles] [icon]'
+      - '<yellow><type> <aqua>hiệu ứng thuốc áp dụng'
+      - '<yellow><duration_ticks|infinite> <aqua>thời gian hiệu ứng tính bằng tích tắc, hoặc infinite'
+      - '<yellow><level> <aqua>mức hiệu ứng từ 1 đến 256'
+      - '<yellow>[ambient] [particles] [icon] <aqua>boolean; mặc định là false, true, true'
+  projectile:
+    info:
+      - '<aqua>projectile <yellow><projectile> [speed] [imprecision] [repeat] [repeatdelay]'
+      - '<yellow><projectile> <aqua>loại thực thể có thể sinh sản có lớp Java mở rộng Projectile'
+      - '<yellow>[speed] <aqua>vận tốc ban đầu; mặc định là 1'
+      - '<yellow>[imprecision] <aqua>bù hướng ngẫu nhiên trên X, Y và Z; mặc định là 0'
+      - '<yellow>[repeat] <aqua>bức ảnh bổ sung sau lần đầu tiên; mặc định là 0'
+      - '<yellow>[repeatdelay] <aqua> tích tắc giữa các lần chụp; mặc định là 5 và phải ít nhất là 1'
+  servercommand:
+    info:
+      - '<aqua>servercommand <yellow><command>'
+      - '<yellow><command> <aqua>lệnh được thực thi bởi máy chủ'
+      - '<aqua>%player% có thể được sử dụng làm phần giữ chỗ cho tên người chơi'
+      - '<aqua>N.B. không bắt buộc phải có <yellow>/<aqua>, ví dụ: <yellow>heal %player%'
+  sound:
+    info:
+      - '<aqua>sound <yellow><sound> [volume] [pitch] [self]'
+      - '<yellow><sound> <aqua>âm thanh để phát'
+      - '<yellow>[volume] <aqua>âm lượng của âm thanh, mặc định 1'
+      - '<yellow>[pitch] <aqua>cao độ của âm thanh, mặc định 1'
+      - '<yellow>[self] <aqua>chỉ người chơi mới nghe được? Mặc định là false'
+  summon:
+    info:
+      - '<aqua>summon <yellow><entity> [quantity] [spread]'
+      - '<yellow><entity> <aqua>loại thực thể có thể sinh sản'
+      - '<yellow>[quantity] <aqua>số lượng thực thể được triệu hồi; mặc định là 1'
+      - '<yellow>[spread] <aqua>khoảng cách từ người chơi; mặc định là 1.5'
+      - '<aqua>Một thực thể xuất hiện ở phía trước; hai lần sinh sản ở ±60°; ba hoặc nhiều hơn cách đều nhau xung quanh người chơi'
+  throwtnt:
+    info:
+      - '<aqua>throwtnt [speed] [imprecision] [fuseTicks] [repeat] [repeatdelay]'
+      - '<aqua>Ném TNT đã kích hoạt theo hướng người chơi đang nhìn'
+      - '<yellow>[speed] <aqua>vận tốc ban đầu; mặc định là 2'
+      - '<yellow>[imprecision] <aqua>độ lệch ngẫu nhiên và độ lệch cao độ theo độ; mặc định là 0'
+      - '<yellow>[fuseTicks] <aqua>TNT thời gian trước khi bùng nổ trong tích tắc; mặc định là 60'
+      - '<yellow>[repeat] <aqua>lần ném bổ sung sau lần ném đầu tiên; mặc định là 0'
+      - '<yellow>[repeatdelay] <aqua> tích tắc giữa các lần ném; mặc định là 5 và phải ít nhất là 1'

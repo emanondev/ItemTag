@@ -1,0 +1,778 @@
+generic:
+  help:
+    player-only: '<dark_red>[<red>ItemTag<dark_red>] <red>Команда только для игроков.'
+    no-item-on-hand: '<dark_red>[<red>ItemTag<dark_red>] <red>Вам нужно держать предмет в руке'
+    lack-permission: '<dark_red>[<red>ItemTag<dark_red>] <red>У вас нет разрешения %permission%'
+    lack-permission-generic: '<dark_red>[<red>ItemTag<dark_red>] <red>У вас нет разрешения на использование этой команды.'
+    prefix: '<dark_gray>[<gradient:#54acff:#A78BFA><bold>ItemTag</bold></gradient><dark_gray>]</dark_gray>'
+    header-format: '<gradient:#54acff:#A78BFA><bold>%header%</bold></gradient> <dark_gray>»</dark_gray> <#A78BFA><bold>Помощь</bold></#A78BFA>'
+    header-sub-format: '<gradient:#54acff:#A78BFA><bold>%header%</bold></gradient> <dark_gray>»</dark_gray> <gradient:#A78BFA:#54acff><bold>%sub%</bold></gradient> <dark_gray>»</dark_gray> <#55d6ff><bold>Помощь</#55d6ff>'
+    command-format: '<gray>/%command%</gray> <#bad1ff>%sub%</#bad1ff> <#d7bbff>%params%</#d7bbff>'
+    footer-format: '%prev_clickable% <#7E9CFD><b>Помощь</b> [%page%/%max_page%]</#7E9CFD> %next_clickable%'
+    next_text: ' <light_purple><b>><st>> ></st> '
+    prev_text: ' <light_purple><b><st>< <</st>< '
+    next_void: ' <dark_gray><b>><st>> ></st> '
+    prev_void: ' <dark_gray><b><st>< <</st>< '
+    next_hover: '<gold><b>Перейти на страницу %target%'
+    prev_hover: '<gold><b>Перейти на страницу %target%'
+  wrong-alias:
+    wrong-flag: '%prefix% <red>Неправильное значение флага! <dark_red>[<gold>наведите здесь<dark_red>]'
+    wrong-action: '%prefix% <red>Неправильный тип действия! <dark_red>[<gold>наведите здесь<dark_red>]'
+    error-pre-hover: '<gradient:#A78BFA:gold><b>Псевдонимы:</b></gradient>'
+    first_color: '<aqua>'
+    second_color: '<yellow>'
+itemtag:
+  flag:
+    description:
+      - '<gradient:#A78BFA:gold><b>Переключить пользовательские флаги на элементе'
+      - ''
+      - '<yellow><flag> <gray>название флага'
+      - '<yellow>[true/false] <gray>значение флага; если опущено, инвертировать текущее значение'
+    params: '<flag> [true/false]'
+    placeable:
+      feedback:
+        standard: '%prefix% <green>Предмет можно разместить.'
+        custom: '%prefix% <green>Невозможно разместить предмет.'
+        failed-place-attempt: '<dark_red>[<red>ItemTag<dark_red>] <red>Вы не можете разместить этот предмет'
+    usable:
+      feedback:
+        standard: '%prefix% <green>Предмет можно использовать.'
+        custom: '%prefix% <green>Предмет нельзя использовать (щелкните правой кнопкой мыши).'
+    smelt:
+      feedback:
+        standard: '%prefix% <green>Предмет можно приготовить или выплавить в печи.'
+        custom: '%prefix% <green>Предмет нельзя приготовить или выплавить в печи.'
+    furnacefuel:
+      feedback:
+        standard: '%prefix% <green>Предмет можно использовать в качестве топлива для печи.'
+        custom: '%prefix% <green>Предмет нельзя использовать в качестве топлива для печи.'
+    recipeingredient:
+      feedback:
+        standard: '%prefix% <green>Предмет можно использовать в качестве ингредиента рецепта.'
+        custom: '%prefix% <green>Этот предмет нельзя использовать в качестве ингредиента рецепта.'
+    enchantable:
+      feedback:
+        standard: '%prefix% <green>Предмет можно зачаровать.'
+        custom: '%prefix% <green>Предмет нельзя зачаровать.'
+    renamable:
+      feedback:
+        standard: '%prefix% <green>Предмет можно использовать на наковальне.'
+        custom: '%prefix% <green>Предмет нельзя использовать на наковальне.'
+    grindable:
+      feedback:
+        standard: '%prefix% <green>Предмет можно распылить с помощью точильного камня.'
+        custom: '%prefix% <green>Предмет нельзя распылить с помощью точильного камня.'
+    equipment:
+      feedback:
+        standard: '%prefix% <green>Предмет можно экипировать.'
+        custom: '%prefix% <green>Предмет нельзя надеть.'
+    entityfood:
+      feedback:
+        standard: '%prefix% <green>Предмет можно использовать в пищу животным.'
+        custom: '%prefix% <green>Предмет нельзя использовать в пищу животным.'
+    clickmove:
+      feedback:
+        standard: '%prefix% <green>Предмет можно перемещать в инвентаре.'
+        custom: '%prefix% <green>Предмет нельзя переместить в инвентаре.'
+    tradeable:
+      feedback:
+        standard: '%prefix% <green>Предмет можно продать сельским жителям.'
+        custom: '%prefix% <green>Этот предмет нельзя продать сельским жителям.'
+    smithing_table:
+      feedback:
+        standard: '%prefix% <green>Предмет можно использовать в качестве ингредиента для кузницы.'
+        custom: '%prefix% <green>Предмет нельзя использовать в качестве ингредиента для кузнечного стола.'
+  actions:
+    invalid-action:
+      message: '<dark_red>[<red>ItemTag<dark_red>] <red>''<gold>%error%<red>'' не является допустимым типом <dark_red>[<gold>наведите здесь<dark_red>]'
+    invalid-actioninfo:
+      message: '<dark_red>[<red>ItemTag<dark_red>] <red>''<gold>%error%<red>'' не является допустимой информацией для <gold>%action% <dark_red>[<gold>наведите здесь<dark_red>]'
+    description:
+      - '<gradient:#A78BFA:gold><b>Устанавливает действия, выполняемые при использовании предмета.'
+      - ''
+      - '<yellow>Add <type> <action> <gray>- добавить выбранное действие'
+      - '<yellow>Set <line> <type> <action> <gray>- заменить действие на выбранной строке'
+      - '<yellow>Remove <line> <gray>- удалить действие на выбранной строке'
+      - '<yellow>Clear <gray>- удалить все действия'
+      - '<yellow>Permission [permission] <gray>- установить необходимое разрешение для использования этого предмета.'
+      - '<yellow>Cooldown <ms> <gray>- установить время восстановления для повторного использования этого предмета.'
+      - '<yellow>Cooldownid [id] <gray>- установить для этого идентификатор используемого времени восстановления.'
+      - '<yellow>Cooldownmsg [msg] <gray>- установить обратную связь по времени восстановления.'
+      - '<yellow>Cooldownmsgtype [type] <gray>- установить тип обратной связи по перезарядке (chat или actionbar)'
+      - '<yellow>Uses [amount] <gray>- установите, сколько раз можно использовать этот предмет.'
+      - '<yellow>Info <gray>- показать информацию о действиях над текущим элементом'
+    params: '[...]'
+    add:
+      params: 'add <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Добавить выбранное действие'
+        - ''
+        - '<yellow><type> <gray>тип действия'
+        - '<yellow><action> <gray>дополнительная информация для действия'
+      feedback: '%prefix% <green>Добавлено <yellow>%action%'
+    addline:
+      params: 'addline <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Добавить выбранное действие в выбранной строке'
+        - ''
+        - '<yellow><line> <gray>строка для добавления'
+        - '<yellow><type> <gray>тип действия'
+        - '<yellow><action> <gray>дополнительная информация для действия'
+      feedback: '%prefix% <green>Строка <yellow>%line% <green>добавлена как <yellow>%action%'
+    set:
+      params: 'set <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Заменить действие в выбранной строке'
+        - ''
+        - '<yellow><line> <gray>строка для замены'
+        - '<yellow><type> <gray>тип действия'
+        - '<yellow><action> <gray>дополнительная информация для действия'
+      feedback: '%prefix% <green>Линия <yellow>%line% <green>установить как <yellow>%action%'
+    remove:
+      params: 'remove <line>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Удалить действие в выбранной строке'
+        - ''
+        - '<yellow><line> <gray>строка, которую нужно удалить'
+      feedback: '%prefix% <green>Удалена строка <yellow>%line% <green>(<yellow>%action%<green>)'
+    permission:
+      params: 'permission [permission]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Установить разрешение на использование этого предмета.'
+        - ''
+        - '<yellow>[permission] <gray>разрешение на установку, по умолчанию нет'
+      feedback:
+        set: '%prefix% <green>Теперь для использования этого предмета требуется разрешение <yellow>%permission% <green>.'
+        removed: '%prefix% <green>Теперь для использования этого предмета не требуется разрешения.'
+    cooldown:
+      params: 'cooldown [ms]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Установить время восстановления, чтобы снова использовать предмет.'
+        - ''
+        - '<yellow>[ms] <gray>сколько времени осталось до того, как можно будет использовать'
+        - '<gray>опять предмет, по умолчанию 0'
+        - '<gray>Примечание: время восстановления устанавливается на основе cooldownid, разное.'
+        - '<gray> предметы с одинаковым cooldownid имеют одинаковое время восстановления'
+        - '<gray>Примечание: время восстановления сохраняется при выходе игрока из системы и перезапуске сервера.'
+      feedback:
+        set: '%prefix% <green>Время восстановления этого предмета составляет <yellow>%cooldown_seconds% <green>секунды.'
+        removed: '%prefix% <green>У этого предмета нет времени восстановления.'
+    cooldownid:
+      params: 'cooldownid [id]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Установить идентификатор перезарядки предмета.'
+        - ''
+        - '<yellow>[id] <gray>общий идентификатор перезарядки'
+        - '<gray>Примечание: время восстановления устанавливается на основе cooldownid, разное.'
+        - '<gray> предметы с одинаковым cooldownid имеют одинаковое время восстановления'
+      feedback:
+        set: '%prefix% <green>Этот предмет использует идентификатор <yellow>%id% <green>для перезарядки.'
+        removed: '%prefix% <green>Этот предмет использует <yellow>по умолчанию <green>id для перезарядки.'
+    cooldownmsg:
+      description:
+        - '<gradient:#A78BFA:gold><b>Установить сообщение о времени восстановления.'
+        - ''
+        - '<yellow>[message] <gray>сообщение, показывающее, когда предмет нельзя использовать.'
+        - '<gray>пока активно время восстановления'
+      params: 'cooldownmsg [message]'
+      feedback:
+        set: '%prefix% <green>Сообщение обратной связи для времени восстановления, установленного как «<white>%msg%<green>», когда время восстановления активно.'
+        removed: '%prefix% <green>Сообщение обратной связи по времени восстановления удалено.'
+    cooldownmsgtype:
+      description:
+        - '<gradient:#A78BFA:gold><b>Установить тип сообщения о перезарядке.'
+        - ''
+        - '<yellow>[type] <gray>chat или actionbar'
+      params: 'cooldownmsgtype [type]'
+      feedback:
+        set: '%prefix% <green>Сообщение обратной связи для времени восстановления, установленного как тип «<yellow>%type%<green>»'
+    uses:
+      params: 'uses [amount]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Установите, сколько раз можно использовать предмет.'
+        - ''
+        - '<gray>Примечание: используйте <yellow>-1 <gray> для неограниченного использования.'
+      feedback:
+        set: '%prefix% <green>Этот предмет можно использовать <yellow>%uses% <green>, прежде чем он будет использован.'
+        unlimited: '%prefix% <green>У этого предмета <yellow>неограниченное <green>использование.'
+    maxuses:
+      params: 'maxuses [amount]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Установить максимальное количество использований предмета.'
+        - ''
+        - '<gray>Используется в основном в эстетических целях с'
+        - '<gray>Использование дисплея установлено на true'
+        - ''
+        - '<gray>Примечание: используйте <yellow>-1 <gray> для неограниченного использования.'
+      feedback:
+        set: '%prefix% <green>Максимальное использование этого предмета: <yellow>%uses% <green>.'
+        unlimited: '%prefix% <green>У этого предмета есть <yellow>неограниченное <green>максимальное использование.'
+    consume:
+      params: 'consume [true/false]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Используйте предмет при последнем использовании.'
+        - ''
+        - '<gray>Примечание: когда true и предмет расходуется'
+        - '<gray> при последнем использовании предмет уничтожается'
+      feedback:
+        set: '%prefix% <green>Предмет уничтожается при последнем использовании.'
+        unset: '%prefix% <green>Предмет не уничтожается после последнего использования.'
+    visualcooldown:
+      params: 'visualcooldown [true/false]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Визуально отображать оставшееся время восстановления.'
+        - ''
+        - '<gray>Когда true элемент показывает анимацию, похожую на'
+        - '<gray>анимация перезарядки жемчуга Края'
+        - ''
+        - '<gray>Примечание: к сожалению, этот визуальный эффект также'
+        - '<gray> применяется к любому предмету того же типа.'
+      feedback:
+        set: '%prefix% <green>Теперь предмет показывает визуальное время восстановления.'
+        unset: '%prefix% <green>Теперь предмет не будет отображать визуальное время восстановления.'
+    displayuses:
+      params: 'displayuses [true/false]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Показывать число оставшихся использований'
+        - ''
+        - '<gray>Когда true добавляет строку для описания'
+        - '<gray>сколько осталось использований'
+        - ''
+        - '<gray>Примечание: к сожалению, этот визуальный эффект также'
+        - '<gray> применяется к любому предмету того же типа.'
+      feedback:
+        set: '%prefix% <green>Теперь предмет показывает оставшееся и максимальное количество использований.'
+        unset: '%prefix% <green>Предмет больше не показывает оставшееся и максимальное количество использований.'
+  activity:
+    description:
+      - '<gradient:#A78BFA:gold><b>Задает активность (некоторые действия)'
+      - '<gray>действие может быть активировано триггерами'
+      - '<gray>триггеры могут быть связаны с элементами (/it trigger)'
+      - ''
+      - '<yellow>Create <id> <gray>- создать новое занятие'
+      - '<yellow>Open <id> <gray>- открыть графический интерфейс для выбранного действия.'
+      - '<yellow>Delete <id> <gray>- удалить выбранное действие'
+      - '<yellow>Clone <id> <new id><gray>- клонировать выбранное действие'
+      - '<yellow>Rename <id> <new id><gray>- переименовать выбранное действие'
+    params: '[...]'
+    feedback:
+      invalid_activity_id: '<dark_red>[<red>ItemTag<dark_red>] <red>Активность <gold>%id% <red>не существует'
+      already_used_activity_id: '<dark_red>[<red>ItemTag<dark_red>] <red>Активность <gold>%id% <red> уже используется'
+    create:
+      params: 'create <new id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Создать новое действие'
+        - ''
+        - '<yellow><new id> <gray> — идентификатор активности'
+        - '<gray>id должен начинаться с буквы и может быть буквенно-цифровым.'
+        - '<gray>может также содержать символ _'
+      feedback: '%prefix% <green>Действие <yellow>%id% <green>создано'
+    rename:
+      params: 'rename <id> <new id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Переименовать идентификатор действия'
+        - ''
+        - '<yellow><id> <gray> — текущий идентификатор активности.'
+        - '<yellow><new id> <gray> — новый идентификатор активности.'
+        - '<gray>id должен начинаться с буквы и может быть буквенно-цифровым.'
+        - '<gray>может также содержать символ _'
+      feedback: '%prefix% <green>Действие <yellow>%id% <green>переименовано <yellow>%new_id%'
+    open:
+      params: 'open <id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Откройте графический интерфейс для редактирования действия.'
+        - ''
+        - '<yellow><id> <gray> — идентификатор активности'
+    delete:
+      params: 'delete <id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Удалить выбранное действие'
+        - ''
+        - '<yellow><id> <gray> — идентификатор активности'
+      feedback: '%prefix% <green>Активность <yellow>%id% <green>удалена'
+    clone:
+      params: 'clone <id> <clone id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Клонировать выбранное действие'
+        - ''
+        - '<yellow><id> <gray> — идентификатор выбранного действия.'
+        - '<yellow><clone id> <gray> — идентификатор клона'
+        - '<gray>id должен начинаться с буквы и может быть буквенно-цифровым.'
+        - '<gray>может также содержать символ _'
+      feedback: '%prefix% <green>Активность <yellow>%id% <green>клонировано в <yellow>%clone_id%'
+    setconsumes:
+      params: 'setconsumes <id> <amount>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Укажите использование, необходимое для выбранного действия.'
+        - ''
+        - '<yellow><id> <gray> — идентификатор выбранного действия.'
+        - '<yellow><amount> <gray>количество использований, потраченных на активацию активности'
+      feedback: '%prefix% <green>Деятельность <yellow>%id% <green>потребление составляет <yellow>%amount%'
+    addcondition:
+      params: 'addcondition <id> [!]<conditiontype> [condition info]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Добавьте условие для активации активности.'
+        - ''
+        - '<yellow><id> <gray> — идентификатор активности'
+        - '<yellow>[!] <gray>это ''!'' если вы хотите, чтобы условие было отменено'
+        - '<yellow><conditiontype> <gray>тип состояния'
+        - '<yellow>[condition info] <gray> — дополнительная информация, которая может потребоваться для типа условия.'
+      feedback: '%prefix% <green>Активность <yellow>%id% <green>добавленное условие <yellow>%condition%'
+  consumeactions:
+    description:
+      - '<gradient:#A78BFA:gold><b>Устанавливает действия, выполняемые при потреблении предмета, например еды и напитков.'
+      - ''
+      - '<yellow>Add <type> <action> <gray>- добавить выбранное действие'
+      - '<yellow>Set <line> <type> <action> <gray>- заменить действие на выбранной строке'
+      - '<yellow>Remove <line> <gray>- удалить действие на выбранной строке'
+      - '<yellow>Clear <gray>- удалить все действия'
+      - '<yellow>Permission [permission] <gray>- установить необходимое разрешение на использование этого предмета.'
+      - '<yellow>Cooldown <ms> <gray>- установить время восстановления для повторного использования этого предмета.'
+      - '<yellow>Cooldownid [id] <gray>- установить для этого идентификатор используемого времени восстановления.'
+      - '<yellow>Info <gray>- показать информацию о действиях над текущим элементом'
+    params: '[...]'
+    add:
+      params: 'add <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Добавить выбранное действие'
+        - ''
+        - '<yellow><type> <gray>тип действия'
+        - '<yellow><action> <gray>дополнительная информация для действия'
+    addline:
+      params: 'addline <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Добавить выбранное действие в выбранной строке'
+        - ''
+        - '<yellow><line> <gray>строка для добавления'
+        - '<yellow><type> <gray>тип действия'
+        - '<yellow><action> <gray>дополнительная информация для действия'
+    set:
+      params: 'set <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Заменить действие в выбранной строке'
+        - ''
+        - '<yellow><line> <gray>строка для замены'
+        - '<yellow><type> <gray>тип действия'
+        - '<yellow><action> <gray>дополнительная информация для действия'
+    remove:
+      params: 'remove <line>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Удалить действие в выбранной строке'
+        - ''
+        - '<yellow><line> <gray>строка, которую нужно удалить'
+    permission:
+      params: 'permission [permission]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Установить разрешение на использование этого предмета.'
+        - ''
+        - '<yellow>[permission] <gray>разрешение на установку, по умолчанию нет'
+    cooldown:
+      params: 'cooldown [ms]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Установить время восстановления для повторного использования предмета.'
+        - ''
+        - '<yellow>[ms] <gray>сколько времени прежде чем можно будет есть'
+        - '<gray>опять предмет, по умолчанию 0'
+        - '<gray>Примечание: время восстановления устанавливается на основе cooldownid, разное.'
+        - '<gray> предметы с одинаковым cooldownid имеют одинаковое время восстановления'
+        - '<gray>Примечание: время восстановления сохраняется при выходе игрока из системы и перезапуске сервера.'
+    cooldownid:
+      params: 'cooldownid [id]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Установить идентификатор перезарядки предмета.'
+        - ''
+        - '<yellow>[id] <gray>общий идентификатор перезарядки'
+        - '<gray>Примечание: время восстановления устанавливается на основе cooldownid, разное.'
+        - '<gray> предметы с одинаковым cooldownid имеют одинаковое время восстановления'
+    feedback:
+      actions:
+        set: '<green>Линия <yellow>%line% <green>установить как <yellow>%action%'
+        remove: '<green>Удалена строка <yellow>%line% <green>(<yellow>%action%<green>)'
+        clear: '<green>Удалены действия по потреблению этого предмета.'
+        permission:
+          set: '<green>Теперь для использования этого предмета требуется разрешение <yellow>%permission% <green>.'
+          removed: '<green>Теперь для использования этого предмета не требуется разрешения.'
+        cooldownid:
+          set: '<green>Этот предмет использует идентификатор <yellow>%id% <green>для перезарядки.'
+          removed: '<green>Этот предмет использует <yellow>по умолчанию <green>id для перезарядки.'
+        cooldown:
+          set: '<green>Время восстановления этого предмета составляет <yellow>%cooldown_seconds% <green>секунды.'
+          removed: '<green>У этого предмета нет времени восстановления.'
+  effects:
+    description:
+      - '<gradient:#A78BFA:gold><b>Добавить постоянные эффекты зелий.'
+      - '<gray>Открыть графический интерфейс'
+      - '<gray>Не забудьте выбрать, какое оборудование'
+      - '<gray> применить эффект'
+    params: ''
+  usepermission:
+    description:
+      - '<gradient:#A78BFA:gold><b>Установить разрешение на использование этого предмета (ванильное поведение щелчка правой кнопкой мыши)'
+      - ''
+      - '<yellow>setpermission <permission> <gray>установить необходимое разрешение'
+      - '<yellow>setmessage <message> <gray>установить сообщение об отсутствии разрешения'
+    params: '[...]'
+    setpermission:
+      feedback: '<green>Разрешение на использование теперь установлено как <yellow>%value%.'
+      feedback-reset: '<green>Разрешение на использование требуемого разрешения удалено.'
+    setmessage:
+      feedback: '<green>Сообщение об отказе в разрешении на использование теперь установлено как <yellow>%value%'
+      feedback-reset: '<green>Сообщение об отказе в разрешении на использование удалено.'
+  wearpermission:
+    description:
+      - '<gradient:#A78BFA:gold><b>Установите разрешение, необходимое для использования этого предмета.'
+      - ''
+      - '<gray>Без разрешения попытка надеть этот предмет возвращает его.'
+      - '<gray> в инвентарь или на землю, если инвентарь полон.'
+      - '<gray>'
+      - '<yellow>setpermission <permission> <gray>установить необходимое разрешение'
+      - '<yellow>setmessage <message> <gray>установить сообщение об отсутствии разрешения'
+    params: '[...]'
+    setpermission:
+      feedback: '<green>Разрешение на экипировку предмета установлено: <yellow>%value%'
+      feedback-reset: '<green>Разрешение, необходимое для экипировки предмета, удалено'
+    setmessage:
+      feedback: '<green>Сообщение об отказе в экипировке установлено: <yellow>%value%'
+      feedback-reset: '<green>Сообщение об отказе в разрешении на использование удалено.'
+  help:
+    header-name: 'ItemTag'
+    description:
+      - '<gradient:#A78BFA:gold><b>Показывает ItemTag Помощь</b></gradient>'
+      - ''
+      - '<gray><yellow>[page] </yellow>Страница помощи'
+      - '<gray><yellow>[subcommand] </yellow>Справка по подкоманде'
+    params: '[page/subcommand]'
+itemtagreload:
+  success: '<blue>[<white>ItemTag<blue>] <green>Перезагрузка'
+gui:
+  middleclick: #middle click can't be used unless on creative mode, an alternative to middle click is pressing hotbar button 1
+    creative: 'Средний щелчок'
+    other: 'Нажмите 1'
+  previous-page:
+    #Holders: %player_name% %page% %target_page%
+    description:
+      - '<gold><bold>Предыдущая страница'
+      - ''
+      - '<gray>[<white>Нажмите<gray>]<gray> Перейти на страницу <yellow>%target_page%'
+  next-page:
+    #Holders: %player_name% %page% %target_page%
+    description:
+      - '<gold><bold>Следующая страница'
+      - ''
+      - '<gray>[<white>Нажмите<gray>]<gray> Перейти на страницу <yellow>%target_page%'
+  back:
+    #Holders: %player_name%
+    description:
+      - '<gold><bold>Вернуться назад'
+      - ''
+      - '<gray>[<white>Нажмите<gray>]<gray> Перейти к предыдущему интерфейсу'
+  actions:
+    title: '<blue>Действия'
+    click-interact: '<blue>[<white>ItemTag<blue>] <gray>[Нажмите здесь]'
+    click-hover: '<gold>Нажмите, чтобы предложить команду'
+    addline:
+      - '<gold><bold>Добавить действие'
+      - ''
+      - '<gray>[<white>Нажмите<gray>]<gray> Изменить значения'
+      - '<blue>/it actions add <action type> <action info>'
+      - '<blue>/it actions addline <line> <action type> <action info>'
+    set:
+      - '<gold><bold>Установить действие'
+      - ''
+      - '<gray>[<white>Нажмите<gray>]<gray> Изменить значения'
+      - '<blue>/it actions set <line> <action type> <action info>'
+    remove:
+      - '<gold><bold>Удалить действие'
+      - ''
+      - '<gray>[<white>Нажмите<gray>]<gray> Изменить значения'
+      - '<blue>/it actions remove <line>'
+    consume:
+      - '<gold><bold>Потребить на <yellow><bold>0<gold><bold> осталось использования'
+      - '<gray>Включено: <yellow>%value%'
+      - '<gray>Примечание: когда true и предмет расходуется'
+      - '<gray> при последнем использовании предмет уничтожается'
+      - ''
+      - '<gray>[<white>Нажмите<gray>]<gray> Переключить'
+      - '<blue>/it actions consume [true/false]'
+    uses:
+      - '<gold><bold>Осталось использований: <yellow><bold>%value%'
+      - '<gray>(-1 для безлимитного)'
+      - ''
+      - '<gray>[<white>Щелкните правой кнопкой мыши<gray>]<gray> Добавить <yellow>%editor%'
+      - '<gray>[<white>Левый клик<gray>]<gray> Удалить <yellow>%editor%'
+      - '<gray>[<white>Shift + щелчок левой/правой кнопкой<gray>]<gray> %editor-prev% << <yellow>%editor% <gray>>> %editor-next%'
+      - '<blue>/it actions uses <amount>'
+    maxuses:
+      - '<gold><bold>Максимум использований: <yellow><bold>%value%'
+      - '<gray>(-1 для безлимитного)'
+      - '<gray>В основном используется для форматирования дисплея оставшегося использования.'
+      - ''
+      - '<gray>[<white>Щелкните правой кнопкой мыши<gray>]<gray> Добавить <yellow>%editor%'
+      - '<gray>[<white>Левый клик<gray>]<gray> Удалить <yellow>%editor%'
+      - '<gray>[<white>Shift + щелчок левой/правой кнопкой<gray>]<gray> %editor-prev% << <yellow>%editor% <gray>>> %editor-next%'
+      - '<blue>/it actions maxuses <amount>'
+    permission:
+      - '<gold><bold>Разрешение на использование: <yellow><bold>%value%'
+      - '<gray>Примечание: если у вас нет этого разрешения'
+      - '<gray> вы не сможете использовать предмет или'
+      - '<gray> уменьшить оставшееся использование'
+      - ''
+      - '<gray>[<white>Нажмите<gray>]<gray> Редактировать'
+      - '<blue>/it actions permission [permission]'
+    cooldown:
+      - '<gold><bold>Перезарядка: <yellow><bold>%value_s% <blue>с.'
+      - '<gray>Примечание: применяется время восстановления при использовании щелчка правой кнопкой мыши.'
+      - ''
+      - '<gray>[<white>Щелкните правой кнопкой мыши<gray>]<gray> Добавить <yellow>%editor%'
+      - '<gray>[<white>Левый клик<gray>]<gray> Удалить <yellow>%editor%'
+      - '<gray>[<white>Shift + щелчок левой/правой кнопкой<gray>]<gray> %editor-prev% << <yellow>%editor% <gray>>> %editor-next%'
+      - '<blue>/it actions cooldown <cooldown <u>ms</u>>'
+    cooldownid:
+      - '<gold><bold>Идентификатор перезарядки: <yellow><bold>%value%'
+      - '<gray>Примечание: все элементы с одинаковым cooldownid'
+      - '<gray> разделяет время восстановления.'
+      - ''
+      - '<gray>[<white>Нажмите<gray>]<gray> Редактировать'
+      - '<blue>/it actions cooldownid [cooldown id]'
+    info:
+      - '<gold><bold>Список действий:'
+    visualcooldown:
+      - '<gold><bold>Отображение визуального времени восстановления.'
+      - '<gray>Включено: <yellow>%value%'
+      - '<gray>Примечание: к сожалению, этот визуальный эффект также'
+      - '<gray> применяется к любому предмету того же типа.'
+      - ''
+      - '<gray>[<white>Нажмите<gray>]<gray> Переключить'
+      - '<blue>/it actions visualdisplay [true/false]'
+    displayuses:
+      - '<gold><bold>Показывать число оставшихся использований'
+      - '<gray>Включено: <yellow>%value%'
+      - ''
+      - '<gray>[<white>Нажмите<gray>]<gray> Переключить'
+      - '<blue>/it actions displayuses [true/false]'
+  actionslines:
+    actionformat: '<yellow>%type% <white>%info%'
+    element:
+      - '%action%'
+      - '<gray>[<white>Щелкните правой кнопкой мыши<gray>]<gray> Заменить это действие'
+      - '<gray>[<white>Левый клик<gray>]<gray> Добавить новое действие перед этим'
+      - '<gray>[<white>Shift + щелчок правой кнопкой мыши<gray>]<gray> Удалить это действие'
+    add:
+      - ' '
+      - '<gray>[<white>Левый клик<gray>]<gray> Добавить новое действие'
+  flags:
+    placeable:
+      - '<gold>Устанавливает, можно ли разместить предмет.'
+      - '<gray>Значение: <yellow>%value%'
+      - ''
+      - '<gray>[<white>Нажмите<gray>]<gray> Переключить'
+    usable:
+      - '<gold>Устанавливает, можно ли использовать предмет.'
+      - '<gray>Значение: <yellow>%value%'
+      - ''
+      - '<gray>Если установлено значение false, отключите нормальное поведение'
+      - '<gray> щелкните правой кнопкой мыши по элементу'
+      - '<gray>Обычное поведение при использовании зависит от типа предмета.'
+      - '<gray>Еду нельзя есть, удочкой нельзя ловить рыбу,'
+      - '<gray> яйца нельзя бросать, а яйца призывания не могут призывать существ...'
+      - ''
+      - '<gray>[<white>Нажмите<gray>]<gray> Переключить'
+    smelt:
+      - '<gold>Устанавливает, можно ли приготовить предмет.'
+      - '<gray>Значение: <yellow>%value%'
+      - ''
+      - '<gray>Если установлено значение false, отключите нормальное поведение.'
+      - '<gray> приготовление пищи в печи'
+      - '<gray>Работает как с едой, так и с рудой.'
+      - ''
+      - '<gray>[<white>Нажмите<gray>]<gray> Переключить'
+    furnacefuel:
+      - '<gold>Устанавливает, можно ли использовать предмет в качестве топлива для печи.'
+      - '<gray>Значение: <yellow>%value%'
+      - ''
+      - '<gray>Если установлено значение false, отключите нормальное поведение'
+      - '<gray> печи, потребляющие этот предмет в качестве топлива'
+      - ''
+      - '<gray>[<white>Нажмите<gray>]<gray> Переключить'
+    recipeingredient:
+      - '<gold>Устанавливает, можно ли использовать предмет в рецептах крафта.'
+      - '<gray>Значение: <yellow>%value%'
+      - ''
+      - '<gray>Если установлено значение false, отключите обычное поведение при крафте.'
+      - '<gray> когда этот предмет является одним из ингредиентов'
+      - ''
+      - '<gray>[<white>Нажмите<gray>]<gray> Переключить'
+    enchantable:
+      - '<gold>Устанавливает, можно ли зачаровать предмет.'
+      - '<gray>Значение: <yellow>%value%'
+      - ''
+      - '<gray>Если установлено значение false, предотвращается нормальное использование стола зачарования.'
+      - '<gray> с этим предметом'
+      - ''
+      - '<gray>[<white>Нажмите<gray>]<gray> Переключить'
+    renamable:
+      - '<gold>Устанавливает, можно ли использовать предмет на наковальне.'
+      - '<gray>Значение: <yellow>%value%'
+      - ''
+      - '<gray>Если установлено значение false, отключить нормальное взаимодействие с наковальней.'
+      - '<gray> на этом товаре'
+      - ''
+      - '<gray>[<white>Нажмите<gray>]<gray> Переключить'
+    grindable:
+      - '<gold>Устанавливает, можно ли распылить предмет на точильном камне.'
+      - '<gray>Значение: <yellow>%value%'
+      - ''
+      - '<gray>Если установлено значение false, предотвращается нормальное использование точильного камня.'
+      - '<gray> с этим предметом'
+      - ''
+      - '<gray>[<white>Нажмите<gray>]<gray> Переключить'
+    equipment:
+      - '<gold>Устанавливает, можно ли использовать предмет в качестве снаряжения.'
+      - '<gray>Значение: <yellow>%value%'
+      - ''
+      - '<gray>Если установлено значение false и предмет экипирован, он будет выброшен.'
+      - '<gray> обратно в инвентарь игрока.'
+      - '<gray>Примечание: рука и вторая рука не считаются частью слотов экипировки.'
+      - ''
+      - '<gray>[<white>Нажмите<gray>]<gray> Переключить'
+    entityfood:
+      - '<gold>Устанавливает, можно ли использовать предмет в качестве еды для животных.'
+      - '<gray>Значение: <yellow>%value%'
+      - ''
+      - '<gray>Если установлено значение false, животные не размножаются.'
+      - '<gray> и предотвращают более быстрый рост детенышей животных.'
+      - '<gray> на этом товаре'
+      - ''
+      - '<gray>[<white>Нажмите<gray>]<gray> Переключить'
+    vanishcurse:
+      - '<gold>Устанавливает, исчезает ли предмет после смерти.'
+      - '<gray>Значение: <yellow>%value%'
+      - ''
+      - '<gray>Работает точно так же, как чары Проклятие исчезновения.'
+      - '<gray>Но это не чары'
+      - ''
+      - '<gray>[<white>Нажмите<gray>]<gray> Переключить'
+    clickmove:
+      - '<gold>Устанавливает, можно ли перемещать предмет в инвентаре.'
+      - '<gray>Значение: <yellow>%value%'
+      - ''
+      - '<gray>Op игроки имеют право обойти этот лимит.'
+      - ''
+      - '<gray>[<white>Нажмите<gray>]<gray> Переключить'
+    tradeable:
+      - '<gold>Устанавливает, можно ли обменять предмет на другие предметы у жителей деревни.'
+      - '<gray>Значение: <yellow>%value%'
+      - ''
+      - '<gray>Если установлено значение false, отключить обычную торговлю с жителями деревни.'
+      - ''
+      - '<gray>[<white>Нажмите<gray>]<gray> Переключить'
+    smithing_table:
+      - '<gold>Устанавливает, можно ли использовать предмет на кузнечном столе.'
+      - '<gray>Значение: <yellow>%value%'
+      - ''
+      - '<gray>Если установлено значение false, отключить нормальное взаимодействие с наковальней.'
+      - '<gray> на этом товаре'
+      - ''
+      - '<gray>[<white>Нажмите<gray>]<gray> Переключить'
+  effects:
+    title: '<blue>Эффекты'
+    slot:
+      - '<gold><bold>%slot%'
+      - '<gray>Включено: <yellow>%value%'
+    potion:
+      - '<gold><bold>%effect%'
+      - ''
+      - '<gray>Уровень: <yellow>%level% <gray>[Изменить левую/правую кнопку мыши]'
+      - '<gray>Частицы: <yellow>%particles% <gray>[Shift + щелчок левой кнопкой мыши по переключению]'
+      - '<gray>Окружение: <yellow>%ambient% <gray>[Shift + щелчок правой кнопкой мыши по переключению]'
+      - '<gray>Значок: <yellow>%icon% <gray>[%middle_click% Переключить]'
+      - '<gray>Продолжительность: <yellow>%duration%'
+    potion-instant: 'мгновенное'
+    potion-unlimited: 'без ограничений'
+  activity:
+    title_main: '<blue>Активность <yellow>%activity_id%'
+  triggers:
+    title_main: '<blue>Триггеры'
+trigger:
+  consume_item:
+    description:
+      - '<gold>активируется, когда игрок потребляет предмет.'
+      - '<gold>(пей или ешь)'
+  right_interact:
+    gui_material:
+      - '<gold>активируется, когда игрок щелкает правой кнопкой мыши'
+  left_interact:
+    gui_material:
+      - '<gold>активируется, когда игрок щелкает левой кнопкой мыши'
+actions:
+  delay:
+    info:
+      - '<aqua>delay <yellow><delay ticks> <action>'
+      - '<yellow><delay ticks> <aqua>на сколько вы хотите отложить действие, 20 тиков = 1 секунды'
+      - '<yellow><action> <aqua>действие для выполнения, пример: <yellow>sound entity_bat_hurt 1 1'
+  message:
+    info:
+      - '<aqua>message <yellow><message>'
+      - '<yellow><message> <aqua>сообщение отправлено игроку'
+      - '<aqua>%player% можно использовать в качестве заполнителя для имени игрока.'
+  permission:
+    info:
+      - '<aqua>permission <yellow><permission> <action>'
+      - '<yellow><permission> <aqua>требуется разрешение или <yellow>-permission <aqua>требовать, чтобы у игрока НЕ было разрешения'
+      - '<yellow><action> <aqua>действие для выполнения, пример: <yellow>sound entity_bat_hurt 1 1'
+  commandasop:
+    info:
+      - '<aqua>commandasop <yellow><command>'
+      - '<yellow><command> <aqua>команда, выполняемая игроком как Op'
+      - '<aqua>%player% можно использовать в качестве заполнителя для имени игрока.'
+      - '<aqua>Примечание. нет <yellow>/<aqua>, пример: <yellow>home'
+  command:
+    info:
+      - '<aqua>command <yellow><command>'
+      - '<yellow><command> <aqua>команда, выполняемая игроком'
+      - '<aqua>%player% можно использовать в качестве заполнителя для имени игрока.'
+      - '<aqua>Примечание. нет <yellow>/<aqua>, пример: <yellow>home'
+  potion:
+    info:
+      - '<aqua>potion <yellow><type> <duration_ticks|infinite> <level> [ambient] [particles] [icon]'
+      - '<yellow><type> <aqua>эффект зелья, который нужно применить'
+      - '<yellow><duration_ticks|infinite> <aqua>продолжительность эффекта в тиках или infinite'
+      - '<yellow><level> <aqua>уровень эффекта от 1 до 256'
+      - '<yellow>[ambient] [particles] [icon] <aqua>логические значения; значения по умолчанию: false, true, true.'
+  projectile:
+    info:
+      - '<aqua>projectile <yellow><projectile> [speed] [imprecision] [repeat] [repeatdelay]'
+      - '<yellow><projectile> <aqua>тип порождаемого объекта, класс Java которого расширяет Projectile'
+      - '<yellow>[speed] <aqua>начальная скорость; по умолчанию 1'
+      - '<yellow>[imprecision] <aqua>смещение произвольного направления по X, Y и Z; по умолчанию 0'
+      - '<yellow>[repeat] <aqua>дополнительных выстрелов после первого; по умолчанию 0'
+      - '<yellow>[repeatdelay] <aqua>тиков между кадрами; по умолчанию 5 и должно быть не менее 1'
+  servercommand:
+    info:
+      - '<aqua>servercommand <yellow><command>'
+      - '<yellow><command> <aqua>команда, выполняемая сервером'
+      - '<aqua>%player% можно использовать в качестве заполнителя для имени игрока.'
+      - '<aqua>Примечание. нет <yellow>/<aqua>, пример: <yellow>heal %player%'
+  sound:
+    info:
+      - '<aqua>sound <yellow><sound> [volume] [pitch] [self]'
+      - '<yellow><sound> <aqua>звук для воспроизведения'
+      - '<yellow>[volume] <aqua>громкость звука, по умолчанию 1'
+      - '<yellow>[pitch] <aqua> высота звука, по умолчанию 1'
+      - '<yellow>[self] <aqua>только игрок должен это слышать? По умолчанию false'
+  summon:
+    info:
+      - '<aqua>summon <yellow><entity> [quantity] [spread]'
+      - '<yellow><entity> <aqua>тип порождаемого объекта'
+      - '<yellow>[quantity] <aqua>количество существ для призыва; по умолчанию 1'
+      - '<yellow>[spread] <aqua>расстояние от игрока; по умолчанию 1.5'
+      - '<aqua>Впереди появляется одна сущность; двое появляются на уровне ±60°; три или более равномерно расположены вокруг игрока'
+  throwtnt:
+    info:
+      - '<aqua>throwtnt [speed] [imprecision] [fuseTicks] [repeat] [repeatdelay]'
+      - '<aqua>Бросает активированный ТНТ в направлении взгляда игрока.'
+      - '<yellow>[speed] <aqua>начальная скорость; по умолчанию 2'
+      - '<yellow>[imprecision] <aqua>произвольное отклонение от курса и тангажа в градусах; по умолчанию 0'
+      - '<yellow>[fuseTicks] <aqua>ТНТ время до взрыва в тиках; по умолчанию 60'
+      - '<yellow>[repeat] <aqua>дополнительных бросков после первого; по умолчанию 0'
+      - '<yellow>[repeatdelay] <aqua>тиков между бросками; по умолчанию 5 и должно быть не менее 1'

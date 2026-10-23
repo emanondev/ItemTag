@@ -1,0 +1,778 @@
+generic:
+  help:
+    player-only: '<dark_red>[<red>ItemTag<dark_red>] <red>Yalnızca Oyuncular için Komut'
+    no-item-on-hand: '<dark_red>[<red>ItemTag<dark_red>] <red>Elinizde bir eşya tutmanız gerekiyor'
+    lack-permission: '<dark_red>[<red>ItemTag<dark_red>] <red>İzniniz yok %permission%'
+    lack-permission-generic: '<dark_red>[<red>ItemTag<dark_red>] <red>Bu komutu kullanma izniniz yok'
+    prefix: '<dark_gray>[<gradient:#54acff:#A78BFA><bold>ItemTag</bold></gradient><dark_gray>]</dark_gray>'
+    header-format: '<gradient:#54acff:#A78BFA><bold>%header%</bold></gradient> <dark_gray>»</dark_gray> <#A78BFA><bold>Yardım</bold></#A78BFA>'
+    header-sub-format: '<gradient:#54acff:#A78BFA><bold>%header%</bold></gradient> <dark_gray>»</dark_gray> <gradient:#A78BFA:#54acff><bold>%sub%</bold></gradient> <dark_gray>»</dark_gray> <#55d6ff><bold>Yardım</#55d6ff>'
+    command-format: '<gray>/%command%</gray> <#bad1ff>%sub%</#bad1ff> <#d7bbff>%params%</#d7bbff>'
+    footer-format: '%prev_clickable% <#7E9CFD><b>Yardım</b> [%page%/%max_page%]</#7E9CFD> %next_clickable%'
+    next_text: ' <light_purple><b>><st>> ></st> '
+    prev_text: ' <light_purple><b><st>< <</st>< '
+    next_void: ' <dark_gray><b>><st>> ></st> '
+    prev_void: ' <dark_gray><b><st>< <</st>< '
+    next_hover: '<gold><b>Sayfaya git %target%'
+    prev_hover: '<gold><b>Sayfaya git %target%'
+  wrong-alias:
+    wrong-flag: '%prefix% <red>Yanlış Bayrak Değeri! <dark_red>[<gold>buraya gelin<dark_red>]'
+    wrong-action: '%prefix% <red>Yanlış Eylem Türü! <dark_red>[<gold>buraya gelin<dark_red>]'
+    error-pre-hover: '<gradient:#A78BFA:gold><b>Takma adlar:</b></gradient>'
+    first_color: '<aqua>'
+    second_color: '<yellow>'
+itemtag:
+  flag:
+    description:
+      - '<gradient:#A78BFA:gold><b>Öğedeki Özel bayrakları aç/kapat'
+      - ''
+      - '<yellow><flag> <gray>bayrak adı'
+      - '<yellow>[true/false] <gray>bayrak değeri; atlanırsa mevcut değeri ters çevirin'
+    params: '<flag> [true/false]'
+    placeable:
+      feedback:
+        standard: '%prefix% <green>Ürün yerleştirilebilir.'
+        custom: '%prefix% <green>Öğe yerleştirilemiyor.'
+        failed-place-attempt: '<dark_red>[<red>ItemTag<dark_red>] <red>Bu öğeyi yerleştiremezsiniz'
+    usable:
+      feedback:
+        standard: '%prefix% <green>Ürün kullanılabilir.'
+        custom: '%prefix% <green>Öğe kullanılamaz (Sağ tıklama).'
+    smelt:
+      feedback:
+        standard: '%prefix% <green>Ürün fırınlarda pişirilebilir veya eritilebilir.'
+        custom: '%prefix% <green>Ürün fırında pişirilemez veya eritilemez.'
+    furnacefuel:
+      feedback:
+        standard: '%prefix% <green>Ürün fırın yakıtı olarak kullanılabilir.'
+        custom: '%prefix% <green>Ürün fırın yakıtı olarak kullanılamaz.'
+    recipeingredient:
+      feedback:
+        standard: '%prefix% <green>Ürün tarif malzemesi olarak kullanılabilir.'
+        custom: '%prefix% <green>Bu ürün tarif malzemesi olarak kullanılamaz.'
+    enchantable:
+      feedback:
+        standard: '%prefix% <green>Eşya büyülenebilir.'
+        custom: '%prefix% <green>Bu eşya büyülenemez.'
+    renamable:
+      feedback:
+        standard: '%prefix% <green>Bu eşya örs üzerinde kullanılabilir.'
+        custom: '%prefix% <green>Bu eşya örs üzerinde kullanılamaz.'
+    grindable:
+      feedback:
+        standard: '%prefix% <green>Eşyanın büyüsü bileği taşı ile etkisiz hale getirilebilir.'
+        custom: '%prefix% <green>Bu eşyanın büyüsü bileme taşıyla bozulamaz.'
+    equipment:
+      feedback:
+        standard: '%prefix% <green>Eşya donatılabilir.'
+        custom: '%prefix% <green>Bu eşya donatılamaz.'
+    entityfood:
+      feedback:
+        standard: '%prefix% <green>Ürün hayvan yemi olarak kullanılabilir.'
+        custom: '%prefix% <green>Bu ürün hayvan yemi olarak kullanılamaz.'
+    clickmove:
+      feedback:
+        standard: '%prefix% <green>Eşya envanterde taşınabilir.'
+        custom: '%prefix% <green>Eşya envanterde taşınamaz.'
+    tradeable:
+      feedback:
+        standard: '%prefix% <green>Eşya köylülerle takas edilebilir.'
+        custom: '%prefix% <green>Eşya köylülerle takas edilemez.'
+    smithing_table:
+      feedback:
+        standard: '%prefix% <green>Bu eşya demircilik masasının malzemesi olarak kullanılabilir.'
+        custom: '%prefix% <green>Bu eşya demircilik masası malzemesi olarak kullanılamaz.'
+  actions:
+    invalid-action:
+      message: '<dark_red>[<red>ItemTag<dark_red>] <red>''<gold>%error%<red>'' geçerli bir tür değil <dark_red>[<gold>buraya gelin<dark_red>]'
+    invalid-actioninfo:
+      message: '<dark_red>[<red>ItemTag<dark_red>] <red>''<gold>%error%<red>'', <gold>%action% <dark_red>[<gold> için geçerli bir bilgi değil, buraya gelin<dark_red>]'
+    description:
+      - '<gradient:#A78BFA:gold><b>Öğe kullanıldığında yapılacak eylemleri ayarlar'
+      - ''
+      - '<yellow>Add <type> <action> <gray>- seçili eylemi ekle'
+      - '<yellow>Set <line> <type> <action> <gray>- seçilen satırdaki eylemi değiştir'
+      - '<yellow>Remove <line> <gray>- seçilen satırdaki eylemi kaldır'
+      - '<yellow>Clear <gray>- tüm eylemleri kaldır'
+      - '<yellow>Permission [permission] <gray>- bu öğeyi kullanmak için gerekli izni ayarlayın'
+      - '<yellow>Cooldown <ms> <gray>- bu öğeyi tekrar kullanmak için bir bekleme süresi belirleyin'
+      - '<yellow>Cooldownid [id] <gray>- bunun için kullanılan bekleme süresi kimliğini ayarlayın'
+      - '<yellow>Cooldownmsg [msg] <gray>- bekleme süresi geri bildirimini ayarlayın'
+      - '<yellow>Cooldownmsgtype [type] <gray>- bekleme süresi geri bildirim türünü ayarlayın (chat veya actionbar)'
+      - '<yellow>Uses [amount] <gray>- bu öğenin kaç kez kullanılabileceğini ayarlayın'
+      - '<yellow>Info <gray>- geçerli öğedeki eylemlerle ilgili bilgileri göster'
+    params: '[...]'
+    add:
+      params: 'add <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Seçili eylemi ekle'
+        - ''
+        - '<yellow><type> <gray>eylem türü'
+        - '<yellow><action> <gray>eylem için ek bilgi'
+      feedback: '%prefix% <green>Eklendi <yellow>%action%'
+    addline:
+      params: 'addline <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Seçilen eylemi seçilen satıra ekle'
+        - ''
+        - '<yellow><line> <gray>eklenecek satır'
+        - '<yellow><type> <gray>eylem türü'
+        - '<yellow><action> <gray>eylem için ek bilgi'
+      feedback: '%prefix% <green>Satır <yellow>%line% <green><yellow>%action% olarak eklendi'
+    set:
+      params: 'set <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Seçili satırdaki eylemi değiştir'
+        - ''
+        - '<yellow><line> <gray>değiştirilecek satır'
+        - '<yellow><type> <gray>eylem türü'
+        - '<yellow><action> <gray>eylem için ek bilgi'
+      feedback: '%prefix% <green>Çizgi <yellow>%line% <green><yellow>%action% olarak ayarlayın'
+    remove:
+      params: 'remove <line>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Seçili satırdaki eylemi kaldır'
+        - ''
+        - '<yellow><line> <gray>kaldırılacak satır'
+      feedback: '%prefix% <green>Satır kaldırıldı <yellow>%line% <green>(<yellow>%action%<green>)'
+    permission:
+      params: 'permission [permission]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Bu öğeyi kullanma iznini ayarlayın'
+        - ''
+        - '<yellow>[permission] <gray>ayarlama izni, varsayılan olarak yok'
+      feedback:
+        set: '%prefix% <green>Bu öğeyi kullanmak için artık <yellow>%permission% <green>izin gerekli'
+        removed: '%prefix% <green>Artık bu öğeyi kullanmak için herhangi bir izne gerek yok'
+    cooldown:
+      params: 'cooldown [ms]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Bir öğeyi tekrar kullanmak için bekleme süresi ayarlayın'
+        - ''
+        - '<yellow>[ms] <gray>Kullanılabilmesi için ne kadar süre geçmesi gerekiyor?'
+        - '<gray>öğeyi tekrar varsayılan olarak 0'
+        - '<gray>Not: Bekleme süresi cooldownid''e göre ayarlanır, farklı'
+        - '<gray> aynı cooldownid''ye sahip öğeler aynı bekleme süresini paylaşır'
+        - '<gray>Not: Bekleme süresi oyuncu oturumu kapatıldığında ve sunucu yeniden başlatıldığında korunur'
+      feedback:
+        set: '%prefix% <green>Bu eşyanın bekleme süresi <yellow>%cooldown_seconds% <green>saniyedir'
+        removed: '%prefix% <green>Bu öğenin bekleme süresi yok'
+    cooldownid:
+      params: 'cooldownid [id]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Bir öğe için bekleme süresi kimliği belirleyin'
+        - ''
+        - '<yellow>[id] <gray>paylaşılan bekleme süresi tanımlayıcısı'
+        - '<gray>Not: Bekleme süresi cooldownid''e göre ayarlanır, farklı'
+        - '<gray> aynı cooldownid''ye sahip öğeler aynı bekleme süresini paylaşır'
+      feedback:
+        set: '%prefix% <green>Bu öğe bekleme süresi için <yellow>%id% <green> kimliğini kullanır'
+        removed: '%prefix% <green>Bu öğe, bekleme süresi için <yellow>varsayılan <green>id''yi kullanır'
+    cooldownmsg:
+      description:
+        - '<gradient:#A78BFA:gold><b>Bir bekleme süresi mesajı ayarlayın'
+        - ''
+        - '<yellow>[message] <gray>öğe kullanılamadığında gösterilecek mesaj'
+        - '<gray>henüz bekleme süresi aktifken'
+      params: 'cooldownmsg [message]'
+      feedback:
+        set: '%prefix% <green>Soğuma süresi aktifken geri bildirim mesajı ''<white>%msg%<green>'' olarak ayarlandı'
+        removed: '%prefix% <green>Bekleme süresi için Geri Bildirim Mesajı kaldırıldı'
+    cooldownmsgtype:
+      description:
+        - '<gradient:#A78BFA:gold><b>Bir bekleme süresi mesajı türü ayarlayın'
+        - ''
+        - '<yellow>[type] <gray>chat veya actionbar'
+      params: 'cooldownmsgtype [type]'
+      feedback:
+        set: '%prefix% <green>Soğuma süresi için geri bildirim mesajı ''<yellow>%type%<green>'' olarak ayarlandı'
+    uses:
+      params: 'uses [amount]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Öğenin kaç kez kullanılabileceğini ayarlayın'
+        - ''
+        - '<gray>Not: Sınırsız kullanım için <yellow>-1 <gray> kullanın'
+      feedback:
+        set: '%prefix% <green>Bu öğenin tüketilmeden önce <yellow>%uses% <green>kullanımı vardır'
+        unlimited: '%prefix% <green>Bu öğenin <yellow>sınırsız <green>kullanımı vardır'
+    maxuses:
+      params: 'maxuses [amount]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Öğenin maksimum kullanım sayısını ayarlayın'
+        - ''
+        - '<gray>Genellikle estetik amaçlı kullanılır.'
+        - '<gray>Ekran Kullanımları true olarak ayarlandı'
+        - ''
+        - '<gray>Not: Sınırsız kullanım için <yellow>-1 <gray> kullanın'
+      feedback:
+        set: '%prefix% <green>Bu öğenin <yellow>%uses% <green>maksimum kullanımı var'
+        unlimited: '%prefix% <green>Bu öğenin <yellow>sınırsız <green>maksimum kullanımı vardır'
+    consume:
+      params: 'consume [true/false]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Öğeyi son kullanımda tüket'
+        - ''
+        - '<gray>Not: true ve öğe tükendiğinde'
+        - '<gray> Son kullanımında eşya yok edilir'
+      feedback:
+        set: '%prefix% <green>Eşya son kullanımına ulaştığında yok edilir'
+        unset: '%prefix% <green>Eşya son kullanımına ulaştığında yok edilmez'
+    visualcooldown:
+      params: 'visualcooldown [true/false]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Kalan bekleme süresini görsel olarak göster'
+        - ''
+        - '<gray>true öğe şuna benzer bir animasyon gösterdiğinde'
+        - '<gray>ender incisinin bekleme süresi animasyonu'
+        - ''
+        - '<gray>Not: Maalesef bu görsel efekt de'
+        - '<gray> aynı türdeki tüm öğeler için geçerlidir'
+      feedback:
+        set: '%prefix% <green>Artık öğe görsel bekleme süresini gösteriyor'
+        unset: '%prefix% <green>Artık eşya görsel bekleme süresini göstermeyecek'
+    displayuses:
+      params: 'displayuses [true/false]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Kalan kullanım sayısını göster'
+        - ''
+        - '<gray>true açıklamak için bir satır eklediğinde'
+        - '<gray>kaç kullanım kaldı'
+        - ''
+        - '<gray>Not: Maalesef bu görsel efekt de'
+        - '<gray> aynı türdeki tüm öğeler için geçerlidir'
+      feedback:
+        set: '%prefix% <green>Ürün artık kalan ve maksimum kullanım sayısını gösteriyor'
+        unset: '%prefix% <green>Ürün artık kalan ve maksimum kullanım sayısını göstermiyor'
+  activity:
+    description:
+      - '<gradient:#A78BFA:gold><b>Bir etkinlik ayarlar (bazı eylemler)'
+      - '<gray>bir etkinlik tetikleyiciler tarafından etkinleştirilebilir'
+      - '<gray>tetikleyiciler öğelerle ilişkilendirilebilir (/it trigger)'
+      - ''
+      - '<yellow>Create <id> <gray>- yeni bir aktivite oluştur'
+      - '<yellow>Open <id> <gray>- seçilen etkinlik için bir GUI aç'
+      - '<yellow>Delete <id> <gray>- seçilen aktiviteyi sil'
+      - '<yellow>Clone <id> <new id><gray>- seçilen aktiviteyi klonla'
+      - '<yellow>Rename <id> <new id><gray>- seçilen etkinliği yeniden adlandır'
+    params: '[...]'
+    feedback:
+      invalid_activity_id: '<dark_red>[<red>ItemTag<dark_red>] <red>Etkinlik <gold>%id% <red>mevcut değil'
+      already_used_activity_id: '<dark_red>[<red>ItemTag<dark_red>] <red>Etkinlik <gold>%id% <red>zaten kullanılıyor'
+    create:
+      params: 'create <new id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Yeni bir aktivite oluştur'
+        - ''
+        - '<yellow><new id> <gray>etkinliğin kimliğidir'
+        - '<gray>id bir harfle başlamalı ve alfasayısal olabilir'
+        - '<gray>ayrıca _ sembolünü de içerebilir'
+      feedback: '%prefix% <green>Aktivite <yellow>%id% <green>oluşturuldu'
+    rename:
+      params: 'rename <id> <new id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Etkinlik kimliğini yeniden adlandır'
+        - ''
+        - '<yellow><id> <gray>etkinliğin mevcut kimliğidir'
+        - '<yellow><new id> <gray>etkinliğin yeni kimliğidir'
+        - '<gray>id bir harfle başlamalı ve alfasayısal olabilir'
+        - '<gray>ayrıca _ sembolünü de içerebilir'
+      feedback: '%prefix% <green>Aktivite <yellow>%id% <green>yeniden adlandırıldı <yellow>%new_id%'
+    open:
+      params: 'open <id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Etkinliği düzenlemek için bir kullanıcı arayüzü açın'
+        - ''
+        - '<yellow><id> <gray>etkinliğin kimliğidir'
+    delete:
+      params: 'delete <id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Seçilen aktiviteyi sil'
+        - ''
+        - '<yellow><id> <gray>etkinliğin kimliğidir'
+      feedback: '%prefix% <green>Etkinlik <yellow>%id% <green>silindi'
+    clone:
+      params: 'clone <id> <clone id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Seçilen aktiviteyi klonla'
+        - ''
+        - '<yellow><id> <gray>seçilen etkinliğin kimliğidir'
+        - '<yellow><clone id> <gray> klonun kimliğidir'
+        - '<gray>id bir harfle başlamalı ve alfasayısal olabilir'
+        - '<gray>ayrıca _ sembolünü de içerebilir'
+      feedback: '%prefix% <green>Aktivite <yellow>%id% <green><yellow>%clone_id%''ye kopyalandı'
+    setconsumes:
+      params: 'setconsumes <id> <amount>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Seçilen etkinlik için gerekli kullanımları ayarlayın'
+        - ''
+        - '<yellow><id> <gray>seçilen etkinliğin kimliğidir'
+        - '<yellow><amount> <gray>etkinlik aktivasyonu tarafından tüketilen kullanım miktarı'
+      feedback: '%prefix% <green>Aktivite <yellow>%id% <green>tüketimi kullanır <yellow>%amount%'
+    addcondition:
+      params: 'addcondition <id> [!]<conditiontype> [condition info]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Etkinliği etkinleştirmek için bir koşul ekleyin'
+        - ''
+        - '<yellow><id> <gray>etkinliğin kimliğidir'
+        - '<yellow>[!] <gray>''!'' koşulun tersine çevrilmesini istiyorsanız'
+        - '<yellow><conditiontype> <gray>durum türüdür'
+        - '<yellow>[condition info] <gray>koşul türünün ihtiyaç duyabileceği ek bilgidir'
+      feedback: '%prefix% <green>Aktivite <yellow>%id% <green>eklenen koşul <yellow>%condition%'
+  consumeactions:
+    description:
+      - '<gradient:#A78BFA:gold><b>Öge yiyecek ve içecek gibi tüketildiğinde yapılan eylemleri ayarlar'
+      - ''
+      - '<yellow>Add <type> <action> <gray>- seçili eylemi ekle'
+      - '<yellow>Set <line> <type> <action> <gray>- seçilen satırdaki eylemi değiştir'
+      - '<yellow>Remove <line> <gray>- seçilen satırdaki eylemi kaldır'
+      - '<yellow>Clear <gray>- tüm eylemleri kaldır'
+      - '<yellow>Permission [permission] <gray>- bu öğeyi kullanmak için gerekli izni ayarlayın'
+      - '<yellow>Cooldown <ms> <gray>- bu öğeyi tekrar kullanmak için bir bekleme süresi belirleyin'
+      - '<yellow>Cooldownid [id] <gray>- bunun için kullanılan bekleme süresi kimliğini ayarlayın'
+      - '<yellow>Info <gray>- geçerli öğedeki eylemlerle ilgili bilgileri göster'
+    params: '[...]'
+    add:
+      params: 'add <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Seçili eylemi ekle'
+        - ''
+        - '<yellow><type> <gray>eylem türü'
+        - '<yellow><action> <gray>eylem için ek bilgi'
+    addline:
+      params: 'addline <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Seçilen eylemi seçilen satıra ekle'
+        - ''
+        - '<yellow><line> <gray>eklenecek satır'
+        - '<yellow><type> <gray>eylem türü'
+        - '<yellow><action> <gray>eylem için ek bilgi'
+    set:
+      params: 'set <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Seçili satırdaki eylemi değiştir'
+        - ''
+        - '<yellow><line> <gray>değiştirilecek satır'
+        - '<yellow><type> <gray>eylem türü'
+        - '<yellow><action> <gray>eylem için ek bilgi'
+    remove:
+      params: 'remove <line>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Seçili satırdaki eylemi kaldır'
+        - ''
+        - '<yellow><line> <gray>kaldırılacak satır'
+    permission:
+      params: 'permission [permission]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Bu öğeyi kullanma iznini ayarlayın'
+        - ''
+        - '<yellow>[permission] <gray>ayarlama izni, varsayılan olarak yok'
+    cooldown:
+      params: 'cooldown [ms]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Bir öğeyi tekrar tüketmek için bir bekleme süresi ayarlayın'
+        - ''
+        - '<yellow>[ms] <gray>Tüketmeye ne kadar zaman var?'
+        - '<gray>öğeyi tekrar varsayılan olarak 0'
+        - '<gray>Not: Bekleme süresi cooldownid''e göre ayarlanır, farklı'
+        - '<gray> aynı cooldownid''ye sahip öğeler aynı bekleme süresini paylaşır'
+        - '<gray>Not: Bekleme süresi oyuncu oturumu kapatıldığında ve sunucu yeniden başlatıldığında korunur'
+    cooldownid:
+      params: 'cooldownid [id]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Bir öğe için bekleme süresi kimliği belirleyin'
+        - ''
+        - '<yellow>[id] <gray>paylaşılan bekleme süresi tanımlayıcısı'
+        - '<gray>Not: Bekleme süresi cooldownid''e göre ayarlanır, farklı'
+        - '<gray> aynı cooldownid''ye sahip öğeler aynı bekleme süresini paylaşır'
+    feedback:
+      actions:
+        set: '<green>Çizgi <yellow>%line% <green><yellow>%action% olarak ayarlayın'
+        remove: '<green>Satır kaldırıldı <yellow>%line% <green>(<yellow>%action%<green>)'
+        clear: '<green>Bu öğedeki tüketim eylemleri temizlendi'
+        permission:
+          set: '<green>İzin <yellow>%permission% <green>artık bu öğeyi tüketmek gerekiyor'
+          removed: '<green>Artık bu öğeyi tüketmek için herhangi bir izne gerek yok'
+        cooldownid:
+          set: '<green>Bu öğe bekleme süresi için <yellow>%id% <green> kimliğini kullanır'
+          removed: '<green>Bu öğe bekleme süresi için <yellow>varsayılan <green>id''yi kullanır'
+        cooldown:
+          set: '<green>Bu eşyanın bekleme süresi <yellow>%cooldown_seconds% <green>saniyedir'
+          removed: '<green>Bu öğenin bekleme süresi yok'
+  effects:
+    description:
+      - '<gradient:#A78BFA:gold><b>Kalıcı iksir efektleri ekle'
+      - '<gray>GUI''yi açın'
+      - '<gray>Hangi ekipmanı seçmeyi unutmayın'
+      - '<gray> slot efekti uygular'
+    params: ''
+  usepermission:
+    description:
+      - '<gradient:#A78BFA:gold><b>Bu öğeyi kullanmak için bir izin ayarlayın (sağ tıklama vanilya davranışı)'
+      - ''
+      - '<yellow>setpermission <permission> <gray>gerekli izni ayarla'
+      - '<yellow>setmessage <message> <gray>izin eksikliği mesajını ayarla'
+    params: '[...]'
+    setpermission:
+      feedback: '<green>Kullanım izni artık <yellow>%value% olarak ayarlandı'
+      feedback-reset: '<green>Gerekli kullanım izni kaldırıldı'
+    setmessage:
+      feedback: '<green>Kullanım izni reddetme mesajı artık <yellow>%value% olarak ayarlandı'
+      feedback-reset: '<green>Kullanım izni reddi mesajı kaldırıldı'
+  wearpermission:
+    description:
+      - '<gradient:#A78BFA:gold><b>Bu öğeyi donatmak için gereken izni ayarlayın'
+      - ''
+      - '<gray>İzinsiz olarak bu eşyayı donatmaya çalışmak onu döndürür'
+      - '<gray>envantere veya envanter doluysa yere'
+      - '<gray>'
+      - '<yellow>setpermission <permission> <gray>gerekli izni ayarla'
+      - '<yellow>setmessage <message> <gray>izin eksikliği mesajını ayarla'
+    params: '[...]'
+    setpermission:
+      feedback: '<green>Eşyayı kuşanma izni şuna ayarlandı: <yellow>%value%'
+      feedback-reset: '<green>Eşyayı kuşanmak için gereken izin kaldırıldı'
+    setmessage:
+      feedback: '<green>Kuşanma izni olmadığında gösterilen mesaj: <yellow>%value%'
+      feedback-reset: '<green>Kullanım izni reddi mesajı kaldırıldı'
+  help:
+    header-name: 'ItemTag'
+    description:
+      - '<gradient:#A78BFA:gold><b>Gösteriler ItemTag yardım</b></gradient>'
+      - ''
+      - '<gray><yellow>[page] </yellow>Yardım sayfası'
+      - '<gray><yellow>[subcommand] </yellow>Alt komut için yardım'
+    params: '[page/subcommand]'
+itemtagreload:
+  success: '<blue>[<white>ItemTag<blue>] <green>Yeniden yüklendi'
+gui:
+  middleclick: #middle click can't be used unless on creative mode, an alternative to middle click is pressing hotbar button 1
+    creative: 'Orta Tıklama'
+    other: '1''e basın'
+  previous-page:
+    #Holders: %player_name% %page% %target_page%
+    description:
+      - '<gold><bold>Önceki Sayfa'
+      - ''
+      - '<gray>[<white>Tıklayın<gray>]<gray> Sayfaya git <yellow>%target_page%'
+  next-page:
+    #Holders: %player_name% %page% %target_page%
+    description:
+      - '<gold><bold>Sonraki Sayfa'
+      - ''
+      - '<gray>[<white>Tıklayın<gray>]<gray> Sayfaya git <yellow>%target_page%'
+  back:
+    #Holders: %player_name%
+    description:
+      - '<gold><bold>Geri Dön'
+      - ''
+      - '<gray>[<white>Tıklayın<gray>]<gray> Önceki kullanıcı arayüzüne git'
+  actions:
+    title: '<blue>Eylemler'
+    click-interact: '<blue>[<white>ItemTag<blue>] <gray>[Buraya tıklayın]'
+    click-hover: '<gold>Komut önermek için tıklayın'
+    addline:
+      - '<gold><bold>Eylem Ekle'
+      - ''
+      - '<gray>[<white>Tıklayın<gray>]<gray> Değerleri değiştir'
+      - '<blue>/it actions add <action type> <action info>'
+      - '<blue>/it actions addline <line> <action type> <action info>'
+    set:
+      - '<gold><bold>Aksiyon Ayarla'
+      - ''
+      - '<gray>[<white>Tıklayın<gray>]<gray> Değerleri değiştir'
+      - '<blue>/it actions set <line> <action type> <action info>'
+    remove:
+      - '<gold><bold>Eylemi Kaldır'
+      - ''
+      - '<gray>[<white>Tıklayın<gray>]<gray> Değerleri değiştir'
+      - '<blue>/it actions remove <line>'
+    consume:
+      - '<gold><bold>Soldaki <yellow><bold>0<gold><bold> kullanımda tüketin'
+      - '<gray>Etkin: <yellow>%value%'
+      - '<gray>Not: true ve öğe tükendiğinde'
+      - '<gray> Son kullanımında eşya yok edilir'
+      - ''
+      - '<gray>[<white>Tıkla<gray>]<gray> Aç/Kapat'
+      - '<blue>/it actions consume [true/false]'
+    uses:
+      - '<gold><bold>Kalan kullanım: <yellow><bold>%value%'
+      - '<gray>(-1 Sınırsız için)'
+      - ''
+      - '<gray>[<white>Sağ Tık<gray>]<gray> Ekle <yellow>%editor%'
+      - '<gray>[<white>Sol Tık<gray>]<gray> Kaldır <yellow>%editor%'
+      - '<gray>[<white>Shift + Sol/Sağ Tıklama<gray>]<gray> %editor-prev% << <yellow>%editor% <gray>>> %editor-next%'
+      - '<blue>/it actions uses <amount>'
+    maxuses:
+      - '<gold><bold>Maksimum kullanım sayısı: <yellow><bold>%value%'
+      - '<gray>(-1 Sınırsız için)'
+      - '<gray>Temel olarak kalan kullanım ekranını biçimlendirmek için kullanılır'
+      - ''
+      - '<gray>[<white>Sağ Tık<gray>]<gray> Ekle <yellow>%editor%'
+      - '<gray>[<white>Sol Tık<gray>]<gray> Kaldır <yellow>%editor%'
+      - '<gray>[<white>Shift + Sol/Sağ Tıklama<gray>]<gray> %editor-prev% << <yellow>%editor% <gray>>> %editor-next%'
+      - '<blue>/it actions maxuses <amount>'
+    permission:
+      - '<gold><bold>Kullanım izni: <yellow><bold>%value%'
+      - '<gray>Not: Bu izne sahip değilseniz'
+      - '<gray> öğeyi kullanamayacaksınız veya'
+      - '<gray> kalan kullanımlarını azalt'
+      - ''
+      - '<gray>[<white>Tıklayın<gray>]<gray> Düzenle'
+      - '<blue>/it actions permission [permission]'
+    cooldown:
+      - '<gold><bold>Bekleme süresi: <yellow><bold>%value_s% <blue>s'
+      - '<gray>Not: Sağ tıklama kullanımlarında bekleme süresi uygulayın'
+      - ''
+      - '<gray>[<white>Sağ Tık<gray>]<gray> Ekle <yellow>%editor%'
+      - '<gray>[<white>Sol Tık<gray>]<gray> Kaldır <yellow>%editor%'
+      - '<gray>[<white>Shift + Sol/Sağ Tıklama<gray>]<gray> %editor-prev% << <yellow>%editor% <gray>>> %editor-next%'
+      - '<blue>/it actions cooldown <cooldown <u>ms</u>>'
+    cooldownid:
+      - '<gold><bold>Bekleme süresi kimliği: <yellow><bold>%value%'
+      - '<gray>Not: aynı cooldownid olan tüm öğeler'
+      - '<gray> bekleme süresini paylaşır'
+      - ''
+      - '<gray>[<white>Tıklayın<gray>]<gray> Düzenle'
+      - '<blue>/it actions cooldownid [cooldown id]'
+    info:
+      - '<gold><bold>Eylem Listesi:'
+    visualcooldown:
+      - '<gold><bold>Görsel bekleme süresini göster'
+      - '<gray>Etkin: <yellow>%value%'
+      - '<gray>Not: Maalesef bu görsel efekt de'
+      - '<gray> aynı türdeki tüm öğeler için geçerlidir'
+      - ''
+      - '<gray>[<white>Tıkla<gray>]<gray> Aç/Kapat'
+      - '<blue>/it actions visualdisplay [true/false]'
+    displayuses:
+      - '<gold><bold>Kalan kullanım sayısını göster'
+      - '<gray>Etkin: <yellow>%value%'
+      - ''
+      - '<gray>[<white>Tıkla<gray>]<gray> Aç/Kapat'
+      - '<blue>/it actions displayuses [true/false]'
+  actionslines:
+    actionformat: '<yellow>%type% <white>%info%'
+    element:
+      - '%action%'
+      - '<gray>[<white>Sağ Tık<gray>]<gray> Bu eylemi değiştir'
+      - '<gray>[<white>Sol Tık<gray>]<gray> Bundan önce yeni eylem ekle'
+      - '<gray>[<white>Shift + Sağ Tık<gray>]<gray> Bu eylemi sil'
+    add:
+      - ' '
+      - '<gray>[<white>Sol Tık<gray>]<gray> Yeni eylem ekle'
+  flags:
+    placeable:
+      - '<gold>Öğenin yerleştirilip yerleştirilemeyeceğini ayarlar'
+      - '<gray>Değer: <yellow>%value%'
+      - ''
+      - '<gray>[<white>Tıkla<gray>]<gray> Aç/Kapat'
+    usable:
+      - '<gold>Öğenin kullanılıp kullanılamayacağını ayarlar'
+      - '<gray>Değer: <yellow>%value%'
+      - ''
+      - '<gray>false olarak ayarlanırsa normal davranışı devre dışı bırakır'
+      - '<gray> öğeye sağ tıklayın'
+      - '<gray>Normal kullanım davranışı öğe türüne bağlıdır'
+      - '<gray>Yemek yenilmez, olta balık tutulamaz,'
+      - '<gray> Yumurtalar atılamaz ve yumurtlayan yumurtalar yaratıkları çağıramaz...'
+      - ''
+      - '<gray>[<white>Tıkla<gray>]<gray> Aç/Kapat'
+    smelt:
+      - '<gold>Öğenin pişirilip pişirilemeyeceğini ayarlar'
+      - '<gray>Değer: <yellow>%value%'
+      - ''
+      - '<gray>false olarak ayarlanırsa normal davranışı devre dışı bırakın'
+      - '<gray> fırında pişirme'
+      - '<gray>Hem gıdalar hem de cevherler için çalışır'
+      - ''
+      - '<gray>[<white>Tıkla<gray>]<gray> Aç/Kapat'
+    furnacefuel:
+      - '<gold>Öğenin fırın yakıtı olarak kullanılıp kullanılamayacağını ayarlar'
+      - '<gray>Değer: <yellow>%value%'
+      - ''
+      - '<gray>false olarak ayarlanırsa normal davranışı devre dışı bırakır'
+      - '<gray> bu maddeyi yakıt olarak tüketen fırınlar'
+      - ''
+      - '<gray>[<white>Tıkla<gray>]<gray> Aç/Kapat'
+    recipeingredient:
+      - '<gold>Öğenin işçilik tariflerinde kullanılıp kullanılamayacağını ayarlar'
+      - '<gray>Değer: <yellow>%value%'
+      - ''
+      - '<gray>false olarak ayarlanırsa normal üretim davranışını devre dışı bırakın'
+      - '<gray> bu öğenin içeriklerden biri olması durumunda'
+      - ''
+      - '<gray>[<white>Tıkla<gray>]<gray> Aç/Kapat'
+    enchantable:
+      - '<gold>Eşyanın büyülenip büyülenemeyeceğini ayarlar'
+      - '<gray>Değer: <yellow>%value%'
+      - ''
+      - '<gray>Eğer false olarak ayarlanırsa büyü masasının normal kullanımını engeller'
+      - '<gray> bu ürünle'
+      - ''
+      - '<gray>[<white>Tıkla<gray>]<gray> Aç/Kapat'
+    renamable:
+      - '<gold>Eşyanın örs üzerinde kullanılıp kullanılamayacağını ayarlar'
+      - '<gray>Değer: <yellow>%value%'
+      - ''
+      - '<gray>false olarak ayarlanırsa normal örs etkileşimlerini devre dışı bırakın'
+      - '<gray> bu öğede'
+      - ''
+      - '<gray>[<white>Tıkla<gray>]<gray> Aç/Kapat'
+    grindable:
+      - '<gold>Eşyanın bileği taşında büyüsünün kaldırılıp kaldırılamayacağını ayarlar'
+      - '<gray>Değer: <yellow>%value%'
+      - ''
+      - '<gray>false olarak ayarlanırsa bileği taşının normal kullanımını engeller'
+      - '<gray> bu ürünle'
+      - ''
+      - '<gray>[<white>Tıkla<gray>]<gray> Aç/Kapat'
+    equipment:
+      - '<gold>Eşyanın ekipman olarak kullanılıp kullanılamayacağını ayarlar'
+      - '<gray>Değer: <yellow>%value%'
+      - ''
+      - '<gray>Eğer false olarak ayarlanırsa ve eşya takılıysa düşürülür'
+      - '<gray> oyuncu envanterine geri dön'
+      - '<gray>Not: el ve el dışı ekipman yuvalarının parçası olarak kabul edilmez'
+      - ''
+      - '<gray>[<white>Tıkla<gray>]<gray> Aç/Kapat'
+    entityfood:
+      - '<gold>Ögenin hayvan yemi olarak kullanılıp kullanılamayacağını ayarlar'
+      - '<gray>Değer: <yellow>%value%'
+      - ''
+      - '<gray>false olarak ayarlanırsa hayvanların üremesini engeller'
+      - '<gray> ve yavru hayvanların daha hızlı büyümesini önleyin'
+      - '<gray> bu öğede'
+      - ''
+      - '<gray>[<white>Tıkla<gray>]<gray> Aç/Kapat'
+    vanishcurse:
+      - '<gold>Öğenin öldüğünde kaybolup kaybolmayacağını ayarlar'
+      - '<gray>Değer: <yellow>%value%'
+      - ''
+      - '<gray>Tam olarak Kaybolmanın Büyü Laneti gibi çalışır'
+      - '<gray>Ama bu bir büyü değil'
+      - ''
+      - '<gray>[<white>Tıkla<gray>]<gray> Aç/Kapat'
+    clickmove:
+      - '<gold>Eşyanın envanterde taşınıp taşınamayacağını ayarlar'
+      - '<gray>Değer: <yellow>%value%'
+      - ''
+      - '<gray>Op oyuncuların bu sınırı aşma izni vardır'
+      - ''
+      - '<gray>[<white>Tıkla<gray>]<gray> Aç/Kapat'
+    tradeable:
+      - '<gold>Eşyanın köylülerle başka eşyalarla takas edilip edilemeyeceğini ayarlar'
+      - '<gray>Değer: <yellow>%value%'
+      - ''
+      - '<gray>Eğer false olarak ayarlanırsa normal köylü ticaretini devre dışı bırakın'
+      - ''
+      - '<gray>[<white>Tıkla<gray>]<gray> Aç/Kapat'
+    smithing_table:
+      - '<gold>Eşyanın demircilik masasında kullanılıp kullanılamayacağını ayarlar'
+      - '<gray>Değer: <yellow>%value%'
+      - ''
+      - '<gray>false olarak ayarlanırsa normal örs etkileşimlerini devre dışı bırakın'
+      - '<gray> bu öğede'
+      - ''
+      - '<gray>[<white>Tıkla<gray>]<gray> Aç/Kapat'
+  effects:
+    title: '<blue>Efektler'
+    slot:
+      - '<gold><bold>%slot%'
+      - '<gray>Etkin: <yellow>%value%'
+    potion:
+      - '<gold><bold>%effect%'
+      - ''
+      - '<gray>Seviye: <yellow>%level% <gray>[Sol/Sağ Tıklama Değişikliği]'
+      - '<gray>Parçacıklar: <yellow>%particles% <gray>[Shift + Sol Tıkla Geçiş]'
+      - '<gray>Ortam: <yellow>%ambient% <gray>[Shift + Sağ Tıkla Geçiş]'
+      - '<gray>Simge: <yellow>%icon% <gray>[%middle_click% Geçiş]'
+      - '<gray>Süre: <yellow>%duration%'
+    potion-instant: 'anlık'
+    potion-unlimited: 'sınırsız'
+  activity:
+    title_main: '<blue>Aktivite <yellow>%activity_id%'
+  triggers:
+    title_main: '<blue>Tetikleyiciler'
+trigger:
+  consume_item:
+    description:
+      - '<gold>oyuncu öğeyi tükettiğinde etkinleştirilir'
+      - '<gold>(iç veya ye)'
+  right_interact:
+    gui_material:
+      - '<gold>oyuncuya sağ tıklandığında etkinleştirilir'
+  left_interact:
+    gui_material:
+      - '<gold>oyuncu sol tıkladığında etkinleştirilir'
+actions:
+  delay:
+    info:
+      - '<aqua>delay <yellow><delay ticks> <action>'
+      - '<yellow><delay ticks> <aqua>aksiyonu ne kadar geciktirmek istediğiniz, 20 tik = 1 saniye'
+      - '<yellow><action> <aqua>yürütülecek eylem, örnek: <yellow>sound entity_bat_hurt 1 1'
+  message:
+    info:
+      - '<aqua>message <yellow><message>'
+      - '<yellow><message> <aqua>oyuncuya mesaj gönderildi'
+      - '<aqua>%player% oyuncu adı için yer tutucu olarak kullanılabilir'
+  permission:
+    info:
+      - '<aqua>permission <yellow><permission> <action>'
+      - '<yellow><permission> <aqua>izin gerekli veya <yellow>-permission <aqua>oyuncunun izne sahip OLMAMASINI gerektirmek için'
+      - '<yellow><action> <aqua>yürütülecek eylem, örnek: <yellow>sound entity_bat_hurt 1 1'
+  commandasop:
+    info:
+      - '<aqua>commandasop <yellow><command>'
+      - '<yellow><command> <aqua>oyuncu tarafından Op olarak yürütülen komut'
+      - '<aqua>%player% oyuncu adı için yer tutucu olarak kullanılabilir'
+      - '<aqua>N.B. hayır <yellow>/<aqua> gerekli değildir, örnek: <yellow>home'
+  command:
+    info:
+      - '<aqua>command <yellow><command>'
+      - '<yellow><command> <aqua>oyuncu tarafından yürütülen komut'
+      - '<aqua>%player% oyuncu adı için yer tutucu olarak kullanılabilir'
+      - '<aqua>N.B. hayır <yellow>/<aqua> gerekli değildir, örnek: <yellow>home'
+  potion:
+    info:
+      - '<aqua>potion <yellow><type> <duration_ticks|infinite> <level> [ambient] [particles] [icon]'
+      - '<yellow><type> <aqua>uygulanacak iksir efekti'
+      - '<yellow><duration_ticks|infinite> <aqua>tikelerdeki etki süresi veya infinite'
+      - '<yellow><level> <aqua>etki seviyesi 1''den 256''ye değiştirildi'
+      - '<yellow>[ambient] [particles] [icon] <aqua>boolean''lar; varsayılanlar false, true, true''dir'
+  projectile:
+    info:
+      - '<aqua>projectile <yellow><projectile> [speed] [imprecision] [repeat] [repeatdelay]'
+      - '<yellow><projectile> <aqua>Java sınıfı Projectile''i genişleten, ortaya çıkabilen varlık türü'
+      - '<yellow>[speed] <aqua>başlangıç hızı; varsayılan olarak 1'
+      - '<yellow>[imprecision] <aqua>X, Y ve Z''de rastgele yön ofseti; varsayılan olarak 0'
+      - '<yellow>[repeat] <aqua>ilk çekimden sonra ek çekimler; varsayılan olarak 0'
+      - '<yellow>[repeatdelay] <aqua>çekimler arasında tıklamalar; varsayılan olarak 5''dir ve en az 1 olmalıdır'
+  servercommand:
+    info:
+      - '<aqua>servercommand <yellow><command>'
+      - '<yellow><command> <aqua>komut sunucu tarafından yürütüldü'
+      - '<aqua>%player% oyuncu adı için yer tutucu olarak kullanılabilir'
+      - '<aqua>N.B. hayır <yellow>/<aqua> gerekli değildir, örnek: <yellow>heal %player%'
+  sound:
+    info:
+      - '<aqua>sound <yellow><sound> [volume] [pitch] [self]'
+      - '<yellow><sound> <aqua>çalınacak ses'
+      - '<yellow>[volume] <aqua>ses seviyesi, varsayılan 1'
+      - '<yellow>[pitch] <aqua>ses perdesi, varsayılan 1'
+      - '<yellow>[self] <aqua>sadece oyuncu mu duymalı? Varsayılan olarak false'
+  summon:
+    info:
+      - '<aqua>summon <yellow><entity> [quantity] [spread]'
+      - '<yellow><entity> <aqua>yeniden yaratılabilir varlık türü'
+      - '<yellow>[quantity] <aqua>çağırılacak varlık sayısı; varsayılan olarak 1'
+      - '<yellow>[spread] <aqua>oyuncuya olan mesafe; varsayılan olarak 1.5'
+      - '<aqua>Bir varlık önde ortaya çıkar; iki tanesi ±60°''de ortaya çıkar; üç veya daha fazlası oynatıcının etrafında eşit aralıklarla yerleştirilmiştir'
+  throwtnt:
+    info:
+      - '<aqua>throwtnt [speed] [imprecision] [fuseTicks] [repeat] [repeatdelay]'
+      - '<aqua>Oyuncunun baktığı yöne etkinleştirilmiş bir TNT atar'
+      - '<yellow>[speed] <aqua>başlangıç hızı; varsayılan olarak 2'
+      - '<yellow>[imprecision] <aqua>derece cinsinden rastgele sapma ve eğim kayması; varsayılan olarak 0'
+      - '<yellow>[fuseTicks] <aqua>TNT kenelerde patlamadan önceki süre; varsayılan olarak 60'
+      - '<yellow>[repeat] <aqua>ilk atıştan sonra ek atışlar; varsayılan olarak 0'
+      - '<yellow>[repeatdelay] <aqua>atışlar arasında tıklama; varsayılan olarak 5''dir ve en az 1 olmalıdır'

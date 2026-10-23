@@ -1,0 +1,778 @@
+generic:
+  help:
+    player-only: '<dark_red>[<red>ItemTag<dark_red>] <red>Befehl nur für Spieler'
+    no-item-on-hand: '<dark_red>[<red>ItemTag<dark_red>] <red>Sie müssen einen Gegenstand in der Hand halten'
+    lack-permission: '<dark_red>[<red>ItemTag<dark_red>] <red>Sie haben keine Berechtigung %permission%'
+    lack-permission-generic: '<dark_red>[<red>ItemTag<dark_red>] <red>Sie haben keine Berechtigung, diesen Befehl zu verwenden'
+    prefix: '<dark_gray>[<gradient:#54acff:#A78BFA><bold>ItemTag</bold></gradient><dark_gray>]</dark_gray>'
+    header-format: '<gradient:#54acff:#A78BFA><bold>%header%</bold></gradient> <dark_gray>»</dark_gray> <#A78BFA><bold>Hilfe</bold></#A78BFA>'
+    header-sub-format: '<gradient:#54acff:#A78BFA><bold>%header%</bold></gradient> <dark_gray>»</dark_gray> <gradient:#A78BFA:#54acff><bold>%sub%</bold></gradient> <dark_gray>»</dark_gray> <#55d6ff><bold>Hilfe</#55d6ff>'
+    command-format: '<gray>/%command%</gray> <#bad1ff>%sub%</#bad1ff> <#d7bbff>%params%</#d7bbff>'
+    footer-format: '%prev_clickable% <#7E9CFD><b>Hilfe</b> [%page%/%max_page%]</#7E9CFD> %next_clickable%'
+    next_text: ' <light_purple><b>><st>> ></st> '
+    prev_text: ' <light_purple><b><st>< <</st>< '
+    next_void: ' <dark_gray><b>><st>> ></st> '
+    prev_void: ' <dark_gray><b><st>< <</st>< '
+    next_hover: '<gold><b>Gehe zu Seite %target%'
+    prev_hover: '<gold><b>Gehe zu Seite %target%'
+  wrong-alias:
+    wrong-flag: '%prefix% <red>Falscher Flag-Wert! <dark_red>[<gold>hier schweben<dark_red>]'
+    wrong-action: '%prefix% <red>Falscher Aktionstyp! <dark_red>[<gold>hier schweben<dark_red>]'
+    error-pre-hover: '<gradient:#A78BFA:gold><b>Aliase:</b></gradient>'
+    first_color: '<aqua>'
+    second_color: '<yellow>'
+itemtag:
+  flag:
+    description:
+      - '<gradient:#A78BFA:gold><b>Benutzerdefinierte Flags für das Element umschalten'
+      - ''
+      - '<yellow><flag> <gray>Flaggenname'
+      - '<yellow>[true/false] <gray>Flag-Wert; Wenn es weggelassen wird, invertieren Sie den aktuellen Wert'
+    params: '<flag> [true/false]'
+    placeable:
+      feedback:
+        standard: '%prefix% <green>Der Gegenstand kann platziert werden.'
+        custom: '%prefix% <green>Der Artikel kann nicht platziert werden.'
+        failed-place-attempt: '<dark_red>[<red>ItemTag<dark_red>] <red>Sie können diesen Artikel nicht platzieren'
+    usable:
+      feedback:
+        standard: '%prefix% <green>Der Artikel kann verwendet werden.'
+        custom: '%prefix% <green>Der Gegenstand kann nicht verwendet werden (Rechtsklick).'
+    smelt:
+      feedback:
+        standard: '%prefix% <green>Der Artikel kann in Öfen gekocht oder geschmolzen werden.'
+        custom: '%prefix% <green>Der Gegenstand kann nicht in einem Ofen gekocht oder geschmolzen werden.'
+    furnacefuel:
+      feedback:
+        standard: '%prefix% <green>Der Gegenstand kann als Ofenbrennstoff verwendet werden.'
+        custom: '%prefix% <green>Der Gegenstand kann nicht als Ofenbrennstoff verwendet werden.'
+    recipeingredient:
+      feedback:
+        standard: '%prefix% <green>Der Artikel kann als Rezeptzutat verwendet werden.'
+        custom: '%prefix% <green>Der Artikel kann nicht als Rezeptzutat verwendet werden.'
+    enchantable:
+      feedback:
+        standard: '%prefix% <green>Der Gegenstand kann verzaubert werden.'
+        custom: '%prefix% <green>Der Gegenstand kann nicht verzaubert werden.'
+    renamable:
+      feedback:
+        standard: '%prefix% <green>Der Gegenstand kann auf einem Amboss verwendet werden.'
+        custom: '%prefix% <green>Der Gegenstand kann nicht auf Ambossen verwendet werden.'
+    grindable:
+      feedback:
+        standard: '%prefix% <green>Der Gegenstand kann mit Schleifstein entzaubert werden.'
+        custom: '%prefix% <green>Der Gegenstand kann nicht mit Schleifstein entzaubert werden.'
+    equipment:
+      feedback:
+        standard: '%prefix% <green>Der Gegenstand kann ausgerüstet werden.'
+        custom: '%prefix% <green>Der Gegenstand kann nicht ausgerüstet werden.'
+    entityfood:
+      feedback:
+        standard: '%prefix% <green>Der Artikel kann als Tierfutter verwendet werden.'
+        custom: '%prefix% <green>Der Artikel darf nicht als Tierfutter verwendet werden.'
+    clickmove:
+      feedback:
+        standard: '%prefix% <green>Der Gegenstand kann im Inventar verschoben werden.'
+        custom: '%prefix% <green>Der Gegenstand kann nicht im Inventar verschoben werden.'
+    tradeable:
+      feedback:
+        standard: '%prefix% <green>Der Gegenstand kann mit Dorfbewohnern gehandelt werden.'
+        custom: '%prefix% <green>Der Gegenstand kann nicht mit Dorfbewohnern gehandelt werden.'
+    smithing_table:
+      feedback:
+        standard: '%prefix% <green>Der Gegenstand kann als Zutat für den Schmiedetisch verwendet werden.'
+        custom: '%prefix% <green>Der Gegenstand kann nicht als Zutat für den Schmiedetisch verwendet werden.'
+  actions:
+    invalid-action:
+      message: '<dark_red>[<red>ItemTag<dark_red>] <red>''<gold>%error%<red>'' ist kein gültiger Typ <dark_red>[<gold>hier schweben<dark_red>]'
+    invalid-actioninfo:
+      message: '<dark_red>[<red>ItemTag<dark_red>] <red>''<gold>%error%<red>'' ist keine gültige Information für <gold>%action% <dark_red>[<gold>hier bewegen<dark_red>]'
+    description:
+      - '<gradient:#A78BFA:gold><b>Legt Aktionen fest, die ausgeführt werden, wenn das Element verwendet wird'
+      - ''
+      - '<yellow>Add <type> <action> <gray>- Ausgewählte Aktion hinzufügen'
+      - '<yellow>Set <line> <type> <action> <gray>- Aktion in der ausgewählten Zeile ersetzen'
+      - '<yellow>Remove <line> <gray>- Aktion in der ausgewählten Zeile entfernen'
+      - '<yellow>Clear <gray>- alle Aktionen entfernen'
+      - '<yellow>Permission [permission] <gray>- Legen Sie eine erforderliche Berechtigung zur Verwendung dieses Elements fest'
+      - '<yellow>Cooldown <ms> <gray>- Legen Sie eine Abklingzeit fest, um diesen Gegenstand erneut zu verwenden'
+      - '<yellow>Cooldownid [id] <gray>- Legen Sie hierfür die verwendete Abklingzeit-ID fest'
+      - '<yellow>Cooldownmsg [msg] <gray>- Legen Sie das Abklingzeit-Feedback fest'
+      - '<yellow>Cooldownmsgtype [type] <gray>- Legen Sie den Cooldown-Feedback-Typ fest (chat oder actionbar)'
+      - '<yellow>Uses [amount] <gray>- Legen Sie fest, wie oft dieses Element verwendet werden kann'
+      - '<yellow>Info <gray>- Informationen zu Aktionen für das aktuelle Element anzeigen'
+    params: '[...]'
+    add:
+      params: 'add <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Ausgewählte Aktion hinzufügen'
+        - ''
+        - '<yellow><type> <gray>Art der Aktion'
+        - '<yellow><action> <gray>zusätzliche Informationen zum Handeln'
+      feedback: '%prefix% <green>Hinzugefügt <yellow>%action%'
+    addline:
+      params: 'addline <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Ausgewählte Aktion in ausgewählter Zeile hinzufügen'
+        - ''
+        - '<yellow><line> <gray>Zeile zum Hinzufügen'
+        - '<yellow><type> <gray>Art der Aktion'
+        - '<yellow><action> <gray>zusätzliche Informationen zum Handeln'
+      feedback: '%prefix% <green>Zeile <yellow>%line% <green>hinzugefügt als <yellow>%action%'
+    set:
+      params: 'set <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Ersetzen Sie die Aktion in der ausgewählten Zeile'
+        - ''
+        - '<yellow><line> <gray>die zu ersetzende Zeile'
+        - '<yellow><type> <gray>Art der Aktion'
+        - '<yellow><action> <gray>zusätzliche Informationen zum Handeln'
+      feedback: '%prefix% <green>Linie <yellow>%line% <green>eingestellt als <yellow>%action%'
+    remove:
+      params: 'remove <line>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Aktion in ausgewählter Zeile entfernen'
+        - ''
+        - '<yellow><line> <gray>die zu entfernende Zeile'
+      feedback: '%prefix% <green>Entfernte Zeile <yellow>%line% <green>(<yellow>%action%<green>)'
+    permission:
+      params: 'permission [permission]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Legen Sie die Berechtigung zur Verwendung dieses Elements fest'
+        - ''
+        - '<yellow>[permission] <gray>die Berechtigung zum Festlegen, standardmäßig keine'
+      feedback:
+        set: '%prefix% <green>Berechtigung <yellow>%permission% <green>ist jetzt erforderlich, um diesen Gegenstand zu verwenden'
+        removed: '%prefix% <green>Jetzt ist keine Erlaubnis erforderlich, um diesen Artikel zu verwenden'
+    cooldown:
+      params: 'cooldown [ms]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Legen Sie eine Abklingzeit fest, um einen Gegenstand erneut zu verwenden'
+        - ''
+        - '<yellow>[ms] <gray>Wie lange dauert es, bis es verwendet werden kann?'
+        - '<gray>das Element erneut, standardmäßig 0'
+        - '<gray>Hinweis: Die Abklingzeit wird basierend auf cooldownid eingestellt, unterschiedlich'
+        - '<gray> Gegenstände mit der gleichen cooldownid haben die gleiche Abklingzeit'
+        - '<gray>Hinweis: Die Abklingzeit bleibt beim Abmelden des Spielers und beim Neustart des Servers erhalten'
+      feedback:
+        set: '%prefix% <green>Dieser Gegenstand hat eine Abklingzeit von <yellow>%cooldown_seconds% <green>Sekunden'
+        removed: '%prefix% <green>Dieser Gegenstand hat keine Abklingzeit'
+    cooldownid:
+      params: 'cooldownid [id]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Legen Sie eine Abklingzeit-ID für einen Gegenstand fest'
+        - ''
+        - '<yellow>[id] <gray>gemeinsame Abklingzeitkennung'
+        - '<gray>Hinweis: Die Abklingzeit wird basierend auf cooldownid eingestellt, unterschiedlich'
+        - '<gray> Gegenstände mit der gleichen cooldownid haben die gleiche Abklingzeit'
+      feedback:
+        set: '%prefix% <green>Dieser Gegenstand verwendet die ID <yellow>%id% <green>für die Abklingzeit'
+        removed: '%prefix% <green>Dieser Gegenstand verwendet <yellow>Standard-<green>id für die Abklingzeit'
+    cooldownmsg:
+      description:
+        - '<gradient:#A78BFA:gold><b>Legen Sie eine Abklingzeitnachricht fest'
+        - ''
+        - '<yellow>[message] <gray>die Meldung, die angezeigt wird, wenn der Artikel nicht verwendet werden kann'
+        - '<gray>noch, während die Abklingzeit aktiv ist'
+      params: 'cooldownmsg [message]'
+      feedback:
+        set: '%prefix% <green>Feedback-Nachricht für die Abklingzeit wird auf „<white>%msg%<green>“ gesetzt, wenn die Abklingzeit aktiv ist'
+        removed: '%prefix% <green>Feedback-Nachricht für Abklingzeit entfernt'
+    cooldownmsgtype:
+      description:
+        - '<gradient:#A78BFA:gold><b>Legen Sie einen Cooldown-Nachrichtentyp fest'
+        - ''
+        - '<yellow>[type] <gray>chat oder actionbar'
+      params: 'cooldownmsgtype [type]'
+      feedback:
+        set: '%prefix% <green>Feedback-Nachricht für Abklingzeit, eingestellt als Typ „<yellow>%type%<green>“'
+    uses:
+      params: 'uses [amount]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Legen Sie fest, wie oft der Artikel verwendet werden kann'
+        - ''
+        - '<gray>Hinweis: Verwenden Sie <yellow>-1 <gray> für unbegrenzte Verwendungsmöglichkeiten'
+      feedback:
+        set: '%prefix% <green>Dieser Gegenstand kann <yellow>%uses% <green>verwendet werden, bevor er verbraucht wird'
+        unlimited: '%prefix% <green>Dieser Gegenstand hat <yellow>unbegrenzte <green>Verwendungsmöglichkeiten'
+    maxuses:
+      params: 'maxuses [amount]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Legen Sie die maximale Anzahl der Verwendungen für den Artikel fest'
+        - ''
+        - '<gray>Wird hauptsächlich für ästhetische Zwecke verwendet'
+        - '<gray>Anzeigeverwendungen auf true eingestellt'
+        - ''
+        - '<gray>Hinweis: Verwenden Sie <yellow>-1 <gray> für unbegrenzte Verwendungsmöglichkeiten'
+      feedback:
+        set: '%prefix% <green>Dieser Gegenstand kann maximal <yellow>%uses% <green> verwendet werden'
+        unlimited: '%prefix% <green>Dieser Gegenstand kann <yellow>unbegrenzt <green>maximal verwendet werden'
+    consume:
+      params: 'consume [true/false]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Verbrauchen Sie den Artikel bei der letzten Verwendung'
+        - ''
+        - '<gray>Hinweis: wenn true und der Artikel verbraucht wird'
+        - '<gray> Bei seiner letzten Verwendung wird der Gegenstand zerstört'
+      feedback:
+        set: '%prefix% <green>Der Gegenstand wird bei Erreichen seiner letzten Verwendung zerstört'
+        unset: '%prefix% <green>Der Gegenstand wird bei Erreichen seiner letzten Verwendung nicht zerstört'
+    visualcooldown:
+      params: 'visualcooldown [true/false]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Zeigen Sie die verbleibende Abklingzeit visuell an'
+        - ''
+        - '<gray>Bei true zeigt das Element eine ähnliche Animation wie'
+        - '<gray>die Abklinganimation einer Enderperle'
+        - ''
+        - '<gray>Hinweis: Leider auch dieser visuelle Effekt'
+        - '<gray> gilt für alle Gegenstände derselben Art'
+      feedback:
+        set: '%prefix% <green>Der Gegenstand zeigt jetzt eine visuelle Abklingzeit'
+        unset: '%prefix% <green>Der Gegenstand zeigt jetzt keine visuelle Abklingzeit an'
+    displayuses:
+      params: 'displayuses [true/false]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Verbleibende Nutzungen anzeigen'
+        - ''
+        - '<gray>Wenn true eine zu beschreibende Zeile hinzufügt'
+        - '<gray>wie viele Verwendungsmöglichkeiten noch übrig sind'
+        - ''
+        - '<gray>Hinweis: Leider auch dieser visuelle Effekt'
+        - '<gray> gilt für alle Gegenstände derselben Art'
+      feedback:
+        set: '%prefix% <green>Der Gegenstand zeigt jetzt seine verbleibende und maximale Nutzungsanzahl an'
+        unset: '%prefix% <green>Der Gegenstand zeigt nicht mehr seine verbleibende und maximale Nutzungsanzahl an'
+  activity:
+    description:
+      - '<gradient:#A78BFA:gold><b>Legt eine Aktivität fest (einige Aktionen)'
+      - '<gray>Eine Aktivität kann durch Auslöser aktiviert werden'
+      - '<gray>Trigger können mit Elementen verknüpft sein (/it trigger)'
+      - ''
+      - '<yellow>Create <id> <gray>- eine neue Aktivität erstellen'
+      - '<yellow>Open <id> <gray>- Öffnen Sie eine GUI für die ausgewählte Aktivität'
+      - '<yellow>Delete <id> <gray>- Ausgewählte Aktivität löschen'
+      - '<yellow>Clone <id> <new id><gray>- Ausgewählte Aktivität klonen'
+      - '<yellow>Rename <id> <new id><gray>- Ausgewählte Aktivität umbenennen'
+    params: '[...]'
+    feedback:
+      invalid_activity_id: '<dark_red>[<red>ItemTag<dark_red>] <red>Aktivität <gold>%id% <red>existiert nicht'
+      already_used_activity_id: '<dark_red>[<red>ItemTag<dark_red>] <red>Aktivität <gold>%id% <red>wird bereits verwendet'
+    create:
+      params: 'create <new id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Erstellen Sie eine neue Aktivität'
+        - ''
+        - '<yellow><new id> <gray>ist die ID der Aktivität'
+        - '<gray>id muss mit einem Buchstaben beginnen und kann alphanumerisch sein'
+        - '<gray>kann auch das Symbol _ enthalten'
+      feedback: '%prefix% <green>Aktivität <yellow>%id% <green>erstellt'
+    rename:
+      params: 'rename <id> <new id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Aktivitäts-ID umbenennen'
+        - ''
+        - '<yellow><id> <gray>ist die aktuelle ID der Aktivität'
+        - '<yellow><new id> <gray>ist die neue ID der Aktivität'
+        - '<gray>id muss mit einem Buchstaben beginnen und kann alphanumerisch sein'
+        - '<gray>kann auch das Symbol _ enthalten'
+      feedback: '%prefix% <green>Aktivität <yellow>%id% <green>umbenannt <yellow>%new_id%'
+    open:
+      params: 'open <id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Öffnen Sie eine GUI, um die Aktivität zu bearbeiten'
+        - ''
+        - '<yellow><id> <gray>ist die ID der Aktivität'
+    delete:
+      params: 'delete <id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Ausgewählte Aktivität löschen'
+        - ''
+        - '<yellow><id> <gray>ist die ID der Aktivität'
+      feedback: '%prefix% <green>Aktivität <yellow>%id% <green>gelöscht'
+    clone:
+      params: 'clone <id> <clone id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Ausgewählte Aktivität klonen'
+        - ''
+        - '<yellow><id> <gray>ist die ID der ausgewählten Aktivität'
+        - '<yellow><clone id> <gray>ist die ID des Klons'
+        - '<gray>id muss mit einem Buchstaben beginnen und kann alphanumerisch sein'
+        - '<gray>kann auch das Symbol _ enthalten'
+      feedback: '%prefix% <green>Aktivität <yellow>%id% <green>geklont auf <yellow>%clone_id%'
+    setconsumes:
+      params: 'setconsumes <id> <amount>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Legen Sie die für die ausgewählte Aktivität erforderlichen Verwendungen fest'
+        - ''
+        - '<yellow><id> <gray>ist die ID der ausgewählten Aktivität'
+        - '<yellow><amount> <gray>Anzahl der durch Aktivitätsaktivierung verbrauchten Nutzungen'
+      feedback: '%prefix% <green>Aktivität <yellow>%id% <green>verbraucht Verbrauch ist <yellow>%amount%'
+    addcondition:
+      params: 'addcondition <id> [!]<conditiontype> [condition info]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Fügen Sie eine Bedingung hinzu, um die Aktivität zu aktivieren'
+        - ''
+        - '<yellow><id> <gray>ist die ID der Aktivität'
+        - '<yellow>[!] <gray>ist das „!“ wenn Sie möchten, dass die Bedingung umgekehrt wird'
+        - '<yellow><conditiontype> <gray>ist die Art der Bedingung'
+        - '<yellow>[condition info] <gray>sind zusätzliche Informationen, die der Bedingungstyp möglicherweise benötigt'
+      feedback: '%prefix% <green>Aktivität <yellow>%id% <green>Zusätzliche Bedingung <yellow>%condition%'
+  consumeactions:
+    description:
+      - '<gradient:#A78BFA:gold><b>Legt Aktionen fest, die ausgeführt werden, wenn der Artikel konsumiert wird, z. B. Essen und Getränke'
+      - ''
+      - '<yellow>Add <type> <action> <gray>- Ausgewählte Aktion hinzufügen'
+      - '<yellow>Set <line> <type> <action> <gray>- Aktion in der ausgewählten Zeile ersetzen'
+      - '<yellow>Remove <line> <gray>- Aktion in der ausgewählten Zeile entfernen'
+      - '<yellow>Clear <gray>- alle Aktionen entfernen'
+      - '<yellow>Permission [permission] <gray>- Legen Sie eine erforderliche Berechtigung fest, um diesen Artikel zu konsumieren'
+      - '<yellow>Cooldown <ms> <gray>- Legen Sie eine Abklingzeit fest, um diesen Gegenstand erneut zu verwenden'
+      - '<yellow>Cooldownid [id] <gray>- Legen Sie hierfür die verwendete Abklingzeit-ID fest'
+      - '<yellow>Info <gray>- Informationen zu Aktionen für das aktuelle Element anzeigen'
+    params: '[...]'
+    add:
+      params: 'add <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Ausgewählte Aktion hinzufügen'
+        - ''
+        - '<yellow><type> <gray>Art der Aktion'
+        - '<yellow><action> <gray>zusätzliche Informationen zum Handeln'
+    addline:
+      params: 'addline <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Ausgewählte Aktion in ausgewählter Zeile hinzufügen'
+        - ''
+        - '<yellow><line> <gray>Zeile zum Hinzufügen'
+        - '<yellow><type> <gray>Art der Aktion'
+        - '<yellow><action> <gray>zusätzliche Informationen zum Handeln'
+    set:
+      params: 'set <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Ersetzen Sie die Aktion in der ausgewählten Zeile'
+        - ''
+        - '<yellow><line> <gray>die zu ersetzende Zeile'
+        - '<yellow><type> <gray>Art der Aktion'
+        - '<yellow><action> <gray>zusätzliche Informationen zum Handeln'
+    remove:
+      params: 'remove <line>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Aktion in ausgewählter Zeile entfernen'
+        - ''
+        - '<yellow><line> <gray>die zu entfernende Zeile'
+    permission:
+      params: 'permission [permission]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Legen Sie die Berechtigung fest, diesen Artikel zu konsumieren'
+        - ''
+        - '<yellow>[permission] <gray>die Berechtigung zum Festlegen, standardmäßig keine'
+    cooldown:
+      params: 'cooldown [ms]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Legen Sie eine Abklingzeit fest, um einen Gegenstand erneut zu verbrauchen'
+        - ''
+        - '<yellow>[ms] <gray>Wie lange dauert es, bis man konsumieren kann?'
+        - '<gray>das Element erneut, standardmäßig 0'
+        - '<gray>Hinweis: Die Abklingzeit wird basierend auf cooldownid eingestellt, unterschiedlich'
+        - '<gray> Gegenstände mit der gleichen cooldownid haben die gleiche Abklingzeit'
+        - '<gray>Hinweis: Die Abklingzeit bleibt beim Abmelden des Spielers und beim Neustart des Servers erhalten'
+    cooldownid:
+      params: 'cooldownid [id]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Legen Sie eine Abklingzeit-ID für einen Gegenstand fest'
+        - ''
+        - '<yellow>[id] <gray>gemeinsame Abklingzeitkennung'
+        - '<gray>Hinweis: Die Abklingzeit wird basierend auf cooldownid eingestellt, unterschiedlich'
+        - '<gray> Gegenstände mit der gleichen cooldownid haben die gleiche Abklingzeit'
+    feedback:
+      actions:
+        set: '<green>Linie <yellow>%line% <green>eingestellt als <yellow>%action%'
+        remove: '<green>Entfernte Zeile <yellow>%line% <green>(<yellow>%action%<green>)'
+        clear: '<green>Verbrauchsaktionen für diesen Artikel gelöscht'
+        permission:
+          set: '<green>Berechtigung <yellow>%permission% <green>ist jetzt erforderlich, um diesen Gegenstand zu konsumieren'
+          removed: '<green>Jetzt ist keine Erlaubnis mehr erforderlich, um diesen Artikel zu konsumieren'
+        cooldownid:
+          set: '<green>Dieser Gegenstand verwendet die ID <yellow>%id% <green>für die Abklingzeit'
+          removed: '<green>Dieser Gegenstand verwendet <yellow>Standard-<green>ID für die Abklingzeit'
+        cooldown:
+          set: '<green>Dieser Gegenstand hat eine Abklingzeit von <yellow>%cooldown_seconds% <green>Sekunden'
+          removed: '<green>Dieser Gegenstand hat keine Abklingzeit'
+  effects:
+    description:
+      - '<gradient:#A78BFA:gold><b>Permanente Trankeffekte hinzufügen'
+      - '<gray>Öffnen Sie eine GUI'
+      - '<gray>Denken Sie daran, die Ausrüstung auszuwählen'
+      - '<gray> Slot wendet den Effekt an'
+    params: ''
+  usepermission:
+    description:
+      - '<gradient:#A78BFA:gold><b>Legen Sie eine Berechtigung zur Verwendung dieses Elements fest (Rechtsklick-Vanilla-Verhalten)'
+      - ''
+      - '<yellow>setpermission <permission> <gray>Erforderliche Berechtigung festlegen'
+      - '<yellow>setmessage <message> <gray>Legen Sie die Meldung „Mangel an Berechtigung“ fest'
+    params: '[...]'
+    setpermission:
+      feedback: '<green>Die Nutzungsberechtigung ist jetzt auf <yellow>%value% eingestellt'
+      feedback-reset: '<green>Die erforderliche Berechtigung verwenden wurde entfernt'
+    setmessage:
+      feedback: '<green>Die Nachricht zum Verweigern der Berechtigung ist jetzt auf <yellow>%value% eingestellt.'
+      feedback-reset: '<green>Die Meldung „Nutzungsberechtigung verweigern“ wurde entfernt'
+  wearpermission:
+    description:
+      - '<gradient:#A78BFA:gold><b>Legen Sie eine erforderliche Berechtigung fest, um diesen Gegenstand auszurüsten'
+      - ''
+      - '<gray>Wenn Sie versuchen, diesen Gegenstand ohne Erlaubnis auszurüsten, wird er zurückgegeben'
+      - '<gray>zum Inventar oder zum Boden, wenn das Inventar voll ist'
+      - '<gray>'
+      - '<yellow>setpermission <permission> <gray>Erforderliche Berechtigung festlegen'
+      - '<yellow>setmessage <message> <gray>Legen Sie die Meldung „Mangel an Berechtigung“ fest'
+    params: '[...]'
+    setpermission:
+      feedback: '<green>Berechtigung zum Ausrüsten des Gegenstands gesetzt auf <yellow>%value%'
+      feedback-reset: '<green>Erforderliche Berechtigung zum Ausrüsten des Gegenstands entfernt'
+    setmessage:
+      feedback: '<green>Nachricht bei fehlender Ausrüstungsberechtigung gesetzt auf <yellow>%value%'
+      feedback-reset: '<green>Die Meldung „Nutzungsberechtigung verweigern“ wurde entfernt'
+  help:
+    header-name: 'ItemTag'
+    description:
+      - '<gradient:#A78BFA:gold><b>Zeigt ItemTag Hilfe</b></gradient>'
+      - ''
+      - '<gray><yellow>[page] </yellow>Hilfeseite'
+      - '<gray><yellow>[subcommand] </yellow>Hilfe für einen Unterbefehl'
+    params: '[page/subcommand]'
+itemtagreload:
+  success: '<blue>[<white>ItemTag<blue>] <green>Neu geladen'
+gui:
+  middleclick: #middle click can't be used unless on creative mode, an alternative to middle click is pressing hotbar button 1
+    creative: 'Mittelklick'
+    other: 'Drücken Sie 1'
+  previous-page:
+    #Holders: %player_name% %page% %target_page%
+    description:
+      - '<gold><bold>Vorherige Seite'
+      - ''
+      - '<gray>[<white>Klick<gray>]<gray> Gehe zu Seite <yellow>%target_page%'
+  next-page:
+    #Holders: %player_name% %page% %target_page%
+    description:
+      - '<gold><bold>Nächste Seite'
+      - ''
+      - '<gray>[<white>Klick<gray>]<gray> Gehe zu Seite <yellow>%target_page%'
+  back:
+    #Holders: %player_name%
+    description:
+      - '<gold><bold>Zurück'
+      - ''
+      - '<gray>[<white>Klicken<gray>]<gray> Gehe zur vorherigen GUI'
+  actions:
+    title: '<blue>Aktionen'
+    click-interact: '<blue>[<white>ItemTag<blue>] <gray>[Hier klicken]'
+    click-hover: '<gold>Klicken Sie, um einen Befehl vorzuschlagen'
+    addline:
+      - '<gold><bold>Aktion hinzufügen'
+      - ''
+      - '<gray>[<white>Klicken<gray>]<gray> Werte ändern'
+      - '<blue>/it actions add <action type> <action info>'
+      - '<blue>/it actions addline <line> <action type> <action info>'
+    set:
+      - '<gold><bold>Aktion festlegen'
+      - ''
+      - '<gray>[<white>Klicken<gray>]<gray> Werte ändern'
+      - '<blue>/it actions set <line> <action type> <action info>'
+    remove:
+      - '<gold><bold>Aktion entfernen'
+      - ''
+      - '<gray>[<white>Klicken<gray>]<gray> Werte ändern'
+      - '<blue>/it actions remove <line>'
+    consume:
+      - '<gold><bold>Verbrauch am <yellow><bold>0<gold><bold> übrige Verwendungen'
+      - '<gray>Aktiviert: <yellow>%value%'
+      - '<gray>Hinweis: wenn true und der Artikel verbraucht wird'
+      - '<gray> Bei seiner letzten Verwendung wird der Gegenstand zerstört'
+      - ''
+      - '<gray>[<white>Klicken<gray>]<gray> Umschalten'
+      - '<blue>/it actions consume [true/false]'
+    uses:
+      - '<gold><bold>Verbleibende Nutzungen: <yellow><bold>%value%'
+      - '<gray>(-1 für Unbegrenzt)'
+      - ''
+      - '<gray>[<white>Rechtsklick<gray>]<gray> Hinzufügen <yellow>%editor%'
+      - '<gray>[<white>Linksklick<gray>]<gray> Entfernen <yellow>%editor%'
+      - '<gray>[<white>Umschalt + Links-/Rechtsklick<gray>]<gray> %editor-prev% << <yellow>%editor% <gray>>> %editor-next%'
+      - '<blue>/it actions uses <amount>'
+    maxuses:
+      - '<gold><bold>Maximale Nutzungen: <yellow><bold>%value%'
+      - '<gray>(-1 für Unbegrenzt)'
+      - '<gray>Wird hauptsächlich zum Formatieren der Restnutzungsanzeige verwendet'
+      - ''
+      - '<gray>[<white>Rechtsklick<gray>]<gray> Hinzufügen <yellow>%editor%'
+      - '<gray>[<white>Linksklick<gray>]<gray> Entfernen <yellow>%editor%'
+      - '<gray>[<white>Umschalt + Links-/Rechtsklick<gray>]<gray> %editor-prev% << <yellow>%editor% <gray>>> %editor-next%'
+      - '<blue>/it actions maxuses <amount>'
+    permission:
+      - '<gold><bold>Berechtigung zur Nutzung: <yellow><bold>%value%'
+      - '<gray>Hinweis: Wenn Sie diese Berechtigung nicht haben'
+      - '<gray> Sie können den Artikel nicht verwenden oder'
+      - '<gray> verringern die verbleibenden Verwendungsmöglichkeiten'
+      - ''
+      - '<gray>[<white>Klicken Sie auf<gray>]<gray> Bearbeiten'
+      - '<blue>/it actions permission [permission]'
+    cooldown:
+      - '<gold><bold>Abklingzeit: <yellow><bold>%value_s% <blue>s'
+      - '<gray>Hinweis: Wenden Sie eine Abklingzeit auf Rechtsklick-Anwendungen an'
+      - ''
+      - '<gray>[<white>Rechtsklick<gray>]<gray> Hinzufügen <yellow>%editor%'
+      - '<gray>[<white>Linksklick<gray>]<gray> Entfernen <yellow>%editor%'
+      - '<gray>[<white>Umschalt + Links-/Rechtsklick<gray>]<gray> %editor-prev% << <yellow>%editor% <gray>>> %editor-next%'
+      - '<blue>/it actions cooldown <cooldown <u>ms</u>>'
+    cooldownid:
+      - '<gold><bold>Abklingzeit-ID: <yellow><bold>%value%'
+      - '<gray>Hinweis: alle Artikel mit demselben cooldownid'
+      - '<gray> teilt die Abklingzeit'
+      - ''
+      - '<gray>[<white>Klicken Sie auf<gray>]<gray> Bearbeiten'
+      - '<blue>/it actions cooldownid [cooldown id]'
+    info:
+      - '<gold><bold>Liste der Aktionen:'
+    visualcooldown:
+      - '<gold><bold>Visuelle Abklingzeit anzeigen'
+      - '<gray>Aktiviert: <yellow>%value%'
+      - '<gray>Hinweis: Leider auch dieser visuelle Effekt'
+      - '<gray> gilt für alle Gegenstände derselben Art'
+      - ''
+      - '<gray>[<white>Klicken<gray>]<gray> Umschalten'
+      - '<blue>/it actions visualdisplay [true/false]'
+    displayuses:
+      - '<gold><bold>Verbleibende Nutzungen anzeigen'
+      - '<gray>Aktiviert: <yellow>%value%'
+      - ''
+      - '<gray>[<white>Klicken<gray>]<gray> Umschalten'
+      - '<blue>/it actions displayuses [true/false]'
+  actionslines:
+    actionformat: '<yellow>%type% <white>%info%'
+    element:
+      - '%action%'
+      - '<gray>[<white>Rechtsklick<gray>]<gray> Ersetzen Sie diese Aktion'
+      - '<gray>[<white>Linksklick<gray>]<gray> Fügen Sie vorher eine neue Aktion hinzu'
+      - '<gray>[<white>Umschalt + Rechtsklick<gray>]<gray> Diese Aktion löschen'
+    add:
+      - ' '
+      - '<gray>[<white>Linksklick<gray>]<gray> Neue Aktion hinzufügen'
+  flags:
+    placeable:
+      - '<gold>Legt fest, ob das Element platziert werden kann'
+      - '<gray>Wert: <yellow>%value%'
+      - ''
+      - '<gray>[<white>Klicken<gray>]<gray> Umschalten'
+    usable:
+      - '<gold>Legt fest, ob der Gegenstand verwendet werden kann'
+      - '<gray>Wert: <yellow>%value%'
+      - ''
+      - '<gray>Wenn auf false eingestellt, wird das normale Verhalten von deaktiviert'
+      - '<gray> Rechtsklick auf das Element'
+      - '<gray>Das normale Nutzungsverhalten hängt vom Artikeltyp ab'
+      - '<gray>Essen kann man nicht essen, mit der Angelrute kann man nicht fischen,'
+      - '<gray> Eier können nicht geworfen werden und Spawn-Eier können keine Kreaturen beschwören ...'
+      - ''
+      - '<gray>[<white>Klicken<gray>]<gray> Umschalten'
+    smelt:
+      - '<gold>Legt fest, ob das Gericht gegart werden kann'
+      - '<gray>Wert: <yellow>%value%'
+      - ''
+      - '<gray>Wenn auf false eingestellt, wird das normale Verhalten deaktiviert'
+      - '<gray> Ofengaren'
+      - '<gray>Funktioniert sowohl für Lebensmittel als auch für Erze'
+      - ''
+      - '<gray>[<white>Klicken<gray>]<gray> Umschalten'
+    furnacefuel:
+      - '<gold>Legt fest, ob der Gegenstand als Ofenbrennstoff verwendet werden kann'
+      - '<gray>Wert: <yellow>%value%'
+      - ''
+      - '<gray>Wenn auf false eingestellt, wird das normale Verhalten von deaktiviert'
+      - '<gray> Öfen, die diesen Gegenstand als Brennstoff verbrauchen'
+      - ''
+      - '<gray>[<white>Klicken<gray>]<gray> Umschalten'
+    recipeingredient:
+      - '<gold>Legt fest, ob der Gegenstand für Herstellungsrezepte verwendet werden kann'
+      - '<gray>Wert: <yellow>%value%'
+      - ''
+      - '<gray>Wenn auf false eingestellt, wird das normale Herstellungsverhalten deaktiviert'
+      - '<gray> wenn dieser Artikel eine der Zutaten ist'
+      - ''
+      - '<gray>[<white>Klicken<gray>]<gray> Umschalten'
+    enchantable:
+      - '<gold>Legt fest, ob der Gegenstand verzaubert werden kann'
+      - '<gray>Wert: <yellow>%value%'
+      - ''
+      - '<gray>Wenn auf false gesetzt, wird die normale Verwendung der Verzauberungstabelle verhindert'
+      - '<gray> mit diesem Artikel'
+      - ''
+      - '<gray>[<white>Klicken<gray>]<gray> Umschalten'
+    renamable:
+      - '<gold>Legt fest, ob der Gegenstand auf einem Amboss verwendet werden kann'
+      - '<gray>Wert: <yellow>%value%'
+      - ''
+      - '<gray>Wenn auf false eingestellt, werden normale Amboss-Interaktionen deaktiviert'
+      - '<gray> für diesen Artikel'
+      - ''
+      - '<gray>[<white>Klicken<gray>]<gray> Umschalten'
+    grindable:
+      - '<gold>Legt fest, ob der Gegenstand auf Schleifstein entzaubert werden kann'
+      - '<gray>Wert: <yellow>%value%'
+      - ''
+      - '<gray>Wenn auf false eingestellt, wird die normale Verwendung des Schleifsteins verhindert'
+      - '<gray> mit diesem Artikel'
+      - ''
+      - '<gray>[<white>Klicken<gray>]<gray> Umschalten'
+    equipment:
+      - '<gold>Legt fest, ob der Gegenstand als Ausrüstung verwendet werden kann'
+      - '<gray>Wert: <yellow>%value%'
+      - ''
+      - '<gray>Wenn auf false gesetzt und der Gegenstand ausgerüstet ist, wird er fallen gelassen'
+      - '<gray> zurück ins Spielerinventar'
+      - '<gray>Hinweis: Hand und Nebenhand gelten nicht als Teil der Ausrüstungsslots'
+      - ''
+      - '<gray>[<white>Klicken<gray>]<gray> Umschalten'
+    entityfood:
+      - '<gold>Legt fest, ob der Gegenstand als Tierfutter verwendet werden kann'
+      - '<gray>Wert: <yellow>%value%'
+      - ''
+      - '<gray>Bei Einstellung auf false verhindern Sie die Fortpflanzung von Tieren'
+      - '<gray> und verhindern ein schnelleres Wachstum von Tierbabys'
+      - '<gray> für diesen Artikel'
+      - ''
+      - '<gray>[<white>Klicken<gray>]<gray> Umschalten'
+    vanishcurse:
+      - '<gold>Legt fest, ob der Gegenstand beim Tod verschwindet'
+      - '<gray>Wert: <yellow>%value%'
+      - ''
+      - '<gray>Funktioniert genau wie die Verzauberung „Fluch des Verschwindens“.'
+      - '<gray>Aber es ist keine Verzauberung'
+      - ''
+      - '<gray>[<white>Klicken<gray>]<gray> Umschalten'
+    clickmove:
+      - '<gold>Legt fest, ob der Gegenstand im Inventar verschoben werden kann'
+      - '<gray>Wert: <yellow>%value%'
+      - ''
+      - '<gray>Op Spieler haben die Erlaubnis, dieses Limit zu umgehen'
+      - ''
+      - '<gray>[<white>Klicken<gray>]<gray> Umschalten'
+    tradeable:
+      - '<gold>Legt fest, ob der Gegenstand bei Dorfbewohnern gegen andere Gegenstände eingetauscht werden kann'
+      - '<gray>Wert: <yellow>%value%'
+      - ''
+      - '<gray>Wenn auf false eingestellt, wird der normale Handel mit Dorfbewohnern deaktiviert'
+      - ''
+      - '<gray>[<white>Klicken<gray>]<gray> Umschalten'
+    smithing_table:
+      - '<gold>Legt fest, ob der Gegenstand auf dem Schmiedetisch verwendet werden kann'
+      - '<gray>Wert: <yellow>%value%'
+      - ''
+      - '<gray>Wenn auf false eingestellt, werden normale Amboss-Interaktionen deaktiviert'
+      - '<gray> für diesen Artikel'
+      - ''
+      - '<gray>[<white>Klicken<gray>]<gray> Umschalten'
+  effects:
+    title: '<blue>Effekte'
+    slot:
+      - '<gold><bold>%slot%'
+      - '<gray>Aktiviert: <yellow>%value%'
+    potion:
+      - '<gold><bold>%effect%'
+      - ''
+      - '<gray>Level: <yellow>%level% <gray>[Links-/Rechtsklick-Änderung]'
+      - '<gray>Partikel: <yellow>%particles% <gray>[Umschalt + Linksklick umschalten]'
+      - '<gray>Umgebung: <yellow>%ambient% <gray>[Umschalt + Rechtsklick umschalten]'
+      - '<gray>Symbol: <yellow>%icon% <gray>[%middle_click% Umschalten]'
+      - '<gray>Dauer: <yellow>%duration%'
+    potion-instant: 'sofort'
+    potion-unlimited: 'unbegrenzt'
+  activity:
+    title_main: '<blue>Aktivität <yellow>%activity_id%'
+  triggers:
+    title_main: '<blue>Trigger'
+trigger:
+  consume_item:
+    description:
+      - '<gold>wird aktiviert, wenn ein Spieler den Gegenstand verbraucht'
+      - '<gold>(trinken oder essen)'
+  right_interact:
+    gui_material:
+      - '<gold>wird aktiviert, wenn ein Spieler mit der rechten Maustaste klickt'
+  left_interact:
+    gui_material:
+      - '<gold>wird aktiviert, wenn ein Spieler mit der linken Maustaste klickt'
+actions:
+  delay:
+    info:
+      - '<aqua>delay <yellow><delay ticks> <action>'
+      - '<yellow><delay ticks> <aqua>wie viel Sie die Aktion verzögern möchten, 20 Ticks = 1 Sekunde'
+      - '<yellow><action> <aqua>auszuführende Aktion, Beispiel: <yellow>sound entity_bat_hurt 1 1'
+  message:
+    info:
+      - '<aqua>message <yellow><message>'
+      - '<yellow><message> <aqua>Nachricht an den Spieler gesendet'
+      - '<aqua>%player% kann als Platzhalter für den Spielernamen verwendet werden'
+  permission:
+    info:
+      - '<aqua>permission <yellow><permission> <action>'
+      - '<yellow><permission> <aqua>Berechtigung erforderlich oder <yellow>-permission <aqua>um zu verlangen, dass der Spieler NICHT über die Berechtigung verfügt'
+      - '<yellow><action> <aqua>auszuführende Aktion, Beispiel: <yellow>sound entity_bat_hurt 1 1'
+  commandasop:
+    info:
+      - '<aqua>commandasop <yellow><command>'
+      - '<yellow><command> <aqua>Befehl vom Spieler ausgeführt als Op'
+      - '<aqua>%player% kann als Platzhalter für den Spielernamen verwendet werden'
+      - '<aqua>NB. es ist kein <yellow>/<aqua> erforderlich, Beispiel: <yellow>home'
+  command:
+    info:
+      - '<aqua>command <yellow><command>'
+      - '<yellow><command> <aqua>Befehl vom Spieler ausgeführt'
+      - '<aqua>%player% kann als Platzhalter für den Spielernamen verwendet werden'
+      - '<aqua>NB. es ist kein <yellow>/<aqua> erforderlich, Beispiel: <yellow>home'
+  potion:
+    info:
+      - '<aqua>potion <yellow><type> <duration_ticks|infinite> <level> [ambient] [particles] [icon]'
+      - '<yellow><type> <aqua>der anzuwendende Trankeffekt'
+      - '<yellow><duration_ticks|infinite> <aqua>Effektdauer in Ticks oder infinite'
+      - '<yellow><level> <aqua>Effektstufe von 1 bis 256'
+      - '<yellow>[ambient] [particles] [icon] <aqua>booleans; Standardwerte sind false, true, true'
+  projectile:
+    info:
+      - '<aqua>projectile <yellow><projectile> [speed] [imprecision] [repeat] [repeatdelay]'
+      - '<yellow><projectile> <aqua>spawnbarer Entitätstyp, dessen Java-Klasse Projectile erweitert'
+      - '<yellow>[speed] <aqua>Anfangsgeschwindigkeit; Standardmäßig ist 1'
+      - '<yellow>[imprecision] <aqua>zufälliger Richtungsversatz auf X, Y und Z; Standardmäßig ist 0'
+      - '<yellow>[repeat] <aqua>zusätzliche Aufnahmen nach dem ersten; Standardmäßig ist 0'
+      - '<yellow>[repeatdelay] <aqua>Ticks zwischen den Schüssen; Der Standardwert ist 5 und muss mindestens 1 sein.'
+  servercommand:
+    info:
+      - '<aqua>servercommand <yellow><command>'
+      - '<yellow><command> <aqua>Befehl vom Server ausgeführt'
+      - '<aqua>%player% kann als Platzhalter für den Spielernamen verwendet werden'
+      - '<aqua>NB. es ist kein <yellow>/<aqua> erforderlich, Beispiel: <yellow>heal %player%'
+  sound:
+    info:
+      - '<aqua>sound <yellow><sound> [volume] [pitch] [self]'
+      - '<yellow><sound> <aqua>der abzuspielende Ton'
+      - '<yellow>[volume] <aqua>die Lautstärke des Tons, Standard 1'
+      - '<yellow>[pitch] <aqua>die Tonhöhe, Standard 1'
+      - '<yellow>[self] <aqua>Nur der Spieler soll es hören? Standardmäßig ist false'
+  summon:
+    info:
+      - '<aqua>summon <yellow><entity> [quantity] [spread]'
+      - '<yellow><entity> <aqua>spawnbarer Entitätstyp'
+      - '<yellow>[quantity] <aqua>Anzahl der zu beschwörenden Entitäten; Standardmäßig ist 1'
+      - '<yellow>[spread] <aqua>Abstand vom Spieler; Standardmäßig ist 1.5'
+      - '<aqua>Ein Wesen erscheint vorne; zwei spawnen bei ±60°; Drei oder mehr sind gleichmäßig um den Spieler herum verteilt'
+  throwtnt:
+    info:
+      - '<aqua>throwtnt [speed] [imprecision] [fuseTicks] [repeat] [repeatdelay]'
+      - '<aqua>Wirft ein aktiviertes TNT in die Richtung, in die der Spieler schaut'
+      - '<yellow>[speed] <aqua>Anfangsgeschwindigkeit; Standardmäßig ist 2'
+      - '<yellow>[imprecision] <aqua>zufälliger Gier- und Nickversatz in Grad; Standardmäßig ist 0'
+      - '<yellow>[fuseTicks] <aqua>TNT-Zeit vor der Explosion in Ticks; Standardmäßig ist 60'
+      - '<yellow>[repeat] <aqua>zusätzliche Würfe nach dem ersten; Standardmäßig ist 0'
+      - '<yellow>[repeatdelay] <aqua>Ticks zwischen den Würfen; Der Standardwert ist 5 und muss mindestens 1 sein.'

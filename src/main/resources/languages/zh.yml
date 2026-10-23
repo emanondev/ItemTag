@@ -1,0 +1,778 @@
+generic:
+  help:
+    player-only: '<dark_red>[<red>ItemTag<dark_red>] <red>仅限玩家的命令'
+    no-item-on-hand: '<dark_red>[<red>ItemTag<dark_red>] <red>你需要手里拿着一个物品'
+    lack-permission: '<dark_red>[<red>ItemTag<dark_red>] <red>您没有权限%permission%'
+    lack-permission-generic: '<dark_red>[<red>ItemTag<dark_red>] <red>您没有权限使用此命令'
+    prefix: '<dark_gray>[<gradient:#54acff:#A78BFA><bold>ItemTag</bold></gradient><dark_gray>]</dark_gray>'
+    header-format: '<gradient:#54acff:#A78BFA><bold>%header%</bold></gradient> <dark_gray>»</dark_gray> <#A78BFA><bold>帮助</bold></#A78BFA>'
+    header-sub-format: '<gradient:#54acff:#A78BFA><bold>%header%</bold></gradient> <dark_gray>»</dark_gray> <gradient:#A78BFA:#54acff><bold>%sub%</bold></gradient> <dark_gray>»</dark_gray> <#55d6ff><bold>帮助</#55d6ff>'
+    command-format: '<gray>/%command%</gray> <#bad1ff>%sub%</#bad1ff> <#d7bbff>%params%</#d7bbff>'
+    footer-format: '%prev_clickable% <#7E9CFD><b>帮助</b> [%page%/%max_page%]</#7E9CFD> %next_clickable%'
+    next_text: ' <light_purple><b>><st>> ></st> '
+    prev_text: ' <light_purple><b><st>< <</st>< '
+    next_void: ' <dark_gray><b>><st>> ></st> '
+    prev_void: ' <dark_gray><b><st>< <</st>< '
+    next_hover: '<gold><b>转到第%target%页'
+    prev_hover: '<gold><b>转到第%target%页'
+  wrong-alias:
+    wrong-flag: '%prefix% <red>错误的标志值！ <dark_red>[<gold>悬停在此处<dark_red>]'
+    wrong-action: '%prefix% <red>动作类型错误！ <dark_red>[<gold>悬停在这里<dark_red>]'
+    error-pre-hover: '<gradient:#A78BFA:gold><b>别名：</b></gradient>'
+    first_color: '<aqua>'
+    second_color: '<yellow>'
+itemtag:
+  flag:
+    description:
+      - '<gradient:#A78BFA:gold><b>切换物品上的自定义标志'
+      - ''
+      - '<yellow><flag> <gray>标志名称'
+      - '<yellow>[true/false] <gray>标志值；如果省略，则反转当前值'
+    params: '<flag> [true/false]'
+    placeable:
+      feedback:
+        standard: '%prefix% <green>可以放置物品。'
+        custom: '%prefix% <green>无法放置该物品。'
+        failed-place-attempt: '<dark_red>[<red>ItemTag<dark_red>] <red>您无法放置该物品'
+    usable:
+      feedback:
+        standard: '%prefix% <green>该物品可以使用。'
+        custom: '%prefix% <green>该物品无法使用（右键）。'
+    smelt:
+      feedback:
+        standard: '%prefix% <green>该物品可以在熔炉中烹饪或熔炼。'
+        custom: '%prefix% <green>该物品不能在熔炉中烹饪或熔炼。'
+    furnacefuel:
+      feedback:
+        standard: '%prefix% <green>该物品可用作熔炉燃料。'
+        custom: '%prefix% <green>该物品不能用作熔炉燃料。'
+    recipeingredient:
+      feedback:
+        standard: '%prefix% <green>该物品可以用作配方成分。'
+        custom: '%prefix% <green>该物品不能用作配方成分。'
+    enchantable:
+      feedback:
+        standard: '%prefix% <green>该物品可以被附魔。'
+        custom: '%prefix% <green>该物品无法附魔。'
+    renamable:
+      feedback:
+        standard: '%prefix% <green>该物品可以在铁砧上使用。'
+        custom: '%prefix% <green>该物品不能在铁砧上使用。'
+    grindable:
+      feedback:
+        standard: '%prefix% <green>该物品可以用磨石分解。'
+        custom: '%prefix% <green>该物品无法用磨石分解。'
+    equipment:
+      feedback:
+        standard: '%prefix% <green>该物品可以装备。'
+        custom: '%prefix% <green>该物品无法装备。'
+    entityfood:
+      feedback:
+        standard: '%prefix% <green>该物品可用作动物食品。'
+        custom: '%prefix% <green>该物品不能用作动物食品。'
+    clickmove:
+      feedback:
+        standard: '%prefix% <green>该物品可以在库存中移动。'
+        custom: '%prefix% <green>该物品无法在库存中移动。'
+    tradeable:
+      feedback:
+        standard: '%prefix% <green>该物品可以与村民交易。'
+        custom: '%prefix% <green>该物品不能与村民交易。'
+    smithing_table:
+      feedback:
+        standard: '%prefix% <green>该物品可用作锻造台的原料。'
+        custom: '%prefix% <green>该物品不能用作锻造台的原料。'
+  actions:
+    invalid-action:
+      message: '<dark_red>[<red>ItemTag<dark_red>] <red>''<gold>%error%<red>'' 不是有效类型 <dark_red>[<gold>将鼠标悬停在此处<dark_red>]'
+    invalid-actioninfo:
+      message: '<dark_red>[<red>ItemTag<dark_red>] <red>''<gold>%error%<red>'' 不是<gold>%action% <dark_red>[<gold>将鼠标悬停在此处<dark_red>]的有效信息'
+    description:
+      - '<gradient:#A78BFA:gold><b>设置使用该物品时完成的操作'
+      - ''
+      - '<yellow>Add <type> <action> <gray>- 添加选定的操作'
+      - '<yellow>Set <line> <type> <action> <gray>- 替换所选行上的操作'
+      - '<yellow>Remove <line> <gray>- 删除所选行上的操作'
+      - '<yellow>Clear <gray>- 删除所有操作'
+      - '<yellow>Permission [permission] <gray>- 设置使用该物品所需的权限'
+      - '<yellow>Cooldown <ms> <gray>- 设置再次使用该物品的冷却时间'
+      - '<yellow>Cooldownid [id] <gray>-为此设置使用的冷却ID'
+      - '<yellow>Cooldownmsg [msg] <gray>- 设置冷却时间反馈'
+      - '<yellow>Cooldownmsgtype [type] <gray>-设置冷却反馈类型（chat或actionbar）'
+      - '<yellow>Uses [amount] <gray>- 设置该物品可以使用多少次'
+      - '<yellow>Info <gray>- 显示有关当前物品操作的信息'
+    params: '[...]'
+    add:
+      params: 'add <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>添加选定的操作'
+        - ''
+        - '<yellow><type> <gray>动作类型'
+        - '<yellow><action> <gray>行动的附加信息'
+      feedback: '%prefix% <green>添加<yellow>%action%'
+    addline:
+      params: 'addline <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>在所选行上添加所选操作'
+        - ''
+        - '<yellow><line> <gray>要添加的行'
+        - '<yellow><type> <gray>动作类型'
+        - '<yellow><action> <gray>行动的附加信息'
+      feedback: '%prefix% <green>行<yellow>%line% <green>添加为<yellow>%action%'
+    set:
+      params: 'set <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>替换所选行上的操作'
+        - ''
+        - '<yellow><line> <gray>要替换的行'
+        - '<yellow><type> <gray>动作类型'
+        - '<yellow><action> <gray>行动的附加信息'
+      feedback: '%prefix% <green>行<yellow>%line% <green>设置为<yellow>%action%'
+    remove:
+      params: 'remove <line>'
+      description:
+        - '<gradient:#A78BFA:gold><b>删除所选行上的操作'
+        - ''
+        - '<yellow><line> <gray>要删除的行'
+      feedback: '%prefix% <green>删除行<yellow>%line% <green>(<yellow>%action%<green>)'
+    permission:
+      params: 'permission [permission]'
+      description:
+        - '<gradient:#A78BFA:gold><b>设置使用该物品的权限'
+        - ''
+        - '<yellow>[permission] <gray>设置的权限，默认无'
+      feedback:
+        set: '%prefix% <green>权限<yellow>%permission% <green>才能使用此物品'
+        removed: '%prefix% <green>现在无需许可即可使用该物品'
+    cooldown:
+      params: 'cooldown [ms]'
+      description:
+        - '<gradient:#A78BFA:gold><b>设置再次使用物品的冷却时间'
+        - ''
+        - '<yellow>[ms] <gray>需要多少时间才能使用'
+        - '<gray>该物品，默认0'
+        - '<gray>注：冷却时间是根据cooldownid设置的，不同'
+        - '<gray> 具有相同 cooldownid 的物品共享相同的冷却时间'
+        - '<gray>注意：冷却时间在玩家注销和服务器重启时保留'
+      feedback:
+        set: '%prefix% <green>该物品的冷却时间为<yellow>%cooldown_seconds% <green>秒'
+        removed: '%prefix% <green>该物品没有冷却时间'
+    cooldownid:
+      params: 'cooldownid [id]'
+      description:
+        - '<gradient:#A78BFA:gold><b>设置物品的冷却时间ID'
+        - ''
+        - '<yellow>[id] <gray>共享冷却时间标识符'
+        - '<gray>注：冷却时间是根据cooldownid设置的，不同'
+        - '<gray> 具有相同 cooldownid 的物品共享相同的冷却时间'
+      feedback:
+        set: '%prefix% <green>该物品使用ID <yellow>%id% <green>进行冷却'
+        removed: '%prefix% <green>该物品使用<yellow>默认<green>id进行冷却'
+    cooldownmsg:
+      description:
+        - '<gradient:#A78BFA:gold><b>设置冷却消息'
+        - ''
+        - '<yellow>[message] <gray>物品无法使用时显示的消息'
+        - '<gray>当冷却时间有效时'
+      params: 'cooldownmsg [message]'
+      feedback:
+        set: '%prefix% <green>冷却时间激活时设置为“<white>%msg%<green>”的反馈消息'
+        removed: '%prefix% <green>删除冷却时间反馈消息'
+    cooldownmsgtype:
+      description:
+        - '<gradient:#A78BFA:gold><b>设置冷却消息类型'
+        - ''
+        - '<yellow>[type] <gray>chat或actionbar'
+      params: 'cooldownmsgtype [type]'
+      feedback:
+        set: '%prefix% <green>冷却时间反馈消息设置为“<yellow>%type%<green>”类型'
+    uses:
+      params: 'uses [amount]'
+      description:
+        - '<gradient:#A78BFA:gold><b>设置该物品可以使用多少次'
+        - ''
+        - '<gray>注意：使用<yellow>-1 <gray>无限次使用'
+      feedback:
+        set: '%prefix% <green>该物品在被消耗前已使用过<yellow>%uses% <green>次'
+        unlimited: '%prefix% <green>该商品有<yellow>无限制<green>用途'
+    maxuses:
+      params: 'maxuses [amount]'
+      description:
+        - '<gradient:#A78BFA:gold><b>设置物品的最大使用次数'
+        - ''
+        - '<gray>主要用于美观目的'
+        - '<gray>显示用途设置为 true'
+        - ''
+        - '<gray>注意：使用<yellow>-1 <gray>无限次使用'
+      feedback:
+        set: '%prefix% <green>该物品最多可使用 <yellow>%uses% <green> 次'
+        unlimited: '%prefix% <green>该物品有<yellow>无限制<green>最多使用次数'
+    consume:
+      params: 'consume [true/false]'
+      description:
+        - '<gradient:#A78BFA:gold><b>上次使用时消耗该物品'
+        - ''
+        - '<gray>注：当true且物品消耗时'
+        - '<gray> 最后一次使用，该物品被销毁'
+      feedback:
+        set: '%prefix% <green>物品在达到最后一次使用时被销毁'
+        unset: '%prefix% <green>物品在达到最后一次使用时不会被销毁'
+    visualcooldown:
+      params: 'visualcooldown [true/false]'
+      description:
+        - '<gradient:#A78BFA:gold><b>直观显示剩余冷却时间'
+        - ''
+        - '<gray>当true时，该物品显示类似于以下的动画'
+        - '<gray>末影珍珠的冷却动画'
+        - ''
+        - '<gray>注：不幸的是这个视觉效果也'
+        - '<gray> 适用于任何同类物品'
+      feedback:
+        set: '%prefix% <green>现在物品显示视觉冷却时间'
+        unset: '%prefix% <green>现在物品不会显示视觉冷却时间'
+    displayuses:
+      params: 'displayuses [true/false]'
+      description:
+        - '<gradient:#A78BFA:gold><b>显示剩余使用次数'
+        - ''
+        - '<gray>当true添加一行描述'
+        - '<gray>还剩多少用途'
+        - ''
+        - '<gray>注：不幸的是这个视觉效果也'
+        - '<gray> 适用于任何同类物品'
+      feedback:
+        set: '%prefix% <green>该物品现在显示其剩余和最大使用次数'
+        unset: '%prefix% <green>该物品不再显示其剩余和最大使用次数'
+  activity:
+    description:
+      - '<gradient:#A78BFA:gold><b>设置活动（某些操作）'
+      - '<gray>活动可以通过触发器激活'
+      - '<gray>触发器可能与物品相关联 (/it trigger)'
+      - ''
+      - '<yellow>Create <id> <gray>- 创建一个新活动'
+      - '<yellow>Open <id> <gray>- 打开所选活动的 GUI'
+      - '<yellow>Delete <id> <gray>- 删除选定的活动'
+      - '<yellow>Clone <id> <new id><gray>- 克隆选定的活动'
+      - '<yellow>Rename <id> <new id><gray>- 重命名选定的活动'
+    params: '[...]'
+    feedback:
+      invalid_activity_id: '<dark_red>[<red>ItemTag<dark_red>] <red>活动<gold>%id% <red>不存在'
+      already_used_activity_id: '<dark_red>[<red>ItemTag<dark_red>] <red>活动<gold>%id% <red>已使用'
+    create:
+      params: 'create <new id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>创建一个新活动'
+        - ''
+        - '<yellow><new id> <gray>是活动的id'
+        - '<gray>id 必须以字母开头并且可以是字母数字'
+        - '<gray>还可能包含_符号'
+      feedback: '%prefix% <green>活动<yellow>%id% <green>已创建'
+    rename:
+      params: 'rename <id> <new id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>重命名活动 ID'
+        - ''
+        - '<yellow><id> <gray>是activity的当前id'
+        - '<yellow><new id> <gray>是activity的新id'
+        - '<gray>id 必须以字母开头并且可以是字母数字'
+        - '<gray>还可能包含_符号'
+      feedback: '%prefix% <green>活动<yellow>%id% <green>重命名为<yellow>%new_id%'
+    open:
+      params: 'open <id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>打开 gui 编辑活动'
+        - ''
+        - '<yellow><id> <gray>是活动的id'
+    delete:
+      params: 'delete <id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>删除所选活动'
+        - ''
+        - '<yellow><id> <gray>是活动的id'
+      feedback: '%prefix% <green>活动<yellow>%id% <green>已删除'
+    clone:
+      params: 'clone <id> <clone id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>克隆选定的活动'
+        - ''
+        - '<yellow><id> <gray>是所选活动的ID'
+        - '<yellow><clone id> <gray>是克隆的id'
+        - '<gray>id 必须以字母开头并且可以是字母数字'
+        - '<gray>还可能包含_符号'
+      feedback: '%prefix% <green>活动<yellow>%id% <green>克隆到<yellow>%clone_id%'
+    setconsumes:
+      params: 'setconsumes <id> <amount>'
+      description:
+        - '<gradient:#A78BFA:gold><b>设置所选活动所需的用途'
+        - ''
+        - '<yellow><id> <gray>是所选活动的ID'
+        - '<yellow><amount> <gray>活动激活消耗的使用量'
+      feedback: '%prefix% <green>活动<yellow>%id% <green>使用消耗为<yellow>%amount%'
+    addcondition:
+      params: 'addcondition <id> [!]<conditiontype> [condition info]'
+      description:
+        - '<gradient:#A78BFA:gold><b>添加激活活动的条件'
+        - ''
+        - '<yellow><id> <gray>是活动的id'
+        - '<yellow>[!] <gray>是“！”如果你想逆转条件'
+        - '<yellow><conditiontype> <gray>是条件类型'
+        - '<yellow>[condition info] <gray>是条件类型可能需要的附加信息'
+      feedback: '%prefix% <green>活动<yellow>%id% <green>添加条件<yellow>%condition%'
+  consumeactions:
+    description:
+      - '<gradient:#A78BFA:gold><b>设置当食物和饮料等物品被消耗时执行的操作'
+      - ''
+      - '<yellow>Add <type> <action> <gray>- 添加选定的操作'
+      - '<yellow>Set <line> <type> <action> <gray>- 替换所选行上的操作'
+      - '<yellow>Remove <line> <gray>- 删除所选行上的操作'
+      - '<yellow>Clear <gray>- 删除所有操作'
+      - '<yellow>Permission [permission] <gray>- 设置消耗该物品所需的权限'
+      - '<yellow>Cooldown <ms> <gray>- 设置再次使用该物品的冷却时间'
+      - '<yellow>Cooldownid [id] <gray>-为此设置使用的冷却ID'
+      - '<yellow>Info <gray>- 显示有关当前物品操作的信息'
+    params: '[...]'
+    add:
+      params: 'add <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>添加选定的操作'
+        - ''
+        - '<yellow><type> <gray>动作类型'
+        - '<yellow><action> <gray>行动的附加信息'
+    addline:
+      params: 'addline <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>在所选行上添加所选操作'
+        - ''
+        - '<yellow><line> <gray>要添加的行'
+        - '<yellow><type> <gray>动作类型'
+        - '<yellow><action> <gray>行动的附加信息'
+    set:
+      params: 'set <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>替换所选行上的操作'
+        - ''
+        - '<yellow><line> <gray>要替换的行'
+        - '<yellow><type> <gray>动作类型'
+        - '<yellow><action> <gray>行动的附加信息'
+    remove:
+      params: 'remove <line>'
+      description:
+        - '<gradient:#A78BFA:gold><b>删除所选行上的操作'
+        - ''
+        - '<yellow><line> <gray>要删除的行'
+    permission:
+      params: 'permission [permission]'
+      description:
+        - '<gradient:#A78BFA:gold><b>设置消耗该物品的权限'
+        - ''
+        - '<yellow>[permission] <gray>设置的权限，默认无'
+    cooldown:
+      params: 'cooldown [ms]'
+      description:
+        - '<gradient:#A78BFA:gold><b>设置再次消耗物品的冷却时间'
+        - ''
+        - '<yellow>[ms] <gray>多久可以食用'
+        - '<gray>该物品，默认0'
+        - '<gray>注：冷却时间是根据cooldownid设置的，不同'
+        - '<gray> 具有相同 cooldownid 的物品共享相同的冷却时间'
+        - '<gray>注意：冷却时间在玩家注销和服务器重启时保留'
+    cooldownid:
+      params: 'cooldownid [id]'
+      description:
+        - '<gradient:#A78BFA:gold><b>设置物品的冷却时间ID'
+        - ''
+        - '<yellow>[id] <gray>共享冷却时间标识符'
+        - '<gray>注：冷却时间是根据cooldownid设置的，不同'
+        - '<gray> 具有相同 cooldownid 的物品共享相同的冷却时间'
+    feedback:
+      actions:
+        set: '<green>行<yellow>%line% <green>设置为<yellow>%action%'
+        remove: '<green>删除行<yellow>%line% <green>(<yellow>%action%<green>)'
+        clear: '<green>已清除该物品的消耗操作'
+        permission:
+          set: '<green>权限<yellow>%permission% <green>才能使用该物品'
+          removed: '<green>现在无需任何权限即可消耗该物品'
+        cooldownid:
+          set: '<green>该物品使用ID <yellow>%id% <green>进行冷却'
+          removed: '<green>该物品使用<yellow>默认<green>id进行冷却'
+        cooldown:
+          set: '<green>该物品的冷却时间为<yellow>%cooldown_seconds% <green>秒'
+          removed: '<green>该物品没有冷却时间'
+  effects:
+    description:
+      - '<gradient:#A78BFA:gold><b>添加永久药水效果'
+      - '<gray>打开图形用户界面'
+      - '<gray>记得选择装备'
+      - '<gray> 插槽应用效果'
+    params: ''
+  usepermission:
+    description:
+      - '<gradient:#A78BFA:gold><b>设置使用此物品的权限（右键单击香草行为）'
+      - ''
+      - '<yellow>setpermission <permission> <gray>设置所需权限'
+      - '<yellow>setmessage <message> <gray>设置缺少权限消息'
+    params: '[...]'
+    setpermission:
+      feedback: '<green>使用权限现在设置为<yellow>%value%'
+      feedback-reset: '<green>使用所需权限已被删除'
+    setmessage:
+      feedback: '<green>使用权限拒绝消息现在设置为<yellow>%value%'
+      feedback-reset: '<green>使用权限拒绝消息已被删除'
+  wearpermission:
+    description:
+      - '<gradient:#A78BFA:gold><b>设置装备该物品所需的权限'
+      - ''
+      - '<gray>未经许可，尝试装备该物品将被退回'
+      - '<gray>到库存，如果库存已满则到地面'
+      - '<gray>'
+      - '<yellow>setpermission <permission> <gray>设置所需权限'
+      - '<yellow>setmessage <message> <gray>设置缺少权限消息'
+    params: '[...]'
+    setpermission:
+      feedback: '<green>装备此物品所需的权限已设为：<yellow>%value%'
+      feedback-reset: '<green>已移除装备此物品所需的权限'
+    setmessage:
+      feedback: '<green>缺少装备权限时显示的消息已设为：<yellow>%value%'
+      feedback-reset: '<green>使用权限拒绝消息已被删除'
+  help:
+    header-name: 'ItemTag'
+    description:
+      - '<gradient:#A78BFA:gold><b>显示ItemTag帮助</b></gradient>'
+      - ''
+      - '<gray><yellow>[page] </yellow>帮助页面'
+      - '<gray><yellow>[subcommand] </yellow>子命令帮助'
+    params: '[page/subcommand]'
+itemtagreload:
+  success: '<blue>[<white>ItemTag<blue>] <green>重装上阵'
+gui:
+  middleclick: #middle click can't be used unless on creative mode, an alternative to middle click is pressing hotbar button 1
+    creative: '中键单击'
+    other: '按1'
+  previous-page:
+    #Holders: %player_name% %page% %target_page%
+    description:
+      - '<gold><bold>上一页'
+      - ''
+      - '<gray>[<white>点击<gray>]<gray>前往页面<yellow>%target_page%'
+  next-page:
+    #Holders: %player_name% %page% %target_page%
+    description:
+      - '<gold><bold>下一页'
+      - ''
+      - '<gray>[<white>点击<gray>]<gray>前往页面<yellow>%target_page%'
+  back:
+    #Holders: %player_name%
+    description:
+      - '<gold><bold>返回'
+      - ''
+      - '<gray>[<white>单击<gray>]<gray>转到上一个图形用户界面'
+  actions:
+    title: '<blue>行动'
+    click-interact: '<blue>[<white>ItemTag<blue>] <gray>[点击这里]'
+    click-hover: '<gold>点击建议命令'
+    addline:
+      - '<gold><bold>添加动作'
+      - ''
+      - '<gray>[<white>单击<gray>]<gray>更改值'
+      - '<blue>/it actions add <action type> <action info>'
+      - '<blue>/it actions addline <line> <action type> <action info>'
+    set:
+      - '<gold><bold>设定动作'
+      - ''
+      - '<gray>[<white>单击<gray>]<gray>更改值'
+      - '<blue>/it actions set <line> <action type> <action info>'
+    remove:
+      - '<gold><bold>删除动作'
+      - ''
+      - '<gray>[<white>单击<gray>]<gray>更改值'
+      - '<blue>/it actions remove <line>'
+    consume:
+      - '<gold><bold>在<yellow><bold>0<gold><bold>上消费使用左侧'
+      - '<gray>启用：<yellow>%value%'
+      - '<gray>注：当true且物品消耗时'
+      - '<gray> 最后一次使用，该物品被销毁'
+      - ''
+      - '<gray>[<white>点击<gray>]<gray>切换'
+      - '<blue>/it actions consume [true/false]'
+    uses:
+      - '<gold><bold>剩余使用次数：<yellow><bold>%value%'
+      - '<gray>（-1 表示无限）'
+      - ''
+      - '<gray>[<white>右键<gray>]<gray>添加<yellow>%editor%'
+      - '<gray>[<white>左键单击<gray>]<gray>删除<yellow>%editor%'
+      - '<gray>[<white>Shift + 左/右键单击<gray>]<gray> %editor-prev% << <yellow>%editor% <gray>>> %editor-next%'
+      - '<blue>/it actions uses <amount>'
+    maxuses:
+      - '<gold><bold>最大使用次数：<yellow><bold>%value%'
+      - '<gray>（-1 表示无限）'
+      - '<gray>主要用于格式化剩余使用显示'
+      - ''
+      - '<gray>[<white>右键<gray>]<gray>添加<yellow>%editor%'
+      - '<gray>[<white>左键单击<gray>]<gray>删除<yellow>%editor%'
+      - '<gray>[<white>Shift + 左/右键单击<gray>]<gray> %editor-prev% << <yellow>%editor% <gray>>> %editor-next%'
+      - '<blue>/it actions maxuses <amount>'
+    permission:
+      - '<gold><bold>使用权限：<yellow><bold>%value%'
+      - '<gray>注意：如果您没有此权限'
+      - '<gray> 您将无法使用该物品或'
+      - '<gray> 减少其剩余用途'
+      - ''
+      - '<gray>[<white>点击<gray>]<gray>编辑'
+      - '<blue>/it actions permission [permission]'
+    cooldown:
+      - '<gold><bold>冷却时间：<yellow><bold>%value_s% <blue>秒'
+      - '<gray>注意：右键单击使用时应用冷却时间'
+      - ''
+      - '<gray>[<white>右键<gray>]<gray>添加<yellow>%editor%'
+      - '<gray>[<white>左键单击<gray>]<gray>删除<yellow>%editor%'
+      - '<gray>[<white>Shift + 左/右键单击<gray>]<gray> %editor-prev% << <yellow>%editor% <gray>>> %editor-next%'
+      - '<blue>/it actions cooldown <cooldown <u>ms</u>>'
+    cooldownid:
+      - '<gold><bold>冷却时间ID：<yellow><bold>%value%'
+      - '<gray>注：所有具有相同cooldownid的物品'
+      - '<gray> 共享冷却时间'
+      - ''
+      - '<gray>[<white>点击<gray>]<gray>编辑'
+      - '<blue>/it actions cooldownid [cooldown id]'
+    info:
+      - '<gold><bold>行动清单：'
+    visualcooldown:
+      - '<gold><bold>显示视觉冷却时间'
+      - '<gray>启用：<yellow>%value%'
+      - '<gray>注：不幸的是这个视觉效果也'
+      - '<gray> 适用于任何同类物品'
+      - ''
+      - '<gray>[<white>点击<gray>]<gray>切换'
+      - '<blue>/it actions visualdisplay [true/false]'
+    displayuses:
+      - '<gold><bold>显示剩余使用次数'
+      - '<gray>启用：<yellow>%value%'
+      - ''
+      - '<gray>[<white>点击<gray>]<gray>切换'
+      - '<blue>/it actions displayuses [true/false]'
+  actionslines:
+    actionformat: '<yellow>%type% <white>%info%'
+    element:
+      - '%action%'
+      - '<gray>[<white>右键<gray>]<gray> 替换此操作'
+      - '<gray>[<white>左键单击<gray>]<gray>在此之前添加新操作'
+      - '<gray>[<white>Shift + 右键单击<gray>]<gray> 删除此操作'
+    add:
+      - ' '
+      - '<gray>[<white>左键单击<gray>]<gray>添加新动作'
+  flags:
+    placeable:
+      - '<gold>设置是否可以放置物品'
+      - '<gray>值：<yellow>%value%'
+      - ''
+      - '<gray>[<white>点击<gray>]<gray>切换'
+    usable:
+      - '<gold>设置该物品是否可以使用'
+      - '<gray>值：<yellow>%value%'
+      - ''
+      - '<gray>如果设置为false禁用正常行为'
+      - '<gray> 右键单击该物品'
+      - '<gray>正常使用行为取决于物品类型'
+      - '<gray>食物不能吃，鱼竿不能钓鱼，'
+      - '<gray> 蛋无法投掷，刷怪蛋无法召唤生物……'
+      - ''
+      - '<gray>[<white>点击<gray>]<gray>切换'
+    smelt:
+      - '<gold>设置该物品是否可以烹饪'
+      - '<gray>值：<yellow>%value%'
+      - ''
+      - '<gray>如果设置为false禁用正常行为'
+      - '<gray> 炉煮'
+      - '<gray>适用于食物和矿石'
+      - ''
+      - '<gray>[<white>点击<gray>]<gray>切换'
+    furnacefuel:
+      - '<gold>设置该物品是否可以用作熔炉燃料'
+      - '<gray>值：<yellow>%value%'
+      - ''
+      - '<gray>如果设置为false禁用正常行为'
+      - '<gray>消耗该物品作为燃料的熔炉'
+      - ''
+      - '<gray>[<white>点击<gray>]<gray>切换'
+    recipeingredient:
+      - '<gold>设置该物品是否可以用于制作配方'
+      - '<gray>值：<yellow>%value%'
+      - ''
+      - '<gray>如果设置为false禁用正常的制作行为'
+      - '<gray> 当该物品是其中一种成分时'
+      - ''
+      - '<gray>[<white>点击<gray>]<gray>切换'
+    enchantable:
+      - '<gold>设置物品是否可以附魔'
+      - '<gray>值：<yellow>%value%'
+      - ''
+      - '<gray>如果设置为false会阻止结界台的正常使用'
+      - '<gray> 与此商品'
+      - ''
+      - '<gray>[<white>点击<gray>]<gray>切换'
+    renamable:
+      - '<gold>设置该物品是否可以在铁砧上使用'
+      - '<gray>值：<yellow>%value%'
+      - ''
+      - '<gray>如果设置为false禁用正常的砧交互'
+      - '<gray> 在此商品上'
+      - ''
+      - '<gray>[<white>点击<gray>]<gray>切换'
+    grindable:
+      - '<gold>设置该物品是否可以在磨石上分解'
+      - '<gray>值：<yellow>%value%'
+      - ''
+      - '<gray>如果设置为false会妨碍磨石的正常使用'
+      - '<gray> 与此商品'
+      - ''
+      - '<gray>[<white>点击<gray>]<gray>切换'
+    equipment:
+      - '<gold>设置该物品是否可以作为装备使用'
+      - '<gray>值：<yellow>%value%'
+      - ''
+      - '<gray>如果设置为false并且装备了物品，则会掉落'
+      - '<gray> 回到玩家库存中'
+      - '<gray>注意：单手和副手不被视为装备槽的一部分'
+      - ''
+      - '<gray>[<white>点击<gray>]<gray>切换'
+    entityfood:
+      - '<gold>设置该物品是否可以用作动物食物'
+      - '<gray>值：<yellow>%value%'
+      - ''
+      - '<gray>如果设置为false防止动物繁殖'
+      - '<gray> 并防止小动物更快生长'
+      - '<gray> 在此商品上'
+      - ''
+      - '<gray>[<white>点击<gray>]<gray>切换'
+    vanishcurse:
+      - '<gold>设置物品是否在死亡时消失'
+      - '<gray>值：<yellow>%value%'
+      - ''
+      - '<gray>与附魔消失诅咒完全相同'
+      - '<gray>但这不是结界'
+      - ''
+      - '<gray>[<white>点击<gray>]<gray>切换'
+    clickmove:
+      - '<gold>设置物品是否可以在库存中移动'
+      - '<gray>值：<yellow>%value%'
+      - ''
+      - '<gray>Op 玩家有权绕过该限制'
+      - ''
+      - '<gray>[<white>点击<gray>]<gray>切换'
+    tradeable:
+      - '<gold>设置该物品是否可以与村民交易其他物品'
+      - '<gray>值：<yellow>%value%'
+      - ''
+      - '<gray>如果设置为false禁用正常村民交易'
+      - ''
+      - '<gray>[<white>点击<gray>]<gray>切换'
+    smithing_table:
+      - '<gold>设置该物品是否可以在锻造台上使用'
+      - '<gray>值：<yellow>%value%'
+      - ''
+      - '<gray>如果设置为false禁用正常的砧交互'
+      - '<gray> 在此商品上'
+      - ''
+      - '<gray>[<white>点击<gray>]<gray>切换'
+  effects:
+    title: '<blue>效果'
+    slot:
+      - '<gold><bold>%slot%'
+      - '<gray>启用：<yellow>%value%'
+    potion:
+      - '<gold><bold>%effect%'
+      - ''
+      - '<gray>等级：<yellow>%level% <gray>[左/右键单击更改]'
+      - '<gray>粒子：<yellow>%particles% <gray>[Shift + 左键单击切换]'
+      - '<gray>环境：<yellow>%ambient% <gray>[Shift + 右键单击切换]'
+      - '<gray>图标：<yellow>%icon% <gray>[%middle_click%切换]'
+      - '<gray>持续时间：<yellow>%duration%'
+    potion-instant: '即时'
+    potion-unlimited: '无限制'
+  activity:
+    title_main: '<blue>活动<yellow>%activity_id%'
+  triggers:
+    title_main: '<blue>触发器'
+trigger:
+  consume_item:
+    description:
+      - '<gold>当玩家消耗该物品时激活'
+      - '<gold>（喝或吃）'
+  right_interact:
+    gui_material:
+      - '<gold>当玩家右键单击时激活'
+  left_interact:
+    gui_material:
+      - '<gold>当玩家左键单击时激活'
+actions:
+  delay:
+    info:
+      - '<aqua>delay <yellow><delay ticks> <action>'
+      - '<yellow><delay ticks> <aqua>您想要延迟多少时间，20 刻度 = 1 秒'
+      - '<yellow><action> <aqua>要执行的操作，例如：<yellow>sound entity_bat_hurt 1 1'
+  message:
+    info:
+      - '<aqua>message <yellow><message>'
+      - '<yellow><message> <aqua>消息发送给玩家'
+      - '<aqua>%player% 可用作玩家姓名的占位符'
+  permission:
+    info:
+      - '<aqua>permission <yellow><permission> <action>'
+      - '<yellow><permission> <aqua>需要权限或<yellow>-permission <aqua>要求玩家没有权限'
+      - '<yellow><action> <aqua>要执行的操作，例如：<yellow>sound entity_bat_hurt 1 1'
+  commandasop:
+    info:
+      - '<aqua>commandasop <yellow><command>'
+      - '<yellow><command> <aqua>玩家执行的命令为Op'
+      - '<aqua>%player% 可用作玩家姓名的占位符'
+      - '<aqua>注意不需要<yellow>/<aqua>，例如：<yellow>home'
+  command:
+    info:
+      - '<aqua>command <yellow><command>'
+      - '<yellow><command> <aqua>玩家执行的命令'
+      - '<aqua>%player% 可用作玩家姓名的占位符'
+      - '<aqua>注意不需要<yellow>/<aqua>，例如：<yellow>home'
+  potion:
+    info:
+      - '<aqua>potion <yellow><type> <duration_ticks|infinite> <level> [ambient] [particles] [icon]'
+      - '<yellow><type> <aqua>要应用的药水效果'
+      - '<yellow><duration_ticks|infinite> <aqua>效果持续时间（以刻度为单位），或 infinite'
+      - '<yellow><level> <aqua>效果等级从1到256'
+      - '<yellow>[ambient] [particles] [icon] <aqua>布尔值；默认为 false、true、true'
+  projectile:
+    info:
+      - '<aqua>projectile <yellow><projectile> [speed] [imprecision] [repeat] [repeatdelay]'
+      - '<yellow><projectile> <aqua>可生成的实体类型，其 Java 类扩展Projectile'
+      - '<yellow>[speed] <aqua>初速度；默认为 1'
+      - '<yellow>[imprecision] <aqua>X、Y、Z 上的随机方向偏移；默认为 0'
+      - '<yellow>[repeat] <aqua>第一张之后的附加镜头；默认为 0'
+      - '<yellow>[repeatdelay] <aqua>刻度；默认为 5 并且必须至少为 1'
+  servercommand:
+    info:
+      - '<aqua>servercommand <yellow><command>'
+      - '<yellow><command> <aqua>服务器执行的命令'
+      - '<aqua>%player% 可用作玩家姓名的占位符'
+      - '<aqua>注意不需要<yellow>/<aqua>，例如：<yellow>heal %player%'
+  sound:
+    info:
+      - '<aqua>sound <yellow><sound> [volume] [pitch] [self]'
+      - '<yellow><sound> <aqua>要播放的声音'
+      - '<yellow>[volume] <aqua>声音音量，默认1'
+      - '<yellow>[pitch] <aqua>声音的音高，默认1'
+      - '<yellow>[self] <aqua>只有玩家才能听到吗？默认为 false'
+  summon:
+    info:
+      - '<aqua>summon <yellow><entity> [quantity] [spread]'
+      - '<yellow><entity> <aqua>可生成实体类型'
+      - '<yellow>[quantity] <aqua>召唤实体数量；默认为 1'
+      - '<yellow>[spread] <aqua>与玩家的距离；默认为 1.5'
+      - '<aqua>前方出现一个实体；两个在 ±60° 处生成；三个或更多均匀分布在玩家周围'
+  throwtnt:
+    info:
+      - '<aqua>throwtnt [speed] [imprecision] [fuseTicks] [repeat] [repeatdelay]'
+      - '<aqua>向玩家注视的方向投掷激活的 TNT'
+      - '<yellow>[speed] <aqua>初速度；默认为 2'
+      - '<yellow>[imprecision] <aqua>随机偏航和俯仰偏移（以度为单位）；默认为 0'
+      - '<yellow>[fuseTicks] <aqua>TNT 爆炸前的时间（以蜱为单位）；默认为 60'
+      - '<yellow>[repeat] <aqua>在第一次之后额外抛出；默认为 0'
+      - '<yellow>[repeatdelay] <aqua> 两次投掷之间的刻度；默认为 5 并且必须至少为 1'

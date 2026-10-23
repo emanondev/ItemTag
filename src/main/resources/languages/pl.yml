@@ -1,0 +1,778 @@
+generic:
+  help:
+    player-only: '<dark_red>[<red>ItemTag<dark_red>] <red>Polecenie tylko dla graczy'
+    no-item-on-hand: '<dark_red>[<red>ItemTag<dark_red>] <red>Musisz trzymać przedmiot w dłoni'
+    lack-permission: '<dark_red>[<red>ItemTag<dark_red>] <red>Nie masz pozwolenia %permission%'
+    lack-permission-generic: '<dark_red>[<red>ItemTag<dark_red>] <red>Nie masz uprawnień, aby używać tego polecenia'
+    prefix: '<dark_gray>[<gradient:#54acff:#A78BFA><bold>ItemTag</bold></gradient><dark_gray>]</dark_gray>'
+    header-format: '<gradient:#54acff:#A78BFA><bold>%header%</bold></gradient> <dark_gray>»</dark_gray> <#A78BFA><bold>Pomoc</bold></#A78BFA>'
+    header-sub-format: '<gradient:#54acff:#A78BFA><bold>%header%</bold></gradient> <dark_gray>»</dark_gray> <gradient:#A78BFA:#54acff><bold>%sub%</bold></gradient> <dark_gray>»</dark_gray> <#55d6ff><bold>Pomoc</#55d6ff>'
+    command-format: '<gray>/%command%</gray> <#bad1ff>%sub%</#bad1ff> <#d7bbff>%params%</#d7bbff>'
+    footer-format: '%prev_clickable% <#7E9CFD><b>Pomoc</b> [%page%/%max_page%]</#7E9CFD> %next_clickable%'
+    next_text: ' <light_purple><b>><st>> ></st> '
+    prev_text: ' <light_purple><b><st>< <</st>< '
+    next_void: ' <dark_gray><b>><st>> ></st> '
+    prev_void: ' <dark_gray><b><st>< <</st>< '
+    next_hover: '<gold><b>Przejdź do strony %target%'
+    prev_hover: '<gold><b>Przejdź do strony %target%'
+  wrong-alias:
+    wrong-flag: '%prefix% <red>Zła wartość flagi! <dark_red>[<gold>najedź tutaj<dark_red>]'
+    wrong-action: '%prefix% <red>Zły typ działania! <dark_red>[<gold>najedź tutaj<dark_red>]'
+    error-pre-hover: '<gradient:#A78BFA:gold><b>Aliasy:</b></gradient>'
+    first_color: '<aqua>'
+    second_color: '<yellow>'
+itemtag:
+  flag:
+    description:
+      - '<gradient:#A78BFA:gold><b>Przełącz niestandardowe flagi na elemencie'
+      - ''
+      - '<yellow><flag> <gray>nazwa flagi'
+      - '<yellow>[true/false] <gray>wartość flagi; jeśli zostanie pominięty, odwróć bieżącą wartość'
+    params: '<flag> [true/false]'
+    placeable:
+      feedback:
+        standard: '%prefix% <green>Przedmiot można umieścić.'
+        custom: '%prefix% <green>Nie można umieścić przedmiotu.'
+        failed-place-attempt: '<dark_red>[<red>ItemTag<dark_red>] <red>Nie możesz umieścić tego przedmiotu'
+    usable:
+      feedback:
+        standard: '%prefix% <green>Przedmiot może zostać użyty.'
+        custom: '%prefix% <green>Nie można użyć przedmiotu (kliknij prawym przyciskiem myszy).'
+    smelt:
+      feedback:
+        standard: '%prefix% <green>Przedmiot można ugotować lub wytopić w piecach.'
+        custom: '%prefix% <green>Przedmiotu nie można gotować ani wytapiać w piecu.'
+    furnacefuel:
+      feedback:
+        standard: '%prefix% <green>Przedmiot może być użyty jako paliwo do pieca.'
+        custom: '%prefix% <green>Przedmiot nie może być użyty jako paliwo do pieca.'
+    recipeingredient:
+      feedback:
+        standard: '%prefix% <green>Przedmiot może zostać użyty jako składnik przepisu.'
+        custom: '%prefix% <green>Przedmiot nie może być użyty jako składnik przepisu.'
+    enchantable:
+      feedback:
+        standard: '%prefix% <green>Przedmiot można zaczarować.'
+        custom: '%prefix% <green>Przedmiotu nie można zaczarować.'
+    renamable:
+      feedback:
+        standard: '%prefix% <green>Przedmiot może być używany na kowadłach.'
+        custom: '%prefix% <green>Przedmiotu nie można używać na kowadłach.'
+    grindable:
+      feedback:
+        standard: '%prefix% <green>Przedmiot można odczarować kamieniem szlifierskim.'
+        custom: '%prefix% <green>Przedmiotu nie można odczarować kamieniem szlifierskim.'
+    equipment:
+      feedback:
+        standard: '%prefix% <green>Przedmiot można wyposażyć.'
+        custom: '%prefix% <green>Przedmiotu nie można założyć.'
+    entityfood:
+      feedback:
+        standard: '%prefix% <green>Przedmiot może być używany jako pokarm dla zwierząt.'
+        custom: '%prefix% <green>Przedmiot nie może być używany jako pokarm dla zwierząt.'
+    clickmove:
+      feedback:
+        standard: '%prefix% <green>Przedmiot można przenieść w ekwipunku.'
+        custom: '%prefix% <green>Przedmiotu nie można przenieść w ekwipunku.'
+    tradeable:
+      feedback:
+        standard: '%prefix% <green>Przedmiotem można handlować z mieszkańcami wioski.'
+        custom: '%prefix% <green>Przedmiotem nie można handlować z mieszkańcami wioski.'
+    smithing_table:
+      feedback:
+        standard: '%prefix% <green>Przedmiot może zostać użyty jako składnik stołu kowalskiego.'
+        custom: '%prefix% <green>Przedmiot nie może być użyty jako składnik stołu kowalskiego.'
+  actions:
+    invalid-action:
+      message: '<dark_red>[<red>ItemTag<dark_red>] <red>''<gold>%error%<red>'' nie jest prawidłowym typem <dark_red>[<gold>najedź tutaj<dark_red>]'
+    invalid-actioninfo:
+      message: '<dark_red>[<red>ItemTag<dark_red>] <red>''<gold>%error%<red>'' nie jest prawidłową informacją dla <gold>%action% <dark_red>[<gold>najedź tutaj<dark_red>]'
+    description:
+      - '<gradient:#A78BFA:gold><b>Ustawia działania wykonywane po użyciu przedmiotu'
+      - ''
+      - '<yellow>Add <type> <action> <gray>- dodaj wybraną akcję'
+      - '<yellow>Set <line> <type> <action> <gray>- zastąp akcję na wybranej linii'
+      - '<yellow>Remove <line> <gray>- usuń akcję na wybranej linii'
+      - '<yellow>Clear <gray>- usuń wszystkie akcje'
+      - '<yellow>Permission [permission] <gray>- ustaw wymagane pozwolenie na użycie tego przedmiotu'
+      - '<yellow>Cooldown <ms> <gray>- ustaw czas odnowienia, aby ponownie użyć tego przedmiotu'
+      - '<yellow>Cooldownid [id] <gray> – ustawia używany identyfikator czasu odnowienia w tym celu'
+      - '<yellow>Cooldownmsg [msg] <gray>- ustawia informację zwrotną o czasie odnowienia'
+      - '<yellow>Cooldownmsgtype [type] <gray>- ustaw typ sprzężenia zwrotnego czasu odnowienia (chat lub actionbar)'
+      - '<yellow>Uses [amount] <gray>- ustaw, ile razy można użyć tego przedmiotu'
+      - '<yellow>Info <gray>- pokaż informacje o działaniach na bieżącym elemencie'
+    params: '[...]'
+    add:
+      params: 'add <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Dodaj wybraną akcję'
+        - ''
+        - '<yellow><type> <gray>rodzaj działania'
+        - '<yellow><action> <gray>dodatkowe informacje dotyczące akcji'
+      feedback: '%prefix% <green>Dodano <yellow>%action%'
+    addline:
+      params: 'addline <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Dodaj wybraną akcję na wybranej linii'
+        - ''
+        - '<yellow><line> <gray>linia do dodania'
+        - '<yellow><type> <gray>rodzaj działania'
+        - '<yellow><action> <gray>dodatkowe informacje dotyczące akcji'
+      feedback: '%prefix% <green>Linia <yellow>%line% <green>dodana jako <yellow>%action%'
+    set:
+      params: 'set <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Zastąp akcję na wybranej linii'
+        - ''
+        - '<yellow><line> <gray>linia do zastąpienia'
+        - '<yellow><type> <gray>rodzaj działania'
+        - '<yellow><action> <gray>dodatkowe informacje dotyczące akcji'
+      feedback: '%prefix% <green>Linia <yellow>%line% <green>ustawiona jako <yellow>%action%'
+    remove:
+      params: 'remove <line>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Usuń akcję na wybranej linii'
+        - ''
+        - '<yellow><line> <gray>linia do usunięcia'
+      feedback: '%prefix% <green>Usunięto linię <yellow>%line% <green>(<yellow>%action%<green>)'
+    permission:
+      params: 'permission [permission]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Ustaw pozwolenie na użycie tego przedmiotu'
+        - ''
+        - '<yellow>[permission] <gray>pozwolenie na ustawienie, domyślnie żadne'
+      feedback:
+        set: '%prefix% <green>Pozwolenie <yellow>%permission% <green>jest teraz wymagane do użycia tego przedmiotu'
+        removed: '%prefix% <green>Teraz nie jest wymagane żadne pozwolenie, aby używać tego przedmiotu'
+    cooldown:
+      params: 'cooldown [ms]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Ustaw czas odnowienia, aby ponownie użyć przedmiotu'
+        - ''
+        - '<yellow>[ms] <gray>ile czasu minie, zanim będzie można z niego skorzystać'
+        - '<gray>element ponownie, domyślnie 0'
+        - '<gray>Uwaga: czas odnowienia jest ustalany na podstawie cooldownid, różni się'
+        - '<gray> przedmiotów z tym samym cooldownid ma ten sam czas odnowienia'
+        - '<gray>Uwaga: czas odnowienia zostaje zachowany po wylogowaniu gracza i ponownym uruchomieniu serwera'
+      feedback:
+        set: '%prefix% <green>Ten przedmiot ma czas odnowienia <yellow>%cooldown_seconds% <green>sekund'
+        removed: '%prefix% <green>Ten przedmiot nie ma czasu odnowienia'
+    cooldownid:
+      params: 'cooldownid [id]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Ustaw identyfikator czasu odnowienia przedmiotu'
+        - ''
+        - '<yellow>[id] <gray>wspólny identyfikator czasu odnowienia'
+        - '<gray>Uwaga: czas odnowienia jest ustalany na podstawie cooldownid, różni się'
+        - '<gray> przedmiotów z tym samym cooldownid ma ten sam czas odnowienia'
+      feedback:
+        set: '%prefix% <green>Ten przedmiot używa ID <yellow>%id% <green>do odnowienia'
+        removed: '%prefix% <green>Ten przedmiot używa <yellow>domyślnego <green>id do czasu odnowienia'
+    cooldownmsg:
+      description:
+        - '<gradient:#A78BFA:gold><b>Ustaw wiadomość dotyczącą odnowienia'
+        - ''
+        - '<yellow>[message] <gray>komunikat wyświetlany, gdy nie można użyć przedmiotu'
+        - '<gray>jeszcze, gdy czas odnowienia jest aktywny'
+      params: 'cooldownmsg [message]'
+      feedback:
+        set: '%prefix% <green>Wiadomość zwrotna dotycząca czasu odnowienia ustawionego na „<white>%msg%<green>”, gdy czas odnowienia jest aktywny'
+        removed: '%prefix% <green>Usunięto wiadomość zwrotną dotyczącą czasu odnowienia'
+    cooldownmsgtype:
+      description:
+        - '<gradient:#A78BFA:gold><b>Ustaw typ wiadomości o odnowieniu'
+        - ''
+        - '<yellow>[type] <gray>chat lub actionbar'
+      params: 'cooldownmsgtype [type]'
+      feedback:
+        set: '%prefix% <green>Wiadomość zwrotna dotycząca czasu odnowienia ustawionego jako typ „<yellow>%type%<green>”'
+    uses:
+      params: 'uses [amount]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Ustaw, ile razy przedmiot może zostać użyty'
+        - ''
+        - '<gray>Uwaga: użyj <yellow>-1 <gray>, aby uzyskać nieograniczoną liczbę zastosowań'
+      feedback:
+        set: '%prefix% <green>Ten przedmiot ma <yellow>%uses% <green>użycia, zanim zostanie skonsumowany'
+        unlimited: '%prefix% <green>Ten przedmiot ma <yellow>nieograniczoną <green>zastosowania'
+    maxuses:
+      params: 'maxuses [amount]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Ustaw maksymalną liczbę zastosowań przedmiotu'
+        - ''
+        - '<gray>Używane głównie do celów estetycznych'
+        - '<gray>Wyświetlacz Używa ustawiony na true'
+        - ''
+        - '<gray>Uwaga: użyj <yellow>-1 <gray>, aby uzyskać nieograniczoną liczbę zastosowań'
+      feedback:
+        set: '%prefix% <green>Ten przedmiot ma <yellow>%uses% <green>maksymalne zastosowania'
+        unlimited: '%prefix% <green>Ten przedmiot ma <yellow>nieograniczone <green>maksymalne zastosowania'
+    consume:
+      params: 'consume [true/false]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Zużyj przedmiot podczas ostatniego użycia'
+        - ''
+        - '<gray>Uwaga: gdy true i przedmiot zużywa się'
+        - '<gray> ostatniego użycia, przedmiot ulega zniszczeniu'
+      feedback:
+        set: '%prefix% <green>Przedmiot ulega zniszczeniu po osiągnięciu ostatniego użycia'
+        unset: '%prefix% <green>Przedmiot nie ulega zniszczeniu po osiągnięciu ostatniego użycia'
+    visualcooldown:
+      params: 'visualcooldown [true/false]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Pokaż wizualnie pozostały czas odnowienia'
+        - ''
+        - '<gray>Kiedy true przedmiot wyświetla animację podobną do'
+        - '<gray>animacja czasu odnowienia perły Endu'
+        - ''
+        - '<gray>Uwaga: niestety ten efekt wizualny również'
+        - '<gray> dotyczy każdego przedmiotu tego samego rodzaju'
+      feedback:
+        set: '%prefix% <green>Teraz przedmiot pokazuje wizualny czas odnowienia'
+        unset: '%prefix% <green>Teraz przedmiot nie będzie pokazywał wizualnego czasu odnowienia'
+    displayuses:
+      params: 'displayuses [true/false]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Pokaż liczbę pozostałych użyć'
+        - ''
+        - '<gray>Kiedy true dodaje linię do opisu'
+        - '<gray>ile pozostało użyć'
+        - ''
+        - '<gray>Uwaga: niestety ten efekt wizualny również'
+        - '<gray> dotyczy każdego przedmiotu tego samego rodzaju'
+      feedback:
+        set: '%prefix% <green> Przedmiot pokazuje teraz licznik pozostałego i maksymalnego użycia'
+        unset: '%prefix% <green> Przedmiot nie wyświetla już pozostałego i maksymalnego użycia'
+  activity:
+    description:
+      - '<gradient:#A78BFA:gold><b>Ustawia czynność (niektóre akcje)'
+      - '<gray>aktywność może zostać aktywowana przez wyzwalacze'
+      - '<gray>wyzwalacze mogą być powiązane z przedmiotami (/it trigger)'
+      - ''
+      - '<yellow>Create <id> <gray>- utwórz nową aktywność'
+      - '<yellow>Open <id> <gray>- otwórz GUI dla wybranej aktywności'
+      - '<yellow>Delete <id> <gray>- usuń wybraną aktywność'
+      - '<yellow>Clone <id> <new id><gray>- sklonuj wybraną aktywność'
+      - '<yellow>Rename <id> <new id><gray>- zmień nazwę wybranej aktywności'
+    params: '[...]'
+    feedback:
+      invalid_activity_id: '<dark_red>[<red>ItemTag<dark_red>] <red>Działalność <gold>%id% <red>nie istnieje'
+      already_used_activity_id: '<dark_red>[<red>ItemTag<dark_red>] <red>Aktywność <gold>%id% <red>jest już używana'
+    create:
+      params: 'create <new id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Utwórz nowe działanie'
+        - ''
+        - '<yellow><new id> <gray>to identyfikator działania'
+        - '<gray>id musi zaczynać się od litery i może być alfanumeryczne'
+        - '<gray>może również zawierać symbol _'
+      feedback: '%prefix% <green>Aktywność <yellow>%id% <green>utworzona'
+    rename:
+      params: 'rename <id> <new id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Zmień identyfikator działania'
+        - ''
+        - '<yellow><id> <gray>to bieżący identyfikator działania'
+        - '<yellow><new id> <gray>to nowy identyfikator działania'
+        - '<gray>id musi zaczynać się od litery i może być alfanumeryczne'
+        - '<gray>może również zawierać symbol _'
+      feedback: '%prefix% <green>Aktywność <yellow>%id% <green>zmieniona nazwa <yellow>%new_id%'
+    open:
+      params: 'open <id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Otwórz GUI, aby edytować działanie'
+        - ''
+        - '<yellow><id> <gray>to identyfikator działania'
+    delete:
+      params: 'delete <id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Usuń wybraną aktywność'
+        - ''
+        - '<yellow><id> <gray>to identyfikator działania'
+      feedback: '%prefix% <green>Aktywność <yellow>%id% <green>usunięta'
+    clone:
+      params: 'clone <id> <clone id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Klonuj wybraną aktywność'
+        - ''
+        - '<yellow><id> <gray>to identyfikator wybranej aktywności'
+        - '<yellow><clone id> <gray>to identyfikator klona'
+        - '<gray>id musi zaczynać się od litery i może być alfanumeryczne'
+        - '<gray>może również zawierać symbol _'
+      feedback: '%prefix% <green>Aktywność <yellow>%id% <green>sklonowana do <yellow>%clone_id%'
+    setconsumes:
+      params: 'setconsumes <id> <amount>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Ustaw zastosowania wymagane dla wybranej aktywności'
+        - ''
+        - '<yellow><id> <gray>to identyfikator wybranej aktywności'
+        - '<yellow><amount> <gray>ilość zastosowań wykorzystanych przez aktywację aktywności'
+      feedback: '%prefix% <green>Aktywność <yellow>%id% <green>zastosowania zużycie wynosi <yellow>%amount%'
+    addcondition:
+      params: 'addcondition <id> [!]<conditiontype> [condition info]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Dodaj warunek aktywujący czynność'
+        - ''
+        - '<yellow><id> <gray>to identyfikator działania'
+        - '<yellow>[!] <gray> to „!” jeśli chcesz, aby warunek został odwrócony'
+        - '<yellow><conditiontype> <gray>to rodzaj warunku'
+        - '<yellow>[condition info] <gray>to dodatkowa informacja, której może potrzebować typ warunku'
+      feedback: '%prefix% <green>Aktywność <yellow>%id% <green>dodany warunek <yellow>%condition%'
+  consumeactions:
+    description:
+      - '<gradient:#A78BFA:gold><b>Ustawia działania wykonywane po spożyciu przedmiotu, np. jedzenia i napojów'
+      - ''
+      - '<yellow>Add <type> <action> <gray>- dodaj wybraną akcję'
+      - '<yellow>Set <line> <type> <action> <gray>- zastąp akcję na wybranej linii'
+      - '<yellow>Remove <line> <gray>- usuń akcję na wybranej linii'
+      - '<yellow>Clear <gray>- usuń wszystkie akcje'
+      - '<yellow>Permission [permission] <gray>- ustaw wymagane pozwolenie na skonsumowanie tego przedmiotu'
+      - '<yellow>Cooldown <ms> <gray>- ustaw czas odnowienia, aby ponownie użyć tego przedmiotu'
+      - '<yellow>Cooldownid [id] <gray> – ustawia używany identyfikator czasu odnowienia w tym celu'
+      - '<yellow>Info <gray>- pokaż informacje o działaniach na bieżącym elemencie'
+    params: '[...]'
+    add:
+      params: 'add <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Dodaj wybraną akcję'
+        - ''
+        - '<yellow><type> <gray>rodzaj działania'
+        - '<yellow><action> <gray>dodatkowe informacje dotyczące akcji'
+    addline:
+      params: 'addline <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Dodaj wybraną akcję na wybranej linii'
+        - ''
+        - '<yellow><line> <gray>linia do dodania'
+        - '<yellow><type> <gray>rodzaj działania'
+        - '<yellow><action> <gray>dodatkowe informacje dotyczące akcji'
+    set:
+      params: 'set <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Zastąp akcję na wybranej linii'
+        - ''
+        - '<yellow><line> <gray>linia do zastąpienia'
+        - '<yellow><type> <gray>rodzaj działania'
+        - '<yellow><action> <gray>dodatkowe informacje dotyczące akcji'
+    remove:
+      params: 'remove <line>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Usuń akcję na wybranej linii'
+        - ''
+        - '<yellow><line> <gray>linia do usunięcia'
+    permission:
+      params: 'permission [permission]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Ustaw pozwolenie na użycie tego przedmiotu'
+        - ''
+        - '<yellow>[permission] <gray>pozwolenie na ustawienie, domyślnie żadne'
+    cooldown:
+      params: 'cooldown [ms]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Ustaw czas odnowienia, aby ponownie skonsumować przedmiot'
+        - ''
+        - '<yellow>[ms] <gray>ile czasu upłynie, zanim będzie można spożyć'
+        - '<gray>element ponownie, domyślnie 0'
+        - '<gray>Uwaga: czas odnowienia jest ustalany na podstawie cooldownid, różni się'
+        - '<gray> przedmiotów z tym samym cooldownid ma ten sam czas odnowienia'
+        - '<gray>Uwaga: czas odnowienia zostaje zachowany po wylogowaniu gracza i ponownym uruchomieniu serwera'
+    cooldownid:
+      params: 'cooldownid [id]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Ustaw identyfikator czasu odnowienia przedmiotu'
+        - ''
+        - '<yellow>[id] <gray>wspólny identyfikator czasu odnowienia'
+        - '<gray>Uwaga: czas odnowienia jest ustalany na podstawie cooldownid, różni się'
+        - '<gray> przedmiotów z tym samym cooldownid ma ten sam czas odnowienia'
+    feedback:
+      actions:
+        set: '<green>Linia <yellow>%line% <green>ustawiona jako <yellow>%action%'
+        remove: '<green>Usunięto linię <yellow>%line% <green>(<yellow>%action%<green>)'
+        clear: '<green>Wyczyszczono działania związane z konsumpcją tego przedmiotu'
+        permission:
+          set: '<green>Pozwolenie <yellow>%permission% <green>jest teraz wymagane do skonsumowania tego przedmiotu'
+          removed: '<green>Teraz skonsumowanie tego przedmiotu nie wymaga pozwolenia'
+        cooldownid:
+          set: '<green>Ten przedmiot używa ID <yellow>%id% <green>do odnowienia'
+          removed: '<green>Ten przedmiot używa <yellow>domyślnego <green>id do czasu odnowienia'
+        cooldown:
+          set: '<green>Ten przedmiot ma czas odnowienia <yellow>%cooldown_seconds% <green>sekund'
+          removed: '<green>Ten przedmiot nie ma czasu odnowienia'
+  effects:
+    description:
+      - '<gradient:#A78BFA:gold><b>Dodaj trwałe efekty mikstury'
+      - '<gray>Otwórz GUI'
+      - '<gray>Pamiętaj, aby wybrać sprzęt'
+      - '<gray> slot zastosuj efekt'
+    params: ''
+  usepermission:
+    description:
+      - '<gradient:#A78BFA:gold><b>Ustaw pozwolenie na użycie tego przedmiotu (standardowe zachowanie po kliknięciu prawym przyciskiem myszy)'
+      - ''
+      - '<yellow>setpermission <permission> <gray>ustaw wymagane uprawnienia'
+      - '<yellow>setmessage <message> <gray>ustaw komunikat o braku pozwolenia'
+    params: '[...]'
+    setpermission:
+      feedback: '<green>Uprawnienie do używania jest teraz ustawione na <yellow>%value%'
+      feedback-reset: '<green>Usunięto wymagane pozwolenie na użycie'
+    setmessage:
+      feedback: '<green>Wiadomość o odmowie użycia uprawnień jest teraz ustawiona na <yellow>%value%'
+      feedback-reset: '<green>Wiadomość o odmowie pozwolenia na użycie została usunięta'
+  wearpermission:
+    description:
+      - '<gradient:#A78BFA:gold><b>Ustaw uprawnienia wymagane do wyposażenia tego przedmiotu'
+      - ''
+      - '<gray>Bez pozwolenia, próba wyposażenia tego przedmiotu powoduje jego zwrot'
+      - '<gray>do inwentarza lub na ziemię jeśli inwentarz jest pełny'
+      - '<gray>'
+      - '<yellow>setpermission <permission> <gray>ustaw wymagane uprawnienia'
+      - '<yellow>setmessage <message> <gray>ustaw komunikat o braku pozwolenia'
+    params: '[...]'
+    setpermission:
+      feedback: '<green>Uprawnienie do założenia przedmiotu ustawiono na <yellow>%value%'
+      feedback-reset: '<green>Usunięto uprawnienie wymagane do założenia przedmiotu'
+    setmessage:
+      feedback: '<green>Komunikat odmowy założenia przedmiotu ustawiono na <yellow>%value%'
+      feedback-reset: '<green>Wiadomość o odmowie pozwolenia na użycie została usunięta'
+  help:
+    header-name: 'ItemTag'
+    description:
+      - '<gradient:#A78BFA:gold><b>Pokazuje ItemTag pomoc</b></gradient>'
+      - ''
+      - '<gray><yellow>[page] </yellow>Strona pomocy'
+      - '<gray><yellow>[subcommand] </yellow>Pomoc dotycząca podkomendy'
+    params: '[page/subcommand]'
+itemtagreload:
+  success: '<blue>[<white>ItemTag<blue>] <green>Załadowano ponownie'
+gui:
+  middleclick: #middle click can't be used unless on creative mode, an alternative to middle click is pressing hotbar button 1
+    creative: 'Środkowe kliknięcie'
+    other: 'Naciśnij 1'
+  previous-page:
+    #Holders: %player_name% %page% %target_page%
+    description:
+      - '<gold><bold>Poprzednia strona'
+      - ''
+      - '<gray>[<white>Kliknij<gray>]<gray> Przejdź do strony <yellow>%target_page%'
+  next-page:
+    #Holders: %player_name% %page% %target_page%
+    description:
+      - '<gold><bold>Następna strona'
+      - ''
+      - '<gray>[<white>Kliknij<gray>]<gray> Przejdź do strony <yellow>%target_page%'
+  back:
+    #Holders: %player_name%
+    description:
+      - '<gold><bold>Wróć'
+      - ''
+      - '<gray>[<white>Kliknij<gray>]<gray> Przejdź do poprzedniego interfejsu użytkownika'
+  actions:
+    title: '<blue>Akcje'
+    click-interact: '<blue>[<white>ItemTag<blue>] <gray>[Kliknij tutaj]'
+    click-hover: '<gold>Kliknij, aby zasugerować polecenie'
+    addline:
+      - '<gold><bold>Dodaj akcję'
+      - ''
+      - '<gray>[<white>Kliknij<gray>]<gray> Zmień wartości'
+      - '<blue>/it actions add <action type> <action info>'
+      - '<blue>/it actions addline <line> <action type> <action info>'
+    set:
+      - '<gold><bold>Ustaw akcję'
+      - ''
+      - '<gray>[<white>Kliknij<gray>]<gray> Zmień wartości'
+      - '<blue>/it actions set <line> <action type> <action info>'
+    remove:
+      - '<gold><bold>Usuń akcję'
+      - ''
+      - '<gray>[<white>Kliknij<gray>]<gray> Zmień wartości'
+      - '<blue>/it actions remove <line>'
+    consume:
+      - '<gold><bold>Zużyj w <yellow><bold>0<gold><bold> pozostałych zastosowań'
+      - '<gray>Włączone: <yellow>%value%'
+      - '<gray>Uwaga: gdy true i przedmiot zużywa się'
+      - '<gray> ostatniego użycia, przedmiot ulega zniszczeniu'
+      - ''
+      - '<gray>[<white>Kliknij<gray>]<gray> Przełącz'
+      - '<blue>/it actions consume [true/false]'
+    uses:
+      - '<gold><bold>Pozostałe użycia: <yellow><bold>%value%'
+      - '<gray>(-1 dla nieograniczonego)'
+      - ''
+      - '<gray>[<white>Kliknij prawym przyciskiem myszy<gray>]<gray> Dodaj <yellow>%editor%'
+      - '<gray>[<white>Kliknięcie lewym przyciskiem<gray>]<gray> Usuń <yellow>%editor%'
+      - '<gray>[<white>Shift + kliknięcie lewym/prawym<gray>]<gray> %editor-prev% << <yellow>%editor% <gray>>> %editor-next%'
+      - '<blue>/it actions uses <amount>'
+    maxuses:
+      - '<gold><bold>Maksymalna liczba użyć: <yellow><bold>%value%'
+      - '<gray>(-1 dla nieograniczonego)'
+      - '<gray>Głównie używane do formatowania wyświetlacza pozostałego wykorzystania'
+      - ''
+      - '<gray>[<white>Kliknij prawym przyciskiem myszy<gray>]<gray> Dodaj <yellow>%editor%'
+      - '<gray>[<white>Kliknięcie lewym przyciskiem<gray>]<gray> Usuń <yellow>%editor%'
+      - '<gray>[<white>Shift + kliknięcie lewym/prawym<gray>]<gray> %editor-prev% << <yellow>%editor% <gray>>> %editor-next%'
+      - '<blue>/it actions maxuses <amount>'
+    permission:
+      - '<gold><bold>Pozwolenie na użytkowanie: <yellow><bold>%value%'
+      - '<gray>Uwaga: jeśli nie masz tego pozwolenia'
+      - '<gray> nie będziesz mógł użyć przedmiotu lub'
+      - '<gray> zmniejsza pozostałe użycia'
+      - ''
+      - '<gray>[<white>Kliknij<gray>]<gray> Edytuj'
+      - '<blue>/it actions permission [permission]'
+    cooldown:
+      - '<gold><bold>Odnowa: <yellow><bold>%value_s% <blue> s'
+      - '<gray>Uwaga: zastosuj czas odnowienia przy użyciu kliknięcia prawym przyciskiem myszy'
+      - ''
+      - '<gray>[<white>Kliknij prawym przyciskiem myszy<gray>]<gray> Dodaj <yellow>%editor%'
+      - '<gray>[<white>Kliknięcie lewym przyciskiem<gray>]<gray> Usuń <yellow>%editor%'
+      - '<gray>[<white>Shift + kliknięcie lewym/prawym<gray>]<gray> %editor-prev% << <yellow>%editor% <gray>>> %editor-next%'
+      - '<blue>/it actions cooldown <cooldown <u>ms</u>>'
+    cooldownid:
+      - '<gold><bold>Identyfikator czasu odnowienia: <yellow><bold>%value%'
+      - '<gray>Uwaga: wszystkie elementy z tym samym cooldownid'
+      - '<gray> dzieli czas odnowienia'
+      - ''
+      - '<gray>[<white>Kliknij<gray>]<gray> Edytuj'
+      - '<blue>/it actions cooldownid [cooldown id]'
+    info:
+      - '<gold><bold>Lista działań:'
+    visualcooldown:
+      - '<gold><bold>Wyświetl wizualny czas odnowienia'
+      - '<gray>Włączone: <yellow>%value%'
+      - '<gray>Uwaga: niestety ten efekt wizualny również'
+      - '<gray> dotyczy każdego przedmiotu tego samego rodzaju'
+      - ''
+      - '<gray>[<white>Kliknij<gray>]<gray> Przełącz'
+      - '<blue>/it actions visualdisplay [true/false]'
+    displayuses:
+      - '<gold><bold>Pokaż liczbę pozostałych użyć'
+      - '<gray>Włączone: <yellow>%value%'
+      - ''
+      - '<gray>[<white>Kliknij<gray>]<gray> Przełącz'
+      - '<blue>/it actions displayuses [true/false]'
+  actionslines:
+    actionformat: '<yellow>%type% <white>%info%'
+    element:
+      - '%action%'
+      - '<gray>[<white>Kliknięcie prawym przyciskiem myszy<gray>]<gray> Zamień tę akcję'
+      - '<gray>[<white>Kliknięcie lewym przyciskiem<gray>]<gray> Dodaj nową akcję przed tym'
+      - '<gray>[<white>Shift + kliknięcie prawym przyciskiem myszy<gray>]<gray> Usuń tę akcję'
+    add:
+      - ' '
+      - '<gray>[<white>Kliknięcie lewym przyciskiem<gray>]<gray> Dodaj nową akcję'
+  flags:
+    placeable:
+      - '<gold>Określa, czy przedmiot może zostać umieszczony'
+      - '<gray>Wartość: <yellow>%value%'
+      - ''
+      - '<gray>[<white>Kliknij<gray>]<gray> Przełącz'
+    usable:
+      - '<gold>Określa, czy przedmiot może zostać użyty'
+      - '<gray>Wartość: <yellow>%value%'
+      - ''
+      - '<gray>Jeśli ustawione na false, wyłącz normalne zachowanie'
+      - '<gray> kliknij prawym przyciskiem myszy element'
+      - '<gray>Normalne zachowanie podczas użytkowania zależy od typu przedmiotu'
+      - '<gray>Jedzenia nie można jeść, wędki nie można łowić,'
+      - '<gray> jajami nie można rzucać, a jaja przyzywające nie mogą przywoływać stworzeń...'
+      - ''
+      - '<gray>[<white>Kliknij<gray>]<gray> Przełącz'
+    smelt:
+      - '<gold>Ustawia, czy dany przedmiot można ugotować'
+      - '<gray>Wartość: <yellow>%value%'
+      - ''
+      - '<gray>Jeśli ustawione na false wyłącz normalne zachowanie'
+      - '<gray> gotowanie w piecu'
+      - '<gray>Działa zarówno w przypadku żywności, jak i rud'
+      - ''
+      - '<gray>[<white>Kliknij<gray>]<gray> Przełącz'
+    furnacefuel:
+      - '<gold>Określa, czy przedmiot może być użyty jako paliwo do pieca'
+      - '<gray>Wartość: <yellow>%value%'
+      - ''
+      - '<gray>Jeśli ustawione na false, wyłącz normalne zachowanie'
+      - '<gray> piece zużywające ten przedmiot jako paliwo'
+      - ''
+      - '<gray>[<white>Kliknij<gray>]<gray> Przełącz'
+    recipeingredient:
+      - '<gold>Określa, czy przedmiot może zostać użyty w przepisach rzemieślniczych'
+      - '<gray>Wartość: <yellow>%value%'
+      - ''
+      - '<gray>Jeśli ustawione na false, wyłącz normalne zachowanie rzemieślnicze'
+      - '<gray>, gdy ten przedmiot jest jednym ze składników'
+      - ''
+      - '<gray>[<white>Kliknij<gray>]<gray> Przełącz'
+    enchantable:
+      - '<gold>Określa, czy przedmiot może zostać zaczarowany'
+      - '<gray>Wartość: <yellow>%value%'
+      - ''
+      - '<gray>Jeśli ustawione na false, uniemożliwia normalne korzystanie z tabeli zaklęć'
+      - '<gray> z tym przedmiotem'
+      - ''
+      - '<gray>[<white>Kliknij<gray>]<gray> Przełącz'
+    renamable:
+      - '<gold>Określa, czy przedmiot może być użyty na kowadle'
+      - '<gray>Wartość: <yellow>%value%'
+      - ''
+      - '<gray>Jeśli ustawione na false, wyłącz normalne interakcje kowadła'
+      - '<gray> na tym przedmiocie'
+      - ''
+      - '<gray>[<white>Kliknij<gray>]<gray> Przełącz'
+    grindable:
+      - '<gold>Określa, czy przedmiot może zostać odczarowany na kamieniu szlifierskim'
+      - '<gray>Wartość: <yellow>%value%'
+      - ''
+      - '<gray>Jeśli ustawione na false, uniemożliwiają normalne użytkowanie kamienia szlifierskiego'
+      - '<gray> z tym przedmiotem'
+      - ''
+      - '<gray>[<white>Kliknij<gray>]<gray> Przełącz'
+    equipment:
+      - '<gold>Określa, czy przedmiot może być używany jako wyposażenie'
+      - '<gray>Wartość: <yellow>%value%'
+      - ''
+      - '<gray>Jeśli ustawione na false i przedmiot jest wyposażony, zostanie upuszczony'
+      - '<gray> z powrotem do ekwipunku gracza'
+      - '<gray>NB: ręka i ręka nie są uważane za część miejsc na wyposażenie'
+      - ''
+      - '<gray>[<white>Kliknij<gray>]<gray> Przełącz'
+    entityfood:
+      - '<gold>Określa, czy przedmiot może być użyty jako pokarm dla zwierząt'
+      - '<gray>Wartość: <yellow>%value%'
+      - ''
+      - '<gray>Jeśli ustawione na false, zapobiega rozmnażaniu się zwierząt'
+      - '<gray> i zapobiegają szybszemu wzrostowi młodych zwierząt'
+      - '<gray> na tym przedmiocie'
+      - ''
+      - '<gray>[<white>Kliknij<gray>]<gray> Przełącz'
+    vanishcurse:
+      - '<gold> Ustawia, czy przedmiot znika po śmierci'
+      - '<gray>Wartość: <yellow>%value%'
+      - ''
+      - '<gray>Działa dokładnie tak samo jak zaklęcie Klątwa Zniknięcia'
+      - '<gray>Ale to nie jest zaklęcie'
+      - ''
+      - '<gray>[<white>Kliknij<gray>]<gray> Przełącz'
+    clickmove:
+      - '<gold>Określa, czy przedmiot może zostać przeniesiony w ekwipunku'
+      - '<gray>Wartość: <yellow>%value%'
+      - ''
+      - '<gray>Op graczy ma pozwolenie na ominięcie tego limitu'
+      - ''
+      - '<gray>[<white>Kliknij<gray>]<gray> Przełącz'
+    tradeable:
+      - '<gold>Określa, czy przedmiot można wymienić na inne przedmioty u mieszkańców wioski'
+      - '<gray>Wartość: <yellow>%value%'
+      - ''
+      - '<gray>Jeśli ustawione na false, wyłącz normalny handel wieśniakami'
+      - ''
+      - '<gray>[<white>Kliknij<gray>]<gray> Przełącz'
+    smithing_table:
+      - '<gold>Określa, czy przedmiot może być używany na stole kowalskim'
+      - '<gray>Wartość: <yellow>%value%'
+      - ''
+      - '<gray>Jeśli ustawione na false, wyłącz normalne interakcje kowadła'
+      - '<gray> na tym przedmiocie'
+      - ''
+      - '<gray>[<white>Kliknij<gray>]<gray> Przełącz'
+  effects:
+    title: '<blue>Efekty'
+    slot:
+      - '<gold><bold>%slot%'
+      - '<gray>Włączone: <yellow>%value%'
+    potion:
+      - '<gold><bold>%effect%'
+      - ''
+      - '<gray>Poziom: <yellow>%level% <gray>[Kliknięcie lewym/prawym zmień]'
+      - '<gray>Cząstki: <yellow>%particles% <gray>[Shift + lewy przycisk myszy]'
+      - '<gray>Otoczenie: <yellow>%ambient% <gray>[Shift + przełączenie prawym przyciskiem myszy]'
+      - '<gray>Ikona: <yellow>%icon% <gray>[%middle_click% Przełącznik]'
+      - '<gray>Czas trwania: <yellow>%duration%'
+    potion-instant: 'natychmiastowe'
+    potion-unlimited: 'nieograniczone'
+  activity:
+    title_main: '<blue>Aktywność <yellow>%activity_id%'
+  triggers:
+    title_main: '<blue>Wyzwalacze'
+trigger:
+  consume_item:
+    description:
+      - '<gold>aktywowane, gdy gracz skonsumuje przedmiot'
+      - '<gold>(pić lub jeść)'
+  right_interact:
+    gui_material:
+      - '<gold>aktywowane po kliknięciu prawym przyciskiem myszy'
+  left_interact:
+    gui_material:
+      - '<gold>aktywowane po kliknięciu lewym przyciskiem myszy'
+actions:
+  delay:
+    info:
+      - '<aqua>delay <yellow><delay ticks> <action>'
+      - '<yellow><delay ticks> <aqua>jak bardzo chcesz opóźnić akcję, 20 tików = 1 sekundy'
+      - '<yellow><action> <aqua>akcja do wykonania, przykład: <yellow>sound entity_bat_hurt 1 1'
+  message:
+    info:
+      - '<aqua>message <yellow><message>'
+      - '<yellow><message> <aqua>wiadomość wysłana do gracza'
+      - '<aqua>%player% może być użyte jako symbol zastępczy nazwy gracza'
+  permission:
+    info:
+      - '<aqua>permission <yellow><permission> <action>'
+      - '<yellow><permission> <aqua>wymagane pozwolenie lub <yellow>-permission <aqua>wymagać, aby gracz NIE miał pozwolenia'
+      - '<yellow><action> <aqua>akcja do wykonania, przykład: <yellow>sound entity_bat_hurt 1 1'
+  commandasop:
+    info:
+      - '<aqua>commandasop <yellow><command>'
+      - '<yellow><command> <aqua>polecenie wykonane przez gracza jako Op'
+      - '<aqua>%player% może być użyte jako symbol zastępczy nazwy gracza'
+      - '<aqua>NB. nie jest wymagane <yellow>/<aqua>, przykład: <yellow>home'
+  command:
+    info:
+      - '<aqua>command <yellow><command>'
+      - '<yellow><command> <aqua>polecenie wykonane przez gracza'
+      - '<aqua>%player% może być użyte jako symbol zastępczy nazwy gracza'
+      - '<aqua>NB. nie jest wymagane <yellow>/<aqua>, przykład: <yellow>home'
+  potion:
+    info:
+      - '<aqua>potion <yellow><type> <duration_ticks|infinite> <level> [ambient] [particles] [icon]'
+      - '<yellow><type> <aqua>efekt mikstury do zastosowania'
+      - '<yellow><duration_ticks|infinite> <aqua>czas trwania efektu w kleszczach, lub infinite'
+      - '<yellow><level> <aqua>poziom efektu od 1 do 256'
+      - '<yellow>[ambient] [particles] [icon] <aqua> wartości logiczne; wartości domyślne to false, true, true'
+  projectile:
+    info:
+      - '<aqua>projectile <yellow><projectile> [speed] [imprecision] [repeat] [repeatdelay]'
+      - '<yellow><projectile> <aqua>generowany typ jednostki, którego klasa Java rozszerza się na Projectile'
+      - '<yellow>[speed] <aqua>prędkość początkowa; domyślnie 1'
+      - '<yellow>[imprecision] <aqua>losowe przesunięcie kierunku na X, Y i Z; domyślnie 0'
+      - '<yellow>[repeat] <aqua>dodatkowe strzały po pierwszym; domyślnie 0'
+      - '<yellow>[repeatdelay] <aqua>taktów pomiędzy ujęciami; domyślnie wynosi 5 i musi wynosić co najmniej 1'
+  servercommand:
+    info:
+      - '<aqua>servercommand <yellow><command>'
+      - '<yellow><command> <aqua>polecenie wykonane przez serwer'
+      - '<aqua>%player% może być użyte jako symbol zastępczy nazwy gracza'
+      - '<aqua>NB. nie jest wymagane <yellow>/<aqua>, przykład: <yellow>heal %player%'
+  sound:
+    info:
+      - '<aqua>sound <yellow><sound> [volume] [pitch] [self]'
+      - '<yellow><sound> <aqua>dźwięk do odtworzenia'
+      - '<yellow>[volume] <aqua>głośność dźwięku, domyślnie 1'
+      - '<yellow>[pitch] <aqua> wysokość dźwięku, domyślnie 1'
+      - '<yellow>[self] <aqua>tylko gracz powinien to słyszeć? Domyślnie false'
+  summon:
+    info:
+      - '<aqua>summon <yellow><entity> [quantity] [spread]'
+      - '<yellow><entity> <aqua>typ jednostki, którą można spawnować'
+      - '<yellow>[quantity] <aqua>liczba bytów do przywołania; domyślnie 1'
+      - '<yellow>[spread] <aqua>odległość od gracza; domyślnie 1.5'
+      - '<aqua>Jeden byt pojawia się z przodu; dwa spawnują się w ±60°; trzy lub więcej są równomiernie rozmieszczone wokół gracza'
+  throwtnt:
+    info:
+      - '<aqua>throwtnt [speed] [imprecision] [fuseTicks] [repeat] [repeatdelay]'
+      - '<aqua> Rzuca aktywowany TNT w kierunku, w którym patrzy gracz'
+      - '<yellow>[speed] <aqua>prędkość początkowa; domyślnie 2'
+      - '<yellow>[imprecision] <aqua>losowe odchylenie i przesunięcie nachylenia w stopniach; domyślnie 0'
+      - '<yellow>[fuseTicks] <aqua>Czas TNT przed eksplozją u kleszczy; domyślnie 60'
+      - '<yellow>[repeat] <aqua>dodatkowe rzuty po pierwszym; domyślnie 0'
+      - '<yellow>[repeatdelay] <aqua>tyknięć pomiędzy rzutami; domyślnie wynosi 5 i musi wynosić co najmniej 1'

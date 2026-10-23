@@ -1,0 +1,778 @@
+generic:
+  help:
+    player-only: '<dark_red>[<red>ItemTag<dark_red>] <red>プレイヤー専用コマンド'
+    no-item-on-hand: '<dark_red>[<red>ItemTag<dark_red>] <red>アイテムを手に持つ必要があります'
+    lack-permission: '<dark_red>[<red>ItemTag<dark_red>] <red>許可がありません %permission%'
+    lack-permission-generic: '<dark_red>[<red>ItemTag<dark_red>] <red>このコマンドを使用する権限がありません'
+    prefix: '<dark_gray>[<gradient:#54acff:#A78BFA><bold>ItemTag</bold></gradient><dark_gray>]</dark_gray>'
+    header-format: '<gradient:#54acff:#A78BFA><bold>%header%</bold></gradient> <dark_gray>»</dark_gray> <#A78BFA><bold>ヘルプ</bold></#A78BFA>'
+    header-sub-format: '<gradient:#54acff:#A78BFA><bold>%header%</bold></gradient> <dark_gray>»</dark_gray> <gradient:#A78BFA:#54acff><bold>%sub%</bold></gradient> <dark_gray>»</dark_gray> <#55d6ff><bold>ヘルプ</#55d6ff>'
+    command-format: '<gray>/%command%</gray> <#bad1ff>%sub%</#bad1ff> <#d7bbff>%params%</#d7bbff>'
+    footer-format: '%prev_clickable% <#7E9CFD><b>ヘルプ</b> [%page%/%max_page%]</#7E9CFD> %next_clickable%'
+    next_text: ' <light_purple><b>><st>> ></st> '
+    prev_text: ' <light_purple><b><st>< <</st>< '
+    next_void: ' <dark_gray><b>><st>> ></st> '
+    prev_void: ' <dark_gray><b><st>< <</st>< '
+    next_hover: '<gold><b>ページ%target%へ'
+    prev_hover: '<gold><b>ページ%target%へ'
+  wrong-alias:
+    wrong-flag: '%prefix% <red>フラグ値が間違っています! <dark_red>[<gold>ここにカーソルを合わせてください<dark_red>]'
+    wrong-action: '%prefix% <red>アクションのタイプが間違っています! <dark_red>[<gold>ここにカーソルを合わせてください<dark_red>]'
+    error-pre-hover: '<gradient:#A78BFA:gold><b>別名:</b></gradient>'
+    first_color: '<aqua>'
+    second_color: '<yellow>'
+itemtag:
+  flag:
+    description:
+      - '<gradient:#A78BFA:gold><b>アイテムのカスタムフラグを切り替えます'
+      - ''
+      - '<yellow><flag> <gray>フラグ名'
+      - '<yellow>[true/false] <gray>フラグ値;省略した場合は、現在の値を反転します'
+    params: '<flag> [true/false]'
+    placeable:
+      feedback:
+        standard: '%prefix% <green>アイテムを置くことができます。'
+        custom: '%prefix% <green>商品を配置できません。'
+        failed-place-attempt: '<dark_red>[<red>ItemTag<dark_red>] <red>このアイテムは配置できません'
+    usable:
+      feedback:
+        standard: '%prefix% <green>ご利用頂けます。'
+        custom: '%prefix% <green>アイテムは使用できません（右クリック）。'
+    smelt:
+      feedback:
+        standard: '%prefix% <green>このアイテムはかまどで調理または精錬することができます。'
+        custom: '%prefix% <green>このアイテムはかまどで調理したり精錬したりすることはできません。'
+    furnacefuel:
+      feedback:
+        standard: '%prefix% <green>このアイテムは炉の燃料として使用できます。'
+        custom: '%prefix% <green>このアイテムはかまどの燃料として使用できません。'
+    recipeingredient:
+      feedback:
+        standard: '%prefix% <green>このアイテムはレシピの材料として使用できます。'
+        custom: '%prefix% <green>このアイテムはレシピの材料として使用できません。'
+    enchantable:
+      feedback:
+        standard: '%prefix% <green>アイテムにはエンチャントを付けることができます。'
+        custom: '%prefix% <green>このアイテムはエンチャントできません。'
+    renamable:
+      feedback:
+        standard: '%prefix% <green>このアイテムは金床で使用できます。'
+        custom: '%prefix% <green>このアイテムは金床では使用できません。'
+    grindable:
+      feedback:
+        standard: '%prefix% <green>このアイテムは砥石で解呪できます。'
+        custom: '%prefix% <green>このアイテムは砥石で解呪できません。'
+    equipment:
+      feedback:
+        standard: '%prefix% <green>このアイテムは装備可能です。'
+        custom: '%prefix% <green>このアイテムは装備できません。'
+    entityfood:
+      feedback:
+        standard: '%prefix% <green>この商品は動物の餌として使用できます。'
+        custom: '%prefix% <green>この商品は動物の餌として使用できません。'
+    clickmove:
+      feedback:
+        standard: '%prefix% <green> アイテムはインベントリ内で移動できます。'
+        custom: '%prefix% <green> このアイテムはインベントリ内で移動できません。'
+    tradeable:
+      feedback:
+        standard: '%prefix% <green>このアイテムは村人と取引できます。'
+        custom: '%prefix% <green>このアイテムは村人と取引できません。'
+    smithing_table:
+      feedback:
+        standard: '%prefix% <green>このアイテムは鍛冶台の材料として使用できます。'
+        custom: '%prefix% <green>このアイテムは鍛冶台の材料として使用できません。'
+  actions:
+    invalid-action:
+      message: '<dark_red>[<red>ItemTag<dark_red>] <red>''<gold>%error%<red>'' は有効なタイプではありません <dark_red>[<gold>ここにカーソルを合わせてください<dark_red>]'
+    invalid-actioninfo:
+      message: '<dark_red>[<red>ItemTag<dark_red>] <red>「<gold>%error%<red>」は、<gold>%action% <dark_red>[<gold>ここにカーソルを合わせてください<dark_red>] にとって有効な情報ではありません'
+    description:
+      - '<gradient:#A78BFA:gold><b>アイテム使用時のアクションを設定します'
+      - ''
+      - '<yellow>Add <type> <action> <gray>- 選択したアクションを追加'
+      - '<yellow>Set <line> <type> <action> <gray>- 選択した行のアクションを置換します'
+      - '<yellow>Remove <line> <gray>- 選択した行のアクションを削除します'
+      - '<yellow>Clear <gray>- すべてのアクションを削除します'
+      - '<yellow>Permission [permission] <gray> - このアイテムを使用するために必要な権限を設定します'
+      - '<yellow>Cooldown <ms> <gray> - このアイテムを再度使用するにはクールダウンを設定してください'
+      - '<yellow>Cooldownid [id] <gray> - これに使用されるクールダウン ID を設定します'
+      - '<yellow>Cooldownmsg [msg] <gray> - クールダウンフィードバックを設定します'
+      - '<yellow>Cooldownmsgtype [type] <gray> - クールダウンフィードバックのタイプを設定します (chat または actionbar)'
+      - '<yellow>Uses [amount] <gray> - このアイテムを使用できる回数を設定します'
+      - '<yellow>Info <gray> - 現在のアイテムに対するアクションに関する情報を表示します'
+    params: '[...]'
+    add:
+      params: 'add <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>選択したアクションを追加'
+        - ''
+        - '<yellow><type> <gray>アクションの種類'
+        - '<yellow><action> <gray>アクションに関する追加情報'
+      feedback: '%prefix% <green>追加 <yellow>%action%'
+    addline:
+      params: 'addline <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>選択したアクションを選択した行に追加します'
+        - ''
+        - '<yellow><line> <gray>行追加'
+        - '<yellow><type> <gray>アクションの種類'
+        - '<yellow><action> <gray>アクションに関する追加情報'
+      feedback: '%prefix% <green>行 <yellow>%line% <green> を <yellow>%action% として追加'
+    set:
+      params: 'set <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>選択した行のアクションを置換'
+        - ''
+        - '<yellow><line> <gray>置換する行'
+        - '<yellow><type> <gray>アクションの種類'
+        - '<yellow><action> <gray>アクションに関する追加情報'
+      feedback: '%prefix% <green>行<yellow>%line% <green>を<yellow>%action%に設定'
+    remove:
+      params: 'remove <line>'
+      description:
+        - '<gradient:#A78BFA:gold><b>選択した行のアクションを削除'
+        - ''
+        - '<yellow><line> <gray>削除する行'
+      feedback: '%prefix% <green>行を削除 <yellow>%line% <green>(<yellow>%action%<green>)'
+    permission:
+      params: 'permission [permission]'
+      description:
+        - '<gradient:#A78BFA:gold><b>このアイテムの使用許可を設定します'
+        - ''
+        - '<yellow>[permission] <gray>設定する権限、デフォルトではなし'
+      feedback:
+        set: '%prefix% <green>許可 <yellow>%permission% <green> が必要です'
+        removed: '%prefix% <green>このアイテムを使用するのに許可は必要ありません'
+    cooldown:
+      params: 'cooldown [ms]'
+      description:
+        - '<gradient:#A78BFA:gold><b>アイテムを再度使用するにはクールダウンを設定します'
+        - ''
+        - '<yellow>[ms] <gray>使用できるようになるまでの時間'
+        - '<gray>アイテムを再度、デフォルトでは 0'
+        - '<gray>注: クールダウンはcooldownidに基づいて設定されており、異なります'
+        - '<gray>  同じアイテム cooldownid 同じクールダウンを共有する'
+        - '<gray>注: クールダウンはプレーヤーのログアウトとサーバーの再起動時に保持されます'
+      feedback:
+        set: '%prefix% <green>このアイテムのクールタイムは<yellow>%cooldown_seconds% <green>秒です'
+        removed: '%prefix% <green>このアイテムにはクールダウンはありません'
+    cooldownid:
+      params: 'cooldownid [id]'
+      description:
+        - '<gradient:#A78BFA:gold><b>アイテムのクールダウン ID を設定する'
+        - ''
+        - '<yellow>[id] <gray>共有クールダウン識別子'
+        - '<gray>注: クールダウンはcooldownidに基づいて設定されており、異なります'
+        - '<gray>  同じアイテム cooldownid 同じクールダウンを共有する'
+      feedback:
+        set: '%prefix% <green>このアイテムはクールダウンに ID <yellow>%id% <green> を使用します'
+        removed: '%prefix% <green>このアイテムはクールダウンに<yellow>デフォルト<green>IDを使用します'
+    cooldownmsg:
+      description:
+        - '<gradient:#A78BFA:gold><b>クールダウンメッセージを設定する'
+        - ''
+        - '<yellow>[message] <gray>アイテムが使用できないときに表示されるメッセージ'
+        - '<gray>'
+      params: 'cooldownmsg [message]'
+      feedback:
+        set: '%prefix% <green>クールダウンがアクティブな場合、クールダウンのフィードバックメッセージが「<white>%msg%<green>」に設定されます'
+        removed: '%prefix% <green>クールダウンのフィードバックメッセージが削除されました'
+    cooldownmsgtype:
+      description:
+        - '<gradient:#A78BFA:gold><b>クールダウンメッセージの種類を設定します'
+        - ''
+        - '<yellow>[type] <gray>chat または actionbar'
+      params: 'cooldownmsgtype [type]'
+      feedback:
+        set: '%prefix% <green>クールダウンのフィードバック メッセージがタイプ「<yellow>%type%<green>」として設定されました'
+    uses:
+      params: 'uses [amount]'
+      description:
+        - '<gradient:#A78BFA:gold><b>アイテムの使用回数を設定します'
+        - ''
+        - '<gray>注: 無制限に使用するには <yellow>-1 <gray> を使用してください'
+      feedback:
+        set: '%prefix% <green>このアイテムは消費されるまでに <yellow>%uses% <green>回使用されます'
+        unlimited: '%prefix% <green>このアイテムは <yellow>無制限 <green>使用できます'
+    maxuses:
+      params: 'maxuses [amount]'
+      description:
+        - '<gradient:#A78BFA:gold><b>アイテムの最大使用回数を設定します'
+        - ''
+        - '<gray>主に美的目的で使用されます'
+        - '<gray> true に設定されたディスプレイを使用します'
+        - ''
+        - '<gray>注: 無制限に使用するには <yellow>-1 <gray> を使用してください'
+      feedback:
+        set: '%prefix% <green>このアイテムの使用回数は <yellow>%uses% <green> までです'
+        unlimited: '%prefix% <green>このアイテムは <yellow>無制限 <green>最大使用可能です'
+    consume:
+      params: 'consume [true/false]'
+      description:
+        - '<gradient:#A78BFA:gold><b>最後の使用時にアイテムを消費する'
+        - ''
+        - '<gray>注: true とアイテムが消費されたとき'
+        - '<gray> 最後に使用した場合、アイテムは破棄されます'
+      feedback:
+        set: '%prefix% <green>アイテムは最後の使用に達すると破棄されます'
+        unset: '%prefix% <green>アイテムは最後に使用しても破壊されません'
+    visualcooldown:
+      params: 'visualcooldown [true/false]'
+      description:
+        - '<gradient:#A78BFA:gold><b>残りのクールダウンを視覚的に表示します'
+        - ''
+        - '<gray>true の場合、アイテムには次のようなアニメーションが表示されます。'
+        - '<gray>エンダーパールのクールダウンアニメーション'
+        - ''
+        - '<gray>注: 残念ながら、この視覚効果も'
+        - '<gray> は同じ種類のアイテムに適用されます'
+      feedback:
+        set: '%prefix% <green>アイテムに視覚的なクールダウンが表示されるようになりました'
+        unset: '%prefix% <green>アイテムに視覚的なクールダウンが表示されなくなりました'
+    displayuses:
+      params: 'displayuses [true/false]'
+      description:
+        - '<gradient:#A78BFA:gold><b>残り使用回数を表示'
+        - ''
+        - '<gray>true が説明する行を追加するとき'
+        - '<gray>あと何回使用できますか'
+        - ''
+        - '<gray>注: 残念ながら、この視覚効果も'
+        - '<gray> は同じ種類のアイテムに適用されます'
+      feedback:
+        set: '%prefix% <green>アイテムの残り使用回数と最大使用回数が表示されるようになりました'
+        unset: '%prefix% <green>アイテムの残り使用回数と最大使用回数が表示されなくなりました'
+  activity:
+    description:
+      - '<gradient:#A78BFA:gold><b>アクティビティ（一部のアクション）を設定します'
+      - '<gray>アクティビティはトリガーによってアクティブ化される場合があります'
+      - '<gray> トリガーをアイテム (/it trigger) に関連付けることができます'
+      - ''
+      - '<yellow>Create <id> <gray>- 新しいアクティビティを作成します'
+      - '<yellow>Open <id> <gray> - 選択したアクティビティの GUI を開きます'
+      - '<yellow>Delete <id> <gray> - 選択したアクティビティを削除します'
+      - '<yellow>Clone <id> <new id><gray>- 選択したアクティビティのクローンを作成します'
+      - '<yellow>Rename <id> <new id><gray>- 選択したアクティビティの名前を変更します'
+    params: '[...]'
+    feedback:
+      invalid_activity_id: '<dark_red>[<red>ItemTag<dark_red>] <red>アクティビティ <gold>%id% <red> は存在しません'
+      already_used_activity_id: '<dark_red>[<red>ItemTag<dark_red>] <red>アクティビティ <gold>%id% <red> はすでに使用されています'
+    create:
+      params: 'create <new id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>新しいアクティビティを作成する'
+        - ''
+        - '<yellow><new id> <gray> はアクティビティの ID です'
+        - '<gray>id は文字で始まる必要があり、英数字を使用できます'
+        - '<gray>には_記号も含まれる場合があります'
+      feedback: '%prefix% <green>アクティビティ <yellow>%id% <green> が作成されました'
+    rename:
+      params: 'rename <id> <new id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>アクティビティ ID の名前を変更'
+        - ''
+        - '<yellow><id> <gray> はアクティビティの現在の ID です'
+        - '<yellow><new id> <gray> はアクティビティの新しい ID です'
+        - '<gray>id は文字で始まる必要があり、英数字を使用できます'
+        - '<gray>には_記号も含まれる場合があります'
+      feedback: '%prefix% <green>アクティビティ <yellow>%id% <green>名前変更 <yellow>%new_id%'
+    open:
+      params: 'open <id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>GUIを開いてアクティビティを編集します'
+        - ''
+        - '<yellow><id> <gray> はアクティビティの ID です'
+    delete:
+      params: 'delete <id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>選択したアクティビティを削除'
+        - ''
+        - '<yellow><id> <gray> はアクティビティの ID です'
+      feedback: '%prefix% <green>アクティビティ <yellow>%id% <green>削除されました'
+    clone:
+      params: 'clone <id> <clone id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>選択したアクティビティのクローンを作成します'
+        - ''
+        - '<yellow><id> <gray>は選択したアクティビティのIDです'
+        - '<yellow><clone id> <gray> はクローンの ID です'
+        - '<gray>id は文字で始まる必要があり、英数字を使用できます'
+        - '<gray>には_記号も含まれる場合があります'
+      feedback: '%prefix% <green>アクティビティ <yellow>%id% <green> が <yellow>%clone_id% にクローンされました'
+    setconsumes:
+      params: 'setconsumes <id> <amount>'
+      description:
+        - '<gradient:#A78BFA:gold><b>選択したアクティビティに必要な用途を設定します'
+        - ''
+        - '<yellow><id> <gray>は選択したアクティビティのIDです'
+        - '<yellow><amount> <gray>アクティビティのアクティベーションによって消費された使用量'
+      feedback: '%prefix% <green>アクティビティ <yellow>%id% <green> の消費量は <yellow>%amount%'
+    addcondition:
+      params: 'addcondition <id> [!]<conditiontype> [condition info]'
+      description:
+        - '<gradient:#A78BFA:gold><b>アクティビティをアクティブ化する条件を追加します'
+        - ''
+        - '<yellow><id> <gray> はアクティビティの ID です'
+        - '<yellow>[!] <gray> は「!」です。条件を元に戻したい場合は'
+        - '<yellow><conditiontype> <gray> は条件のタイプです'
+        - '<yellow>[condition info] <gray>は、条件タイプに必要な追加情報です'
+      feedback: '%prefix% <green>アクティビティ <yellow>%id% <green>追加条件 <yellow>%condition%'
+  consumeactions:
+    description:
+      - '<gradient:#A78BFA:gold><b>食べ物や飲み物などのアイテムが消費されたときに実行されるアクションを設定します'
+      - ''
+      - '<yellow>Add <type> <action> <gray>- 選択したアクションを追加'
+      - '<yellow>Set <line> <type> <action> <gray>- 選択した行のアクションを置換します'
+      - '<yellow>Remove <line> <gray>- 選択した行のアクションを削除します'
+      - '<yellow>Clear <gray>- すべてのアクションを削除します'
+      - '<yellow>Permission [permission] <gray> - このアイテムを消費するために必要な権限を設定します'
+      - '<yellow>Cooldown <ms> <gray> - このアイテムを再度使用するにはクールダウンを設定してください'
+      - '<yellow>Cooldownid [id] <gray> - これに使用されるクールダウン ID を設定します'
+      - '<yellow>Info <gray> - 現在のアイテムに対するアクションに関する情報を表示します'
+    params: '[...]'
+    add:
+      params: 'add <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>選択したアクションを追加'
+        - ''
+        - '<yellow><type> <gray>アクションの種類'
+        - '<yellow><action> <gray>アクションに関する追加情報'
+    addline:
+      params: 'addline <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>選択したアクションを選択した行に追加します'
+        - ''
+        - '<yellow><line> <gray>行追加'
+        - '<yellow><type> <gray>アクションの種類'
+        - '<yellow><action> <gray>アクションに関する追加情報'
+    set:
+      params: 'set <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>選択した行のアクションを置換'
+        - ''
+        - '<yellow><line> <gray>置換する行'
+        - '<yellow><type> <gray>アクションの種類'
+        - '<yellow><action> <gray>アクションに関する追加情報'
+    remove:
+      params: 'remove <line>'
+      description:
+        - '<gradient:#A78BFA:gold><b>選択した行のアクションを削除'
+        - ''
+        - '<yellow><line> <gray>削除する行'
+    permission:
+      params: 'permission [permission]'
+      description:
+        - '<gradient:#A78BFA:gold><b>このアイテムを消費する権限を設定します'
+        - ''
+        - '<yellow>[permission] <gray>設定する権限、デフォルトではなし'
+    cooldown:
+      params: 'cooldown [ms]'
+      description:
+        - '<gradient:#A78BFA:gold><b>アイテムを再度消費するにはクールダウンを設定します'
+        - ''
+        - '<yellow>[ms] <gray>消費できるようになるまでの時間'
+        - '<gray>アイテムを再度、デフォルトでは 0'
+        - '<gray>注: クールダウンはcooldownidに基づいて設定されており、異なります'
+        - '<gray>  同じアイテム cooldownid 同じクールダウンを共有する'
+        - '<gray>注: クールダウンはプレーヤーのログアウトとサーバーの再起動時に保持されます'
+    cooldownid:
+      params: 'cooldownid [id]'
+      description:
+        - '<gradient:#A78BFA:gold><b>アイテムのクールダウン ID を設定する'
+        - ''
+        - '<yellow>[id] <gray>共有クールダウン識別子'
+        - '<gray>注: クールダウンはcooldownidに基づいて設定されており、異なります'
+        - '<gray>  同じアイテム cooldownid 同じクールダウンを共有する'
+    feedback:
+      actions:
+        set: '<green>行<yellow>%line% <green>を<yellow>%action%に設定'
+        remove: '<green>行を削除 <yellow>%line% <green>(<yellow>%action%<green>)'
+        clear: '<green>このアイテムの消費アクションをクリアしました'
+        permission:
+          set: '<green>許可<yellow>%permission% <green>が必要です'
+          removed: '<green>このアイテムを消費するのに許可は必要ありません'
+        cooldownid:
+          set: '<green>このアイテムはクールダウンに ID <yellow>%id% <green> を使用します'
+          removed: '<green>このアイテムはクールダウンに<yellow>デフォルト<green>IDを使用します'
+        cooldown:
+          set: '<green>このアイテムのクールダウンは <yellow>%cooldown_seconds% <green> 秒です'
+          removed: '<green>このアイテムにはクールダウンはありません'
+  effects:
+    description:
+      - '<gradient:#A78BFA:gold><b>永久ポーション効果を追加'
+      - '<gray>GUIを開く'
+      - '<gray>どの装備を選択するかを忘れないでください'
+      - '<gray> スロットが効果を適用します'
+    params: ''
+  usepermission:
+    description:
+      - '<gradient:#A78BFA:gold><b>このアイテムを使用する権限を設定します (右クリックのバニラ動作)'
+      - ''
+      - '<yellow>setpermission <permission> <gray>必要な権限を設定します'
+      - '<yellow>setmessage <message> <gray>権限不足メッセージを設定'
+    params: '[...]'
+    setpermission:
+      feedback: '<green>使用許可が<yellow>%value%に設定されました'
+      feedback-reset: '<green>必要な使用許可が削除されました'
+    setmessage:
+      feedback: '<green>使用許可拒否メッセージが <yellow>%value% に設定されるようになりました'
+      feedback-reset: '<green>使用許可拒否メッセージが削除されました'
+  wearpermission:
+    description:
+      - '<gradient:#A78BFA:gold><b>このアイテムを装備するために必要な権限を設定します'
+      - ''
+      - '<gray>許可なくこのアイテムを装備しようとすると返されます'
+      - '<gray>インベントリに、またはインベントリがいっぱいの場合は地面に'
+      - '<gray>'
+      - '<yellow>setpermission <permission> <gray>必要な権限を設定します'
+      - '<yellow>setmessage <message> <gray>権限不足メッセージを設定'
+    params: '[...]'
+    setpermission:
+      feedback: '<green>アイテムの装備に必要な権限を設定しました：<yellow>%value%'
+      feedback-reset: '<green>アイテムの装備に必要な権限を解除しました'
+    setmessage:
+      feedback: '<green>装備権限がない場合のメッセージを設定しました：<yellow>%value%'
+      feedback-reset: '<green>使用許可拒否メッセージが削除されました'
+  help:
+    header-name: 'ItemTag'
+    description:
+      - '<gradient:#A78BFA:gold><b> ItemTag ヘルプ</b></gradient> を表示します'
+      - ''
+      - '<gray><yellow>[page] </yellow>ヘルプページ'
+      - '<gray><yellow>[subcommand] </yellow>サブコマンドのヘルプ'
+    params: '[page/subcommand]'
+itemtagreload:
+  success: '<blue>[<white>ItemTag<blue>] <green>リロードしました'
+gui:
+  middleclick: #middle click can't be used unless on creative mode, an alternative to middle click is pressing hotbar button 1
+    creative: '中クリック'
+    other: '1 を押します'
+  previous-page:
+    #Holders: %player_name% %page% %target_page%
+    description:
+      - '<gold><bold>前のページ'
+      - ''
+      - '<gray>[<white>クリック<gray>]<gray> ページ<yellow>%target_page%に移動'
+  next-page:
+    #Holders: %player_name% %page% %target_page%
+    description:
+      - '<gold><bold>次のページ'
+      - ''
+      - '<gray>[<white>クリック<gray>]<gray> ページ<yellow>%target_page%に移動'
+  back:
+    #Holders: %player_name%
+    description:
+      - '<gold><bold>戻る'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> 前の GUI に移動'
+  actions:
+    title: '<blue>アクション'
+    click-interact: '<blue>[<white>ItemTag<blue>] <gray>[ここをクリック]'
+    click-hover: '<gold>クリックしてコマンドを提案'
+    addline:
+      - '<gold><bold>アクションの追加'
+      - ''
+      - '<gray>[<white>クリック<gray>]<gray> 値を変更'
+      - '<blue>/it actions add <action type> <action info>'
+      - '<blue>/it actions addline <line> <action type> <action info>'
+    set:
+      - '<gold><bold>アクションを設定'
+      - ''
+      - '<gray>[<white>クリック<gray>]<gray> 値を変更'
+      - '<blue>/it actions set <line> <action type> <action info>'
+    remove:
+      - '<gold><bold>アクションを削除'
+      - ''
+      - '<gray>[<white>クリック<gray>]<gray> 値を変更'
+      - '<blue>/it actions remove <line>'
+    consume:
+      - '<gold><bold><yellow><bold>0<gold><bold> で消費し、残りを使用します'
+      - '<gray>有効: <yellow>%value%'
+      - '<gray>注: true とアイテムが消費されたとき'
+      - '<gray> 最後に使用した場合、アイテムは破棄されます'
+      - ''
+      - '<gray>[<white>クリック<gray>]<gray> トグル'
+      - '<blue>/it actions consume [true/false]'
+    uses:
+      - '<gold><bold>残り使用回数：<yellow><bold>%value%'
+      - '<gray> (無制限の場合は -1)'
+      - ''
+      - '<gray>[<white>右クリック<gray>]<gray> <yellow>%editor%を追加'
+      - '<gray>[<white>左クリック<gray>]<gray> <yellow>%editor%を削除'
+      - '<gray>[<white>Shift + 左/右クリック<gray>]<gray> %editor-prev% << <yellow>%editor% <gray>>> %editor-next%'
+      - '<blue>/it actions uses <amount>'
+    maxuses:
+      - '<gold><bold>最大使用回数：<yellow><bold>%value%'
+      - '<gray> (無制限の場合は -1)'
+      - '<gray>主に使用残量表示のフォーマットに使用されます'
+      - ''
+      - '<gray>[<white>右クリック<gray>]<gray> <yellow>%editor%を追加'
+      - '<gray>[<white>左クリック<gray>]<gray> <yellow>%editor%を削除'
+      - '<gray>[<white>Shift + 左/右クリック<gray>]<gray> %editor-prev% << <yellow>%editor% <gray>>> %editor-next%'
+      - '<blue>/it actions maxuses <amount>'
+    permission:
+      - '<gold><bold>使用許可: <yellow><bold>%value%'
+      - '<gray>注: この権限がない場合'
+      - '<gray> アイテムを使用できなくなるか、'
+      - '<gray> 残りの使用量を減らします'
+      - ''
+      - '<gray>[<white>クリック<gray>]<gray> 編集'
+      - '<blue>/it actions permission [permission]'
+    cooldown:
+      - '<gold><bold>クールダウン: <yellow><bold>%value_s% <blue>s'
+      - '<gray>注: 右クリックの使用にクールダウンを適用します'
+      - ''
+      - '<gray>[<white>右クリック<gray>]<gray> <yellow>%editor%を追加'
+      - '<gray>[<white>左クリック<gray>]<gray> <yellow>%editor%を削除'
+      - '<gray>[<white>Shift + 左/右クリック<gray>]<gray> %editor-prev% << <yellow>%editor% <gray>>> %editor-next%'
+      - '<blue>/it actions cooldown <cooldown <u>ms</u>>'
+    cooldownid:
+      - '<gold><bold>クールダウン ID: <yellow><bold>%value%'
+      - '<gray>注: すべてのアイテムは同じcooldownid'
+      - '<gray> がクールダウンを共有します'
+      - ''
+      - '<gray>[<white>クリック<gray>]<gray> 編集'
+      - '<blue>/it actions cooldownid [cooldown id]'
+    info:
+      - '<gold><bold>アクションのリスト:'
+    visualcooldown:
+      - '<gold><bold>ビジュアルクールダウンを表示'
+      - '<gray>有効: <yellow>%value%'
+      - '<gray>注: 残念ながら、この視覚効果も'
+      - '<gray> は同じ種類のアイテムに適用されます'
+      - ''
+      - '<gray>[<white>クリック<gray>]<gray> トグル'
+      - '<blue>/it actions visualdisplay [true/false]'
+    displayuses:
+      - '<gold><bold>残り使用回数を表示'
+      - '<gray>有効: <yellow>%value%'
+      - ''
+      - '<gray>[<white>クリック<gray>]<gray> トグル'
+      - '<blue>/it actions displayuses [true/false]'
+  actionslines:
+    actionformat: '<yellow>%type% <white>%info%'
+    element:
+      - '%action%'
+      - '<gray>[<white>右クリック<gray>]<gray> このアクションを置き換えます'
+      - '<gray>[<white>左クリック<gray>]<gray> この前に新しいアクションを追加'
+      - '<gray>[<white>Shift + 右クリック<gray>]<gray> このアクションを削除'
+    add:
+      - ' '
+      - '<gray>[<white>左クリック<gray>]<gray> 新しいアクションを追加'
+  flags:
+    placeable:
+      - '<gold>アイテムを配置できるかどうかを設定します'
+      - '<gray>値: <yellow>%value%'
+      - ''
+      - '<gray>[<white>クリック<gray>]<gray> トグル'
+    usable:
+      - '<gold>アイテムを使用できるかどうかを設定します'
+      - '<gray>値: <yellow>%value%'
+      - ''
+      - '<gray> false に設定すると、通常の動作が無効になります'
+      - '<gray> 項目を右クリック'
+      - '<gray>通常の使用動作はアイテムの種類によって異なります'
+      - '<gray>食べ物は食べられない、釣り竿では釣れない、'
+      - '<gray> 卵は投げられず、スポーンエッグはクリーチャーを召喚できません...'
+      - ''
+      - '<gray>[<white>クリック<gray>]<gray> トグル'
+    smelt:
+      - '<gold>調理可能かどうかを設定します'
+      - '<gray>値: <yellow>%value%'
+      - ''
+      - '<gray> false に設定すると、通常の動作が無効になります'
+      - '<gray> かまど調理'
+      - '<gray>食べ物と鉱石の両方に使用できます'
+      - ''
+      - '<gray>[<white>クリック<gray>]<gray> トグル'
+    furnacefuel:
+      - '<gold>アイテムをかまどの燃料として使用できるかどうかを設定します'
+      - '<gray>値: <yellow>%value%'
+      - ''
+      - '<gray> false に設定すると、通常の動作が無効になります'
+      - '<gray> かまど'
+      - ''
+      - '<gray>[<white>クリック<gray>]<gray> トグル'
+    recipeingredient:
+      - '<gold>アイテムをクラフトレシピで使用できるかどうかを設定します'
+      - '<gray>値: <yellow>%value%'
+      - ''
+      - '<gray> false に設定すると、通常のクラフト動作が無効になります'
+      - '<gray>'
+      - ''
+      - '<gray>[<white>クリック<gray>]<gray> トグル'
+    enchantable:
+      - '<gold>アイテムをエンチャントできるかどうかを設定します'
+      - '<gray>値: <yellow>%value%'
+      - ''
+      - '<gray> false に設定すると、エンチャント テーブルの通常の使用が妨げられます'
+      - '<gray>'
+      - ''
+      - '<gray>[<white>クリック<gray>]<gray> トグル'
+    renamable:
+      - '<gold>アイテムを金床で使用できるかどうかを設定します'
+      - '<gray>値: <yellow>%value%'
+      - ''
+      - '<gray> false に設定すると、通常のアンビルインタラクションが無効になります'
+      - '<gray>'
+      - ''
+      - '<gray>[<white>クリック<gray>]<gray> トグル'
+    grindable:
+      - '<gold>砥石でアイテムを解呪できるかどうかを設定します'
+      - '<gray>値: <yellow>%value%'
+      - ''
+      - '<gray> false に設定すると、砥石の通常の使用が妨げられます'
+      - '<gray>'
+      - ''
+      - '<gray>[<white>クリック<gray>]<gray> トグル'
+    equipment:
+      - '<gold>アイテムを装備として使用できるかどうかを設定します'
+      - '<gray>値: <yellow>%value%'
+      - ''
+      - '<gray> false に設定され、アイテムが装備されている場合、ドロップされます'
+      - '<gray> がプレイヤーのインベントリに戻りました'
+      - '<gray>注意: ハンドとオフハンドは装備スロットの一部とはみなされません'
+      - ''
+      - '<gray>[<white>クリック<gray>]<gray> トグル'
+    entityfood:
+      - '<gold>動物の餌として使用できるかどうかを設定します'
+      - '<gray>値: <yellow>%value%'
+      - ''
+      - '<gray> false に設定すると動物の繁殖を防ぎます'
+      - '<gray> と動物の赤ちゃんの急速な成長を防ぎます'
+      - '<gray>'
+      - ''
+      - '<gray>[<white>クリック<gray>]<gray> トグル'
+    vanishcurse:
+      - '<gold>死亡時にアイテムが消えるかどうかを設定します'
+      - '<gray>値: <yellow>%value%'
+      - ''
+      - '<gray>エンチャント Curse of Vanishing とまったく同じように機能します。'
+      - '<gray>でもそれは魔法ではありません'
+      - ''
+      - '<gray>[<white>クリック<gray>]<gray> トグル'
+    clickmove:
+      - '<gold>インベントリ内でアイテムを移動できるかどうかを設定します'
+      - '<gray>値: <yellow>%value%'
+      - ''
+      - '<gray>Op プレイヤーにはその制限を回避する許可があります'
+      - ''
+      - '<gray>[<white>クリック<gray>]<gray> トグル'
+    tradeable:
+      - '<gold>アイテムを村人と他のアイテムと交換できるかどうかを設定します'
+      - '<gray>値: <yellow>%value%'
+      - ''
+      - '<gray> false に設定すると、通常の村人の取引が無効になります'
+      - ''
+      - '<gray>[<white>クリック<gray>]<gray> トグル'
+    smithing_table:
+      - '<gold>アイテムを鍛冶台で使用できるかどうかを設定します'
+      - '<gray>値: <yellow>%value%'
+      - ''
+      - '<gray> false に設定すると、通常のアンビルインタラクションが無効になります'
+      - '<gray>'
+      - ''
+      - '<gray>[<white>クリック<gray>]<gray> トグル'
+  effects:
+    title: '<blue>効果'
+    slot:
+      - '<gold><bold>%slot%'
+      - '<gray>有効: <yellow>%value%'
+    potion:
+      - '<gold><bold>%effect%'
+      - ''
+      - '<gray>レベル: <yellow>%level% <gray>[左/右クリック変更]'
+      - '<gray>パーティクル: <yellow>%particles% <gray>[Shift + 左クリックで切り替え]'
+      - '<gray>アンビエント: <yellow>%ambient% <gray>[Shift + 右クリックで切り替え]'
+      - '<gray>アイコン: <yellow>%icon% <gray>[%middle_click% トグル]'
+      - '<gray>期間: <yellow>%duration%'
+    potion-instant: 'インスタント'
+    potion-unlimited: '無制限'
+  activity:
+    title_main: '<blue>アクティビティ <yellow>%activity_id%'
+  triggers:
+    title_main: '<blue>トリガー'
+trigger:
+  consume_item:
+    description:
+      - '<gold>プレイヤーがアイテムを消費すると発動'
+      - '<gold>(飲むか食べるか)'
+  right_interact:
+    gui_material:
+      - '<gold>プレイヤーが右クリックするとアクティブになります'
+  left_interact:
+    gui_material:
+      - '<gold>プレイヤーが左クリックするとアクティブになります'
+actions:
+  delay:
+    info:
+      - '<aqua>delay <yellow><delay ticks> <action>'
+      - '<yellow><delay ticks> <aqua>アクションをどのくらい遅らせるか、20 ティック = 1 秒'
+      - '<yellow><action> <aqua> 実行するアクション、例: <yellow>sound entity_bat_hurt 1 1'
+  message:
+    info:
+      - '<aqua>message <yellow><message>'
+      - '<yellow><message> <aqua>メッセージがプレイヤーに送信されました'
+      - '<aqua>%player% はプレイヤー名のプレースホルダーとして使用できます'
+  permission:
+    info:
+      - '<aqua>permission <yellow><permission> <action>'
+      - '<yellow><permission> <aqua>許可が必要です、または <yellow>-permission <aqua> プレーヤーが許可を持っていないことを要求します'
+      - '<yellow><action> <aqua> 実行するアクション、例: <yellow>sound entity_bat_hurt 1 1'
+  commandasop:
+    info:
+      - '<aqua>commandasop <yellow><command>'
+      - '<yellow><command> <aqua>コマンドはプレイヤーによってOpとして実行されます'
+      - '<aqua>%player% はプレイヤー名のプレースホルダーとして使用できます'
+      - '<aqua>注意いいえ、<yellow>/<aqua> は必須です。例: <yellow>home'
+  command:
+    info:
+      - '<aqua>command <yellow><command>'
+      - '<yellow><command> <aqua>プレイヤーが実行したコマンド'
+      - '<aqua>%player% はプレイヤー名のプレースホルダーとして使用できます'
+      - '<aqua>注意いいえ、<yellow>/<aqua> は必須です。例: <yellow>home'
+  potion:
+    info:
+      - '<aqua>potion <yellow><type> <duration_ticks|infinite> <level> [ambient] [particles] [icon]'
+      - '<yellow><type> <aqua>適用するポーション効果'
+      - '<yellow><duration_ticks|infinite> <aqua>効果時間（ティック単位）、または infinite'
+      - '<yellow><level> <aqua>効果レベルは1から256まで'
+      - '<yellow>[ambient] [particles] [icon] <aqua>ブール値;デフォルトは false、true、true です'
+  projectile:
+    info:
+      - '<aqua>projectile <yellow><projectile> [speed] [imprecision] [repeat] [repeatdelay]'
+      - '<yellow><projectile> <aqua>Java クラスが Projectile を拡張する生成可能なエンティティ タイプ'
+      - '<yellow>[speed] <aqua>初速度;デフォルトは 1'
+      - '<yellow>[imprecision] <aqua>X、Y、Z のランダムな方向オフセット。デフォルトは 0'
+      - '<yellow>[repeat] <aqua>最初のショットの後に追加ショット。デフォルトは 0'
+      - '<yellow>[repeatdelay] <aqua>ティック。デフォルトは 5 で、少なくとも 1 である必要があります'
+  servercommand:
+    info:
+      - '<aqua>servercommand <yellow><command>'
+      - '<yellow><command> <aqua>コマンドがサーバーによって実行されました'
+      - '<aqua>%player% はプレイヤー名のプレースホルダーとして使用できます'
+      - '<aqua>注意いいえ、<yellow>/<aqua> は必須です。例: <yellow>heal %player%'
+  sound:
+    info:
+      - '<aqua>sound <yellow><sound> [volume] [pitch] [self]'
+      - '<yellow><sound> <aqua>再生する音'
+      - '<yellow>[volume] <aqua>サウンドの音量、デフォルト1'
+      - '<yellow>[pitch] <aqua>音のピッチ、デフォルト 1'
+      - '<yellow>[self] <aqua>プレイヤーのみが聞く必要がありますか?デフォルトは false'
+  summon:
+    info:
+      - '<aqua>summon <yellow><entity> [quantity] [spread]'
+      - '<yellow><entity> <aqua>生成可能なエンティティ タイプ'
+      - '<yellow>[quantity] <aqua>召喚するエンティティの数。デフォルトは 1'
+      - '<yellow>[spread] <aqua>プレイヤーからの距離。デフォルトは 1.5'
+      - '<aqua> 1 つのエンティティが前にスポーンします。 2 つは ±60° にスポーンします。プレイヤーの周囲に 3 人以上が等間隔に配置されている'
+  throwtnt:
+    info:
+      - '<aqua>throwtnt [speed] [imprecision] [fuseTicks] [repeat] [repeatdelay]'
+      - '<aqua>起動した TNT をプレイヤーが見ている方向に投げます'
+      - '<yellow>[speed] <aqua>初速度;デフォルトは 2'
+      - '<yellow>[imprecision] <aqua>ランダムなヨーとピッチのオフセット（度単位）。デフォルトは 0'
+      - '<yellow>[fuseTicks] <aqua>爆発前のTNT時間（ティック単位）。デフォルトは 60'
+      - '<yellow>[repeat] <aqua>最初の投球後の追加投球。デフォルトは 0'
+      - '<yellow>[repeatdelay] <aqua>ティック。デフォルトは 5 で、少なくとも 1 である必要があります'

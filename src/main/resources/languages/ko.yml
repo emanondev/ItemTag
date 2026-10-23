@@ -1,0 +1,778 @@
+generic:
+  help:
+    player-only: '<dark_red>[<red>ItemTag<dark_red>] <red>플레이어 전용 명령'
+    no-item-on-hand: '<dark_red>[<red>ItemTag<dark_red>] <red>아이템을 손에 들고 있어야 합니다'
+    lack-permission: '<dark_red>[<red>ItemTag<dark_red>] <red>권한이 없습니다 %permission%'
+    lack-permission-generic: '<dark_red>[<red>ItemTag<dark_red>] <red>이 명령을 사용할 권한이 없습니다.'
+    prefix: '<dark_gray>[<gradient:#54acff:#A78BFA><bold>ItemTag</bold></gradient><dark_gray>]</dark_gray>'
+    header-format: '<gradient:#54acff:#A78BFA><bold>%header%</bold></gradient> <dark_gray>»</dark_gray> <#A78BFA><bold>도움말</bold></#A78BFA>'
+    header-sub-format: '<gradient:#54acff:#A78BFA><bold>%header%</bold></gradient> <dark_gray>»</dark_gray> <gradient:#A78BFA:#54acff><bold>%sub%</bold></gradient> <dark_gray>»</dark_gray> <#55d6ff><bold>도움말</#55d6ff>'
+    command-format: '<gray>/%command%</gray> <#bad1ff>%sub%</#bad1ff> <#d7bbff>%params%</#d7bbff>'
+    footer-format: '%prev_clickable% <#7E9CFD><b>도움말</b> [%page%/%max_page%]</#7E9CFD> %next_clickable%'
+    next_text: ' <light_purple><b>><st>> ></st> '
+    prev_text: ' <light_purple><b><st>< <</st>< '
+    next_void: ' <dark_gray><b>><st>> ></st> '
+    prev_void: ' <dark_gray><b><st>< <</st>< '
+    next_hover: '<gold><b>페이지로 이동 %target%'
+    prev_hover: '<gold><b>페이지로 이동 %target%'
+  wrong-alias:
+    wrong-flag: '%prefix% <red>플래그 값이 잘못되었습니다! <dark_red>[<gold>여기에 마우스를 올리세요<dark_red>]'
+    wrong-action: '%prefix% <red>작업 유형이 잘못되었습니다! <dark_red>[<gold>여기로 마우스를 가져가세요<dark_red>]'
+    error-pre-hover: '<gradient:#A78BFA:gold><b>별칭:</b></gradient>'
+    first_color: '<aqua>'
+    second_color: '<yellow>'
+itemtag:
+  flag:
+    description:
+      - '<gradient:#A78BFA:gold><b>아이템에 맞춤 플래그 전환'
+      - ''
+      - '<yellow><flag> <gray>플래그 이름'
+      - '<yellow>[true/false] <gray>플래그 값; 생략하면 현재 값을 반전시킵니다.'
+    params: '<flag> [true/false]'
+    placeable:
+      feedback:
+        standard: '%prefix% <green>아이템을 배치할 수 있습니다.'
+        custom: '%prefix% <green>아이템을 배치할 수 없습니다.'
+        failed-place-attempt: '<dark_red>[<red>ItemTag<dark_red>] <red>이 아이템을 배치할 수 없습니다'
+    usable:
+      feedback:
+        standard: '%prefix% <green>아이템을 사용할 수 있습니다.'
+        custom: '%prefix% <green>해당 아이템을 사용할 수 없습니다(오른쪽 클릭).'
+    smelt:
+      feedback:
+        standard: '%prefix% <green>이 아이템은 화로에서 요리하거나 제련할 수 있습니다.'
+        custom: '%prefix% <green>이 아이템은 화로에서 요리하거나 제련할 수 없습니다.'
+    furnacefuel:
+      feedback:
+        standard: '%prefix% <green>이 아이템은 화로 연료로 사용할 수 있습니다.'
+        custom: '%prefix% <green>이 아이템은 화로 연료로 사용할 수 없습니다.'
+    recipeingredient:
+      feedback:
+        standard: '%prefix% <green>해당 아이템은 레시피 재료로 사용할 수 있습니다.'
+        custom: '%prefix% <green>해당 아이템은 레시피 재료로 사용할 수 없습니다.'
+    enchantable:
+      feedback:
+        standard: '%prefix% <green>아이템에 마법을 부여할 수 있습니다.'
+        custom: '%prefix% <green>해당 아이템에는 마법을 부여할 수 없습니다.'
+    renamable:
+      feedback:
+        standard: '%prefix% <green>해당 아이템은 모루에 사용할 수 있습니다.'
+        custom: '%prefix% <green>해당 아이템은 모루에 사용할 수 없습니다.'
+    grindable:
+      feedback:
+        standard: '%prefix% <green> 해당 아이템은 숫돌로 마력을 추출할 수 있습니다.'
+        custom: '%prefix% <green> 해당 아이템은 숫돌로 마력을 추출할 수 없습니다.'
+    equipment:
+      feedback:
+        standard: '%prefix% <green>아이템을 장착할 수 있습니다.'
+        custom: '%prefix% <green>해당 아이템은 장착할 수 없습니다.'
+    entityfood:
+      feedback:
+        standard: '%prefix% <green>동물의 먹이로 사용할 수 있는 아이템입니다.'
+        custom: '%prefix% <green>동물사료로 사용할 수 없는 아이템입니다.'
+    clickmove:
+      feedback:
+        standard: '%prefix% <green>해당 아이템은 인벤토리에서 이동할 수 있습니다.'
+        custom: '%prefix% <green>해당 아이템은 인벤토리 내에서 이동할 수 없습니다.'
+    tradeable:
+      feedback:
+        standard: '%prefix% <green>해당 아이템은 마을 주민들과 거래할 수 있습니다.'
+        custom: '%prefix% <green>해당 아이템은 주민과 거래할 수 없습니다.'
+    smithing_table:
+      feedback:
+        standard: '%prefix% <green>이 아이템은 대장간 테이블의 재료로 사용할 수 있습니다.'
+        custom: '%prefix% <green>이 아이템은 대장간 테이블 재료로 사용할 수 없습니다.'
+  actions:
+    invalid-action:
+      message: '<dark_red>[<red>ItemTag<dark_red>] <red>''<gold>%error%<red>''은(는) 유효한 유형이 아닙니다. <dark_red>[<gold>여기에 마우스를 올리세요<dark_red>]'
+    invalid-actioninfo:
+      message: '<dark_red>[<red>ItemTag<dark_red>] <red>''<gold>%error%<red>''은 <gold>%action% <dark_red>[<gold>여기<dark_red>]에 대한 유효한 정보가 아닙니다.'
+    description:
+      - '<gradient:#A78BFA:gold><b>아이템 사용 시 수행되는 동작을 설정합니다.'
+      - ''
+      - '<yellow>Add <type> <action> <gray>- 선택한 작업 추가'
+      - '<yellow>Set <line> <type> <action> <gray>- 선택한 줄의 작업 바꾸기'
+      - '<yellow>Remove <line> <gray>- 선택한 라인에서 작업 제거'
+      - '<yellow>Clear <gray>- 모든 작업 제거'
+      - '<yellow>Permission [permission] <gray>- 이 아이템을 사용하는 데 필요한 권한을 설정하세요'
+      - '<yellow>Cooldown <ms> <gray>- 이 아이템을 다시 사용하려면 쿨타임을 설정하세요'
+      - '<yellow>Cooldownid [id] <gray>- 이에 대해 사용된 쿨다운 ID를 설정합니다.'
+      - '<yellow>Cooldownmsg [msg] <gray>- 쿨다운 피드백 설정'
+      - '<yellow>Cooldownmsgtype [type] <gray> - 쿨다운 피드백 유형 설정(chat 또는 actionbar)'
+      - '<yellow>Uses [amount] <gray>- 이 아이템을 몇 번이나 사용할 수 있는지 설정'
+      - '<yellow>Info <gray>- 현재 아이템에 대한 작업 정보 표시'
+    params: '[...]'
+    add:
+      params: 'add <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>선택한 작업 추가'
+        - ''
+        - '<yellow><type> <gray>행동 유형'
+        - '<yellow><action> <gray>작업에 대한 추가 정보'
+      feedback: '%prefix% <green>추가됨 <yellow>%action%'
+    addline:
+      params: 'addline <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>선택한 줄에 선택한 작업 추가'
+        - ''
+        - '<yellow><line> <gray> 추가할 줄'
+        - '<yellow><type> <gray>행동 유형'
+        - '<yellow><action> <gray>작업에 대한 추가 정보'
+      feedback: '%prefix% <green>라인 <yellow>%line% <green>이 <yellow>%action%로 추가됨'
+    set:
+      params: 'set <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>선택한 줄의 작업 바꾸기'
+        - ''
+        - '<yellow><line> <gray> 교체할 줄'
+        - '<yellow><type> <gray>행동 유형'
+        - '<yellow><action> <gray>작업에 대한 추가 정보'
+      feedback: '%prefix% <green>라인 <yellow>%line% <green>을 <yellow>%action%로 설정'
+    remove:
+      params: 'remove <line>'
+      description:
+        - '<gradient:#A78BFA:gold><b>선택한 줄에서 작업 제거'
+        - ''
+        - '<yellow><line> <gray>제거할 줄'
+      feedback: '%prefix% <green>삭제된 줄 <yellow>%line% <green>(<yellow>%action%<green>)'
+    permission:
+      params: 'permission [permission]'
+      description:
+        - '<gradient:#A78BFA:gold><b>이 아이템 사용 권한 설정'
+        - ''
+        - '<yellow>[permission] <gray>권한 설정, 기본적으로 없음'
+      feedback:
+        set: '%prefix% <green>권한 <yellow>%permission% <green>이 이제 이 아이템을 사용하는 데 필요합니다.'
+        removed: '%prefix% <green>이제 이 아이템을 사용하는 데 권한이 필요하지 않습니다.'
+    cooldown:
+      params: 'cooldown [ms]'
+      description:
+        - '<gradient:#A78BFA:gold><b>아이템을 다시 사용하려면 재사용 대기시간을 설정하세요.'
+        - ''
+        - '<yellow>[ms] <gray>사용 가능까지 시간이 얼마나 소요됩니까?'
+        - '<gray>아이템을 다시 기본적으로 0'
+        - '<gray>참고: 재사용 대기시간은 cooldownid에 따라 설정됩니다.'
+        - '<gray> 동일한 아이템 cooldownid 동일한 재사용 대기시간 공유'
+        - '<gray>참고: 플레이어 로그아웃 및 서버 재시작 시 재사용 대기시간이 유지됩니다.'
+      feedback:
+        set: '%prefix% <green>이 아이템의 재사용 대기시간은 <yellow>%cooldown_seconds% <green>초입니다.'
+        removed: '%prefix% <green>이 아이템에는 재사용 대기시간이 없습니다.'
+    cooldownid:
+      params: 'cooldownid [id]'
+      description:
+        - '<gradient:#A78BFA:gold><b>아이템의 쿨다운 ID 설정'
+        - ''
+        - '<yellow>[id] <gray>공유 재사용 대기시간 식별자'
+        - '<gray>참고: 재사용 대기시간은 cooldownid에 따라 설정됩니다.'
+        - '<gray> 동일한 아이템 cooldownid 동일한 재사용 대기시간 공유'
+      feedback:
+        set: '%prefix% <green>이 아이템은 재사용 대기시간으로 ID <yellow>%id% <green>를 사용합니다.'
+        removed: '%prefix% <green>이 아이템은 재사용 대기시간에 <yellow>기본 <green>id를 사용합니다.'
+    cooldownmsg:
+      description:
+        - '<gradient:#A78BFA:gold><b>쿨다운 메시지 설정'
+        - ''
+        - '<yellow>[message] <gray>아이템을 사용할 수 없을 때 표시되는 메시지'
+        - '<gray>아직 재사용 대기시간이 활성화된 동안'
+      params: 'cooldownmsg [message]'
+      feedback:
+        set: '%prefix% <green>쿨다운이 활성화되면 ''<white>%msg%<green>''로 설정된 쿨다운에 대한 피드백 메시지'
+        removed: '%prefix% <green>쿨타임에 대한 피드백 메시지가 삭제되었습니다.'
+    cooldownmsgtype:
+      description:
+        - '<gradient:#A78BFA:gold><b>대기시간 메시지 유형 설정'
+        - ''
+        - '<yellow>[type] <gray>chat 또는 actionbar'
+      params: 'cooldownmsgtype [type]'
+      feedback:
+        set: '%prefix% <green>''<yellow>%type%<green>'' 유형으로 설정된 재사용 대기시간에 대한 피드백 메시지'
+    uses:
+      params: 'uses [amount]'
+      description:
+        - '<gradient:#A78BFA:gold><b>아이템 사용 횟수 설정'
+        - ''
+        - '<gray>참고: 무제한 사용하려면 <yellow>-1 <gray>를 사용하세요.'
+      feedback:
+        set: '%prefix% <green>이 아이템은 소모되기 전까지 <yellow>%uses% <green>사용 횟수가 있습니다'
+        unlimited: '%prefix% <green>이 아이템에는 <yellow>무제한 <green> 용도가 있습니다.'
+    maxuses:
+      params: 'maxuses [amount]'
+      description:
+        - '<gradient:#A78BFA:gold><b>아이템의 최대 사용 횟수 설정'
+        - ''
+        - '<gray>주로 미적 목적으로 사용됩니다.'
+        - '<gray>디스플레이 사용이 true로 설정됨'
+        - ''
+        - '<gray>참고: 무제한 사용하려면 <yellow>-1 <gray>를 사용하세요.'
+      feedback:
+        set: '%prefix% <green>이 아이템의 최대 사용 횟수는 <yellow>%uses% <green>입니다.'
+        unlimited: '%prefix% <green>이 아이템은 <yellow>무제한 <green>최대 사용 가능'
+    consume:
+      params: 'consume [true/false]'
+      description:
+        - '<gradient:#A78BFA:gold><b>마지막 사용 시 아이템 소모'
+        - ''
+        - '<gray>참고: true 및 아이템이 소모될 때'
+        - '<gray> 마지막으로 사용하면 아이템이 파괴됩니다.'
+      feedback:
+        set: '%prefix% <green>아이템은 마지막 사용 시 폐기됩니다.'
+        unset: '%prefix% <green>아이템은 마지막 사용 후에도 파괴되지 않습니다.'
+    visualcooldown:
+      params: 'visualcooldown [true/false]'
+      description:
+        - '<gradient:#A78BFA:gold><b>남은 재사용 대기시간을 시각적으로 표시'
+        - ''
+        - '<gray> true 때 아이템이 다음과 유사한 애니메이션을 표시합니다.'
+        - '<gray>엔더 진주의 재사용 대기시간 애니메이션'
+        - ''
+        - '<gray>참고: 안타깝게도 이 시각 효과도'
+        - '<gray> 같은 종류의 모든 품목에 적용됩니다.'
+      feedback:
+        set: '%prefix% <green>이제 아이템에 시각적 쿨다운이 표시됩니다.'
+        unset: '%prefix% <green>이제 아이템에 시각적 재사용 대기시간이 표시되지 않습니다.'
+    displayuses:
+      params: 'displayuses [true/false]'
+      description:
+        - '<gradient:#A78BFA:gold><b>남은 사용 횟수 표시'
+        - ''
+        - '<gray> true가 설명하는 줄을 추가하는 경우'
+        - '<gray>사용 횟수가 얼마나 남았나요?'
+        - ''
+        - '<gray>참고: 안타깝게도 이 시각 효과도'
+        - '<gray> 같은 종류의 모든 품목에 적용됩니다.'
+      feedback:
+        set: '%prefix% <green> 이제 아이템에 남은 사용 횟수와 최대 사용 횟수가 표시됩니다.'
+        unset: '%prefix% <green>아이템에 더 이상 남은 사용 횟수와 최대 사용 횟수가 표시되지 않습니다.'
+  activity:
+    description:
+      - '<gradient:#A78BFA:gold><b>활동 설정(일부 동작)'
+      - '<gray>트리거에 의해 활동이 활성화될 수 있습니다.'
+      - '<gray>트리거가 아이템과 연결될 수 있음(/it trigger)'
+      - ''
+      - '<yellow>Create <id> <gray>- 새 활동 만들기'
+      - '<yellow>Open <id> <gray>- 선택한 활동에 대한 GUI 열기'
+      - '<yellow>Delete <id> <gray>- 선택한 활동 삭제'
+      - '<yellow>Clone <id> <new id><gray>- 선택한 활동 복제'
+      - '<yellow>Rename <id> <new id><gray>- 선택한 활동의 이름 바꾸기'
+    params: '[...]'
+    feedback:
+      invalid_activity_id: '<dark_red>[<red>ItemTag<dark_red>] <red>활동 <gold>%id% <red>이 존재하지 않습니다'
+      already_used_activity_id: '<dark_red>[<red>ItemTag<dark_red>] <red>활동 <gold>%id% <red>은 이미 사용되었습니다.'
+    create:
+      params: 'create <new id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>새 활동 만들기'
+        - ''
+        - '<yellow><new id> <gray>는 활동의 ID입니다.'
+        - '<gray>id는 문자로 시작해야 하며 영숫자일 수 있습니다.'
+        - '<gray> _ 기호도 포함될 수 있음'
+      feedback: '%prefix% <green>활동 <yellow>%id% <green>생성됨'
+    rename:
+      params: 'rename <id> <new id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>활동 ID 이름 바꾸기'
+        - ''
+        - '<yellow><id> <gray>는 활동의 현재 ID입니다.'
+        - '<yellow><new id> <gray>는 활동의 새 ID입니다.'
+        - '<gray>id는 문자로 시작해야 하며 영숫자일 수 있습니다.'
+        - '<gray> _ 기호도 포함될 수 있음'
+      feedback: '%prefix% <green>활동 <yellow>%id% <green>이름이 변경됨 <yellow>%new_id%'
+    open:
+      params: 'open <id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>GUI를 열어 활동을 편집하세요.'
+        - ''
+        - '<yellow><id> <gray>는 활동의 ID입니다.'
+    delete:
+      params: 'delete <id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>선택한 활동 삭제'
+        - ''
+        - '<yellow><id> <gray>는 활동의 ID입니다.'
+      feedback: '%prefix% <green>활동 <yellow>%id% <green>삭제됨'
+    clone:
+      params: 'clone <id> <clone id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>선택한 활동 복제'
+        - ''
+        - '<yellow><id> <gray>는 선택한 활동의 ID입니다.'
+        - '<yellow><clone id> <gray>은 클론의 ID입니다.'
+        - '<gray>id는 문자로 시작해야 하며 영숫자일 수 있습니다.'
+        - '<gray> _ 기호도 포함될 수 있음'
+      feedback: '%prefix% <green>활동 <yellow>%id% <green>이 <yellow>%clone_id%에 복제되었습니다.'
+    setconsumes:
+      params: 'setconsumes <id> <amount>'
+      description:
+        - '<gradient:#A78BFA:gold><b>선택한 활동에 필요한 용도 설정'
+        - ''
+        - '<yellow><id> <gray>는 선택한 활동의 ID입니다.'
+        - '<yellow><amount> <gray>활동 활성화에 따른 사용 횟수'
+      feedback: '%prefix% <green>활동 <yellow>%id% <green>사용 소비는 <yellow>%amount%'
+    addcondition:
+      params: 'addcondition <id> [!]<conditiontype> [condition info]'
+      description:
+        - '<gradient:#A78BFA:gold><b>활동을 활성화하는 조건을 추가하세요'
+        - ''
+        - '<yellow><id> <gray>는 활동의 ID입니다.'
+        - '<yellow>[!] <gray>는 ''!'' 조건을 반전시키고 싶다면'
+        - '<yellow><conditiontype> <gray>는 조건 유형입니다.'
+        - '<yellow>[condition info] <gray>는 조건 유형에 필요할 수 있는 추가 정보입니다.'
+      feedback: '%prefix% <green>활동 <yellow>%id% <green>추가된 조건 <yellow>%condition%'
+  consumeactions:
+    description:
+      - '<gradient:#A78BFA:gold><b>음식, 음료 등 아이템이 소비될 때 수행되는 동작을 설정합니다.'
+      - ''
+      - '<yellow>Add <type> <action> <gray>- 선택한 작업 추가'
+      - '<yellow>Set <line> <type> <action> <gray>- 선택한 줄의 작업 바꾸기'
+      - '<yellow>Remove <line> <gray>- 선택한 라인에서 작업 제거'
+      - '<yellow>Clear <gray>- 모든 작업 제거'
+      - '<yellow>Permission [permission] <gray>- 이 아이템을 사용하기 위해 필요한 권한을 설정하세요'
+      - '<yellow>Cooldown <ms> <gray>- 이 아이템을 다시 사용하려면 쿨타임을 설정하세요'
+      - '<yellow>Cooldownid [id] <gray>- 이에 대해 사용된 쿨다운 ID를 설정합니다.'
+      - '<yellow>Info <gray>- 현재 아이템에 대한 작업 정보 표시'
+    params: '[...]'
+    add:
+      params: 'add <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>선택한 작업 추가'
+        - ''
+        - '<yellow><type> <gray>행동 유형'
+        - '<yellow><action> <gray>작업에 대한 추가 정보'
+    addline:
+      params: 'addline <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>선택한 줄에 선택한 작업 추가'
+        - ''
+        - '<yellow><line> <gray> 추가할 줄'
+        - '<yellow><type> <gray>행동 유형'
+        - '<yellow><action> <gray>작업에 대한 추가 정보'
+    set:
+      params: 'set <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>선택한 줄의 작업 바꾸기'
+        - ''
+        - '<yellow><line> <gray> 교체할 줄'
+        - '<yellow><type> <gray>행동 유형'
+        - '<yellow><action> <gray>작업에 대한 추가 정보'
+    remove:
+      params: 'remove <line>'
+      description:
+        - '<gradient:#A78BFA:gold><b>선택한 줄에서 작업 제거'
+        - ''
+        - '<yellow><line> <gray>제거할 줄'
+    permission:
+      params: 'permission [permission]'
+      description:
+        - '<gradient:#A78BFA:gold><b>이 아이템을 소비할 수 있는 권한을 설정하세요'
+        - ''
+        - '<yellow>[permission] <gray>권한 설정, 기본적으로 없음'
+    cooldown:
+      params: 'cooldown [ms]'
+      description:
+        - '<gradient:#A78BFA:gold><b>아이템을 다시 소모하려면 재사용 대기시간을 설정하세요.'
+        - ''
+        - '<yellow>[ms] <gray> 소비할 수 있기까지 시간이 얼마나 걸리나요?'
+        - '<gray>아이템을 다시 기본적으로 0'
+        - '<gray>참고: 재사용 대기시간은 cooldownid에 따라 설정됩니다.'
+        - '<gray> 동일한 아이템 cooldownid 동일한 재사용 대기시간 공유'
+        - '<gray>참고: 플레이어 로그아웃 및 서버 재시작 시 재사용 대기시간이 유지됩니다.'
+    cooldownid:
+      params: 'cooldownid [id]'
+      description:
+        - '<gradient:#A78BFA:gold><b>아이템의 쿨다운 ID 설정'
+        - ''
+        - '<yellow>[id] <gray>공유 재사용 대기시간 식별자'
+        - '<gray>참고: 재사용 대기시간은 cooldownid에 따라 설정됩니다.'
+        - '<gray> 동일한 아이템 cooldownid 동일한 재사용 대기시간 공유'
+    feedback:
+      actions:
+        set: '<green>라인 <yellow>%line% <green>을 <yellow>%action%로 설정'
+        remove: '<green>삭제된 줄 <yellow>%line% <green>(<yellow>%action%<green>)'
+        clear: '<green>이 아이템에 대한 소비 작업이 삭제되었습니다.'
+        permission:
+          set: '<green>권한 <yellow>%permission% <green>이 이제 이 아이템을 소비하는 데 필요합니다.'
+          removed: '<green>이제 이 아이템을 사용하는 데 권한이 필요하지 않습니다.'
+        cooldownid:
+          set: '<green>이 아이템은 재사용 대기시간으로 ID <yellow>%id% <green>를 사용합니다.'
+          removed: '<green>이 아이템은 재사용 대기시간에 <yellow>기본값 <green>id를 사용합니다.'
+        cooldown:
+          set: '<green>이 아이템의 재사용 대기시간은 <yellow>%cooldown_seconds% <green>초입니다.'
+          removed: '<green>이 아이템에는 재사용 대기시간이 없습니다.'
+  effects:
+    description:
+      - '<gradient:#A78BFA:gold><b>영구 물약 효과 추가'
+      - '<gray>GUI 열기'
+      - '<gray>어떤 장비를 선택해야 하는지 기억하세요'
+      - '<gray> 슬롯 효과 적용'
+    params: ''
+  usepermission:
+    description:
+      - '<gradient:#A78BFA:gold><b>이 아이템을 사용하기 위한 권한 설정 (바닐라 동작을 마우스 오른쪽 버튼으로 클릭)'
+      - ''
+      - '<yellow>setpermission <permission> <gray>필수 권한 설정'
+      - '<yellow>setmessage <message> <gray>권한 없음 메시지 설정'
+    params: '[...]'
+    setpermission:
+      feedback: '<green>사용권한이 <yellow>%value%로 설정되었습니다.'
+      feedback-reset: '<green>사용 필수 권한이 삭제되었습니다.'
+    setmessage:
+      feedback: '<green>사용 권한 거부 메시지가 이제 <yellow>%value%로 설정됩니다.'
+      feedback-reset: '<green>사용 권한 거부 메시지가 삭제되었습니다.'
+  wearpermission:
+    description:
+      - '<gradient:#A78BFA:gold><b>이 아이템을 장착하는 데 필요한 권한을 설정하세요'
+      - ''
+      - '<gray>허가 없이 이 아이템을 장착하려고 하면 반환됩니다.'
+      - '<gray>인벤토리로, 인벤토리가 가득 찬 경우 땅바닥으로'
+      - '<gray>'
+      - '<yellow>setpermission <permission> <gray>필수 권한 설정'
+      - '<yellow>setmessage <message> <gray>권한 없음 메시지 설정'
+    params: '[...]'
+    setpermission:
+      feedback: '<green>아이템 장착에 필요한 권한을 설정했습니다: <yellow>%value%'
+      feedback-reset: '<green>아이템 장착에 필요한 권한을 제거했습니다'
+    setmessage:
+      feedback: '<green>장착 권한이 없을 때 표시할 메시지를 설정했습니다: <yellow>%value%'
+      feedback-reset: '<green>사용 권한 거부 메시지가 삭제되었습니다.'
+  help:
+    header-name: 'ItemTag'
+    description:
+      - '<gradient:#A78BFA:gold><b>쇼 ItemTag 도움말</b></gradient>'
+      - ''
+      - '<gray><yellow>[page] </yellow>도움말 페이지'
+      - '<gray><yellow>[subcommand] </yellow>하위 명령 도움말'
+    params: '[page/subcommand]'
+itemtagreload:
+  success: '<blue>[<white>ItemTag<blue>] <green>다시 로드됨'
+gui:
+  middleclick: #middle click can't be used unless on creative mode, an alternative to middle click is pressing hotbar button 1
+    creative: '가운데 클릭'
+    other: '1번을 누르세요'
+  previous-page:
+    #Holders: %player_name% %page% %target_page%
+    description:
+      - '<gold><bold>이전 페이지'
+      - ''
+      - '<gray>[<white>클릭<gray>]<gray> 페이지로 이동 <yellow>%target_page%'
+  next-page:
+    #Holders: %player_name% %page% %target_page%
+    description:
+      - '<gold><bold>다음 페이지'
+      - ''
+      - '<gray>[<white>클릭<gray>]<gray> 페이지로 이동 <yellow>%target_page%'
+  back:
+    #Holders: %player_name%
+    description:
+      - '<gold><bold>뒤로가기'
+      - ''
+      - '<gray>[<white>클릭<gray>]<gray> 이전 GUI로 이동'
+  actions:
+    title: '<blue>작업'
+    click-interact: '<blue>[<white>ItemTag<blue>] <gray>[여기를 클릭하세요]'
+    click-hover: '<gold>명령을 제안하려면 클릭하세요.'
+    addline:
+      - '<gold><bold>액션 추가'
+      - ''
+      - '<gray>[<white>클릭<gray>]<gray> 값 변경'
+      - '<blue>/it actions add <action type> <action info>'
+      - '<blue>/it actions addline <line> <action type> <action info>'
+    set:
+      - '<gold><bold>액션 설정'
+      - ''
+      - '<gray>[<white>클릭<gray>]<gray> 값 변경'
+      - '<blue>/it actions set <line> <action type> <action info>'
+    remove:
+      - '<gold><bold>작업 제거'
+      - ''
+      - '<gray>[<white>클릭<gray>]<gray> 값 변경'
+      - '<blue>/it actions remove <line>'
+    consume:
+      - '<gold><bold> 소비 <yellow><bold>0<gold><bold> 사용 남음'
+      - '<gray>활성화됨: <yellow>%value%'
+      - '<gray>참고: true 및 아이템이 소모될 때'
+      - '<gray> 마지막으로 사용하면 아이템이 파괴됩니다.'
+      - ''
+      - '<gray>[<white>클릭<gray>]<gray> 토글'
+      - '<blue>/it actions consume [true/false]'
+    uses:
+      - '<gold><bold>남은 사용 횟수: <yellow><bold>%value%'
+      - '<gray>(무제한의 경우-1)'
+      - ''
+      - '<gray>[<white>오른쪽 클릭<gray>]<gray> 추가 <yellow>%editor%'
+      - '<gray>[<white>왼쪽 클릭<gray>]<gray> 제거 <yellow>%editor%'
+      - '<gray>[<white>Shift + 왼쪽/오른쪽 클릭<gray>]<gray> %editor-prev% << <yellow>%editor% <gray>>> %editor-next%'
+      - '<blue>/it actions uses <amount>'
+    maxuses:
+      - '<gold><bold>최대 사용 횟수: <yellow><bold>%value%'
+      - '<gray>(무제한의 경우-1)'
+      - '<gray>주로 남은 사용량 표시 형식을 지정하는 데 사용됩니다.'
+      - ''
+      - '<gray>[<white>오른쪽 클릭<gray>]<gray> 추가 <yellow>%editor%'
+      - '<gray>[<white>왼쪽 클릭<gray>]<gray> 제거 <yellow>%editor%'
+      - '<gray>[<white>Shift + 왼쪽/오른쪽 클릭<gray>]<gray> %editor-prev% << <yellow>%editor% <gray>>> %editor-next%'
+      - '<blue>/it actions maxuses <amount>'
+    permission:
+      - '<gold><bold>사용 권한: <yellow><bold>%value%'
+      - '<gray>참고: 이 권한이 없는 경우'
+      - '<gray> 해당 아이템을 사용할 수 없거나'
+      - '<gray> 남은 사용량 감소'
+      - ''
+      - '<gray>[<white>클릭<gray>]<gray> 수정'
+      - '<blue>/it actions permission [permission]'
+    cooldown:
+      - '<gold><bold>쿨다운: <yellow><bold>%value_s% <blue>초'
+      - '<gray>참고: 오른쪽 클릭 사용 시 재사용 대기시간이 적용됩니다.'
+      - ''
+      - '<gray>[<white>오른쪽 클릭<gray>]<gray> 추가 <yellow>%editor%'
+      - '<gray>[<white>왼쪽 클릭<gray>]<gray> 제거 <yellow>%editor%'
+      - '<gray>[<white>Shift + 왼쪽/오른쪽 클릭<gray>]<gray> %editor-prev% << <yellow>%editor% <gray>>> %editor-next%'
+      - '<blue>/it actions cooldown <cooldown <u>ms</u>>'
+    cooldownid:
+      - '<gold><bold>쿨다운 ID: <yellow><bold>%value%'
+      - '<gray>참고: 동일한 cooldownid를 가진 모든 아이템'
+      - '<gray> 재사용 대기시간을 공유합니다.'
+      - ''
+      - '<gray>[<white>클릭<gray>]<gray> 수정'
+      - '<blue>/it actions cooldownid [cooldown id]'
+    info:
+      - '<gold><bold>작업 목록:'
+    visualcooldown:
+      - '<gold><bold>시각적 쿨다운 표시'
+      - '<gray>활성화됨: <yellow>%value%'
+      - '<gray>참고: 안타깝게도 이 시각 효과도'
+      - '<gray> 같은 종류의 모든 품목에 적용됩니다.'
+      - ''
+      - '<gray>[<white>클릭<gray>]<gray> 토글'
+      - '<blue>/it actions visualdisplay [true/false]'
+    displayuses:
+      - '<gold><bold>남은 사용 횟수 표시'
+      - '<gray>활성화됨: <yellow>%value%'
+      - ''
+      - '<gray>[<white>클릭<gray>]<gray> 토글'
+      - '<blue>/it actions displayuses [true/false]'
+  actionslines:
+    actionformat: '<yellow>%type% <white>%info%'
+    element:
+      - '%action%'
+      - '<gray>[<white>오른쪽 클릭<gray>]<gray> 이 작업 바꾸기'
+      - '<gray>[<white>왼쪽 클릭<gray>]<gray> 이 전에 새 작업 추가'
+      - '<gray>[<white>Shift + 마우스 오른쪽 버튼 클릭<gray>]<gray> 이 작업 삭제'
+    add:
+      - ' '
+      - '<gray>[<white>왼쪽 클릭<gray>]<gray> 새 작업 추가'
+  flags:
+    placeable:
+      - '<gold>아이템 배치 가능 여부 설정'
+      - '<gray>값: <yellow>%value%'
+      - ''
+      - '<gray>[<white>클릭<gray>]<gray> 토글'
+    usable:
+      - '<gold>아이템 사용 가능 여부를 설정합니다.'
+      - '<gray>값: <yellow>%value%'
+      - ''
+      - '<gray> false로 설정하면 다음의 정상적인 동작이 비활성화됩니다.'
+      - '<gray> 해당 아이템을 마우스 오른쪽 버튼으로 클릭하세요.'
+      - '<gray>일반적인 사용 동작은 아이템 유형에 따라 다릅니다.'
+      - '<gray>음식을 먹을 수 없고, 낚싯대가 낚시를 할 수 없으며,'
+      - '<gray> 알은 던질 수 없으며, 생성 알은 생물을 소환할 수 없습니다...'
+      - ''
+      - '<gray>[<white>클릭<gray>]<gray> 토글'
+    smelt:
+      - '<gold>요리 가능 여부를 설정합니다.'
+      - '<gray>값: <yellow>%value%'
+      - ''
+      - '<gray> false로 설정하면 정상적인 동작이 비활성화됩니다.'
+      - '<gray> 화로 요리'
+      - '<gray>식품과 광석 모두에 작용'
+      - ''
+      - '<gray>[<white>클릭<gray>]<gray> 토글'
+    furnacefuel:
+      - '<gold>아이템을 화로 연료로 사용할 수 있는지 여부를 설정합니다.'
+      - '<gray>값: <yellow>%value%'
+      - ''
+      - '<gray> false로 설정하면 다음의 정상적인 동작이 비활성화됩니다.'
+      - '<gray> 이 아이템을 연료로 사용하는 용광로'
+      - ''
+      - '<gray>[<white>클릭<gray>]<gray> 토글'
+    recipeingredient:
+      - '<gold> 아이템을 제작법 제작에 사용할 수 있는지 여부를 설정합니다'
+      - '<gray>값: <yellow>%value%'
+      - ''
+      - '<gray> false로 설정하면 일반적인 제작 동작이 비활성화됩니다.'
+      - '<gray> 이 아이템이 재료 중 하나일 때'
+      - ''
+      - '<gray>[<white>클릭<gray>]<gray> 토글'
+    enchantable:
+      - '<gold>아이템에 마법을 부여할 수 있는지 여부를 설정합니다'
+      - '<gray>값: <yellow>%value%'
+      - ''
+      - '<gray> false로 설정하면 인챈트 테이블의 정상적인 사용을 방지합니다.'
+      - '<gray> 이 아이템 포함'
+      - ''
+      - '<gray>[<white>클릭<gray>]<gray> 토글'
+    renamable:
+      - '<gold>모루에 아이템을 사용할 수 있는지 여부를 설정합니다.'
+      - '<gray>값: <yellow>%value%'
+      - ''
+      - '<gray> false로 설정하면 일반적인 모루 상호작용이 비활성화됩니다.'
+      - '<gray>'
+      - ''
+      - '<gray>[<white>클릭<gray>]<gray> 토글'
+    grindable:
+      - '<gold> 숫돌에서 아이템을 추출할 수 있는지 여부를 설정합니다.'
+      - '<gray>값: <yellow>%value%'
+      - ''
+      - '<gray>false로 설정하면 숫돌의 정상적인 사용을 방해합니다.'
+      - '<gray> 이 아이템 포함'
+      - ''
+      - '<gray>[<white>클릭<gray>]<gray> 토글'
+    equipment:
+      - '<gold>아이템을 장비로 사용할 수 있는지 여부를 설정합니다.'
+      - '<gray>값: <yellow>%value%'
+      - ''
+      - '<gray>false로 설정하고 아이템을 장착하면 드랍됩니다.'
+      - '<gray> 플레이어 인벤토리로 돌아가기'
+      - '<gray>NB: 손 및 오프 핸드는 장비 슬롯의 일부로 간주되지 않습니다.'
+      - ''
+      - '<gray>[<white>클릭<gray>]<gray> 토글'
+    entityfood:
+      - '<gold>아이템을 동물 사료로 사용할 수 있는지 여부를 설정합니다.'
+      - '<gray>값: <yellow>%value%'
+      - ''
+      - '<gray> false로 설정하면 동물의 번식을 방지합니다.'
+      - '<gray> 아기 동물의 빠른 성장을 방지합니다.'
+      - '<gray>'
+      - ''
+      - '<gray>[<white>클릭<gray>]<gray> 토글'
+    vanishcurse:
+      - '<gold> 사망 시 아이템이 사라질지 여부를 설정합니다.'
+      - '<gray>값: <yellow>%value%'
+      - ''
+      - '<gray>마법 소멸의 저주와 정확히 동일하게 작동합니다.'
+      - '<gray>하지만 마법은 아니지'
+      - ''
+      - '<gray>[<white>클릭<gray>]<gray> 토글'
+    clickmove:
+      - '<gold>인벤토리 내 아이템 이동 가능 여부를 설정합니다.'
+      - '<gray>값: <yellow>%value%'
+      - ''
+      - '<gray>Op 플레이어는 해당 제한을 우회할 권한이 있습니다.'
+      - ''
+      - '<gray>[<white>클릭<gray>]<gray> 토글'
+    tradeable:
+      - '<gold>해당 아이템을 주민과 다른 아이템으로 교환할 수 있는지 여부를 설정합니다'
+      - '<gray>값: <yellow>%value%'
+      - ''
+      - '<gray> false로 설정하면 일반 주민 거래가 비활성화됩니다.'
+      - ''
+      - '<gray>[<white>클릭<gray>]<gray> 토글'
+    smithing_table:
+      - '<gold> 대장간 테이블에서 아이템 사용 가능 여부를 설정합니다.'
+      - '<gray>값: <yellow>%value%'
+      - ''
+      - '<gray> false로 설정하면 일반적인 모루 상호작용이 비활성화됩니다.'
+      - '<gray>'
+      - ''
+      - '<gray>[<white>클릭<gray>]<gray> 토글'
+  effects:
+    title: '<blue>효과'
+    slot:
+      - '<gold><bold>%slot%'
+      - '<gray>활성화됨: <yellow>%value%'
+    potion:
+      - '<gold><bold>%effect%'
+      - ''
+      - '<gray>레벨: <yellow>%level% <gray>[왼쪽/오른쪽 클릭 변경]'
+      - '<gray>입자: <yellow>%particles% <gray>[Shift + 왼쪽 클릭 토글]'
+      - '<gray>주변: <yellow>%ambient% <gray>[Shift + 마우스 오른쪽 버튼 클릭 토글]'
+      - '<gray>아이콘: <yellow>%icon% <gray>[%middle_click% 토글]'
+      - '<gray>기간: <yellow>%duration%'
+    potion-instant: '즉시'
+    potion-unlimited: '무제한'
+  activity:
+    title_main: '<blue>활동 <yellow>%activity_id%'
+  triggers:
+    title_main: '<blue>트리거'
+trigger:
+  consume_item:
+    description:
+      - '<gold>플레이어가 아이템을 소비하면 활성화됩니다.'
+      - '<gold>(마시거나 먹습니다)'
+  right_interact:
+    gui_material:
+      - '<gold>플레이어가 마우스 오른쪽 버튼을 클릭하면 활성화됩니다.'
+  left_interact:
+    gui_material:
+      - '<gold>플레이어가 마우스 왼쪽 버튼을 클릭하면 활성화됩니다.'
+actions:
+  delay:
+    info:
+      - '<aqua>delay <yellow><delay ticks> <action>'
+      - '<yellow><delay ticks> <aqua>작업을 얼마나 지연시키려는지, 20 틱 = 1초'
+      - '<yellow><action> <aqua>실행할 작업, 예: <yellow>sound entity_bat_hurt 1 1'
+  message:
+    info:
+      - '<aqua>message <yellow><message>'
+      - '<yellow><message> <aqua> 플레이어에게 메시지가 전송되었습니다.'
+      - '<aqua>%player%는 플레이어 이름의 자리 표시자로 사용될 수 있습니다.'
+  permission:
+    info:
+      - '<aqua>permission <yellow><permission> <action>'
+      - '<yellow><permission> <aqua>권한이 필요함 또는 <yellow>-permission <aqua>플레이어에게 권한이 없음을 요구함'
+      - '<yellow><action> <aqua>실행할 작업, 예: <yellow>sound entity_bat_hurt 1 1'
+  commandasop:
+    info:
+      - '<aqua>commandasop <yellow><command>'
+      - '<yellow><command> <aqua>명령은 플레이어가 Op로 실행합니다.'
+      - '<aqua>%player%는 플레이어 이름의 자리 표시자로 사용될 수 있습니다.'
+      - '<aqua>N.B. 아니요 <yellow>/<aqua>는 필수입니다. 예: <yellow>home'
+  command:
+    info:
+      - '<aqua>command <yellow><command>'
+      - '<yellow><command> <aqua> 플레이어가 실행하는 명령'
+      - '<aqua>%player%는 플레이어 이름의 자리 표시자로 사용될 수 있습니다.'
+      - '<aqua>N.B. 아니요 <yellow>/<aqua>는 필수입니다. 예: <yellow>home'
+  potion:
+    info:
+      - '<aqua>potion <yellow><type> <duration_ticks|infinite> <level> [ambient] [particles] [icon]'
+      - '<yellow><type> <aqua>적용할 물약 효과'
+      - '<yellow><duration_ticks|infinite> <aqua>효과 지속 시간(틱 단위) 또는 infinite'
+      - '<yellow><level> <aqua>효과 수준이 1에서 256까지입니다.'
+      - '<yellow>[ambient] [particles] [icon] <aqua> 부울; 기본값은 false, true, true입니다.'
+  projectile:
+    info:
+      - '<aqua>projectile <yellow><projectile> [speed] [imprecision] [repeat] [repeatdelay]'
+      - '<yellow><projectile> <aqua>Java 클래스가 확장되는 생성 가능한 엔터티 유형 Projectile'
+      - '<yellow>[speed] <aqua>초기 속도; 기본값은 1'
+      - '<yellow>[imprecision] <aqua>X, Y, Z의 임의 방향 오프셋; 기본값은 0'
+      - '<yellow>[repeat] <aqua>첫 번째 이후 추가 샷; 기본값은 0'
+      - '<yellow>[repeatdelay] <aqua>샷 사이의 틱; 기본값은 5이고 최소 1여야 합니다.'
+  servercommand:
+    info:
+      - '<aqua>servercommand <yellow><command>'
+      - '<yellow><command> <aqua>서버에서 실행되는 명령'
+      - '<aqua>%player%는 플레이어 이름의 자리 표시자로 사용될 수 있습니다.'
+      - '<aqua>N.B. 아니요 <yellow>/<aqua>는 필수입니다. 예: <yellow>heal %player%'
+  sound:
+    info:
+      - '<aqua>sound <yellow><sound> [volume] [pitch] [self]'
+      - '<yellow><sound> <aqua>재생할 사운드'
+      - '<yellow>[volume] <aqua>소리 볼륨, 기본값 1'
+      - '<yellow>[pitch] <aqua>소리의 높이, 기본값 1'
+      - '<yellow>[self] <aqua>플레이어만 들어야 하나요? 기본값은 false입니다.'
+  summon:
+    info:
+      - '<aqua>summon <yellow><entity> [quantity] [spread]'
+      - '<yellow><entity> <aqua>생성 가능한 엔터티 유형'
+      - '<yellow>[quantity] <aqua>소환할 개체 수; 기본값은 1'
+      - '<yellow>[spread] <aqua> 플레이어와의 거리; 기본값은 1.5'
+      - '<aqua>하나의 개체가 앞에 생성됩니다. 두 개는 ±60°에 생성됩니다. 3개 이상이 플레이어 주위에 균등한 간격으로 배치되어 있습니다.'
+  throwtnt:
+    info:
+      - '<aqua>throwtnt [speed] [imprecision] [fuseTicks] [repeat] [repeatdelay]'
+      - '<aqua>플레이어가 보고 있는 방향으로 활성화된 TNT를 던집니다.'
+      - '<yellow>[speed] <aqua>초기 속도; 기본값은 2'
+      - '<yellow>[imprecision] <aqua> 임의 요 및 피치 오프셋(도); 기본값은 0'
+      - '<yellow>[fuseTicks] <aqua>폭발 전 TNT 시간(틱 단위); 기본값은 60'
+      - '<yellow>[repeat] <aqua>첫 번째 던지기 이후 추가 던지기; 기본값은 0'
+      - '<yellow>[repeatdelay] <aqua> 던지기 사이의 틱; 기본값은 5이고 최소 1여야 합니다.'

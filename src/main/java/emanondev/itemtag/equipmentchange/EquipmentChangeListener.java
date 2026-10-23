@@ -2,6 +2,7 @@ package emanondev.itemtag.equipmentchange;
 
 import emanondev.itemedit.utility.InventoryUtils;
 import emanondev.itemedit.utility.ItemUtils;
+import emanondev.itemedit.utility.SchedulerUtils;
 import emanondev.itemedit.utility.VersionUtils;
 import emanondev.itemtag.ItemTag;
 import lombok.extern.slf4j.Slf4j;
@@ -165,11 +166,9 @@ public class EquipmentChangeListener implements Listener {
                 if (slot != null && ItemUtils.isAirOrNull(getEquip(p, slot)))
                     onEquipChange(p, EquipmentChangeEvent.EquipMethod.INVENTORY_MOVE_TO_OTHER_INVENTORY, slot, null, event.getCurrentItem());
                 if (clickedSlot == null || clickedSlot == EquipmentSlot.HAND)
-                    new SlotCheck(p, EquipmentChangeEvent.EquipMethod.INVENTORY_MOVE_TO_OTHER_INVENTORY, EquipmentSlot.HAND)
-                            .runTaskLater(ItemTag.get(), 1L);
+                    scheduleSlotCheck(new SlotCheck(p, EquipmentChangeEvent.EquipMethod.INVENTORY_MOVE_TO_OTHER_INVENTORY, EquipmentSlot.HAND));
                 else
-                    new SlotCheck(p, EquipmentChangeEvent.EquipMethod.INVENTORY_MOVE_TO_OTHER_INVENTORY, clickedSlot).runTaskLater(ItemTag.get(),
-                            1L);
+                    scheduleSlotCheck(new SlotCheck(p, EquipmentChangeEvent.EquipMethod.INVENTORY_MOVE_TO_OTHER_INVENTORY, clickedSlot));
             }
             case COLLECT_TO_CURSOR -> {
                 ArrayList<EquipmentSlot> slots = new ArrayList<>();
@@ -181,7 +180,7 @@ public class EquipmentChangeListener implements Listener {
                 else if (event.getCursor().isSimilar(getEquip(p, EquipmentSlot.HAND)))
                     slots.add(EquipmentSlot.HAND);
                 if (!slots.isEmpty())
-                    new SlotCheck(p, EquipmentChangeEvent.EquipMethod.INVENTORY_COLLECT_TO_CURSOR, slots).runTaskLater(ItemTag.get(), 1L);
+                    scheduleSlotCheck(new SlotCheck(p, EquipmentChangeEvent.EquipMethod.INVENTORY_COLLECT_TO_CURSOR, slots));
             }
             case PICKUP_SOME, UNKNOWN -> {
                 return; // ???
@@ -312,8 +311,8 @@ public class EquipmentChangeListener implements Listener {
             return;
         if (!equips.containsKey(event.getPlayer()))
             return; // some plugins teleport players just after login, before join this listener
-        new SlotCheck(event.getPlayer(), EquipmentChangeEvent.EquipMethod.PLUGIN_WORLD_CHANGE, InventoryUtils.getPlayerEquipmentSlots())
-                .runTaskLater(ItemTag.get(), 1L);
+        scheduleSlotCheck(new SlotCheck(event.getPlayer(), EquipmentChangeEvent.EquipMethod.PLUGIN_WORLD_CHANGE,
+                InventoryUtils.getPlayerEquipmentSlots()));
     }
 
     @EventHandler
@@ -359,7 +358,7 @@ public class EquipmentChangeListener implements Listener {
             onEquipChange(e.getPlayer(), EquipmentChangeEvent.EquipMethod.BROKE, slots.getFirst(), e.getBrokenItem(), null);
             return;
         }
-        new SlotCheck(e.getPlayer(), EquipmentChangeEvent.EquipMethod.BROKE, slots).runTaskLater(ItemTag.get(), 1L);
+        scheduleSlotCheck(new SlotCheck(e.getPlayer(), EquipmentChangeEvent.EquipMethod.BROKE, slots));
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
@@ -417,7 +416,7 @@ public class EquipmentChangeListener implements Listener {
             onEquipChange(event.getPlayer(), EquipmentChangeEvent.EquipMethod.SHEEP_COLOR, slot, handItem, null);
             return;
         }
-        new SlotCheck(event.getPlayer(), EquipmentChangeEvent.EquipMethod.USE_ON_ENTITY, slot).runTaskLater(ItemTag.get(), 1L);
+        scheduleSlotCheck(new SlotCheck(event.getPlayer(), EquipmentChangeEvent.EquipMethod.USE_ON_ENTITY, slot));
     }
 
     @EventHandler(priority = EventPriority.MONITOR) // compability -> !=priority
@@ -437,15 +436,15 @@ public class EquipmentChangeListener implements Listener {
                     if (e.getPlayer().getGameMode() != GameMode.CREATIVE)
                         onEquipChange(e.getPlayer(), EquipmentChangeEvent.EquipMethod.RIGHT_CLICK, slot, e.getItem(), null);
                 } else if (e.getItem().getAmount() == 1)
-                    new SlotCheck(e.getPlayer(), EquipmentChangeEvent.EquipMethod.USE, slot).runTaskLater(ItemTag.get(), 1L);
+                    scheduleSlotCheck(new SlotCheck(e.getPlayer(), EquipmentChangeEvent.EquipMethod.USE, slot));
                 return;
             case RIGHT_CLICK_BLOCK:
                 if (e.useItemInHand() == Event.Result.DENY)
                     return;
                 if (type != null && ItemUtils.isAirOrNull(getEquip(e.getPlayer(), type))) {
-                    new SlotCheck(e.getPlayer(), EquipmentChangeEvent.EquipMethod.RIGHT_CLICK, slot, type).runTaskLater(ItemTag.get(), 1L);
+                    scheduleSlotCheck(new SlotCheck(e.getPlayer(), EquipmentChangeEvent.EquipMethod.RIGHT_CLICK, slot, type));
                 } else if (e.getItem().getAmount() == 1)
-                    new SlotCheck(e.getPlayer(), EquipmentChangeEvent.EquipMethod.USE, slot).runTaskLater(ItemTag.get(), 1L);
+                    scheduleSlotCheck(new SlotCheck(e.getPlayer(), EquipmentChangeEvent.EquipMethod.USE, slot));
                 return;
             default:
                 return;
@@ -469,10 +468,10 @@ public class EquipmentChangeListener implements Listener {
             onEquipChange(event.getPlayer(), EquipmentChangeEvent.EquipMethod.CONSUME, slots.getFirst(), event.getItem(),
                     event.getItem().getType() == Material.MILK_BUCKET ? new ItemStack(Material.BUCKET) : null);
         else if (slots.size() > 1)
-            new SlotCheck(event.getPlayer(), EquipmentChangeEvent.EquipMethod.CONSUME, slots).runTaskLater(ItemTag.get(), 1L);
+            scheduleSlotCheck(new SlotCheck(event.getPlayer(), EquipmentChangeEvent.EquipMethod.CONSUME, slots));
         else // 3rd party plugin
-            new SlotCheck(event.getPlayer(), EquipmentChangeEvent.EquipMethod.CONSUME,
-                    Arrays.asList(EquipmentSlot.HAND, EquipmentSlot.OFF_HAND)).runTaskLater(ItemTag.get(), 1L);
+            scheduleSlotCheck(new SlotCheck(event.getPlayer(), EquipmentChangeEvent.EquipMethod.CONSUME,
+                    Arrays.asList(EquipmentSlot.HAND, EquipmentSlot.OFF_HAND)));
     }
 
     @EventHandler
@@ -524,7 +523,7 @@ public class EquipmentChangeListener implements Listener {
         for (int i = 0; i < p.getInventory().getHeldItemSlot(); i++)
             if (ItemUtils.isAirOrNull(p.getInventory().getItem(i)))
                 return;
-        new SlotCheck(p, EquipmentChangeEvent.EquipMethod.PICKUP, EquipmentSlot.HAND).runTaskLater(ItemTag.get(), 1L);
+        scheduleSlotCheck(new SlotCheck(p, EquipmentChangeEvent.EquipMethod.PICKUP, EquipmentSlot.HAND));
     }
 
     private class TimerCheckTask extends BukkitRunnable {
@@ -589,7 +588,11 @@ public class EquipmentChangeListener implements Listener {
 
     }
 
-    protected class SlotCheck extends BukkitRunnable {
+    private void scheduleSlotCheck(SlotCheck slotCheck) {
+        SchedulerUtils.runLater(ItemTag.get(), slotCheck.p, 1L, slotCheck::run);
+    }
+
+    protected class SlotCheck {
 
         private final EnumSet<EquipmentSlot> slots = EnumSet.noneOf(EquipmentSlot.class);
         private final Player p;
@@ -628,7 +631,6 @@ public class EquipmentChangeListener implements Listener {
             }
         }
 
-        @Override
         public void run() {
             if (!p.isOnline())
                 return;

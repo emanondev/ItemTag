@@ -5,6 +5,7 @@ import emanondev.itemedit.utility.ItemUtils;
 import emanondev.itemedit.utility.SchedulerUtils;
 import emanondev.itemedit.utility.VersionUtils;
 import emanondev.itemtag.ItemTag;
+import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import lombok.extern.slf4j.Slf4j;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -29,7 +30,6 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -41,23 +41,13 @@ public class EquipmentChangeListener implements Listener {
     protected final Map<Player, EnumMap<EquipmentSlot, ItemStack>> equips = new ConcurrentHashMap<>();
     protected final Set<Player> clickDrop = ConcurrentHashMap.newKeySet();
     private int maxCheckedPlayerPerTick = 5;
-    private TimerCheckTask timerTask = null;
+    private long timerCheckFrequencyTicks = 10L;
+
+    private ScheduledTask timerTask;
+    private ScheduledTask playerCheckTask;
 
     public void reload() {
-        if (timerTask != null)
-            timerTask.cancel();
-        long timerCheckFrequencyTicks = Math.max(5, ItemTag.get().getConfig().getInteger("equipment_change.frequency_ticks", 10));
-        maxCheckedPlayerPerTick = Math.max(1, ItemTag.get().getConfig().getInteger("equipment_change.max_checked_players_per_tick", 5));
-        for (Player p : equips.keySet())
-            untrackPlayer(p);
-
-        equips.clear();
-        for (Player p : Bukkit.getOnlinePlayers())
-            trackPlayer(p);
-
-        timerTask = new TimerCheckTask();
-        timerTask.runTaskTimer(ItemTag.get(), timerCheckFrequencyTicks, timerCheckFrequencyTicks);
-
+        SchedulerUtils.run(ItemTag.get(), this::reloadOnGlobalRegion);
     }
 
     public void onEquipChange(Player p,
@@ -284,6 +274,65 @@ public class EquipmentChangeListener implements Listener {
                 : null;
     }
 
+    private void reloadOnGlobalRegion() {
+        if (timerTask != null) {
+            timerTask.cancel();
+        }
+        if (playerCheckTask != null) {
+            playerCheckTask.cancel();
+        }
+        playerCheckTask = null;
+
+        timerCheckFrequencyTicks = Math.max(5, ItemTag.get().getConfig()
+                .getInteger("equipment_change.frequency_ticks", 10));
+        maxCheckedPlayerPerTick = Math.max(1, ItemTag.get().getConfig()
+                .getInteger("equipment_change.max_checked_players_per_tick", 5));
+
+        Set<Player> players = new HashSet<>(equips.keySet());
+        players.addAll(Bukkit.getOnlinePlayers());
+        for (Player p : players) {
+            SchedulerUtils.run(ItemTag.get(), p, () -> {
+                if (equips.containsKey(p)) {
+                    untrackPlayer(p);
+                }
+                if (p.isOnline()) {
+                    trackPlayer(p);
+                }
+            });
+        }
+
+        timerTask = ItemTag.get().getServer().getGlobalRegionScheduler().runAtFixedRate(
+                ItemTag.get(), task -> {
+                    if (playerCheckTask == null) {
+                        startPlayerCheck();
+                    }
+                }, timerCheckFrequencyTicks, timerCheckFrequencyTicks);
+    }
+
+    private void startPlayerCheck() {
+        PlayerCheckTask playerCheck = new PlayerCheckTask();
+        playerCheckTask = ItemTag.get().getServer().getGlobalRegionScheduler().runAtFixedRate(
+                ItemTag.get(), playerCheck::run, 1L, 1L);
+    }
+
+    private void checkPlayer(Player p) {
+        if (!p.isOnline() || p.hasMetadata("NPC")) {
+            return;
+        }
+        trackPlayer(p);
+        EnumMap<EquipmentSlot, ItemStack> playerEquips = equips.get(p);
+        if (playerEquips == null) {
+            return;
+        }
+        for (EquipmentSlot slot : InventoryUtils.getPlayerEquipmentSlots()) {
+            ItemStack newItem = getEquip(p, slot);
+            ItemStack oldItem = playerEquips.get(slot);
+            if (!isSimilarIgnoreDamage(oldItem, newItem)) {
+                onEquipChange(p, EquipmentChangeEvent.EquipMethod.UNKNOWN, slot, oldItem, newItem);
+            }
+        }
+    }
+
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     private void event(PlayerJoinEvent event) {
         trackPlayer(event.getPlayer());
@@ -307,18 +356,21 @@ public class EquipmentChangeListener implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     private void event(PlayerTeleportEvent event) {
-        if (event.getPlayer().hasMetadata("NPC"))
+        if (event.getPlayer().hasMetadata("NPC")) {
             return;
-        if (!equips.containsKey(event.getPlayer()))
+        }
+        if (!equips.containsKey(event.getPlayer())) {
             return; // some plugins teleport players just after login, before join this listener
+        }
         scheduleSlotCheck(new SlotCheck(event.getPlayer(), EquipmentChangeEvent.EquipMethod.PLUGIN_WORLD_CHANGE,
                 InventoryUtils.getPlayerEquipmentSlots()));
     }
 
     @EventHandler
     private void event(PlayerRespawnEvent event) {
-        if (event.getPlayer().hasMetadata("NPC"))
+        if (event.getPlayer().hasMetadata("NPC")) {
             return;
+        }
         for (EquipmentSlot type : InventoryUtils.getPlayerEquipmentSlots()) {
             ItemStack item = getEquip(event.getPlayer(), type);
             if (!ItemUtils.isAirOrNull(item))
@@ -330,8 +382,9 @@ public class EquipmentChangeListener implements Listener {
     private void event(InventoryDragEvent event) {
         if (!(event.getWhoClicked() instanceof Player p))
             return;
-        if (event.getWhoClicked().hasMetadata("NPC"))
+        if (event.getWhoClicked().hasMetadata("NPC")) {
             return;
+        }
         for (EquipmentSlot type : InventoryUtils.getPlayerEquipmentSlots()) {
             int pos = getSlotPosition(type, p, event.getView());
             if (pos != -1 && event.getNewItems().containsKey(pos)) {
@@ -345,15 +398,18 @@ public class EquipmentChangeListener implements Listener {
 
     @EventHandler
     private void event(PlayerItemBreakEvent e) {
-        if (e.getPlayer().hasMetadata("NPC"))
+        if (e.getPlayer().hasMetadata("NPC")) {
             return;
+        }
         ArrayList<EquipmentSlot> slots = new ArrayList<>();
         for (EquipmentSlot slot : InventoryUtils.getPlayerEquipmentSlots()) {
-            if (e.getBrokenItem().equals(getEquip(e.getPlayer(), slot)))
+            if (e.getBrokenItem().equals(getEquip(e.getPlayer(), slot))) {
                 slots.add(slot);
+            }
         }
-        if (slots.isEmpty())
+        if (slots.isEmpty()) {
             throw new IllegalStateException();
+        }
         if (slots.size() == 1) {
             onEquipChange(e.getPlayer(), EquipmentChangeEvent.EquipMethod.BROKE, slots.getFirst(), e.getBrokenItem(), null);
             return;
@@ -363,44 +419,54 @@ public class EquipmentChangeListener implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     private void event(PlayerArmorStandManipulateEvent event) {
-        if (event.getPlayer().hasMetadata("NPC"))
+        if (event.getPlayer().hasMetadata("NPC")) {
             return;
-        if (isSimilarIgnoreDamage(event.getArmorStandItem(), event.getPlayerItem()))
+        }
+        if (isSimilarIgnoreDamage(event.getArmorStandItem(), event.getPlayerItem())) {
             return;
+        }
         onEquipChange(event.getPlayer(), EquipmentChangeEvent.EquipMethod.ARMOR_STAND_MANIPULATE, EquipmentSlot.HAND, event.getPlayerItem(),
                 event.getArmorStandItem());
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     private void event(PlayerDropItemEvent event) {
-        if (event.getPlayer().hasMetadata("NPC"))
+        if (event.getPlayer().hasMetadata("NPC")) {
             return;
-        if (clickDrop.remove(event.getPlayer()))
+        }
+        if (clickDrop.remove(event.getPlayer())) {
             return;
-        if (event.isCancelled())
+        }
+        if (event.isCancelled()) {
             return;
+        }
         if (ItemUtils.isAirOrNull(getEquip(event.getPlayer(), EquipmentSlot.HAND)))
-            onEquipChange(event.getPlayer(), EquipmentChangeEvent.EquipMethod.DROP, EquipmentSlot.HAND, event.getItemDrop().getItemStack(),
-                    null);
+            onEquipChange(event.getPlayer(), EquipmentChangeEvent.EquipMethod.DROP,
+                    EquipmentSlot.HAND, event.getItemDrop().getItemStack(), null);
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     private void event(PlayerInteractEntityEvent event) {
-        if (event.getPlayer().hasMetadata("NPC"))
+        if (event.getPlayer().hasMetadata("NPC")) {
             return;
+        }
         EquipmentSlot slot = event.getHand();
         ItemStack handItem;
         handItem = getEquip(event.getPlayer(), slot);
 
         if (ItemUtils.isAirOrNull(handItem) || handItem.getAmount() > 1
                 || (event.getRightClicked().getType() == EntityType.ARMOR_STAND
-                && handItem.getType() != Material.NAME_TAG))
+                && handItem.getType() != Material.NAME_TAG)) {
             return;
+        }
         if (handItem.getType() == Material.NAME_TAG) {
-            if (!(event.getRightClicked() instanceof LivingEntity) || (event.getRightClicked() instanceof Player))
+            if (!(event.getRightClicked() instanceof LivingEntity)
+                    || (event.getRightClicked() instanceof Player)) {
                 return;
-            if (!handItem.hasItemMeta() || !handItem.getItemMeta().hasDisplayName())
+            }
+            if (!handItem.hasItemMeta() || !handItem.getItemMeta().hasDisplayName()) {
                 return;
+            }
 
             onEquipChange(event.getPlayer(), EquipmentChangeEvent.EquipMethod.NAMETAG_APPLY, slot, handItem, null);
             return;
@@ -526,70 +592,29 @@ public class EquipmentChangeListener implements Listener {
         scheduleSlotCheck(new SlotCheck(p, EquipmentChangeEvent.EquipMethod.PICKUP, EquipmentSlot.HAND));
     }
 
-    private class TimerCheckTask extends BukkitRunnable {
-
-        private TimerCheckTask.PlayerCheck subTask = null;
-
-        @Override
-        public void run() {
-            if (subTask == null)// || subTask.isCancelled())
-                if (!Bukkit.getOnlinePlayers().isEmpty()) {
-                    subTask = new TimerCheckTask.PlayerCheck();
-                    subTask.runTaskTimer(ItemTag.get(), 1L, 1L);
-                }
-        }
-
-        public void cancel() {
-            super.cancel();
-            if (subTask != null) {// && !subTask.isCancelled())
-                subTask.cancel();
-                subTask = null;
-            }
-        }
-
-        private class PlayerCheck extends BukkitRunnable {
-            private final List<Player> players = new ArrayList<>();
-            private int index = 0;
-
-            private PlayerCheck() {
-                players.addAll(Bukkit.getOnlinePlayers());
-            }
-
-            @Override
-            public void run() {
-                int counter = 0;
-                while (counter < maxCheckedPlayerPerTick) {
-                    if (index >= players.size()) {
-                        this.cancel();
-                        if (subTask != null)
-                            subTask = null;
-                        return;
-                    }
-                    Player p = players.get(index);
-                    index++;
-                    if (!p.isOnline())
-                        continue;
-                    if (p.hasMetadata("NPC"))
-                        continue;
-                    trackPlayer(p);
-                    counter++;
-                    for (EquipmentSlot slot : InventoryUtils.getPlayerEquipmentSlots()) {
-                        ItemStack newItem = getEquip(p, slot);
-                        ItemStack oldItem = equips.get(p).get(slot);
-                        if (!isSimilarIgnoreDamage(oldItem, newItem))
-                            onEquipChange(p, EquipmentChangeEvent.EquipMethod.UNKNOWN, slot, oldItem, newItem);
-                    }
-
-                }
-
-            }
-
-        }
-
-    }
-
     private void scheduleSlotCheck(SlotCheck slotCheck) {
         SchedulerUtils.runLater(ItemTag.get(), slotCheck.p, 1L, slotCheck::run);
+    }
+
+    private class PlayerCheckTask {
+        private final List<Player> players = new ArrayList<>(Bukkit.getOnlinePlayers());
+        private int index;
+
+        private void run(ScheduledTask task) {
+            int counter = 0;
+            while (counter < maxCheckedPlayerPerTick) {
+                if (index >= players.size()) {
+                    if (playerCheckTask == task) {
+                        playerCheckTask = null;
+                    }
+                    task.cancel();
+                    return;
+                }
+                Player p = players.get(index++);
+                counter++;
+                SchedulerUtils.run(ItemTag.get(), p, () -> checkPlayer(p));
+            }
+        }
     }
 
     protected class SlotCheck {

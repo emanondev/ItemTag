@@ -4,13 +4,13 @@ import emanondev.itemedit.aliases.Aliases;
 import emanondev.itemedit.utility.CompleteUtility;
 import emanondev.itemedit.utility.InventoryUtils;
 import emanondev.itemedit.utility.ItemUtils;
+import emanondev.itemedit.utility.SchedulerUtils;
 import emanondev.itemtag.EffectsInfo;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.command.ItemTagCommand;
 import emanondev.itemtag.command.ListenerSubCmd;
 import emanondev.itemtag.equipmentchange.EquipmentChangeEvent;
 import emanondev.itemtag.gui.EffectsGui;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -22,7 +22,6 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -241,30 +240,29 @@ public class Effects extends ListenerSubCmd {
 
     @EventHandler
     private void onPlayerRespawn(PlayerRespawnEvent event) {
-        new BukkitRunnable() {
-            public void run() {
-                for (EquipmentSlot slot : InventoryUtils.getPlayerEquipmentSlots()) {
-                    ItemStack equip = getEquip(event.getPlayer(), slot);
-                    if (ItemUtils.isAirOrNull(equip))
-                        continue;
-                    EffectsInfo newInfo = new EffectsInfo(equip);
-                    if (!(newInfo.isValidSlot(slot) && newInfo.hasAnyEffects()))
-                        continue;
-                    //if the new item has some active effects
-                    for (PotionEffect effect : newInfo.getEffects()) {
-                        ItemTag.get().log(effect.getType() + " " + effect.getAmplifier() + 1);
-                        if (effect.getType().isInstant() || !event.getPlayer().hasPotionEffect(effect.getType()))
-                            addEffect(event.getPlayer(), effect.getType(), effect);
+        Player player = event.getPlayer();
+        SchedulerUtils.runLater(ItemTag.get(), player, 1L, () -> {
+            for (EquipmentSlot slot : InventoryUtils.getPlayerEquipmentSlots()) {
+                ItemStack equip = getEquip(player, slot);
+                if (ItemUtils.isAirOrNull(equip))
+                    continue;
+                EffectsInfo newInfo = new EffectsInfo(equip);
+                if (!(newInfo.isValidSlot(slot) && newInfo.hasAnyEffects()))
+                    continue;
+                //if the new item has some active effects
+                for (PotionEffect effect : newInfo.getEffects()) {
+                    ItemTag.get().log(effect.getType() + " " + effect.getAmplifier() + 1);
+                    if (effect.getType().isInstant() || !player.hasPotionEffect(effect.getType()))
+                        addEffect(player, effect.getType(), effect);
 
-                        else {
-                            PotionEffect currentEffect = event.getPlayer().getPotionEffect(effect.getType());
-                            if (currentEffect.getDuration() < 3600 * 20 && currentEffect.getDuration() >= 0) //could be changed checking the whole equipment effects, but this way seems faster and still fair
-                                addEffect(event.getPlayer(), effect.getType(), effect);
-                        }
+                    else {
+                        PotionEffect currentEffect = player.getPotionEffect(effect.getType());
+                        if (currentEffect.getDuration() < 3600 * 20 && currentEffect.getDuration() >= 0) //could be changed checking the whole equipment effects, but this way seems faster and still fair
+                            addEffect(player, effect.getType(), effect);
                     }
                 }
             }
-        }.runTaskLater(ItemTag.get(), 1L); //effect are resetted just after playerrespawnevent
+        }); //effects are reset just after PlayerRespawnEvent
 
     }
 
@@ -284,25 +282,26 @@ public class Effects extends ListenerSubCmd {
 
     @EventHandler(ignoreCancelled = true)
     private void event(PlayerItemConsumeEvent event) {
-        if (event.getItem().getType() == Material.MILK_BUCKET)
-            Bukkit.getScheduler().runTaskLater(this.getPlugin(), () -> restoreEffects(event.getPlayer()), 1L);
+        if (event.getItem().getType() == Material.MILK_BUCKET) {
+            Player player = event.getPlayer();
+            SchedulerUtils.runLater(getPlugin(), player, 1L, () -> restoreEffects(player));
+        }
     }
 
     @EventHandler(ignoreCancelled = true)
     private void event(EntityResurrectEvent event) {
-        if (event.getEntity() instanceof Player)
-            Bukkit.getScheduler().runTaskLater(getPlugin(),
-                    () -> {
-                        List<PotionEffect> l = new ArrayList<>(event.getEntity().getActivePotionEffects());
-                        l.forEach((e) -> event.getEntity().removePotionEffect(e.getType()));
-                        restoreEffects((Player) event.getEntity());
-                        l.forEach((e) -> {
-                            if (!event.getEntity().hasPotionEffect(e.getType()) ||
-                                    e.getAmplifier() > event.getEntity().getPotionEffect(e.getType()).getAmplifier())
-                                event.getEntity().addPotionEffect(e);
-                        });
-                    }
-                    , 1L);
+        if (!(event.getEntity() instanceof Player player))
+            return;
+        SchedulerUtils.runLater(getPlugin(), player, 1L, () -> {
+            List<PotionEffect> effects = new ArrayList<>(player.getActivePotionEffects());
+            effects.forEach(effect -> player.removePotionEffect(effect.getType()));
+            restoreEffects(player);
+            effects.forEach(effect -> {
+                PotionEffect restoredEffect = player.getPotionEffect(effect.getType());
+                if (restoredEffect == null || effect.getAmplifier() > restoredEffect.getAmplifier())
+                    player.addPotionEffect(effect);
+            });
+        });
     }
 
 }

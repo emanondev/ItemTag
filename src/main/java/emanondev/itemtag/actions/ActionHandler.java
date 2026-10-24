@@ -1,6 +1,7 @@
 package emanondev.itemtag.actions;
 
 import emanondev.itemedit.utility.VersionUtils;
+import emanondev.itemtag.ItemTag;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -13,7 +14,13 @@ public class ActionHandler {
             new ConcurrentHashMap<>() : new HashMap<>();
 
     public static void handleAction(Player player, String type, String action) {
-        actions.get(type).execute(player, action);
+        Action registeredAction = getAction(type);
+        if (registeredAction == null) {
+            ItemTag.get().log("<yellow>Ignoring action with unknown type '" + type
+                    + "' params '" + action + "' player " + player.getName());
+            return;
+        }
+        registeredAction.execute(player, action);
     }
 
     public static void registerAction(Action action) {
@@ -56,7 +63,7 @@ public class ActionHandler {
     }
 
     public static Action getAction(String type) {
-        return actions.get(type.toLowerCase(Locale.ENGLISH));
+        return type == null ? null : actions.get(type.toLowerCase(Locale.ENGLISH));
     }
 
     public static String fixActionInfo(String type, String actionInfo) {

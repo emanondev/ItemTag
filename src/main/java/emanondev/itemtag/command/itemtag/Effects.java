@@ -15,6 +15,7 @@ import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.EntityResurrectEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -31,7 +32,6 @@ public class Effects extends ListenerSubCmd {
 
     public Effects(ItemTagCommand cmd) {
         super("effects", cmd, true, true);
-        getPlugin().registerListener(new EffectsResurrectListener(this));
     }
 
     public void reload() {
@@ -41,84 +41,46 @@ public class Effects extends ListenerSubCmd {
     @Override
     public void onCommand(@NotNull CommandSender sender, @NotNull String alias, String[] args) {
         Player p = (Player) sender;
-        if (args.length != 1) {
-            switch (args[1].toLowerCase()) {
-                case "set": {
-                    set(p, alias, args);
-                    return;
-                }
-                case "modify": {
-                    modify(p, alias, args);
-                    return;
-                }
-                case "slots": {
-                    slots(p, alias, args);
-                    return;
-                }
-                case "remove": {
-                    remove(p, alias, args);
-                    return;
-                }
-            }
-            onFail(p, alias);
+        if (args.length == 1) {
+            p.openInventory(new EffectsGui(p, getItemInMainHand(p)).getInventory());
             return;
         }
-        p.openInventory(new EffectsGui(p, getItemInMainHand(p)).getInventory());
+        switch (args[1].toLowerCase(Locale.ENGLISH)) {
+            case "set" -> set(p, alias, args);
+            case "modify" -> modify(p, alias, args);
+            case "slots" -> slots(p, alias, args);
+            case "remove" -> remove(p, alias, args);
+            default -> onFail(p, alias);
+        }
     }
 
     @Override
     public List<String> onComplete(@NotNull CommandSender sender, String[] args) {
-        switch (args.length) {
-            case 2: {
-                return CompleteUtility.complete(args[1], "set", "modify", "slots", "remove");
-            }
-            case 3: {
-                switch (args[1].toLowerCase()) {
-                    case "set":
-                    case "modify":
-                    case "remove": {
-                        return CompleteUtility.complete(args[2], Aliases.POTION_EFFECT);
-                    }
-                    case "slots": {
-                        return CompleteUtility.complete(args[2], Aliases.EQUIPMENT_SLOTS);
-                    }
-                }
-                return List.of();
-            }
-            case 4: {
-                switch (args[1].toLowerCase()) {
-                    case "set":
-                    case "modify": {
-                        return CompleteUtility.complete(args[3], "1", "2", "3");
-                    }
-                    case "slots": {
-                        return CompleteUtility.complete(args[3], Aliases.EQUIPMENT_SLOTS);
-                    }
-                }
-                return List.of();
-            }
-            case 5:
-            case 6:
-            case 7: {
-                switch (args[1].toLowerCase()) {
-                    case "set":
-                    case "modify": {
-                        return CompleteUtility.complete(args[4], Aliases.BOOLEAN);
-                    }
-                    case "slots": {
-                        return CompleteUtility.complete(args[4], Aliases.EQUIPMENT_SLOTS);
-                    }
-                }
-                return List.of();
-            }
-            case 8: {
+        return switch (args.length) {
+            case 2 -> CompleteUtility.complete(args[1], "set", "modify", "slots", "remove");
+            case 3 -> switch (args[1].toLowerCase()) {
+                case "set", "modify", "remove" -> CompleteUtility.complete(args[2], Aliases.POTION_EFFECT);
+                case "slots" -> CompleteUtility.complete(args[2], Aliases.EQUIPMENT_SLOTS);
+                default -> List.of();
+            };
+            case 4 -> switch (args[1].toLowerCase()) {
+                case "set", "modify" -> CompleteUtility.complete(args[3], "1", "2", "3");
+                case "slots" -> CompleteUtility.complete(args[3], Aliases.EQUIPMENT_SLOTS);
+                default -> List.of();
+            };
+            case 5, 6, 7 -> switch (args[1].toLowerCase()) {
+                case "set", "modify" -> CompleteUtility.complete(args[4], Aliases.BOOLEAN);
+                case "slots" -> CompleteUtility.complete(args[4], Aliases.EQUIPMENT_SLOTS);
+                default -> List.of();
+            };
+            case 8 -> {
                 if ("slots".equalsIgnoreCase(args[1])) {
-                    return CompleteUtility.complete(args[4], Aliases.EQUIPMENT_SLOTS);
+                    yield CompleteUtility.complete(args[4], Aliases.EQUIPMENT_SLOTS);
                 }
-                return List.of();
+                yield List.of();
             }
-        }
-        return List.of();
+            default -> List.of();
+        };
     }
 
     @EventHandler
@@ -324,6 +286,23 @@ public class Effects extends ListenerSubCmd {
     private void event(PlayerItemConsumeEvent event) {
         if (event.getItem().getType() == Material.MILK_BUCKET)
             Bukkit.getScheduler().runTaskLater(this.getPlugin(), () -> restoreEffects(event.getPlayer()), 1L);
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    private void event(EntityResurrectEvent event) {
+        if (event.getEntity() instanceof Player)
+            Bukkit.getScheduler().runTaskLater(getPlugin(),
+                    () -> {
+                        List<PotionEffect> l = new ArrayList<>(event.getEntity().getActivePotionEffects());
+                        l.forEach((e) -> event.getEntity().removePotionEffect(e.getType()));
+                        restoreEffects((Player) event.getEntity());
+                        l.forEach((e) -> {
+                            if (!event.getEntity().hasPotionEffect(e.getType()) ||
+                                    e.getAmplifier() > event.getEntity().getPotionEffect(e.getType()).getAmplifier())
+                                event.getEntity().addPotionEffect(e);
+                        });
+                    }
+                    , 1L);
     }
 
 }

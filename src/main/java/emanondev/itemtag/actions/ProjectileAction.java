@@ -2,15 +2,17 @@ package emanondev.itemtag.actions;
 
 import emanondev.itemedit.aliases.Aliases;
 import emanondev.itemedit.utility.CompleteUtility;
+import emanondev.itemedit.utility.SchedulerUtils;
 import emanondev.itemtag.ItemTag;
 import lombok.extern.slf4j.Slf4j;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.*;
-import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.entity.AbstractArrow;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
@@ -63,25 +65,7 @@ public class ProjectileAction extends Action {
         int repeatDelay = args.length >= 5 ? Integer.parseInt(args[4]) : DEFAULT_REPEAT_DELAY;
 
         fire(player, type, speed, (float) imprecision);
-        if (repeat == 0) {
-            return;
-        }
-
-        new BukkitRunnable() {
-            private int repeated;
-
-            @Override
-            public void run() {
-                if (!player.isOnline() || player.isDead()) {
-                    cancel();
-                    return;
-                }
-                fire(player, type, speed, (float) imprecision);
-                if (++repeated >= repeat) {
-                    cancel();
-                }
-            }
-        }.runTaskTimer(ItemTag.get(), repeatDelay, repeatDelay);
+        scheduleRepeat(player, type, speed, (float) imprecision, repeat, repeatDelay);
     }
 
     @Override
@@ -107,6 +91,19 @@ public class ProjectileAction extends Action {
         };
     }
 
+    private static void scheduleRepeat(Player player, EntityType type, double speed, float imprecision,
+                                       int repeatsRemaining, int repeatDelay) {
+        if (repeatsRemaining <= 0) {
+            return;
+        }
+        SchedulerUtils.runLater(ItemTag.get(), player, repeatDelay, () -> {
+            if (!player.isOnline() || player.isDead()) {
+                return;
+            }
+            fire(player, type, speed, imprecision);
+            scheduleRepeat(player, type, speed, imprecision, repeatsRemaining - 1, repeatDelay);
+        });
+    }
 
     private static void fire(Player player, EntityType type, double speed, float imprecision) {
         Location launchLocation = player.getEyeLocation();
@@ -123,7 +120,7 @@ public class ProjectileAction extends Action {
         Vector direction = launchLocation.getDirection().normalize();
         Vector velocity = direction.multiply(speed);
         Projectile projectile = player.launchProjectile((Class<? extends Projectile>) type.getEntityClass(), velocity);
-        if (projectile instanceof AbstractArrow arrow){
+        if (projectile instanceof AbstractArrow arrow) {
             arrow.setPickupStatus(AbstractArrow.PickupStatus.CREATIVE_ONLY);
         }
     }

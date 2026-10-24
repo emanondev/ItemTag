@@ -1,14 +1,14 @@
 package emanondev.itemtag.actions;
 
-import emanondev.itemtag.ItemTag;
 import emanondev.itemedit.utility.CompleteUtility;
+import emanondev.itemedit.utility.SchedulerUtils;
+import emanondev.itemtag.ItemTag;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -61,25 +61,21 @@ public class ThrowTntAction extends Action {
         int repeatDelay = args.length >= 5 ? Integer.parseInt(args[4]) : DEFAULT_REPEAT_DELAY;
 
         throwTnt(player, speed, imprecision, fuseTicks);
-        if (repeat == 0) {
+        scheduleRepeat(player, speed, imprecision, fuseTicks, repeat, repeatDelay);
+    }
+
+    private static void scheduleRepeat(Player player, double speed, float imprecision, int fuseTicks,
+                                      int repeatsRemaining, int repeatDelay) {
+        if (repeatsRemaining <= 0) {
             return;
         }
-
-        new BukkitRunnable() {
-            private int repeated;
-
-            @Override
-            public void run() {
-                if (!player.isOnline() || player.isDead()) {
-                    cancel();
-                    return;
-                }
-                throwTnt(player, speed, imprecision, fuseTicks);
-                if (++repeated >= repeat) {
-                    cancel();
-                }
+        SchedulerUtils.runLater(ItemTag.get(), player, repeatDelay, () -> {
+            if (!player.isOnline() || player.isDead()) {
+                return;
             }
-        }.runTaskTimer(ItemTag.get(), repeatDelay, repeatDelay);
+            throwTnt(player, speed, imprecision, fuseTicks);
+            scheduleRepeat(player, speed, imprecision, fuseTicks, repeatsRemaining - 1, repeatDelay);
+        });
     }
 
     @Override

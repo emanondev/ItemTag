@@ -40,7 +40,7 @@ public class ItemTag extends APlugin {
     }
 
     public static TagItem getTagItem(@Nullable ItemStack item) {
-        return USE_NBTAPI ? new NBTAPITagItem(item) : new SpigotTagItem(item);
+        return new SpigotTagItem(item);
     }
 
     public void onLoad() {
@@ -54,15 +54,6 @@ public class ItemTag extends APlugin {
 
     @Override
     public void enable() {
-        try {
-            initDataPersistance();
-        } catch (Exception e) {
-            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Error while enabling ItemTag, disabling it");
-            log.warn("Error in ItemTag", e);
-            Bukkit.getServer().getPluginManager().disablePlugin(this);
-            return;
-        }
-        //true Enable
 
         try {
             //register equipmentchange listener
@@ -178,37 +169,4 @@ public class ItemTag extends APlugin {
         }
     }
 
-    private void initDataPersistance() throws Exception {
-        switch (getConfig().getString("data.preference", "SPIGOT").toUpperCase(Locale.ENGLISH)) {
-            case "NBTAPI" -> {
-                try {
-                    initNBTAPI();
-                } catch (Exception e) {
-                    Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "NBTAPI is selected as data.preference but it's not installed/working, " +
-                            "if you wish to use NBTAPI get the plugin at www.spigotmc.org/resources/7939/");
-                    initDefault();
-                }
-            }
-            case "SPIGOT" -> initDefault();
-            default -> {
-                Bukkit.getConsoleSender().sendMessage(ChatColor.RED + getConfig().getString("data.preference", "SPIGOT") + " is selected as data.preference but it's unknown");
-                initDefault();
-            }
-        }
-    }
-
-    private void initNBTAPI() throws Exception {
-        new NBTAPITagItem(new ItemStack(Material.STONE));//force load NBTAPI classes or fails
-        USE_NBTAPI = true;
-        this.log("Data using NBTAPI");
-    }
-
-    private void initSpigotPersistentDataAPI() throws Exception {
-        USE_NBTAPI = false;
-        this.log("Data using Spigot PersistentDataContainer");
-    }
-
-    private void initDefault() throws Exception {
-        initSpigotPersistentDataAPI();
-    }
 }

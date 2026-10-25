@@ -2,14 +2,15 @@ package emanondev.itemtag.command.itemtag.customflags;
 
 import emanondev.itemedit.utility.InventoryUtils;
 import emanondev.itemedit.utility.ItemUtils;
+import emanondev.itemedit.utility.SchedulerUtils;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.command.itemtag.Flag;
 import emanondev.itemtag.equipmentchange.EquipmentChangeEvent;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.inventory.EntityEquipment;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -48,27 +49,14 @@ public class EquipmentFlag extends CustomFlag {
         if (this.getValue(ItemTag.getTagItem(event.getTo()))) {
             return;
         }
-        Bukkit.getScheduler().runTaskLater(getPlugin(), () -> {
-            if (!event.getPlayer().isOnline()) {
+        Player player = event.getPlayer();
+        EquipmentSlot slot = event.getSlotType();
+        SchedulerUtils.runLater(getPlugin(), player, 1L, () -> {
+            if (!player.isOnline()) {
                 return;
             }
-            ItemStack originalItem = null;
-            try {
-                originalItem = event.getPlayer().getInventory().getItem(event.getSlotType());
-            } catch (Throwable e) {
-                EntityEquipment equip = event.getPlayer().getEquipment();
-                if (equip != null) {
-                    originalItem = switch (event.getSlotType().name()) {
-                        case "HAND" -> equip.getItemInHand();
-                        case "LEGS" -> equip.getLeggings();
-                        case "CHEST" -> equip.getChestplate();
-                        case "HEAD" -> equip.getHelmet();
-                        case "FEET" -> equip.getBoots();
-                        case "OFF_HAND" -> equip.getItemInOffHand();
-                        default -> throw new IllegalArgumentException();
-                    };
-                }
-            }
+            ItemStack originalItem = player.getInventory().getItem(slot);
+
             if (ItemUtils.isAirOrNull(originalItem)) {
                 return;
             }
@@ -76,11 +64,11 @@ public class EquipmentFlag extends CustomFlag {
             if (getValue(ItemTag.getTagItem(item))) {
                 return;
             }
-            event.getPlayer().getInventory().setItem(event.getSlotType(), null);
-            event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_ITEM_BREAK, 1F, 1F);
-            InventoryUtils.giveAmount(event.getPlayer(), item, item.getAmount(), InventoryUtils.ExcessMode.DROP_EXCESS);
-            ItemTag.get().getEquipChangeListener().onEquipChange(event.getPlayer(), EquipmentChangeEvent.EquipMethod.UNKNOWN
-                    , event.getSlotType(), item, null);
-        }, 1L);
+            player.getInventory().setItem(slot, null);
+            player.playSound(player.getLocation(), Sound.ENTITY_ITEM_BREAK, 1F, 1F);
+            InventoryUtils.giveAmount(player, item, item.getAmount(), InventoryUtils.ExcessMode.DROP_EXCESS);
+            ItemTag.get().getEquipChangeListener().onEquipChange(
+                    player, EquipmentChangeEvent.EquipMethod.UNKNOWN, slot, item, null);
+        });
     }
 }

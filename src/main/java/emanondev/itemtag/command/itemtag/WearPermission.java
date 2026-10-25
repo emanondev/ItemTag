@@ -7,12 +7,12 @@ import emanondev.itemedit.command.AbstractCommand;
 import emanondev.itemedit.utility.CompleteUtility;
 import emanondev.itemedit.utility.InventoryUtils;
 import emanondev.itemedit.utility.ItemUtils;
+import emanondev.itemedit.utility.SchedulerUtils;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.TagItem;
 import emanondev.itemtag.command.ListenerSubCmd;
 import emanondev.itemtag.equipmentchange.EquipmentChangeEvent;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -115,11 +115,12 @@ public class WearPermission extends ListenerSubCmd {
         if (canWear(player, event.getTo())) {
             return;
         }
+        EquipmentSlot slot = event.getSlotType();
 
-        Bukkit.getScheduler().runTaskLater(getPlugin(), () -> {
+        SchedulerUtils.runLater(getPlugin(), player, 1L, () -> {
             if (!player.isOnline())
                 return;
-            ItemStack originalItem = player.getInventory().getItem(event.getSlotType());
+            ItemStack originalItem = player.getInventory().getItem(slot);
             if (ItemUtils.isAirOrNull(originalItem)) {
                 return;
             }
@@ -127,11 +128,11 @@ public class WearPermission extends ListenerSubCmd {
             if (canWear(player, originalItem)) {
                 return;
             }
-            player.getInventory().setItem(event.getSlotType(), null);
+            player.getInventory().setItem(slot, null);
             player.playSound(player.getLocation(), Sound.ENTITY_ITEM_BREAK, 1F, 1F);
             InventoryUtils.giveAmount(player, item, item.getAmount(), InventoryUtils.ExcessMode.DROP_EXCESS);
-            ItemTag.get().getEquipChangeListener().onEquipChange(player, EquipmentChangeEvent.EquipMethod.UNKNOWN
-                    , event.getSlotType(), item, null);
+            ItemTag.get().getEquipChangeListener().onEquipChange(
+                    player, EquipmentChangeEvent.EquipMethod.UNKNOWN, slot, item, null);
             TagItem tagItem = ItemTag.getTagItem(item);
             String perm = tagItem.getString(WEAR_KEY);
             if (tagItem.hasStringTag(WEARMSG_KEY)) {
@@ -143,7 +144,7 @@ public class WearPermission extends ListenerSubCmd {
                 api.setCooldown(player, cooldownKey, 1, TimeUnit.SECONDS);
                 Util.sendComponent(player, UtilsString.fix(tagItem.getString(WEARMSG_KEY), player, true, "%permission%", perm));
             }
-        }, 1L);
+        });
 
     }
 

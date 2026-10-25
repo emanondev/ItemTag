@@ -17,15 +17,6 @@ language:
   # Regenerate language files on version change?
   # if true delete the files and replace them with latest version when game version change is detected
   regen_files: true
-data:
-  #What API should be used for item informations?
-  #WARNING: changing this value may invalidate ItemTag properties for items created before the change
-  #
-  #for NBTAPI plugin using nbt inside item write "NBTAPI"(require NBTAPI plugin)
-  #for Spigot PersistentData use write "SPIGOT" (can be used only on spigot 1.14+)
-  #
-  #If preferred api cannot be used the plugin will choose which api use by itself
-  preference: "SPIGOT"
 actions:
   unsafe_mode: false
   player_command:

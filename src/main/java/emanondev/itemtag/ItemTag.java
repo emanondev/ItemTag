@@ -29,7 +29,6 @@ import java.util.*;
 public class ItemTag extends APlugin {
 
     private static ItemTag plugin = null;
-    private static boolean USE_NBTAPI;
     @Getter
     private EquipmentChangeListener equipChangeListener;
     @Getter

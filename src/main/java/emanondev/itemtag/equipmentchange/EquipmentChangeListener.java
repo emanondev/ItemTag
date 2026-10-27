@@ -83,7 +83,7 @@ public class EquipmentChangeListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void event(InventoryClickEvent event) {
+    public void onInventoryClick(InventoryClickEvent event) {
         ItemTag.get().log(event.getAction().name());
         if (!(event.getWhoClicked() instanceof Player p))
             return;
@@ -334,17 +334,17 @@ public class EquipmentChangeListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    private void event(PlayerJoinEvent event) {
+    private void onPlayerJoin(PlayerJoinEvent event) {
         trackPlayer(event.getPlayer());
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    private void event(PlayerQuitEvent event) {
+    private void onPlayerQuit(PlayerQuitEvent event) {
         untrackPlayer(event.getPlayer());
     }
 
     @EventHandler
-    private void event(PlayerDeathEvent event) {
+    private void onPlayerDeath(PlayerDeathEvent event) {
         if (event.getEntity().hasMetadata("NPC"))
             return;
         for (EquipmentSlot type : InventoryUtils.getPlayerEquipmentSlots()) {
@@ -355,7 +355,7 @@ public class EquipmentChangeListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-    private void event(PlayerTeleportEvent event) {
+    private void onPlayerTeleport(PlayerTeleportEvent event) {
         if (event.getPlayer().hasMetadata("NPC")) {
             return;
         }
@@ -367,7 +367,7 @@ public class EquipmentChangeListener implements Listener {
     }
 
     @EventHandler
-    private void event(PlayerRespawnEvent event) {
+    private void onPlayerRespawn(PlayerRespawnEvent event) {
         if (event.getPlayer().hasMetadata("NPC")) {
             return;
         }
@@ -379,7 +379,7 @@ public class EquipmentChangeListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    private void event(InventoryDragEvent event) {
+    private void onInventoryDrag(InventoryDragEvent event) {
         if (!(event.getWhoClicked() instanceof Player p))
             return;
         if (event.getWhoClicked().hasMetadata("NPC")) {
@@ -397,7 +397,7 @@ public class EquipmentChangeListener implements Listener {
     }
 
     @EventHandler
-    private void event(PlayerItemBreakEvent e) {
+    private void onPlayerItemBreak(PlayerItemBreakEvent e) {
         if (e.getPlayer().hasMetadata("NPC")) {
             return;
         }
@@ -418,7 +418,7 @@ public class EquipmentChangeListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-    private void event(PlayerArmorStandManipulateEvent event) {
+    private void onPlayerArmorStandManipulate(PlayerArmorStandManipulateEvent event) {
         if (event.getPlayer().hasMetadata("NPC")) {
             return;
         }
@@ -430,7 +430,7 @@ public class EquipmentChangeListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    private void event(PlayerDropItemEvent event) {
+    private void onPlayerDropItem(PlayerDropItemEvent event) {
         if (event.getPlayer().hasMetadata("NPC")) {
             return;
         }
@@ -446,7 +446,7 @@ public class EquipmentChangeListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-    private void event(PlayerInteractEntityEvent event) {
+    private void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
         if (event.getPlayer().hasMetadata("NPC")) {
             return;
         }
@@ -486,7 +486,7 @@ public class EquipmentChangeListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR) // compability -> !=priority
-    private void event(PlayerInteractEvent e) {
+    private void onPlayerInteract(PlayerInteractEvent e) {
         if (ItemUtils.isAirOrNull(e.getItem()))
             return;
         if (e.useItemInHand() == Event.Result.DENY)
@@ -519,7 +519,7 @@ public class EquipmentChangeListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-    private void event(PlayerItemConsumeEvent event) {
+    private void onPlayerItemConsume(PlayerItemConsumeEvent event) {
         if (event.getPlayer().hasMetadata("NPC"))
             return;
         if (event.getItem().getAmount() != 1)
@@ -541,7 +541,7 @@ public class EquipmentChangeListener implements Listener {
     }
 
     @EventHandler
-    private void event(PlayerItemHeldEvent event) {
+    private void onPlayerItemHeld(PlayerItemHeldEvent event) {
         if (event.getPlayer().hasMetadata("NPC"))
             return;
         ItemStack i1 = event.getPlayer().getInventory().getItem(event.getPreviousSlot());
@@ -554,7 +554,7 @@ public class EquipmentChangeListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-    private void event(PlayerSwapHandItemsEvent event) {
+    private void onPlayerSwapHandItems(PlayerSwapHandItemsEvent event) {
         if (event.getPlayer().hasMetadata("NPC"))
             return;
         if (isSimilarIgnoreDamage(event.getMainHandItem(), event.getOffHandItem()))
@@ -566,7 +566,7 @@ public class EquipmentChangeListener implements Listener {
     }
 
     @EventHandler
-    private void event(BlockDispenseArmorEvent event) {
+    private void onBlockDispenseArmor(BlockDispenseArmorEvent event) {
         if (!(event.getTargetEntity() instanceof Player))
             return;
         if (event.getTargetEntity().hasMetadata("NPC"))
@@ -578,7 +578,7 @@ public class EquipmentChangeListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-    private void event(EntityPickupItemEvent event) {
+    private void onEntityPickupItem(EntityPickupItemEvent event) {
         if (!(event.getEntity() instanceof Player p))
             return;
         if (event.getEntity().hasMetadata("NPC"))

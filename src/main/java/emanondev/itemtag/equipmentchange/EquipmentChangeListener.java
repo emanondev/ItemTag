@@ -60,6 +60,9 @@ public class EquipmentChangeListener implements Listener {
     }
 
     public boolean trackPlayer(Player p) {
+        if (p.hasMetadata("NPC")) {
+            return false;
+        }
         if (equips.containsKey(p))
             return false;
         EnumMap<EquipmentSlot, ItemStack> map = new EnumMap<>(EquipmentSlot.class);
@@ -72,6 +75,11 @@ public class EquipmentChangeListener implements Listener {
     }
 
     public boolean untrackPlayer(Player p) {
+        if (p.hasMetadata("NPC")) {
+            equips.remove(p);
+            log.warn("A NPC {} was tracked ",p.getName());
+            return true;
+        }
         if (!equips.containsKey(p))
             return false;
         EnumMap<EquipmentSlot, ItemStack> map = equips.get(p);
@@ -139,26 +147,33 @@ public class EquipmentChangeListener implements Listener {
                         event.getCursor());
             }
             case HOTBAR_SWAP -> {
-                ItemStack to = event.getHotbarButton() == -1 ? p.getInventory().getItemInOffHand() : p.getInventory().getItem(event.getHotbarButton());
+                ItemStack to = event.getHotbarButton() == -1 ?
+                        p.getInventory().getItemInOffHand() : p.getInventory().getItem(event.getHotbarButton());
                 if (isSimilarIgnoreDamage(event.getCurrentItem(), to))
                     return;
                 if (clickedSlot != null)
-                    onEquipChange(p, EquipmentChangeEvent.EquipMethod.INVENTORY_HOTBAR_SWAP, clickedSlot, event.getCurrentItem(), to);
+                    onEquipChange(p, EquipmentChangeEvent.EquipMethod.INVENTORY_HOTBAR_SWAP,
+                            clickedSlot, event.getCurrentItem(), to);
                 if (event.getHotbarButton() == -1)
-                    onEquipChange(p, EquipmentChangeEvent.EquipMethod.INVENTORY_HOTBAR_SWAP, EquipmentSlot.OFF_HAND, to, event.getCurrentItem());
+                    onEquipChange(p, EquipmentChangeEvent.EquipMethod.INVENTORY_HOTBAR_SWAP,
+                            EquipmentSlot.OFF_HAND, to, event.getCurrentItem());
                 else if (event.getHotbarButton() == p.getInventory().getHeldItemSlot())
-                    onEquipChange(p, EquipmentChangeEvent.EquipMethod.INVENTORY_HOTBAR_SWAP, EquipmentSlot.HAND, to, event.getCurrentItem());
+                    onEquipChange(p, EquipmentChangeEvent.EquipMethod.INVENTORY_HOTBAR_SWAP,
+                            EquipmentSlot.HAND, to, event.getCurrentItem());
             }
             case MOVE_TO_OTHER_INVENTORY -> {
                 EquipmentSlot slot = event.getView().getTopInventory().getType() == InventoryType.CRAFTING
                         ? guessDispenserSlotType(event.getCurrentItem())
                         : null;
                 if (slot != null && ItemUtils.isAirOrNull(getEquip(p, slot)))
-                    onEquipChange(p, EquipmentChangeEvent.EquipMethod.INVENTORY_MOVE_TO_OTHER_INVENTORY, slot, null, event.getCurrentItem());
+                    onEquipChange(p, EquipmentChangeEvent.EquipMethod.INVENTORY_MOVE_TO_OTHER_INVENTORY,
+                            slot, null, event.getCurrentItem());
                 if (clickedSlot == null || clickedSlot == EquipmentSlot.HAND)
-                    scheduleSlotCheck(new SlotCheck(p, EquipmentChangeEvent.EquipMethod.INVENTORY_MOVE_TO_OTHER_INVENTORY, EquipmentSlot.HAND));
+                    scheduleSlotCheck(new SlotCheck(p, EquipmentChangeEvent.EquipMethod.INVENTORY_MOVE_TO_OTHER_INVENTORY,
+                            EquipmentSlot.HAND));
                 else
-                    scheduleSlotCheck(new SlotCheck(p, EquipmentChangeEvent.EquipMethod.INVENTORY_MOVE_TO_OTHER_INVENTORY, clickedSlot));
+                    scheduleSlotCheck(new SlotCheck(p, EquipmentChangeEvent.EquipMethod.INVENTORY_MOVE_TO_OTHER_INVENTORY,
+                            clickedSlot));
             }
             case COLLECT_TO_CURSOR -> {
                 ArrayList<EquipmentSlot> slots = new ArrayList<>();
@@ -317,6 +332,7 @@ public class EquipmentChangeListener implements Listener {
 
     private void checkPlayer(Player p) {
         if (!p.isOnline() || p.hasMetadata("NPC")) {
+            untrackPlayer(p);
             return;
         }
         trackPlayer(p);
@@ -425,8 +441,8 @@ public class EquipmentChangeListener implements Listener {
         if (isSimilarIgnoreDamage(event.getArmorStandItem(), event.getPlayerItem())) {
             return;
         }
-        onEquipChange(event.getPlayer(), EquipmentChangeEvent.EquipMethod.ARMOR_STAND_MANIPULATE, EquipmentSlot.HAND, event.getPlayerItem(),
-                event.getArmorStandItem());
+        onEquipChange(event.getPlayer(), EquipmentChangeEvent.EquipMethod.ARMOR_STAND_MANIPULATE,
+                EquipmentSlot.HAND, event.getPlayerItem(), event.getArmorStandItem());
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -559,10 +575,10 @@ public class EquipmentChangeListener implements Listener {
             return;
         if (isSimilarIgnoreDamage(event.getMainHandItem(), event.getOffHandItem()))
             return;
-        onEquipChange(event.getPlayer(), EquipmentChangeEvent.EquipMethod.SWAP_HANDS_ITEM, EquipmentSlot.HAND, event.getOffHandItem(),
-                event.getMainHandItem());
-        onEquipChange(event.getPlayer(), EquipmentChangeEvent.EquipMethod.SWAP_HANDS_ITEM, EquipmentSlot.OFF_HAND, event.getMainHandItem(),
-                event.getOffHandItem());
+        onEquipChange(event.getPlayer(), EquipmentChangeEvent.EquipMethod.SWAP_HANDS_ITEM,
+                EquipmentSlot.HAND, event.getOffHandItem(), event.getMainHandItem());
+        onEquipChange(event.getPlayer(), EquipmentChangeEvent.EquipMethod.SWAP_HANDS_ITEM,
+                EquipmentSlot.OFF_HAND, event.getMainHandItem(), event.getOffHandItem());
     }
 
     @EventHandler
@@ -597,7 +613,7 @@ public class EquipmentChangeListener implements Listener {
     }
 
     private class PlayerCheckTask {
-        private final List<Player> players = new ArrayList<>(Bukkit.getOnlinePlayers());
+        private final List<Player> players = new ArrayList<>(equips.keySet());
         private int index;
 
         private void run(ScheduledTask task) {

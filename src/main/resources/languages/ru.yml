@@ -263,7 +263,7 @@ itemtag:
       description:
         - '<gradient:#A78BFA:gold><b>Создать новое действие'
         - ''
-        - '<yellow><new id> <gray> — идентификатор активности'
+        - '<yellow><new id> <gray> - идентификатор активности'
         - '<gray>id должен начинаться с буквы и может быть буквенно-цифровым.'
         - '<gray>может также содержать символ _'
       feedback: '%prefix% <green>Действие <yellow>%id% <green>создано'
@@ -272,8 +272,8 @@ itemtag:
       description:
         - '<gradient:#A78BFA:gold><b>Переименовать идентификатор действия'
         - ''
-        - '<yellow><id> <gray> — текущий идентификатор активности.'
-        - '<yellow><new id> <gray> — новый идентификатор активности.'
+        - '<yellow><id> <gray> - текущий идентификатор активности.'
+        - '<yellow><new id> <gray> - новый идентификатор активности.'
         - '<gray>id должен начинаться с буквы и может быть буквенно-цифровым.'
         - '<gray>может также содержать символ _'
       feedback: '%prefix% <green>Действие <yellow>%id% <green>переименовано <yellow>%new_id%'
@@ -282,21 +282,21 @@ itemtag:
       description:
         - '<gradient:#A78BFA:gold><b>Откройте графический интерфейс для редактирования действия.'
         - ''
-        - '<yellow><id> <gray> — идентификатор активности'
+        - '<yellow><id> <gray> - идентификатор активности'
     delete:
       params: 'delete <id>'
       description:
         - '<gradient:#A78BFA:gold><b>Удалить выбранное действие'
         - ''
-        - '<yellow><id> <gray> — идентификатор активности'
+        - '<yellow><id> <gray> - идентификатор активности'
       feedback: '%prefix% <green>Активность <yellow>%id% <green>удалена'
     clone:
       params: 'clone <id> <clone id>'
       description:
         - '<gradient:#A78BFA:gold><b>Клонировать выбранное действие'
         - ''
-        - '<yellow><id> <gray> — идентификатор выбранного действия.'
-        - '<yellow><clone id> <gray> — идентификатор клона'
+        - '<yellow><id> <gray> - идентификатор выбранного действия.'
+        - '<yellow><clone id> <gray> - идентификатор клона'
         - '<gray>id должен начинаться с буквы и может быть буквенно-цифровым.'
         - '<gray>может также содержать символ _'
       feedback: '%prefix% <green>Активность <yellow>%id% <green>клонировано в <yellow>%clone_id%'
@@ -305,7 +305,7 @@ itemtag:
       description:
         - '<gradient:#A78BFA:gold><b>Укажите использование, необходимое для выбранного действия.'
         - ''
-        - '<yellow><id> <gray> — идентификатор выбранного действия.'
+        - '<yellow><id> <gray> - идентификатор выбранного действия.'
         - '<yellow><amount> <gray>количество использований, потраченных на активацию активности'
       feedback: '%prefix% <green>Деятельность <yellow>%id% <green>потребление составляет <yellow>%amount%'
     addcondition:
@@ -313,10 +313,10 @@ itemtag:
       description:
         - '<gradient:#A78BFA:gold><b>Добавьте условие для активации активности.'
         - ''
-        - '<yellow><id> <gray> — идентификатор активности'
+        - '<yellow><id> <gray> - идентификатор активности'
         - '<yellow>[!] <gray>это ''!'' если вы хотите, чтобы условие было отменено'
         - '<yellow><conditiontype> <gray>тип состояния'
-        - '<yellow>[condition info] <gray> — дополнительная информация, которая может потребоваться для типа условия.'
+        - '<yellow>[condition info] <gray> - дополнительная информация, которая может потребоваться для типа условия.'
       feedback: '%prefix% <green>Активность <yellow>%id% <green>добавленное условие <yellow>%condition%'
   consumeactions:
     description:

@@ -94,7 +94,7 @@ public class ItemTag extends APlugin {
                 public Collection<Action> getValues() {
                     return ActionHandler.getActions();
                 }
-            });
+            }, true);
             if (Hooks.isPAPIEnabled()) {
                 try {
                     this.log("Hooking into PlaceholderApi");

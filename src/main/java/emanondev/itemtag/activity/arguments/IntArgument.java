@@ -1,8 +1,11 @@
 package emanondev.itemtag.activity.arguments;
 
+import lombok.Getter;
+
 public class IntArgument extends Argument {
     private final int min;
     private final int max;
+    @Getter
     private int value;
 
     public IntArgument(int value) {
@@ -26,16 +29,12 @@ public class IntArgument extends Argument {
         this(Integer.parseInt(info), min, max);
     }
 
-    public int getValue() {
-        return value;
-    }
-
     public void setValue(int value) {
         this.value = bound(value);
     }
 
     private int bound(int value) {
-        return Math.max(min, Math.min(max, value));
+        return Math.clamp(value, min, max);
     }
 
     @Override

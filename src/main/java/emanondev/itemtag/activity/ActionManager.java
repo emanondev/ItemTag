@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Locale;
 
 public class ActionManager {
+
     private static final HashMap<String, ActionType> actionTypes = new HashMap<>();
 
     public static @NotNull ActionType.Action read(@NotNull String line) {

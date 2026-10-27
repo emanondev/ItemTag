@@ -8,7 +8,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.regex.Pattern;
 
-
 public abstract class ConditionType {
 
     private final String id;

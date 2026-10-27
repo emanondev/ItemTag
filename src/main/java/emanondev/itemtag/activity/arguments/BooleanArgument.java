@@ -1,5 +1,8 @@
 package emanondev.itemtag.activity.arguments;
 
+import lombok.Setter;
+
+@Setter
 public class BooleanArgument extends Argument {
     private boolean value;
 
@@ -10,10 +13,6 @@ public class BooleanArgument extends Argument {
 
     public boolean getValue() {
         return value;
-    }
-
-    public void setValue(boolean value) {
-        this.value = value;
     }
 
     @Override

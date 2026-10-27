@@ -59,6 +59,7 @@ public class ItemTag extends APlugin {
             equipChangeListener = new EquipmentChangeListener();
 
             equipChangeListener.reload();
+            registerListener(equipChangeListener);
 
             //TODO new features
             /*targetManager = new TargetManager();

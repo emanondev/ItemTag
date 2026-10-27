@@ -16,7 +16,6 @@ import java.util.regex.Pattern;
 @Slf4j
 public class ActivityManager {
 
-
     private static final HashMap<String, Activity> activities = new HashMap<>();
 
     public static void reload() {

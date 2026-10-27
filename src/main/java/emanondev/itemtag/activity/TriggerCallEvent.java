@@ -1,6 +1,8 @@
 package emanondev.itemtag.activity;
 
 import emanondev.itemtag.actions.Action;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.inventory.ItemStack;
@@ -11,10 +13,15 @@ import java.util.List;
 public class TriggerCallEvent implements Cancellable {
 
     private final TriggerType trigger;
+    @Getter
     private final Player player;
+    @Getter
     private final ItemStack itemOld;
+    @Getter
     private final ArrayList<Action> actions;
     private boolean cancelled = false;
+    @Setter
+    @Getter
     private ItemStack itemNew;
 
     public TriggerCallEvent(TriggerType trigger, Player player, ItemStack itemOld, ItemStack itemNew, List<Action> actions) {
@@ -27,26 +34,6 @@ public class TriggerCallEvent implements Cancellable {
 
     public TriggerType getTriggerType() {
         return trigger;
-    }
-
-    public Player getPlayer() {
-        return player;
-    }
-
-    public ItemStack getItemOld() {
-        return itemOld;
-    }
-
-    public ItemStack getItemNew() {
-        return itemNew;
-    }
-
-    public void setItemNew(ItemStack itemNew) {
-        this.itemNew = itemNew;
-    }
-
-    public ArrayList<Action> getActions() {
-        return actions;
     }
 
     @Override

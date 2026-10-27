@@ -4,6 +4,7 @@ import emanondev.itemedit.YMLConfig;
 import emanondev.itemtag.ItemTag;
 import emanondev.itemtag.activity.action.EmptyActionType;
 import emanondev.itemtag.activity.condition.EmptyConditionType;
+import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -21,6 +22,7 @@ public class Activity {
     private final List<ConditionType.Condition> conditions = new ArrayList<>();
     //private int alternativeConsumes;
     private final String id;
+    @Getter
     private int consumes;
 
 
@@ -65,10 +67,6 @@ public class Activity {
                 noConsumesActions.add(EmptyActionType.INST.read(line));
             }
         }
-    }
-
-    public int getConsumes() {
-        return consumes;
     }
 
     public void setConsumes(int consumes) {

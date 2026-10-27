@@ -39,7 +39,7 @@ public class PlaySoundActionType extends ActionType {
                 throw new IllegalArgumentException("Invalid sound '" + values[0] + "' must be '<sound> [volume] [pitch] [category]' you can find sound here https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html");
             }
             try {
-                volume = values.length <= 1 ? 1 : Float.parseFloat(values[1]);
+                volume = values.length == 1 ? 1 : Float.parseFloat(values[1]);
                 if (volume <= 0F)
                     throw new IllegalArgumentException();
             } catch (Exception e) {

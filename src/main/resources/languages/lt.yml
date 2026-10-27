@@ -1,0 +1,778 @@
+generic:
+  help:
+    player-only: '<dark_red>[<red>ItemTag<dark_red>] <red>Komanda tik žaidėjams'
+    no-item-on-hand: '<dark_red>[<red>ItemTag<dark_red>] <red>Turite laikyti daiktą rankoje'
+    lack-permission: '<dark_red>[<red>ItemTag<dark_red>] <red>Neturite leidimo %permission%'
+    lack-permission-generic: '<dark_red>[<red>ItemTag<dark_red>] <red>Neturite leidimo naudoti šios komandos'
+    prefix: '<dark_gray>[<gradient:#54acff:#A78BFA><bold>ItemTag</bold></gradient><dark_gray>]</dark_gray>'
+    header-format: '<gradient:#54acff:#A78BFA><bold>%header%</bold></gradient> <dark_gray>»</dark_gray> <#A78BFA><bold>Pagalba</bold></#A78BFA>'
+    header-sub-format: '<gradient:#54acff:#A78BFA><bold>%header%</bold></gradient> <dark_gray>»</dark_gray> <gradient:#A78BFA:#54acff><bold>%sub%</bold></gradient> <dark_gray>»</dark_gray> <#55d6ff><bold>Pagalba</#55d6ff>'
+    command-format: '<gray> / %command%</gray> <#bad1ff>%sub%</#bad1ff> <#d7bbff>%params%</#d7bbff>'
+    footer-format: '%prev_clickable% <#7E9CFD><b>Pagalba</b> [%page% / %max_page%]</#7E9CFD> %next_clickable%'
+    next_text: '<light_purple><b>><st>> ></st>'
+    prev_text: '<light_purple><b><st>< <</st><'
+    next_void: '<dark_gray><b>><st>> ></st>'
+    prev_void: '<dark_gray><b><st>< <</st><'
+    next_hover: '<gold><b>Eiti į puslapį %target%'
+    prev_hover: '<gold><b>Eiti į puslapį %target%'
+  wrong-alias:
+    wrong-flag: '%prefix% <red> Neteisinga vėliavos vertė! <dark_red>[<gold>Užveskite čia<dark_red>]'
+    wrong-action: '%prefix% <red> Netinkamas veiksmo tipas! <dark_red>[<gold>Užveskite čia<dark_red>]'
+    error-pre-hover: '<gradient:#A78BFA:gold><b>Aslapyvardžiai: </b></gradient>'
+    first_color: '<aqua>'
+    second_color: '<yellow>'
+itemtag:
+  flag:
+    description:
+      - '<gradient:#A78BFA:gold><b>Perjungti pasirinktines vėliavėles ant elemento'
+      - ''
+      - '<yellow><flag> <gray> vėliavėlės pavadinimas'
+      - '<yellow>[true/false] <gray> vėliavėlės reikšmė, pagal numatytuosius nustatymus perjungti'
+    params: '<flag> [true/false]'
+    placeable:
+      feedback:
+        standard: '%prefix% <green>Prekė gali būti dedama.'
+        custom: '%prefix% <green>Elemento negalima įdėti.'
+        failed-place-attempt: '<dark_red>[<red>ItemTag<dark_red>] <red> Negalite įdėti šio elemento'
+    usable:
+      feedback:
+        standard: '%prefix% <green>Prekė gali būti naudojama.'
+        custom: '%prefix% <green>Elemento naudoti negalima (dešiniuoju pelės mygtuku spustelėkite).'
+    smelt:
+      feedback:
+        standard: '%prefix% <green>Prekė gali būti kepti krosnyje.'
+        custom: '%prefix% <green>Prekės negalima kepti krosnyje.'
+    furnacefuel:
+      feedback:
+        standard: '%prefix% <green> Prekė gali būti naudojama kaip krosnies kuras.'
+        custom: '%prefix% <green>Prekė negali būti naudojama kaip krosnies kuras.'
+    recipeingredient:
+      feedback:
+        standard: '%prefix% <green>Elementas gali būti naudojamas kaip recepto ingredientas.'
+        custom: '%prefix% <green>Elementas negali būti naudojamas kaip recepto ingredientas.'
+    enchantable:
+      feedback:
+        standard: '%prefix% <green>Prekė gali būti užburta.'
+        custom: '%prefix% <green>Prekė negali būti užburta.'
+    renamable:
+      feedback:
+        standard: '%prefix% <green>Prekė gali būti naudojama ant priekalų.'
+        custom: '%prefix% <green>Prekė negali būti naudojama ant priekalų.'
+    grindable:
+      feedback:
+        standard: '%prefix% <green>Prekė gali būti nuviliama šlifavimo akmeniu.'
+        custom: '%prefix% <green>Prekė negali būti nuvilta nuo šlifavimo.'
+    equipment:
+      feedback:
+        standard: '%prefix% <green>Prekė gali būti komplektuojama.'
+        custom: '%prefix% <green>Prekė negali būti komplektuojama.'
+    entityfood:
+      feedback:
+        standard: '%prefix% <green> Prekė gali būti naudojama kaip gyvūnų maistas.'
+        custom: '%prefix% <green> Prekė negali būti naudojama kaip gyvūnų maistas.'
+    clickmove:
+      feedback:
+        standard: '%prefix% <green>Prekė gali būti perkelta į atsargas.'
+        custom: '%prefix% <green>Prekė negali būti perkelta į atsargas.'
+    tradeable:
+      feedback:
+        standard: '%prefix% <green>Preke galima prekiauti su kaimo gyventojais.'
+        custom: '%prefix% <green>Prekė negali būti prekiaujama su kaimo gyventojais.'
+    smithing_table:
+      feedback:
+        standard: '%prefix% <green> Prekė gali būti naudojama kaip kalimo stalo sudedamoji dalis.'
+        custom: '%prefix% <green> Prekė negali būti naudojama kaip kalimo stalo sudedamoji dalis.'
+  actions:
+    invalid-action:
+      message: '<dark_red>[<red>ItemTag<dark_red>] <red>''<gold>%error%<red>'' nėra tinkamas tipas <dark_red>[<gold>užveskite pelę čia<dark_red>]'
+    invalid-actioninfo:
+      message: '<dark_red>[<red>ItemTag<dark_red>] <red>''<gold>%error%<red>'' nėra tinkama informacija veiksmui <gold>%action% <dark_red>[<gold>užveskite pelę čia<dark_red>]'
+    description:
+      - '<gradient:#A78BFA:gold><b>Nustato veiksmus, atliekamus, kai elementas naudojamas'
+      - ''
+      - '<yellow>Add <type> <action> <gray> – pridėkite pasirinktą veiksmą'
+      - '<yellow>Set <line> <type> <action> <gray> – pakeiskite veiksmą pasirinktoje eilutėje'
+      - '<yellow>Remove <line> <gray> – pašalinkite veiksmą pasirinktoje eilutėje'
+      - '<yellow>Clear <gray> – pašalinkite visus veiksmus'
+      - '<yellow>Permission [permission] <gray>- nustato teisę, kurios reikia norint naudoti šį daiktą'
+      - '<yellow>Cooldown <ms> <gray> – nustatykite atvėsimą, kad vėl galėtumėte naudoti šį elementą'
+      - '<yellow>Cooldownid [id] <gray>- nustato šiam daiktui naudojamą cooldown ID'
+      - '<yellow>Cooldownmsg [msg] <gray> – nustatykite vėsinimo grįžtamąjį ryšį'
+      - '<yellow>Cooldownmsgtype [type] <gray>- nustato cooldown pranešimo tipą (pokalbyje arba veiksmų juostoje)'
+      - '<yellow>Uses [amount] <gray>- nustato, kiek kartų galima naudoti šį daiktą'
+      - '<yellow>Info <gray> – rodyti informaciją apie veiksmus su esamu daiktu'
+    params: '[...]'
+    add:
+      params: 'add <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>APridėti pasirinktą veiksmą'
+        - ''
+        - '<yellow><type> <gray>veiksmo tipas'
+        - '<yellow><action> <gray>papildoma informacija apie veiksmą'
+      feedback: '%prefix% <green>Apridėta <yellow>%action%'
+    addline:
+      params: 'addline <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>APridėkite pasirinktą veiksmą pasirinktoje eilutėje'
+        - ''
+        - '<yellow><line> <gray> eilutę pridėti'
+        - '<yellow><type> <gray>veiksmo tipas'
+        - '<yellow><action> <gray>papildoma informacija apie veiksmą'
+      feedback: '%prefix% <green>Eilutė <yellow>%line% <green>pridėta kaip <yellow>%action%'
+    set:
+      params: 'set <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Pakeisti veiksmą pasirinktoje eilutėje'
+        - ''
+        - '<yellow><line> <gray> linija, kurią reikia pakeisti'
+        - '<yellow><type> <gray>veiksmo tipas'
+        - '<yellow><action> <gray>papildoma informacija apie veiksmą'
+      feedback: '%prefix% <green>Eilutė <yellow>%line% <green>nustatyti kaip <yellow>%action%'
+    remove:
+      params: 'remove <line>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Pašalinkite veiksmą pasirinktoje eilutėje'
+        - ''
+        - '<yellow><line> <gray> linija, kurią reikia pašalinti'
+      feedback: '%prefix% <green>Pašalinta eilutė <yellow>%line% <green>(<yellow>%action%<green>)'
+    permission:
+      params: 'permission [permission]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Nustatyti leidimą naudoti šį elementą'
+        - ''
+        - '<yellow>[permission] <gray>nustatoma teisė; pagal numatytuosius nustatymus nenustatyta'
+      feedback:
+        set: '%prefix% <green> Leidimas <yellow>%permission% <green> dabar reikalingas norint naudoti šį elementą'
+        removed: '%prefix% <green>Dabar nereikia leidimo naudoti šį elementą'
+    cooldown:
+      params: 'cooldown [ms]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Nustatykite cooldown laiką, po kurio daiktą vėl bus galima naudoti'
+        - ''
+        - '<yellow>[ms] <gray>kiek laiko, kol bus galima naudoti'
+        - '<gray> vėl elementas, pagal numatytuosius nustatymus 0'
+        - '<gray>Pastaba: vėsinimas nustatytas pagal cooldownid, skiriasi'
+        - '<gray> elementai su tuo pačiu cooldownid turi tą patį atvėsimą'
+        - '<gray>Pastaba: atvėsimas išsaugomas žaidėjui atsijungus ir paleidžiant serverį iš naujo'
+      feedback:
+        set: '%prefix% <green>Atvėsimo trukmė šiam daiktui: <yellow>%cooldown_seconds% <green>sekundžių'
+        removed: '%prefix% <green>Šiam daiktui nenustatytas atvėsimas'
+    cooldownid:
+      params: 'cooldownid [id]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Nustatykite elemento cooldown ID'
+        - ''
+        - '<yellow>[id] <gray>kiek laiko turi praeiti, kol vėl bus galima naudoti daiktą'
+        - '<gray>Pastaba: vėsinimas nustatytas pagal cooldownid, skiriasi'
+        - '<gray> elementai su tuo pačiu cooldownid turi tą patį atvėsimą'
+      feedback:
+        set: '%prefix% <green>Šis elementas naudoja ID <yellow>%id% <green>atvėsimui'
+        removed: '%prefix% <green>Šis elementas atvėsimui naudoja <yellow>numatytąjį <green>ID'
+    cooldownmsg:
+      description:
+        - '<gradient:#A78BFA:gold><b>Nustatykite cooldown pranešimą'
+        - ''
+        - '<yellow>[pranešimas] <gray>pranešimas, rodantis, kai elemento naudoti negalima'
+        - '<gray>y, kol vėsinimas aktyvus'
+      params: 'cooldownmsg [message]'
+      feedback:
+        set: '%prefix% <green>Atvėsimo pranešimas nustatytas kaip „<white>%msg%<green>“, kai vėsinimas aktyvus'
+        removed: '%prefix% <green>Atvėsimo pranešimas pašalintas'
+    cooldownmsgtype:
+      description:
+        - '<gradient:#A78BFA:gold><b>Nustatykite cooldown pranešimo tipą'
+        - ''
+        - '<yellow>[type] <gray>pokalbyje arba veiksmų juostoje'
+      params: 'cooldownmsgtype [type]'
+      feedback:
+        set: '%prefix% <green> Atsiliepimo pranešimas, skirtas vėsinimui, nustatytas kaip „<yellow>%type%<green>“'
+    uses:
+      params: 'uses [amount]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Nustatykite, kiek kartų elementą galima naudoti'
+        - ''
+        - '<gray>Pastaba: naudokite <yellow>-1 <gray> neribotam naudojimui'
+      feedback:
+        set: '%prefix% <green>Ši prekė turi <yellow>%uses% <green> prieš vartojant'
+        unlimited: '%prefix% <green>Šioje prekėje yra <yellow> neribotas <green> naudojimas'
+    maxuses:
+      params: 'maxuses [amount]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Nustatykite maksimalų elemento naudojimą'
+        - ''
+        - '<gray>Naudojamas daugiausia estetiniais tikslais su'
+        - '<gray> ekranas naudojamas kaip true'
+        - ''
+        - '<gray>Pastaba: naudokite <yellow>-1 <gray> neribotam naudojimui'
+      feedback:
+        set: '%prefix% <green>Šiam daiktui leidžiama naudoti ne daugiau kaip <yellow>%uses% <green>kartų'
+        unlimited: '%prefix% <green>Šiam daiktui <yellow>leidžiama naudoti neribotai <green>'
+    consume:
+      params: 'consume [true/false]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Vartokite prekę paskutinį kartą naudodami'
+        - ''
+        - '<gray>Pastaba: kai sunaudojama true ir prekė'
+        - '<gray> paskutinis naudojimas, prekė sunaikinta'
+      feedback:
+        set: '%prefix% <green>Elementas sunaikinamas paskutinį kartą panaudojus'
+        unset: '%prefix% <green>Prekė nėra sunaikinta paskutinį kartą panaudojus'
+    visualcooldown:
+      params: 'visualcooldown [true/false]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Liko vaizdinio ekrano aušinimo laikas'
+        - ''
+        - '<gray>Kai true taikomas vėsinimo efektas, panašus į'
+        - '<gray>ender pearls atvėsimas iki prekės'
+        - ''
+        - '<gray>Pastaba: Deja, šis vizualinis efektas taip pat'
+        - '<gray> taikomas bet kuriai tos pačios rūšies prekei'
+      feedback:
+        set: '%prefix% <green>Dabar elementas rodo vizualinį atvėsimą'
+        unset: '%prefix% <green>Dabar elementas nebus rodomas vizualiai atvėsęs'
+    displayuses:
+      params: 'displayuses [true/false]'
+      description:
+        - '<gradient:#A78BFA:gold><b> Ekrano naudojimas liko'
+        - ''
+        - '<gray>Kai true prideda eilutę aprašyti'
+        - '<gray>kiek liko naudojimo būdų'
+        - ''
+        - '<gray>Pastaba: Deja, šis vizualinis efektas taip pat'
+        - '<gray> taikomas bet kuriai tos pačios rūšies prekei'
+      feedback:
+        set: '%prefix% <green>Dabar elemente rodomas likęs ir maksimalus naudojimas'
+        unset: '%prefix% <green>Dabar elemente nebus rodomas likęs naudojimas ir maksimalus naudojimas'
+  activity:
+    description:
+      - '<gradient:#A78BFA:gold><b>Nustato veiklą (kai kurie veiksmai)'
+      - '<gray> aktyvumą gali suaktyvinti paleidikliai'
+      - '<gray> aktyvikliai gali būti susieti su elementais (/it trigger)'
+      - ''
+      - '<yellow>Kurti <id> <gray> – sukurti naują veiklą'
+      - '<yellow>Atidaryti <id> <gray> – atidaryti pasirinktos veiklos gidą'
+      - '<yellow>Delete <id> <gray> – ištrinkite pasirinktą veiklą'
+      - '<yellow>Klonuoti <id> <new id><gray>- klonuoti pasirinktą veiklą'
+      - '<yellow>Pervardyti <id> <new id><gray> – pervardyti pasirinktą veiklą'
+    params: '[...]'
+    feedback:
+      invalid_activity_id: '<dark_red>[<red>ItemTag<dark_red>] <red>Veikla <gold>%id% <red> neegzistuoja'
+      already_used_activity_id: '<dark_red>[<red>ItemTag<dark_red>] <red>Veikla <gold>%id% <red> jau naudojamas'
+    create:
+      params: 'create <new id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Sukurti naują veiklą'
+        - ''
+        - '<yellow><new id> <gray>yra veiklos ID'
+        - '<gray>id turi prasidėti raide ir gali būti raidinis ir skaitinis'
+        - '<gray> taip pat gali būti simbolis _'
+      feedback: '%prefix% <green>Veikla <yellow>%id% <green> sukurta'
+    rename:
+      params: 'rename <id> <new id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Pervardyti veiklos ID'
+        - ''
+        - '<yellow><id> <gray> yra dabartinis veiklos ID'
+        - '<yellow><new id> <gray> yra naujas veiklos ID'
+        - '<gray>id turi prasidėti raide ir gali būti raidinis ir skaitinis'
+        - '<gray> taip pat gali būti simbolis _'
+      feedback: '%prefix% <green>Veikla <yellow>%id% <green> Pervadintas <yellow>%new_id%'
+    open:
+      params: 'open <id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Atidarykite gidą, kad galėtumėte redaguoti veiklą'
+        - ''
+        - '<yellow><id> <gray>yra veiklos ID'
+    delete:
+      params: 'delete <id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Ištrinti pasirinktą veiklą'
+        - ''
+        - '<yellow><id> <gray>yra veiklos ID'
+      feedback: '%prefix% <green>Veikla <yellow>%id% <green> ištrinta'
+    clone:
+      params: 'clone <id> <clone id>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Klonuoti pasirinktą veiklą'
+        - ''
+        - '<yellow><id> <gray>yra klonavimo veiklos ID'
+        - '<yellow><clone id> <gray>yra klono ID'
+        - '<gray>id turi prasidėti raide ir gali būti raidinis ir skaitinis'
+        - '<gray> taip pat gali būti simbolis _'
+      feedback: '%prefix% <green>Veikla <yellow>%id% <green>klonuota į <yellow>%clone_id%'
+    setconsumes:
+      params: 'setconsumes <id> <amount>'
+      description:
+        - '<gradient:#A78BFA:gold><b> Nustatyti pasirinktai veiklai reikalingus naudojimo būdus'
+        - ''
+        - '<yellow><id> <gray>yra klonavimo veiklos ID'
+        - '<yellow><amount> <gray>naudojimas, sunaudotas aktyvinant veiklą'
+      feedback: '%prefix% <green>Veikla <yellow>%id% <green>Vartojimų suvartojimas yra <yellow>%amount%'
+    addcondition:
+      params: 'addcondition <id> [!]<conditiontype> [condition info]'
+      description:
+        - '<gradient:#A78BFA:gold><b>APridėkite sąlygą, kad suaktyvintumėte veiklą'
+        - ''
+        - '<yellow><id> <gray>yra veiklos ID'
+        - '<yellow>[!] <gray> yra „!“ jei norite, kad sąlyga būtų pakeista'
+        - '<yellow><conditiontype> <gray> yra būklės tipas'
+        - '<yellow>[informacija apie būklę] <gray> yra papildoma informacija, kurios gali prireikti sąlygos tipui'
+      feedback: '%prefix% <green>Veikla <yellow>%id% <green>Papildyta sąlyga <yellow>%condition%'
+  consumeactions:
+    description:
+      - '<gradient:#A78BFA:gold><b>Nustato veiksmus, atliekamus, kai prekė yra suvartojama, pavyzdžiui, maistas ir gėrimai'
+      - ''
+      - '<yellow>Add <type> <action> <gray> – pridėkite pasirinktą veiksmą'
+      - '<yellow>Set <line> <type> <action> <gray> – pakeiskite veiksmą pasirinktoje eilutėje'
+      - '<yellow>Remove <line> <gray> – pašalinkite veiksmą pasirinktoje eilutėje'
+      - '<yellow>Clear <gray> – pašalinkite visus veiksmus'
+      - '<yellow>Permission [permission] <gray>- nustato teisę, kurios reikia norint suvartoti šį daiktą'
+      - '<yellow>Cooldown <ms> <gray> – nustatykite atvėsimą, kad vėl galėtumėte naudoti šį elementą'
+      - '<yellow>Cooldownid [id] <gray>- nustato šiam daiktui naudojamą cooldown ID'
+      - '<yellow>Info <gray> – rodyti informaciją apie veiksmus su esamu daiktu'
+    params: '[...]'
+    add:
+      params: 'add <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>APridėti pasirinktą veiksmą'
+        - ''
+        - '<yellow><type> <gray>veiksmo tipas'
+        - '<yellow><action> <gray>papildoma informacija apie veiksmą'
+    addline:
+      params: 'addline <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>APridėkite pasirinktą veiksmą pasirinktoje eilutėje'
+        - ''
+        - '<yellow><line> <gray> eilutę pridėti'
+        - '<yellow><type> <gray>veiksmo tipas'
+        - '<yellow><action> <gray>papildoma informacija apie veiksmą'
+    set:
+      params: 'set <line> <type> <action>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Pakeisti veiksmą pasirinktoje eilutėje'
+        - ''
+        - '<yellow><line> <gray> linija, kurią reikia pakeisti'
+        - '<yellow><type> <gray>veiksmo tipas'
+        - '<yellow><action> <gray>papildoma informacija apie veiksmą'
+    remove:
+      params: 'remove <line>'
+      description:
+        - '<gradient:#A78BFA:gold><b>Pašalinkite veiksmą pasirinktoje eilutėje'
+        - ''
+        - '<yellow><line> <gray> linija, kurią reikia pašalinti'
+    permission:
+      params: 'permission [permission]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Nustatyti leidimą naudoti šį elementą'
+        - ''
+        - '<yellow>[permission] <gray>nustatoma teisė; pagal numatytuosius nustatymus nenustatyta'
+    cooldown:
+      params: 'cooldown [ms]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Nustatykite atvėsimą, kad vėl sunaudotumėte prekę'
+        - ''
+        - '<yellow>[ms] <gray>kiek laiko, kol bus galima vartoti'
+        - '<gray> vėl elementas, pagal numatytuosius nustatymus 0'
+        - '<gray>Pastaba: vėsinimas nustatytas pagal cooldownid, skiriasi'
+        - '<gray> elementai su tuo pačiu cooldownid turi tą patį atvėsimą'
+        - '<gray>Pastaba: atvėsimas išsaugomas žaidėjui atsijungus ir paleidžiant serverį iš naujo'
+    cooldownid:
+      params: 'cooldownid [id]'
+      description:
+        - '<gradient:#A78BFA:gold><b>Nustatykite elemento cooldown ID'
+        - ''
+        - '<yellow>[id] <gray>kiek laiko turi praeiti, kol daiktą bus galima vėl suvartoti'
+        - '<gray>Pastaba: vėsinimas nustatytas pagal cooldownid, skiriasi'
+        - '<gray> elementai su tuo pačiu cooldownid turi tą patį atvėsimą'
+    feedback:
+      actions:
+        set: '<green>Eilutė <yellow>%line% <green>nustatyti kaip <yellow>%action%'
+        remove: '<green>Pašalinta eilutė <yellow>%line% <green>(<yellow>%action%<green>)'
+        clear: '<green>Išvalyti sunaudojimo veiksmai su šiuo elementu'
+        permission:
+          set: '<green>Leidimas <yellow>%permission% <green> dabar reikalingas norint vartoti šį elementą'
+          removed: '<green>Dabar nereikia leidimo vartoti šį elementą'
+        cooldownid:
+          set: '<green>Šis elementas naudoja ID <yellow>%id% <green>atvėsimui'
+          removed: '<green>Šis elementas atvėsimui naudoja <yellow>numatytąjį <green>ID'
+        cooldown:
+          set: '<green>Atvėsimo trukmė šiam daiktui: <yellow>%cooldown_seconds% <green>sekundžių'
+          removed: '<green>Šiam daiktui nenustatytas atvėsimas'
+  effects:
+    description:
+      - '<gradient:#A78BFA:gold><b>APridėti nuolatinį gėrimo poveikį'
+      - '<gray>Atidarykite gui'
+      - '<gray>Nepamirškite pasirinkti įrangos'
+      - '<gray> lizdas pritaikykite efektą'
+    params: ''
+  usepermission:
+    description:
+      - '<gradient:#A78BFA:gold><b>Nustatyti leidimą naudoti šį elementą (dešiniuoju pelės mygtuku spustelėkite vanilės elgseną)'
+      - ''
+      - '<yellow>nustatyti leidimą <permission> <gray>nustatyti reikalingą leidimą'
+      - '<yellow>nustatyti pranešimą <message> <gray>nustatyti leidimo trūkumo pranešimą'
+    params: '[...]'
+    setpermission:
+      feedback: '<green>Naudojimo leidimas dabar nustatytas kaip <yellow>%value%'
+      feedback-reset: '<green>Naudoti reikalingas leidimas buvo pašalintas'
+    setmessage:
+      feedback: '<green>Pranešimas apie naudojimo leidimo trūkumą dabar nustatytas kaip <yellow>%value%'
+      feedback-reset: '<green>Pranešimas apie naudojimo leidimo trūkumą buvo pašalintas'
+  wearpermission:
+    description:
+      - '<gradient:#A78BFA:gold><b>Nustatyti leidimą dėvėti šį daiktą'
+      - ''
+      - '<gray>A Bandant nešioti prekė nukris'
+      - '<gray>ikite į inventorių arba ant grindų, jei pilna'
+      - '<gray>'
+      - '<yellow>nustatyti leidimą <permission> <gray>nustatyti reikalingą leidimą'
+      - '<yellow>nustatyti pranešimą <message> <gray>nustatyti leidimo trūkumo pranešimą'
+    params: '[...]'
+    setpermission:
+      feedback: '<green>Dėvėjimo leidimas dabar nustatytas kaip <yellow>%value%'
+      feedback-reset: '<green>Dėvėti reikalingas leidimas buvo pašalintas'
+    setmessage:
+      feedback: '<green>Dėvėjimo leidimo atsisakymo pranešimas dabar nustatytas kaip <yellow>%value%'
+      feedback-reset: '<green>Pranešimas apie naudojimo leidimo trūkumą buvo pašalintas'
+  help:
+    header-name: 'ItemTag'
+    description:
+      - '<gradient:#A78BFA:gold><b>Rodo ItemTag pagalbą</b></gradient>'
+      - ''
+      - '<gray><yellow>[page] </yellow>Pagalbos puslapis'
+      - '<gray><yellow>[subcommand] </yellow>Pagalba komandai'
+    params: '[page/subcommand]'
+itemtagreload:
+  success: '<blue>[<white>ItemTag<blue>] <green> Perkrautas'
+gui:
+  middleclick: #middle click can't be used unless on creative mode, an alternative to middle click is pressing hotbar button 1
+    creative: 'Vidurinis paspaudimas'
+    other: 'Paspauskite 1'
+  previous-page:
+    #Holders: %player_name% %page% %target_page%
+    description:
+      - '<gold><bold>Ankstesnis puslapis'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> Eiti į puslapį <yellow>%target_page%'
+  next-page:
+    #Holders: %player_name% %page% %target_page%
+    description:
+      - '<gold><bold>Kitas puslapis'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> Eiti į puslapį <yellow>%target_page%'
+  back:
+    #Holders: %player_name%
+    description:
+      - '<gold><bold>Grįžti'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> Eiti į ankstesnį gui'
+  actions:
+    title: '<blue>Aveiksmai'
+    click-interact: '<blue>[<white>ItemTag<blue>] <gray>[Spustelėkite čia]'
+    click-hover: '<gold>Spustelėkite, kad pasiūlytumėte komandą'
+    addline:
+      - '<gold><bold>APridėti veiksmą'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> Keisti reikšmes'
+      - '<blue>/it actions pridėti <action type> <action info>'
+      - '<blue>/it actions papildoma linija <line> <action type> <action info>'
+    set:
+      - '<gold><bold>Nustatyti veiksmą'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> Keisti reikšmes'
+      - '<blue>/it actions rinkinys <line> <action type> <action info>'
+    remove:
+      - '<gold><bold>Pašalinimo veiksmas'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> Keisti reikšmes'
+      - '<blue>/it actions pašalinti <line>'
+    consume:
+      - '<gold><bold>Vartokite ant <yellow><bold>0<gold><bold> naudojimo likę'
+      - '<gray>EĮgalinta: <yellow>%value%'
+      - '<gray>Pastaba: kai sunaudojama true ir prekė'
+      - '<gray> paskutinis naudojimas, prekė sunaikinta'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> perjungimas'
+      - '<blue>/it actions vartoja [true/false]'
+    uses:
+      - '<gold><bold>AGalimas naudojimas <yellow><bold>%value%'
+      - '<gray> (-1, skirtas neribotam)'
+      - ''
+      - '<gray>[<white>Dešiniuoju pelės mygtuku spustelėkite<gray>]<gray> Pridėti <yellow>%editor%'
+      - '<gray>[<white>Kairysis spustelėjimas<gray>]<gray> Pašalinti <yellow>%editor%'
+      - '<gray>[<white>Shift į kairę/Right Click<gray>]<gray> %editor-prev% << <yellow>%editor% <gray>>> %editor-next%'
+      - '<blue>/it actions naudoja <amount>'
+    maxuses:
+      - '<gold><bold>Max Naudoja <yellow><bold>%value%'
+      - '<gray> (-1, skirtas neribotam)'
+      - '<gray>Daugiausia naudojamas estetiniais tikslais naudojant ekraną'
+      - ''
+      - '<gray>[<white>Dešiniuoju pelės mygtuku spustelėkite<gray>]<gray> Pridėti <yellow>%editor%'
+      - '<gray>[<white>Kairysis spustelėjimas<gray>]<gray> Pašalinti <yellow>%editor%'
+      - '<gray>[<white>Shift į kairę/Right Click<gray>]<gray> %editor-prev% << <yellow>%editor% <gray>>> %editor-next%'
+      - '<blue>/it actions maksimaliai naudoja <amount>'
+    permission:
+      - '<gold><bold>Leidimas naudoti: <yellow><bold>%value%'
+      - '<gray>Pastaba: jei neturite šio leidimo'
+      - '<gray> negalėsite naudoti elemento arba'
+      - '<gray> sumažina jo naudojimą'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> Redaguoti'
+      - '<blue>/it actions leidimas [permission]'
+    cooldown:
+      - '<gold><bold>Aušinimas: <yellow><bold>%value_s% <blue>s'
+      - '<gray>Pastaba: naudokite atvėsinimą, kai spustelėsite dešiniuoju pelės mygtuku'
+      - ''
+      - '<gray>[<white>Dešiniuoju pelės mygtuku spustelėkite<gray>]<gray> Pridėti <yellow>%editor%'
+      - '<gray>[<white>Kairysis spustelėjimas<gray>]<gray> Pašalinti <yellow>%editor%'
+      - '<gray>[<white>Shift į kairę/Right Click<gray>]<gray> %editor-prev% << <yellow>%editor% <gray>>> %editor-next%'
+      - '<blue>/it actions vėsinimas <cooldown <u>ms</u>>'
+    cooldownid:
+      - '<gold><bold>Atvėsimo ID: <yellow><bold>%value%'
+      - '<gray>Pastaba: visi elementai su tuo pačiu cooldownid'
+      - '<gray> dalijasi atvėsimu'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> Redaguoti'
+      - '<blue>/it actions cooldownid [cooldown id]'
+    info:
+      - '<gold><bold> Veiksmų sąrašas:'
+    visualcooldown:
+      - '<gold><bold>Rodyti vizualinį vėsinimą'
+      - '<gray>EĮgalinta: <yellow>%value%'
+      - '<gray>Pastaba: Deja, šis vizualinis efektas taip pat'
+      - '<gray> taikomas bet kuriai tos pačios rūšies prekei'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> perjungimas'
+      - '<blue>/it actions vizualinis ekranas [true/false]'
+    displayuses:
+      - '<gold><bold>Ekranas Naudojimas liko'
+      - '<gray>EĮgalinta: <yellow>%value%'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> perjungimas'
+      - '<blue>/it actions ekranai [true/false]'
+  actionslines:
+    actionformat: '<yellow>%type% <white>%info%'
+    element:
+      - '%action%'
+      - '<gray>[<white>Dešiniuoju pelės mygtuku spustelėkite <gray>]<gray> Pakeiskite šį veiksmą'
+      - '<gray>[<white>Kairysis spustelėjimas<gray>]<gray> Prieš tai pridėkite naują veiksmą'
+      - '<gray>[<white>Shift Dešinysis spustelėjimas<gray>]<gray> Ištrinti šį veiksmą'
+    add:
+      - ''
+      - '<gray>[<white>Kairysis spustelėjimas<gray>]<gray> Pridėti naują veiksmą'
+  flags:
+    placeable:
+      - '<gold>Nustato, ar prekę galima įdėti'
+      - '<gray> vertė: <yellow>%value%'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> perjungimas'
+    usable:
+      - '<gold>Nustato, ar elementą galima naudoti'
+      - '<gray> vertė: <yellow>%value%'
+      - ''
+      - '<gray>Jei nustatytas į false, užkertamas kelias vanilės elgesiui'
+      - '<gray> dešiniuoju pelės mygtuku spustelėkite elementą'
+      - '<gray> Naudojimo apibrėžimas skiriasi priklausomai nuo prekės tipo'
+      - '<gray>Maisto negalima valgyti, meškerės negalima žvejoti,'
+      - '<gray> kiaušiniai negali išmesti, ikreliai negali neršti...'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> perjungimas'
+    smelt:
+      - '<gold>Nustato, ar gaminį galima virti'
+      - '<gray> vertė: <yellow>%value%'
+      - ''
+      - '<gray>Jei nustatyta į false, vanilės elgesys neleidžiamas'
+      - '<gray> virimas krosnyje'
+      - '<gray> Veikia ir maisto produktams, ir rūdoms'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> perjungimas'
+    furnacefuel:
+      - '<gold>Nustato, ar prekė gali būti naudojama kaip krosnies kuras'
+      - '<gray> vertė: <yellow>%value%'
+      - ''
+      - '<gray>Jei nustatytas į false, užkertamas kelias vanilės elgesiui'
+      - '<gray> krosnys, kuriose šis produktas naudojamas kaip kuras'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> perjungimas'
+    recipeingredient:
+      - '<gold>Nustato, ar elementą galima naudoti gaminant receptus'
+      - '<gray> vertė: <yellow>%value%'
+      - ''
+      - '<gray>Jei nustatyta į false, neleidžiama gaminti vanilės'
+      - '<gray> kai ši prekė yra viena iš sudedamųjų dalių'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> perjungimas'
+    enchantable:
+      - '<gold>Nustato, ar daiktą galima užburti'
+      - '<gray> vertė: <yellow>%value%'
+      - ''
+      - '<gray>Jei nustatyta į false, atsisakykite kerinčio vanilės stalo'
+      - '<gray> elgesys su šiuo elementu'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> perjungimas'
+    renamable:
+      - '<gold>Nustato, ar elementą galima naudoti ant priekalo'
+      - '<gray> vertė: <yellow>%value%'
+      - ''
+      - '<gray>Jei nustatytas į false, uždrauskite vanilinio priekalo elgesį'
+      - '<gray> ant šio elemento'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> perjungimas'
+    grindable:
+      - '<gold>Nustato, ar daiktą galima nuvilti ant šlifavimo akmens'
+      - '<gray> vertė: <yellow>%value%'
+      - ''
+      - '<gray>Jei nustatytas į false, atsisakykite vanilės malimo akmens'
+      - '<gray> elgesys su šiuo elementu'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> perjungimas'
+    equipment:
+      - '<gold>Nustato, ar elementą galima naudoti kaip įrangą'
+      - '<gray> vertė: <yellow>%value%'
+      - ''
+      - '<gray>Jei nustatytas į false ir elementas yra įrengtas, jis būtų atmestas'
+      - '<gray> atgal į grotuvo inventorių'
+      - '<gray>NB: ranka ir ranka nelaikomos įrangos lizdų dalimi'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> perjungimas'
+    entityfood:
+      - '<gold>Nustato, ar prekė gali būti naudojama kaip gyvūnų maistas'
+      - '<gray> vertė: <yellow>%value%'
+      - ''
+      - '<gray>Jei nustatytas į false, užkertamas kelias vanilės veislės elgesiui'
+      - '<gray> ir kūdikio greito augimo elgesys'
+      - '<gray> ant šio elemento'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> perjungimas'
+    vanishcurse:
+      - '<gold>Nustato, ar elementas išnyks mirus'
+      - '<gray> vertė: <yellow>%value%'
+      - ''
+      - '<gray> Veikia lygiai taip pat kaip užkeikimas Vanish Curse'
+      - '<gray>Bet tai ne užkeikimas'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> perjungimas'
+    clickmove:
+      - '<gold>Nustato, ar prekę galima perkelti į atsargas'
+      - '<gray> vertė: <yellow>%value%'
+      - ''
+      - '<gray>Op žaidėjai turi leidimą apeiti šią ribą'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> perjungimas'
+    tradeable:
+      - '<gold>Nustato, ar prekę galima iškeisti į kitas prekes su kaimo gyventojais'
+      - '<gray> vertė: <yellow>%value%'
+      - ''
+      - '<gray>Jei nustatytas į false, neleidžiama prekiauti vanile'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> perjungimas'
+    smithing_table:
+      - '<gold>Nustato, ar prekę galima naudoti ant kalimo stalo'
+      - '<gray> vertė: <yellow>%value%'
+      - ''
+      - '<gray>Jei nustatytas į false, uždrauskite vanilinio priekalo elgesį'
+      - '<gray> ant šio elemento'
+      - ''
+      - '<gray>[<white>Click<gray>]<gray> perjungimas'
+  effects:
+    title: '<blue>Eefektai'
+    slot:
+      - '<gold><bold>%slot%'
+      - '<gray>EĮgalinta: <yellow>%value%'
+    potion:
+      - '<gold><bold>%effect%'
+      - ''
+      - '<gray> Lygis: <yellow>%level% <gray>[Kairysis/Right Click pakeitimas]'
+      - '<gray>Dalelės: <yellow>%particles% <gray>[Shift kairiojo paspaudimo perjungimas]'
+      - '<gray>AAplinka: <yellow>%ambient% <gray>[Shift Dešiniojo paspaudimo perjungimas]'
+      - '<gray>Icon: <yellow>%icon% <gray>[%middle_click% perjungiklis]'
+      - '<gray> Trukmė: <yellow>%duration%'
+    potion-instant: 'instant'
+    potion-unlimited: 'neribotas'
+  activity:
+    title_main: '<blue>Veikla <yellow>%activity_id%'
+  triggers:
+    title_main: '<blue> Paleidikliai'
+trigger:
+  consume_item:
+    description:
+      - '<gold>aktyvuojamas, kai žaidėjas suvartoja prekę'
+      - '<gold> (gerti arba valgyti)'
+  right_interact:
+    gui_material:
+      - '<gold>aktyvuojama, kai žaidėjas spusteli dešiniuoju pelės mygtuku'
+  left_interact:
+    gui_material:
+      - '<gold>aktyvuojama, kai žaidėjas spustelėja kairiuoju pelės mygtuku'
+actions:
+  delay:
+    info:
+      - '<aqua>delay <yellow><delay ticks> <action>'
+      - '<yellow><delay ticks> <aqua> kiek norite atidėti veiksmą, 20 pažymi = 1 sekundė'
+      - '<yellow><action> <aqua> veiksmas, kurį reikia vykdyti, pvz.: <yellow>garso entity_bat_hurt 1 1'
+  message:
+    info:
+      - '<aqua>message <yellow><message>'
+      - '<yellow><message> <aqua>message išsiųstas žaidėjui'
+      - '<aqua>%player% gali būti naudojamas kaip žaidėjo vardo rezervuota vieta'
+  permission:
+    info:
+      - '<aqua>permission <yellow><permission> <action>'
+      - '<yellow><permission> <aqua>permission arba <yellow> leidimas <aqua> atvirkštiniam patikrinimui'
+      - '<yellow><action> <aqua> veiksmas, kurį reikia vykdyti, pvz.: <yellow>garso entity_bat_hurt 1 1'
+  commandasop:
+    info:
+      - '<aqua>commandasop <yellow><command>'
+      - '<yellow><command> <aqua>command žaidėjas įvykdė kaip Op'
+      - '<aqua>%player% gali būti naudojamas kaip žaidėjo vardo rezervuota vieta'
+      - '<aqua>N.B. nereikia <yellow>/<aqua>, pvz.: <yellow>home'
+  command:
+    info:
+      - '<aqua>command <yellow><command>'
+      - '<yellow><command> <aqua>command įvykdė žaidėjas'
+      - '<aqua>%player% gali būti naudojamas kaip žaidėjo vardo rezervuota vieta'
+      - '<aqua>N.B. nereikia <yellow>/<aqua>, pvz.: <yellow>home'
+  potion:
+    info:
+      - '<aqua>potion <yellow><type> <duration_ticks|infinite> <level> [ambient] [particles] [icon]'
+      - '<yellow><type> <aqua> taikomas gėrimo efektas'
+      - '<yellow><duration_ticks|infinite> <aqua>efekto trukmė erkėms arba infinite'
+      - '<yellow><level> <aqua>efekto lygis nuo 1 iki 256'
+      - '<yellow>[ambient] [particles] [icon] <aqua>loginės reikšmės; numatytosios reikšmės yra false, true, true'
+  projectile:
+    info:
+      - '<aqua>projectile <yellow><projectile> [greitis] [netikslumas] [kartojimas] [pakartojimo delsa]'
+      - '<yellow><projectile> <aqua>Pateikiamas objekto tipas, kuris išplečia sviedinį'
+      - '<yellow>[greitis] <aqua>pradinis greitis; numatytasis 1'
+      - '<yellow>[netikslumas] <aqua>atsitiktinis krypties poslinkis X, Y ir Z; numatytasis 0'
+      - '<yellow>[kartoti] <aqua>Papildomi kadrai po pirmojo; numatytasis 0'
+      - '<yellow>[pakartojimo delsa] <aqua>Tiksta tarp kadrų; numatytoji reikšmė yra 5 ir turi būti bent 1'
+  servercommand:
+    info:
+      - '<aqua>servercommand <yellow><command>'
+      - '<yellow><command> <aqua>command vykdo serveris'
+      - '<aqua>%player% gali būti naudojamas kaip žaidėjo vardo rezervuota vieta'
+      - '<aqua>N.B. nereikia <yellow> / <aqua>, pvz.: <yellow>heal %player%'
+  sound:
+    info:
+      - '<aqua>sound <yellow><sound> [garsumas] [aukštis] [savaime]'
+      - '<yellow><sound> <aqua> grojamas garsas'
+      - '<yellow>[garsumas] <aqua>garso garsumas, numatytasis 1'
+      - '<yellow>[aukštis] <aqua>garso aukštis, numatytasis 1'
+      - '<yellow>[self] <aqua>Tik grotuvas turėtų tai girdėti? Numatytoji reikšmė yra false'
+  summon:
+    info:
+      - '<aqua>summon <yellow><entity> [quantity] [plinta]'
+      - '<yellow><entity> <aqua>Pateikiamo objekto tipas'
+      - '<yellow>[quantity] <aqua>iškviečiamų esybių skaičius; pagal numatytuosius nustatymus 1'
+      - '<yellow>[spread] <aqua>atstumas nuo grotuvo; numatytasis 1.5'
+      - '<aqua>One esybė neršia priekyje; du ikrai ties ±60°; trys ar daugiau yra vienodai išdėstyti aplink žaidėją'
+  throwtnt:
+    info:
+      - '<aqua>throwtnt [greitis] [netikslumas] [saugiklis] [kartojimas] [pakartojimo delsa]'
+      - '<aqua>Meta paruoštą TNT ta kryptimi, į kurią žaidėjas žiūri'
+      - '<yellow>[greitis] <aqua>pradinis greitis; numatytasis nustatymas yra 2'
+      - '<yellow>[netikslumas] <aqua> Atsitiktinis posūkis ir žingsnio poslinkis laipsniais; numatytasis nustatymas yra 0'
+      - '<yellow>[fuseTicks] <aqua>TNT saugiklio trukmė erkėse; numatytasis nustatymas yra 60'
+      - '<yellow>[kartoti] <aqua>Papildomi metimai po pirmojo; numatytasis nustatymas yra 0'
+      - '<yellow>[pakartojimo delsa] <aqua>Tiksta tarp metimų; numatytoji reikšmė yra 5 ir turi būti bent 1'
